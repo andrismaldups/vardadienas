@@ -45,9 +45,28 @@ function findName(){let q=nameInput.value.trim().toLocaleLowerCase('lv-LV');if(!
 
 function fmtKey(k){let [d,m]=k.split('.').map(Number);return d+'. '+months[m-1]}
 
-function parseDate(s){s=s.trim().toLocaleLowerCase('lv-LV').replace(/,/g,' ').replace(/\s+/g,' ');
-let m=s.match(/^(\d{1,2})\.?\s+(\p{L}+)$/u);if(m){let mi=months.findIndex(x=>x===m[2]||x.replace(/s$/,'')===m[2]);if(mi>=0)return pad(+m[1])+'.'+pad(mi+1)+'.'}m=s.match(/^(\d{1,2})[.\/-](\d{1,2})\.?$/);if(m)return pad(+m[1])+'.'+pad(+m[2])+'.';return null}
+function parseDate(s){
+  s=s.trim().toLocaleLowerCase('lv-LV').replace(/,/g,' ').replace(/\s+/g,' ');
 
+  let m=s.match(/^(\d{1,2})\.?\s+(\p{L}+)$/u);
+
+  if(m){
+    let monthText=m[2];
+
+    let mi=months.findIndex((x,i)=>
+      x===monthText ||
+      monthsLoc[i]===monthText
+    );
+
+    if(mi>=0)return pad(+m[1])+'.'+pad(mi+1)+'.';
+  }
+
+  m=s.match(/^(\d{1,2})[.\/-](\d{1,2})\.?$/);
+
+  if(m)return pad(+m[1])+'.'+pad(+m[2])+'.';
+
+  return null;
+}
 function findDate(){let k=parseDate(dateInput.value);if(!k||!DATA[k]){dateResult.textContent='Datumu neizdevās atpazīt. Piemērs: 20. septembris';return}let [t,e]=DATA[k];dateResult.innerHTML='<strong>'+fmtKey(k)+'</strong><br><span class="tag">Tradicionālie</span> '+(t.length?t.map(esc).join(', '):'—')+(e.length?'<br><span class="tag extra">Paplašinātie</span> '+e.map(esc).join(', '):'')}
 prevDay.onclick=()=>{selected.setDate(selected.getDate()-1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
 renderSelected()};
