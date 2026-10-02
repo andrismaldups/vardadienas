@@ -131,6 +131,7 @@ dateInput.addEventListener('input',()=>{
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
 renderSelected();
+renderTomorrow();
 </script><script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
