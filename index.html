@@ -281,7 +281,7 @@ function parseDate(s){
 }
 function findDate(){let k=parseDate(dateInput.value);if(!k||!DATA[k]){dateResult.textContent='Datumu neizdevās atpazīt. Piemērs: 20. septembris';return}let [t,e]=DATA[k];dateResult.innerHTML='<strong>'+fmtKey(k)+'</strong><br><span class="tag">Tradicionālie</span> '+(t.length?t.map(esc).join(', '):'—')+(e.length?'<br><span class="tag extra">Paplašinātie</span> '+e.map(esc).join(', '):'')}
 prevDay.onclick=()=>{selected.setDate(selected.getDate()-1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
-renderSelected()};
+renderSelected();renderLatviaToday(selected)};
 nextDay.onclick=()=>{selected.setDate(selected.getDate()+1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
 renderSelected();renderLatviaToday(selected)};
 todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),selected.getMonth(),1);
