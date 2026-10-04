@@ -85,7 +85,12 @@ let selected=new Date(), view=new Date(selected.getFullYear(),selected.getMonth(
 const pad=n=>String(n).padStart(2,'0');
 const key=d=>pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.';
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function addFavorite(name){
+function removeFavorite(name){
+  favorites=favorites.filter(n=>n!==name);
+  localStorage.setItem('favorites',JSON.stringify(favorites));
+  renderFavorites();
+}
+  function addFavorite(name){
   if(!favorites.includes(name)){
     favorites.push(name);
     localStorage.setItem('favorites',JSON.stringify(favorites));
