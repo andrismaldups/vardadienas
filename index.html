@@ -175,7 +175,16 @@ function removeFavorite(name){
   let d=new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
   let name=LATVIA_DAYS[k];
+    if(!name){
+  let day=d.getDay();
+  let date=d.getDate();
+  let month=d.getMonth()+1;
 
+  if(month===5 && day===0 && date>=8 && date<=14) name="Mātes diena";
+  if(month===6 && day===0 && date>=15 && date<=21) name="Medicīnas darbinieku diena";
+  if(month===7 && day===6 && date>=8 && date<=14) name="Jūras svētku diena";
+  if(month===9 && day===0 && date>=8 && date<=14) name="Tēva diena";
+}
   if(name){
     latviaTodayName.textContent=name;
     latviaTodayBlock.hidden=false;
