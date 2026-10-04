@@ -115,6 +115,16 @@ function removeFavorite(name){
     list.sort((a,b)=>a.localeCompare(b,'lv'));
   }
   favoritesList.innerHTML=list.length
+    ?list.map(name=>
+      '<div class="favorite-row">'+
+        '<span class="favorite-name">'+esc(name)+'</span>'+
+        '<span class="favorite-date">'+fmtKey(getFavoriteDate(name))+'</span>'+
+        '<button class="remove-favorite" onclick="removeFavorite(\''+esc(name)+'\')">×</button>'+
+      '</div>'
+    ).join('')
+    :'Neviens vārds vēl nav pievienots.';
+}
+  favoritesList.innerHTML=list.length
   ?list.map(name=>'<div>'+esc(name)+' — '+fmtKey(getFavoriteDate(name))+' <button class="remove-favorite" onclick="removeFavorite(\''+esc(name)+'\')">×</button></div>').join('')
   :'Neviens vārds vēl nav pievienots.';
   }
