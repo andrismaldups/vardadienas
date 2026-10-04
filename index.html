@@ -124,10 +124,6 @@ function removeFavorite(name){
     ).join('')
     :'Neviens vārds vēl nav pievienots.';
 }
-  favoritesList.innerHTML=list.length
-  ?list.map(name=>'<div>'+esc(name)+' — '+fmtKey(getFavoriteDate(name))+' <button class="remove-favorite" onclick="removeFavorite(\''+esc(name)+'\')">×</button></div>').join('')
-  :'Neviens vārds vēl nav pievienots.';
-  }
   function renderTomorrow(){let d=new Date();d.setDate(d.getDate()+1);let x=DATA[key(d)]||[[],[]];tomorrowNames.textContent=x[0].length?x[0].join(', '):'—'}
   function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar()}
 
