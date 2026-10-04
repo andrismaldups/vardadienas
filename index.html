@@ -189,8 +189,8 @@ function removeFavorite(name){
 
   return new Date(year,month-1,day);
 }
-  function renderLatviaToday(){
-  let d=new Date();
+  function renderLatviaToday(testDate){
+  let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
   let name=LATVIA_DAYS[k];
     if(!name){
