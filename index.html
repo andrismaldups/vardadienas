@@ -205,6 +205,15 @@ function removeFavorite(name){
 }
     if(!name){
   let easter=getEasterDate(d.getFullYear());
+  let goodFriday=new Date(easter);
+goodFriday.setDate(goodFriday.getDate()-2);
+
+if(
+  d.getMonth()===goodFriday.getMonth() &&
+  d.getDate()===goodFriday.getDate()
+){
+  name="Lielā Piektdiena";
+}
 
   if(
     d.getMonth()===easter.getMonth() &&
