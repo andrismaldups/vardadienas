@@ -283,7 +283,7 @@ function findDate(){let k=parseDate(dateInput.value);if(!k||!DATA[k]){dateResult
 prevDay.onclick=()=>{selected.setDate(selected.getDate()-1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
 renderSelected()};
 nextDay.onclick=()=>{selected.setDate(selected.getDate()+1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
-renderSelected()};
+renderSelected();renderLatviaToday(selected)};
 todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),selected.getMonth(),1);
 renderSelected()};
 prevMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
