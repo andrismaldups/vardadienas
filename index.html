@@ -171,6 +171,18 @@ function removeFavorite(name){
     :'Neviens vārds vēl nav pievienots.';
 }
   function renderTomorrow(){let d=new Date();d.setDate(d.getDate()+1);let x=DATA[key(d)]||[[],[]];tomorrowNames.textContent=x[0].length?x[0].join(', '):'—'}
+  function renderLatviaToday(){
+  let d=new Date();
+  let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
+  let name=LATVIA_DAYS[k];
+
+  if(name){
+    latviaTodayName.textContent=name;
+    latviaTodayBlock.hidden=false;
+  }else{
+    latviaTodayBlock.hidden=true;
+  }
+}
   function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar()}
 
 function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
