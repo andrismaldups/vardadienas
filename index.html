@@ -285,7 +285,7 @@ renderSelected()};
 nextDay.onclick=()=>{selected.setDate(selected.getDate()+1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
 renderSelected();renderLatviaToday(selected)};
 todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),selected.getMonth(),1);
-renderSelected()};
+renderSelected();renderLatviaToday(selected)};
 prevMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
 nextMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
 nameBtn.onclick=findName;nameInput.onkeydown=e=>{if(e.key==='Enter')findName()};
