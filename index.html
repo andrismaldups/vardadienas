@@ -87,6 +87,12 @@ function addFavorite(name){
     localStorage.setItem('favorites',JSON.stringify(favorites));
   }
 }
+ function getFavoriteDate(name){
+  for(const [d,[t,e]] of Object.entries(DATA)){
+    if([...t,...e].includes(name)) return d;
+  }
+  return '';
+}
   function renderFavorites(){
   favoritesList.textContent=favorites.length?favorites.join(', '):'Neviens vārds vēl nav pievienots.';
 }
