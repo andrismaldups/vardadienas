@@ -314,7 +314,7 @@ dateInput.addEventListener('input',()=>{
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
 renderSelected();
 renderTomorrow();
-renderLatviaToday();
+renderLatviaToday(selected);
 </script><script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
