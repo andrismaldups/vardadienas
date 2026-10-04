@@ -251,7 +251,7 @@ if(
 
 function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
 let first=new Date(view.getFullYear(),view.getMonth(),1), offset=(first.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();for(let i=0;i<offset;i++){let e=document.createElement('div');calendar.appendChild(e)}for(let n=1;n<=days;n++){let d=new Date(view.getFullYear(),view.getMonth(),n),b=document.createElement('button');b.className='day';b.textContent=n;if(d.toDateString()==selected.toDateString())b.classList.add('sel');if(d.toDateString()==new Date().toDateString())b.classList.add('today');b.onclick=()=>{selected=d;
-renderSelected()};calendar.appendChild(b)}}
+renderSelected();renderLatviaToday(selected)};calendar.appendChild(b)}}
 
 function findName(){let q=nameInput.value.trim().toLocaleLowerCase('lv-LV');if(!q){nameResult.textContent='Ievadiet vārdu.';return}let hits=[];for(const [d,[t,e]] of Object.entries(DATA)){for(const n of t)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'tradicionālais']);for(const n of e)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'paplašinātais'])}nameResult.innerHTML=hits.length?hits.map(h=>'<strong>'+esc(h[1])+'</strong> — '+fmtKey(h[0])+' <span class="tag'+(h[2][0]=='p'?' extra':'')+'">'+h[2]+'</span>').join('<br>')+'<br><button onclick="addFavorite(\''+esc(hits[0][1])+'\')">Pievienot Maniem vārdiem</button>':'Vārds “'+esc(nameInput.value.trim())+'” sarakstos nav atrasts.'}
 
