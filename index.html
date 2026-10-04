@@ -104,7 +104,7 @@ function removeFavorite(name){
 }
   function renderFavorites(){
   let list=[...favorites];
-  if(favoritesSort.value==='date'){
+  if(sortDate.classList.contains('active')){
     list.sort((a,b)=>{
       let [da,ma]=getFavoriteDate(a).split('.').map(Number);
       let [db,mb]=getFavoriteDate(b).split('.').map(Number);
