@@ -54,7 +54,7 @@
   <h2>Mani vārdi</h2>
       <div class="favorites-sort">
   <button id="sortAlpha" class="active">Alfabētiski (A–Z)</button>
-  <button id="sortDate">Pēc datuma</button>
+  <button id="sortDate" onclick="sortAlpha.classList.remove('active');sortDate.classList.add('active');renderFavorites()">Pēc datuma</button>
 </div>
   <div id="favoritesList">Neviens vārds vēl nav pievienots.</div>
   <button class="back-btn" onclick="favoritesView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
