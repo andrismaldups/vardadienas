@@ -171,6 +171,24 @@ function removeFavorite(name){
     :'Neviens vārds vēl nav pievienots.';
 }
   function renderTomorrow(){let d=new Date();d.setDate(d.getDate()+1);let x=DATA[key(d)]||[[],[]];tomorrowNames.textContent=x[0].length?x[0].join(', '):'—'}
+  function getEasterDate(year){
+  let a=year%19;
+  let b=Math.floor(year/100);
+  let c=year%100;
+  let d=Math.floor(b/4);
+  let e=b%4;
+  let f=Math.floor((b+8)/25);
+  let g=Math.floor((b-f+1)/3);
+  let h=(19*a+b-d-g+15)%30;
+  let i=Math.floor(c/4);
+  let k=c%4;
+  let l=(32+2*e+2*i-h-k)%7;
+  let m=Math.floor((a+11*h+22*l)/451);
+  let month=Math.floor((h+l-7*m+114)/31);
+  let day=((h+l-7*m+114)%31)+1;
+
+  return new Date(year,month-1,day);
+}
   function renderLatviaToday(){
   let d=new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
