@@ -212,6 +212,15 @@ function removeFavorite(name){
   ){
     name="Pirmās Lieldienas";
   }
+      let easterMonday=new Date(easter);
+easterMonday.setDate(easterMonday.getDate()+1);
+
+if(
+  d.getMonth()===easterMonday.getMonth() &&
+  d.getDate()===easterMonday.getDate()
+){
+  name="Otrā Lieldienu diena";
+}
 }
   if(name){
     latviaTodayName.textContent=name;
