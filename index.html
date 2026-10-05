@@ -615,6 +615,11 @@ function isLastWeekdayOfMonth(d, weekday){
   next.setDate(next.getDate()+7);
   return next.getMonth()!==d.getMonth();
 }
+function getDayOfYear(d){
+  const start=Date.UTC(d.getFullYear(),0,0);
+  const current=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+  return Math.floor((current-start)/86400000);
+}
   function renderInteresting(testDate){
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
@@ -665,6 +670,17 @@ const lastWeekdayRules=[
 
 for(const [month,weekday,name] of lastWeekdayRules){
   if(d.getMonth()===month && isLastWeekdayOfMonth(d,weekday)){
+    names=[...names,name];
+  }
+}
+
+const dayOfYearRules=[
+  [88,"Pasaules klavieru diena"],
+  [256,"Programmētāju diena"]
+];
+
+for(const [dayNumber,name] of dayOfYearRules){
+  if(getDayOfYear(d)===dayNumber){
     names=[...names,name];
   }
 }
