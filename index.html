@@ -613,6 +613,9 @@ if(
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
   let names=INTERESTING_DAYS[k]||[];
+    if(d.getMonth()===9 && isNthWeekdayOfMonth(d,5,2)){
+  names=[...names,"Pasaules olu diena"];
+}
 
   if(names.length){
     interestingNames.innerHTML=names.map(esc).join('<br>');
