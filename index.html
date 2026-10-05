@@ -282,6 +282,18 @@ if(
     latviaTodayBlock.hidden=true;
   }
 }
+  function renderInteresting(testDate){
+  let d=testDate||new Date();
+  let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
+  let names=INTERESTING_DAYS[k]||[];
+
+  if(names.length){
+    interestingNames.textContent=names.join(', ');
+    interestingBlock.hidden=false;
+  }else{
+    interestingBlock.hidden=true;
+  }
+}
   function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar()}
 
 function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
