@@ -113,6 +113,10 @@
 <script>
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedReminderTime=localStorage.getItem('reminderTime');
+  const savedReminderEvening=localStorage.getItem('reminderEvening');
+  const savedReminderMorning=localStorage.getItem('reminderMorning');
+  const savedReminderEveningTime=localStorage.getItem('reminderEveningTime');
+  const savedReminderMorningTime=localStorage.getItem('reminderMorningTime');
   const LATVIA_DAYS={
   "01.01.":"Jaungada diena",
   "20.01.":"1991. gada barikāžu aizstāvju atceres diena",
@@ -833,8 +837,23 @@ dateInput.addEventListener('input',()=>{
   });
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
-if(savedReminderTime==="evening")reminderEvening.checked=true;
-if(savedReminderTime==="day")reminderMorning.checked=true;
+if(savedReminderEvening!==null){
+  reminderEvening.checked=savedReminderEvening==="true";
+}else if(savedReminderTime==="evening"){
+  reminderEvening.checked=true;
+}
+if(savedReminderMorning!==null){
+  reminderMorning.checked=savedReminderMorning==="true";
+}else if(savedReminderTime==="day"){
+  reminderMorning.checked=true;
+}
+if(savedReminderEveningTime)reminderEveningTime.value=savedReminderEveningTime;
+if(savedReminderMorningTime)reminderMorningTime.value=savedReminderMorningTime;
+
+reminderEvening.addEventListener('change',()=>localStorage.setItem('reminderEvening',reminderEvening.checked));
+reminderMorning.addEventListener('change',()=>localStorage.setItem('reminderMorning',reminderMorning.checked));
+reminderEveningTime.addEventListener('change',()=>localStorage.setItem('reminderEveningTime',reminderEveningTime.value));
+reminderMorningTime.addEventListener('change',()=>localStorage.setItem('reminderMorningTime',reminderMorningTime.value));
 renderSelected();
 renderTomorrow();
 renderLatviaToday(selected);
