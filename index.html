@@ -70,9 +70,9 @@
   <h2>Iestatījumi</h2>
   <section class="card">
     <h3>Atgādinājumi</h3>
-    <label><input type="radio" name="reminderTime" value="evening"> Iepriekšējā vakarā</label>
+    <label><input type="checkbox" id="reminderEvening"> Iepriekšējā vakarā — <input type="time" id="reminderEveningTime" value="18:00"></label>
     <br>
-    <label><input type="radio" name="reminderTime" value="day"> Vārdadienas dienā</label>
+    <label><input type="checkbox" id="reminderMorning"> Vārdadienas rītā — <input type="time" id="reminderMorningTime" value="07:00"></label>
   </section>
   <button class="back-btn" onclick="settingsView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
 </section>
@@ -833,10 +833,8 @@ dateInput.addEventListener('input',()=>{
   });
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
-document.querySelectorAll('input[name="reminderTime"]').forEach(radio=>{
-  if(radio.value===savedReminderTime)radio.checked=true;
-  radio.addEventListener('change',()=>localStorage.setItem('reminderTime',radio.value));
-});
+if(savedReminderTime==="evening")reminderEvening.checked=true;
+if(savedReminderTime==="day")reminderMorning.checked=true;
 renderSelected();
 renderTomorrow();
 renderLatviaToday(selected);
