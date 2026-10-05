@@ -642,6 +642,15 @@ function isFirstAdvent(d){
   firstAdvent.setDate(fourthAdvent.getDate()-21);
   return d.getMonth()===firstAdvent.getMonth() && d.getDate()===firstAdvent.getDate();
 }
+function isGlobalDayOfUnplugging(d){
+  if(d.getMonth()!==2 || d.getDay()!==5) return false;
+  return d.getDate()<=7;
+}
+function isWorldSleepDay(d){
+  if(d.getMonth()!==2 || d.getDay()!==5) return false;
+  const equinox=new Date(d.getFullYear(),2,20);
+  return d.getDate()===equinox.getDate()-((equinox.getDay()-5+7)%7||7);
+}
   function renderInteresting(testDate){
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
@@ -712,6 +721,12 @@ if(isBuyNothingDay(d)){
 }
 if(isFirstAdvent(d)){
   names=[...names,"Pirmā Advente"];
+}
+if(isGlobalDayOfUnplugging(d)){
+  names=[...names,"Globālā atslēgšanās no ierīcēm diena"];
+}
+if(isWorldSleepDay(d)){
+  names=[...names,"Pasaules miega diena"];
 }
 
   if(names.length){
