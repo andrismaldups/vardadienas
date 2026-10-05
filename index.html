@@ -112,6 +112,7 @@
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
+  const savedReminderTime=localStorage.getItem('reminderTime');
   const LATVIA_DAYS={
   "01.01.":"Jaungada diena",
   "20.01.":"1991. gada barikāžu aizstāvju atceres diena",
@@ -832,6 +833,10 @@ dateInput.addEventListener('input',()=>{
   });
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
+document.querySelectorAll('input[name="reminderTime"]').forEach(radio=>{
+  if(radio.value===savedReminderTime)radio.checked=true;
+  radio.addEventListener('change',()=>localStorage.setItem('reminderTime',radio.value));
+});
 renderSelected();
 renderTomorrow();
 renderLatviaToday(selected);
