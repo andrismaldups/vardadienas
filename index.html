@@ -620,6 +620,28 @@ function getDayOfYear(d){
   const current=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
   return Math.floor((current-start)/86400000);
 }
+function getNthWeekdayDate(year, month, weekday, n){
+  const first=new Date(year,month,1);
+  const offset=(weekday-first.getDay()+7)%7;
+  return new Date(year,month,1+offset+(n-1)*7);
+}
+function isBuyNothingDay(d){
+  const thanksgiving=getNthWeekdayDate(d.getFullYear(),10,4,4);
+  const buyNothing=new Date(thanksgiving);
+  buyNothing.setDate(buyNothing.getDate()+1);
+  return d.getFullYear()===buyNothing.getFullYear() &&
+    d.getMonth()===buyNothing.getMonth() &&
+    d.getDate()===buyNothing.getDate();
+}
+function isFirstAdvent(d){
+  if(d.getDay()!==0) return false;
+  const christmas=new Date(d.getFullYear(),11,25);
+  const fourthAdvent=new Date(christmas);
+  fourthAdvent.setDate(christmas.getDate()-((christmas.getDay()+7)%7));
+  const firstAdvent=new Date(fourthAdvent);
+  firstAdvent.setDate(fourthAdvent.getDate()-21);
+  return d.getMonth()===firstAdvent.getMonth() && d.getDate()===firstAdvent.getDate();
+}
   function renderInteresting(testDate){
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
@@ -683,6 +705,13 @@ for(const [dayNumber,name] of dayOfYearRules){
   if(getDayOfYear(d)===dayNumber){
     names=[...names,name];
   }
+}
+
+if(isBuyNothingDay(d)){
+  names=[...names,"“Nekā nepirkšanas” diena"];
+}
+if(isFirstAdvent(d)){
+  names=[...names,"Pirmā Advente"];
 }
 
   if(names.length){
