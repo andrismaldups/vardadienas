@@ -73,6 +73,10 @@
     <label><input type="checkbox" id="reminderEvening"> Iepriekšējā vakarā — <input type="time" id="reminderEveningTime" value="18:00"></label>
     <br>
     <label><input type="checkbox" id="reminderMorning"> Vārdadienas rītā — <input type="time" id="reminderMorningTime" value="07:00"></label>
+    <h4>Par ko atgādināt</h4>
+    <label><input type="radio" name="reminderTarget" value="all"> Visas vārdadienas</label>
+    <br>
+    <label><input type="radio" name="reminderTarget" value="favorites"> Tikai Mani vārdi</label>
   </section>
   <button class="back-btn" onclick="settingsView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
 </section>
@@ -117,6 +121,7 @@
   const savedReminderMorning=localStorage.getItem('reminderMorning');
   const savedReminderEveningTime=localStorage.getItem('reminderEveningTime');
   const savedReminderMorningTime=localStorage.getItem('reminderMorningTime');
+  const savedReminderTarget=localStorage.getItem('reminderTarget')||'favorites';
   const LATVIA_DAYS={
   "01.01.":"Jaungada diena",
   "20.01.":"1991. gada barikāžu aizstāvju atceres diena",
@@ -854,6 +859,11 @@ reminderEvening.addEventListener('change',()=>localStorage.setItem('reminderEven
 reminderMorning.addEventListener('change',()=>localStorage.setItem('reminderMorning',reminderMorning.checked));
 reminderEveningTime.addEventListener('change',()=>localStorage.setItem('reminderEveningTime',reminderEveningTime.value));
 reminderMorningTime.addEventListener('change',()=>localStorage.setItem('reminderMorningTime',reminderMorningTime.value));
+
+document.querySelectorAll('input[name="reminderTarget"]').forEach(radio=>{
+  if(radio.value===savedReminderTarget)radio.checked=true;
+  radio.addEventListener('change',()=>localStorage.setItem('reminderTarget',radio.value));
+});
 renderSelected();
 renderTomorrow();
 renderLatviaToday(selected);
