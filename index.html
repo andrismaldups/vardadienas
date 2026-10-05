@@ -613,8 +613,39 @@ if(
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
   let names=INTERESTING_DAYS[k]||[];
-    if(d.getMonth()===9 && isNthWeekdayOfMonth(d,5,2)){
-  names=[...names,"Pasaules olu diena"];
+    const nthRules=[
+  [0,3,2,"Kāpņu diena"],
+  [0,0,3,"Pasaules sniega diena"],
+  [0,1,3,"Zilā pirmdiena"],
+  [1,5,1,"Košļājamās gumijas diena"],
+  [1,6,2,"Globālā filmu diena"],
+  [1,5,4,"Diena bez salmiņa"],
+  [2,6,3,"Diktofona diena"],
+  [3,6,1,"Starptautiskā spilvenu kauju diena"],
+  [3,3,2,"Rozā diena"],
+  [4,6,2,"Pasaules vēderdeju diena"],
+  [4,6,2,"Pasaules migrējošo putnu diena"],
+  [5,3,1,"Globālā skriešanas diena"],
+  [6,6,1,"Ķiršu kauliņu spļaušanas diena"],
+  [6,6,1,"Starptautiskā kooperatīvu diena"],
+  [6,2,2,"Govju novērtēšanas diena"],
+  [6,5,2,"Frī kartupeļu diena"],
+  [7,1,1,"Piknika diena"],
+  [7,6,1,"Sinepju diena"],
+  [7,6,3,"Starptautiskā geokešinga diena"],
+  [8,0,4,"Pasaules upju diena"],
+  [9,1,1,"Pasaules arhitektūras diena"],
+  [9,1,1,"Pasaules mājokļu diena"],
+  [9,4,2,"Pasaules redzes diena"],
+  [9,5,2,"Pasaules olu diena"],
+  [10,4,3,"Pasaules filozofijas diena"],
+  [11,0,2,"Pasaules koru diena"]
+];
+
+for(const [month,weekday,n,name] of nthRules){
+  if(d.getMonth()===month && isNthWeekdayOfMonth(d,weekday,n)){
+    names=[...names,name];
+  }
 }
 
   if(names.length){
