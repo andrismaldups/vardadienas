@@ -70,6 +70,7 @@
   <h2>Iestatījumi</h2>
   <section class="card">
     <h3>Atgādinājumi</h3>
+    <label><input type="checkbox" id="remindersEnabled"> Atgādinājumi ieslēgti</label>
     <label><input type="checkbox" id="reminderEvening"> Iepriekšējā vakarā — <input type="time" id="reminderEveningTime" value="18:00"></label>
     <br>
     <label><input type="checkbox" id="reminderMorning"> Vārdadienas rītā — <input type="time" id="reminderMorningTime" value="07:00"></label>
@@ -116,6 +117,7 @@
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
+  const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
   const savedReminderEvening=localStorage.getItem('reminderEvening');
   const savedReminderMorning=localStorage.getItem('reminderMorning');
@@ -842,6 +844,9 @@ dateInput.addEventListener('input',()=>{
   });
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
+remindersEnabled.checked=savedRemindersEnabled;
+remindersEnabled.addEventListener('change',()=>localStorage.setItem('remindersEnabled',remindersEnabled.checked));
+
 if(savedReminderEvening!==null){
   reminderEvening.checked=savedReminderEvening==="true";
 }else if(savedReminderTime==="evening"){
