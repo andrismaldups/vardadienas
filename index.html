@@ -742,6 +742,14 @@ if(chineseNewYearDates[d.getFullYear()]===k){
   names=[...names,"Ķīniešu Jaunais gads"];
 }
 
+const christmasJumperDayDates={
+  2025:"11.12.",
+  2026:"10.12."
+};
+if(christmasJumperDayDates[d.getFullYear()]===k){
+  names=[...names,"Ziemassvētku džemperu diena"];
+}
+
   if(names.length){
     interestingNames.innerHTML=names.map(esc).join('<br>');
     interestingBlock.hidden=false;
