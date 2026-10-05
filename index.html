@@ -605,6 +605,10 @@ if(
     latviaTodayBlock.hidden=true;
   }
 }
+  function isNthWeekdayOfMonth(d, weekday, n){
+  if(d.getDay()!==weekday) return false;
+  return Math.ceil(d.getDate()/7)===n;
+}
   function renderInteresting(testDate){
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
