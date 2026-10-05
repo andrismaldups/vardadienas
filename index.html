@@ -609,6 +609,12 @@ if(
   if(d.getDay()!==weekday) return false;
   return Math.ceil(d.getDate()/7)===n;
 }
+function isLastWeekdayOfMonth(d, weekday){
+  if(d.getDay()!==weekday) return false;
+  let next=new Date(d);
+  next.setDate(next.getDate()+7);
+  return next.getMonth()!==d.getMonth();
+}
   function renderInteresting(testDate){
   let d=testDate||new Date();
   let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
@@ -644,6 +650,21 @@ if(
 
 for(const [month,weekday,n,name] of nthRules){
   if(d.getMonth()===month && isNthWeekdayOfMonth(d,weekday,n)){
+    names=[...names,name];
+  }
+}
+
+const lastWeekdayRules=[
+  [0,1,"Burbuļplēves diena"],
+  [2,0,"Kaimiņu diena"],
+  [3,6,"Pasaules tai-či un ciguna diena"],
+  [5,4,"Rokasspiedienu diena"],
+  [5,6,"Pasaules smilšu kāpu diena"],
+  [8,5,"Zinātnieku nakts"]
+];
+
+for(const [month,weekday,name] of lastWeekdayRules){
+  if(d.getMonth()===month && isLastWeekdayOfMonth(d,weekday)){
     names=[...names,name];
   }
 }
