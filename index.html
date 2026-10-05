@@ -729,6 +729,19 @@ if(isWorldSleepDay(d)){
   names=[...names,"Pasaules miega diena"];
 }
 
+const chineseNewYearDates={
+  2025:"29.01.",
+  2026:"17.02.",
+  2027:"06.02.",
+  2028:"26.01.",
+  2029:"13.02.",
+  2030:"03.02.",
+  2031:"23.01."
+};
+if(chineseNewYearDates[d.getFullYear()]===k){
+  names=[...names,"Ķīniešu Jaunais gads"];
+}
+
   if(names.length){
     interestingNames.innerHTML=names.map(esc).join('<br>');
     interestingBlock.hidden=false;
