@@ -288,7 +288,7 @@ if(
   let names=INTERESTING_DAYS[k]||[];
 
   if(names.length){
-    interestingNames.textContent=names.join(', ');
+    interestingNames.innerHTML=names.map(esc).join('<br>');
     interestingBlock.hidden=false;
   }else{
     interestingBlock.hidden=true;
