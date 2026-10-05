@@ -294,7 +294,7 @@ if(
     interestingBlock.hidden=true;
   }
 }
-  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar()}
+  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar();renderInteresting(selected)}
 
 function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
 let first=new Date(view.getFullYear(),view.getMonth(),1), offset=(first.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();for(let i=0;i<offset;i++){let e=document.createElement('div');calendar.appendChild(e)}for(let n=1;n<=days;n++){let d=new Date(view.getFullYear(),view.getMonth(),n),b=document.createElement('button');b.className='day';b.textContent=n;if(d.toDateString()==selected.toDateString())b.classList.add('sel');if(d.toDateString()==new Date().toDateString())b.classList.add('today');b.onclick=()=>{selected=d;
