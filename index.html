@@ -290,15 +290,29 @@
     return part;
   }
 
+  function isKnownName(name){
+    const q=name.toLocaleLowerCase('lv-LV');
+    return Object.values(DATA).some(groups=>groups.some(names=>names.some(n=>n.toLocaleLowerCase('lv-LV')===q)));
+  }
+
+  function greetingVocative(name){
+    if(!isKnownName(name))return name;
+    if(/us$/i.test(name))return name;
+    if(/is$/i.test(name))return name.slice(0,-2)+"i";
+    if(/s$/i.test(name))return name.slice(0,-1);
+    return name;
+  }
+
   function generateSincereGreeting(name){
     const usedTags=new Set();
+    const vocativeName=greetingVocative(name);
     const parts=[
       randomGreetingPart(GREETING_SINCERE.openings,usedTags),
       randomGreetingPart(GREETING_SINCERE.greetings,usedTags),
       randomGreetingPart(GREETING_SINCERE.wishes,usedTags),
       randomGreetingPart(GREETING_SINCERE.closings,usedTags)
     ];
-    return parts.map(part=>part.text.replace("[Vārds]",name)).join(" ");
+    return parts.map(part=>part.text.replace("[Vārds]",vocativeName)).join(" ");
   }
 
   greetingCreate.addEventListener('click',()=>{
