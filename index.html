@@ -35,7 +35,7 @@
   background:#f2f5f8;
   border:1px solid #d7dee8;
   border-radius:10px;
-}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-options button.active{background:#f0f8f2;color:#08783f;border-color:#08783f}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-validation{margin-top:12px;color:#a33;font-size:14px;line-height:1.4}.greeting-result{margin-top:16px;padding:14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}.greeting-result .muted{margin-top:6px}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
+}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-options button.active{background:#f0f8f2;color:#08783f;border-color:#08783f}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-validation{margin-top:12px;color:#a33;font-size:14px;line-height:1.4}.greeting-result{padding:18px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}.greeting-result .muted{margin-top:8px}.greeting-result-actions{margin-top:12px}.greeting-result-actions>button{width:100%;background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-result-action-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.greeting-result-action-row button{background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
 .name-input-wrap{
   position:relative;
   flex:1;
@@ -177,13 +177,27 @@
 
     <button type="button" class="primary greeting-create" id="greetingCreate">Izveidot apsveikumu</button>
     <div id="greetingValidation" class="greeting-validation" hidden></div>
-    <section id="greetingResult" class="greeting-result" hidden>
-      <strong>Gatavais apsveikums</strong>
-      <div class="muted">Šeit parādīsies izveidotais apsveikuma teksts.</div>
-    </section>
   </section>
   <div class="greeting-back-bar">
     <button class="back-btn" onclick="greetingView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
+  </div>
+</section>
+<section id="greetingResultView" hidden>
+  <h2>Apsveikums</h2>
+  <section class="card greeting-result">
+    <strong>Gatavais apsveikums</strong>
+    <div class="muted">Šeit parādīsies izveidotais apsveikuma teksts.</div>
+  </section>
+  <div class="greeting-result-actions">
+    <button type="button">↻ Izveidot vēlreiz</button>
+    <div class="greeting-result-action-row">
+      <button type="button">Rediģēt</button>
+      <button type="button">Kopēt</button>
+      <button type="button">Dalīties</button>
+    </div>
+  </div>
+  <div class="greeting-back-bar">
+    <button class="back-btn" onclick="greetingResultView.hidden=true;greetingView.hidden=false">← Atpakaļ</button>
   </div>
 </section>
 <div id="mainView">
@@ -231,14 +245,13 @@
     if(!relationship)missing.push('attiecības');
     if(!style)missing.push('stilu');
     if(missing.length){
-      greetingResult.hidden=true;
       greetingValidation.textContent='Lūdzu norādiet '+missing.join(', ')+'.';
       greetingValidation.hidden=false;
       return;
     }
     greetingValidation.hidden=true;
-    greetingResult.hidden=false;
-    greetingResult.scrollIntoView({behavior:'smooth',block:'nearest'});
+    greetingView.hidden=true;
+    greetingResultView.hidden=false;
   });
   greetingName.addEventListener('input',()=>{greetingValidation.hidden=true});
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
