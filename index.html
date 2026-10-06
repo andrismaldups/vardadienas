@@ -336,9 +336,16 @@
     }
     greetingView.hidden=true;
     greetingResultView.hidden=false;
+    resizeGreetingResult();
   });
+  function resizeGreetingResult(){
+    greetingResultText.style.height="auto";
+    greetingResultText.style.height=greetingResultText.scrollHeight+"px";
+  }
+
   greetingEdit.addEventListener('click',()=>{
-    greetingResultText.readOnly=false;
+    greetingResultText.removeAttribute('readonly');
+    resizeGreetingResult();
     greetingResultText.focus();
     greetingResultText.setSelectionRange(greetingResultText.value.length,greetingResultText.value.length);
   });
@@ -360,7 +367,10 @@
       next=generateSincereGreeting(name);
     }
     greetingResultText.value=next;
+    resizeGreetingResult();
   });
+
+  greetingResultText.addEventListener('input',resizeGreetingResult);
 
   greetingName.addEventListener('input',()=>{greetingValidation.hidden=true});
   greetingName.addEventListener('keydown',e=>{
