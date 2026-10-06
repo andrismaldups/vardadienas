@@ -113,7 +113,14 @@
       <p><strong>Interesanti</strong><br>Informācija par starptautiskajām, tematiskajām un citām atzīmējamām dienām apkopota no publiski pieejamiem avotiem, priekšroku dodot oficiālu organizāciju un attiecīgo dienu izveidotāju publicētajai informācijai.</p>
       <p><strong>Piezīme</strong><br>Informācija aplikācijā tiek apkopota un pārbaudīta pēc iespējas rūpīgi, tomēr atsevišķu tematisko dienu nosaukumi vai datumi dažādos avotos var atšķirties.</p>
     </div>
-    <div class="about-row"><span>Privātums</span><span>⌄</span></div>
+    <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Privātums</span><span class="about-chevron">⌄</span></button>
+    <div class="about-content" hidden>
+      <p><strong>Personas dati</strong><br>Aplikācijas lietošanai nav nepieciešams izveidot lietotāja kontu. Aplikācija neprasa lietotāja vārdu, e-pasta adresi, kontaktpersonu sarakstu, atrašanās vietu vai citus personas datus.</p>
+      <p><strong>Mani vārdi un iestatījumi</strong><br>Sadaļā “Mani vārdi” pievienotie vārdi un lietotāja izvēlētie aplikācijas iestatījumi tiek saglabāti lietotāja ierīcē. Tie netiek izmantoti lietotāja identificēšanai.</p>
+      <p><strong>Atgādinājumi</strong><br>Ja lietotājs ieslēdz vārdadienu atgādinājumus, aplikācija izmanto ierīces paziņojumu funkciju. Paziņojumu atļauju lietotājs var piešķirt vai atsaukt savas ierīces iestatījumos.</p>
+      <p><strong>Piekļuve ierīces datiem</strong><br>Aplikācijai nav nepieciešama piekļuve lietotāja kontaktiem, atrašanās vietai, kamerai, mikrofonam vai fotogrāfijām.</p>
+      <p><strong>Datu nodošana trešajām personām</strong><br>Aplikācijā saglabātie “Mani vārdi” un lietotāja iestatījumi netiek nodoti reklāmas vai mārketinga pakalpojumu sniedzējiem.</p>
+    </div>
     <div class="about-row"><span>Lietošanas noteikumi</span><span>⌄</span></div>
   </section>
 
