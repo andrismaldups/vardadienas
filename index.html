@@ -338,6 +338,12 @@
     greetingResultView.hidden=false;
   });
   greetingName.addEventListener('input',()=>{greetingValidation.hidden=true});
+  greetingName.addEventListener('keydown',e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      greetingName.blur();
+    }
+  });
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
