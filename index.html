@@ -35,7 +35,7 @@
   background:#f2f5f8;
   border:1px solid #d7dee8;
   border-radius:10px;
-}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
+}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
 .name-input-wrap{
   position:relative;
   flex:1;
@@ -166,7 +166,8 @@
   <div class="nav"><button id="prevDay">← Iepriekšējā diena</button><button id="nextDay">Nākamā diena →</button></div></section>
 <div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
 <div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><input id="dateInput" placeholder="Piemēram, 20. septembris"><div id="dateSuggestions" class="date-suggestions"></div>
-<button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section></div></div>
+<button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section>
+<section class="card greeting-entry"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></section></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
