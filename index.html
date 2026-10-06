@@ -35,7 +35,7 @@
   background:#f2f5f8;
   border:1px solid #d7dee8;
   border-radius:10px;
-}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
+}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
 .name-input-wrap{
   position:relative;
   flex:1;
@@ -143,6 +143,44 @@
   <div id="favoritesList">Neviens vārds vēl nav pievienots.</div>
   <button class="back-btn" onclick="favoritesView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
 </section>
+<section id="greetingView" hidden>
+  <h2>Apsveikums</h2>
+  <section class="card greeting-form">
+    <label class="greeting-label" for="greetingName">Jubilāra vārds</label>
+    <input id="greetingName" placeholder="Ievadiet vārdu">
+
+    <div class="greeting-group">
+      <strong>Attiecības</strong>
+      <div class="greeting-options">
+        <button type="button">Ģimenes loceklis</button>
+        <button type="button">Draugs</button>
+        <button type="button">Kolēģis</button>
+        <button type="button">Paziņa</button>
+        <button type="button">Cits</button>
+      </div>
+    </div>
+
+    <div class="greeting-group">
+      <strong>Stils</strong>
+      <div class="greeting-options">
+        <button type="button">Sirsnīgs</button>
+        <button type="button">Jautrs</button>
+        <button type="button">Īss</button>
+        <button type="button">Formāls</button>
+      </div>
+    </div>
+
+    <div class="greeting-group">
+      <label class="greeting-label" for="greetingNotes">Papildu norādes (neobligāti)</label>
+      <textarea id="greetingNotes" maxlength="200" placeholder="Piemēram: vēlos pieminēt darbu, ģimeni, hobijus vai ko citu..."></textarea>
+    </div>
+
+    <button type="button" class="primary greeting-create">Izveidot apsveikumu</button>
+  </section>
+  <div class="greeting-back-bar">
+    <button class="back-btn" onclick="greetingView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
+  </div>
+</section>
 <div id="mainView">
 <section class="card">
 <div class="hero">
@@ -167,7 +205,7 @@
 <div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
 <div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><input id="dateInput" placeholder="Piemēram, 20. septembris"><div id="dateSuggestions" class="date-suggestions"></div>
 <button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section>
-<section class="card greeting-entry"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></section></div></div>
+<button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
