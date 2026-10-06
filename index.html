@@ -184,7 +184,7 @@
     <div id="greetingResultText" class="muted">Šeit parādīsies izveidotais apsveikuma teksts.</div>
   </section>
   <div class="greeting-result-actions">
-    <button type="button">↻ Izveidot vēlreiz</button>
+    <button type="button" id="greetingRegenerate">↻ Izveidot vēlreiz</button>
     <div class="greeting-result-action-row">
       <button type="button">Rediģēt</button>
       <button type="button">Kopēt</button>
@@ -337,6 +337,18 @@
     greetingView.hidden=true;
     greetingResultView.hidden=false;
   });
+  greetingRegenerate.addEventListener('click',()=>{
+    const name=greetingName.value.trim();
+    const style=document.querySelector('[data-choice-group="style"] .active');
+    if(!name||!style||style.textContent.trim()!=="Sirsnīgs")return;
+    const previous=greetingResultText.textContent;
+    let next=previous;
+    for(let attempt=0;attempt<20&&next===previous;attempt++){
+      next=generateSincereGreeting(name);
+    }
+    greetingResultText.textContent=next;
+  });
+
   greetingName.addEventListener('input',()=>{greetingValidation.hidden=true});
   greetingName.addEventListener('keydown',e=>{
     if(e.key==="Enter"){
