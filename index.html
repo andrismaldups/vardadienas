@@ -181,7 +181,7 @@
   <h2>Apsveikums</h2>
   <section class="card greeting-result">
     <strong>Gatavais apsveikums</strong>
-    <div class="muted">Šeit parādīsies izveidotais apsveikuma teksts.</div>
+    <div id="greetingResultText" class="muted">Šeit parādīsies izveidotais apsveikuma teksts.</div>
   </section>
   <div class="greeting-result-actions">
     <button type="button">↻ Izveidot vēlreiz</button>
@@ -282,6 +282,25 @@
       greetingValidation.hidden=true;
     });
   });
+  function randomGreetingPart(parts,usedTags){
+    const compatible=parts.filter(part=>part.tags.every(tag=>tag==="lai"||!usedTags.has(tag)));
+    const pool=compatible.length?compatible:parts;
+    const part=pool[Math.floor(Math.random()*pool.length)];
+    part.tags.filter(tag=>tag!=="lai").forEach(tag=>usedTags.add(tag));
+    return part;
+  }
+
+  function generateSincereGreeting(name){
+    const usedTags=new Set();
+    const parts=[
+      randomGreetingPart(GREETING_SINCERE.openings,usedTags),
+      randomGreetingPart(GREETING_SINCERE.greetings,usedTags),
+      randomGreetingPart(GREETING_SINCERE.wishes,usedTags),
+      randomGreetingPart(GREETING_SINCERE.closings,usedTags)
+    ];
+    return parts.map(part=>part.text.replace("[Vārds]",name)).join(" ");
+  }
+
   greetingCreate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
     const relationship=document.querySelector('[data-choice-group="relationship"] .active');
@@ -296,6 +315,11 @@
       return;
     }
     greetingValidation.hidden=true;
+    if(style.textContent.trim()==="Sirsnīgs"){
+      greetingResultText.textContent=generateSincereGreeting(name);
+    }else{
+      greetingResultText.textContent="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
+    }
     greetingView.hidden=true;
     greetingResultView.hidden=false;
   });
