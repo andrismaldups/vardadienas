@@ -35,7 +35,7 @@
   background:#f2f5f8;
   border:1px solid #d7dee8;
   border-radius:10px;
-}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
+}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-options button.active{background:#08783f;color:white;border-color:#08783f}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
 .name-input-wrap{
   position:relative;
   flex:1;
@@ -151,7 +151,7 @@
 
     <div class="greeting-group">
       <strong>Attiecības</strong>
-      <div class="greeting-options">
+      <div class="greeting-options" data-choice-group="relationship">
         <button type="button">Ģimenes loceklis</button>
         <button type="button">Draugs</button>
         <button type="button">Kolēģis</button>
@@ -162,7 +162,7 @@
 
     <div class="greeting-group">
       <strong>Stils</strong>
-      <div class="greeting-options">
+      <div class="greeting-options" data-choice-group="style">
         <button type="button">Sirsnīgs</button>
         <button type="button">Jautrs</button>
         <button type="button">Īss</button>
@@ -208,6 +208,14 @@
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
+  document.querySelectorAll('.greeting-options').forEach(group=>{
+    group.addEventListener('click',e=>{
+      const btn=e.target.closest('button');
+      if(!btn)return;
+      group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
