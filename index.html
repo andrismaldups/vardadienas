@@ -222,6 +222,57 @@
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
+  const GREETING_SINCERE={
+    openings:[
+      {text:"[Vārds], šodien ir Tava diena!",tags:["diena"]},
+      {text:"[Vārds], šodien visi labie vārdi ir Tev!",tags:["labi_vārdi"]},
+      {text:"[Vārds], sirsnīgi sveicu vārdadienā!",tags:["sveiciens"]},
+      {text:"Sirsnīgi sveicieni vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Daudz siltu sveicienu Tavā vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Skaistus vārdadienas sveicienus Tev, [Vārds]!",tags:["sveiciens","skaists"]},
+      {text:"No sirds sveicu Tevi vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Lai Tev skaista vārdadiena, [Vārds]!",tags:["skaists","lai"]}
+    ],
+    greetings:[
+      {text:"Lai šī diena ir piepildīta ar prieku, smaidiem un jaukiem mirkļiem.",tags:["prieks","smaids","lai"]},
+      {text:"Lai Tava vārdadiena ir gaiša un sirsnīgu cilvēku piepildīta.",tags:["cilvēki","lai"]},
+      {text:"Lai šodien Tevi sasniedz daudz labu vārdu un siltu domu.",tags:["labi_vārdi","lai"]},
+      {text:"Lai šī īpašā diena atnes daudz prieka un patīkamu pārsteigumu.",tags:["prieks","pārsteigumi","lai"]},
+      {text:"Lai vārdadiena Tev dāvā skaistus mirkļus un patiesu prieku.",tags:["skaists","prieks","lai"]},
+      {text:"Lai šodien apkārt ir smaidi, labi vārdi un patīkama sabiedrība.",tags:["smaids","labi_vārdi","lai"]},
+      {text:"Lai šī diena ir mazliet īpašāka par citām un sagādā daudz prieka.",tags:["prieks","lai"]},
+      {text:"Lai vārdadienas sveicieni sasilda un iepriecina visas dienas garumā.",tags:["sveiciens","lai"]},
+      {text:"Lai šodien netrūkst smaidu un jauku pārsteigumu.",tags:["smaids","pārsteigumi","netrūkst","lai"]},
+      {text:"Lai Tava vārdadiena ir piepildīta ar siltumu un labām emocijām.",tags:["lai"]}
+    ],
+    wishes:[
+      {text:"Lai ikdienā netrūkst veselības, enerģijas un skaistu mirkļu.",tags:["veselība","skaists","netrūkst","lai"]},
+      {text:"Lai piepildās iecerētais un vienmēr atrodas kāds jauns iemesls smaidīt.",tags:["smaids","lai"]},
+      {text:"Lai blakus vienmēr ir cilvēki, kuri Tevi novērtē un iepriecina.",tags:["cilvēki","lai"]},
+      {text:"Lai katra jauna diena atnes ko labu un vērtīgu.",tags:["diena","lai"]},
+      {text:"Lai izdodas iecerētais un dzīve sagādā patīkamus pārsteigumus.",tags:["pārsteigumi","lai"]},
+      {text:"Lai Tev daudz laimīgu brīžu un cilvēku, ar kuriem tajos dalīties.",tags:["cilvēki","lai"]},
+      {text:"Lai pietiek spēka lieliem mērķiem un laika tam, kas Tev patiesi svarīgs.",tags:["lai"]},
+      {text:"Lai ikdienā vairāk gaišu domu, siltu tikšanos un patiesu smaidu.",tags:["smaids","lai"]},
+      {text:"Lai dzīvē netrūkst veselības, mīlestības un jauku notikumu.",tags:["veselība","netrūkst","lai"]},
+      {text:"Lai katrā dienā izdodas atrast kaut ko, par ko priecāties.",tags:["prieks","diena","lai"]},
+      {text:"Lai sapņi pamazām kļūst par skaistiem notikumiem.",tags:["skaists","lai"]},
+      {text:"Lai Tevi pavada veiksme, veselība un labi cilvēki.",tags:["veselība","cilvēki","lai"]}
+    ],
+    closings:[
+      {text:"Brīnišķīgu vārdadienu!",tags:[]},
+      {text:"Skaistu un priecīgu vārdadienu!",tags:["skaists","prieks"]},
+      {text:"Sirsnīgi sveicieni Tavā svētku dienā!",tags:["sveiciens","diena"]},
+      {text:"No sirds — skaistu vārdadienu!",tags:["skaists"]},
+      {text:"Jauku un saulainu svētku dienu!",tags:["diena"]},
+      {text:"Daudz prieka Tavā vārdadienā!",tags:["prieks"]},
+      {text:"Sirsnīgi sveicieni un jauku dienu!",tags:["sveiciens","diena"]},
+      {text:"Daudz smaidu Tavā svētku dienā!",tags:["smaids","diena"]},
+      {text:"Skaistus svētkus!",tags:["skaists"]},
+      {text:"Vislabākie vēlējumi vārdadienā!",tags:[]}
+    ]
+  };
+
   document.querySelectorAll('.greeting-options').forEach(group=>{
     group.addEventListener('click',e=>{
       const btn=e.target.closest('button');
