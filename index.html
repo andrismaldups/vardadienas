@@ -121,7 +121,13 @@
       <p><strong>Piekļuve ierīces datiem</strong><br>Aplikācijai nav nepieciešama piekļuve lietotāja kontaktiem, atrašanās vietai, kamerai, mikrofonam vai fotogrāfijām.</p>
       <p><strong>Datu nodošana trešajām personām</strong><br>Aplikācijā saglabātie “Mani vārdi” un lietotāja iestatījumi netiek nodoti reklāmas vai mārketinga pakalpojumu sniedzējiem.</p>
     </div>
-    <div class="about-row"><span>Lietošanas noteikumi</span><span>⌄</span></div>
+    <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Lietošanas noteikumi</span><span class="about-chevron">⌄</span></button>
+    <div class="about-content" hidden>
+      <p><strong>Aplikācijas mērķis</strong><br>“Vārdadienas” ir informatīva aplikācija, kas palīdz uzzināt Latvijas vārdadienas, svētku, atceres un atzīmējamās dienas, kā arī citu ar konkrētiem datumiem saistītu interesantu informāciju.</p>
+      <p><strong>Informācijas precizitāte</strong><br>Aplikācijā publicētā informācija tiek apkopota un pārbaudīta pēc iespējas rūpīgi. Tomēr nevar garantēt, ka visa informācija vienmēr ir pilnīga un bez kļūdām. Ja oficiālajos avotos informācija tiek mainīta, aplikācijas dati var tikt atjaunināti ar laika nobīdi.</p>
+      <p><strong>Atgādinājumi</strong><br>Vārdadienu atgādinājumi ir palīgfunkcija. To saņemšana var būt atkarīga no lietotāja ierīces, operētājsistēmas un paziņojumu iestatījumiem, tādēļ aplikācija nevar garantēt katra atgādinājuma saņemšanu noteiktajā laikā.</p>
+      <p><strong>Izmaiņas aplikācijā</strong><br>Aplikācijas saturs, funkcijas un šie lietošanas noteikumi var tikt papildināti vai mainīti, attīstot aplikāciju un izlaižot jaunas versijas.</p>
+    </div>
   </section>
 
   <div class="settings-back-bar">
