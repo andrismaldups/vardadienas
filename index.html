@@ -97,6 +97,11 @@
       <label class="target-row"><input type="radio" name="reminderTarget" value="favorites"> Tikai Mani vārdi</label>
       <label class="target-row"><input type="checkbox" id="reminderBirthdays"> Dzimšanas dienas</label>
     </div>
+    <div class="settings-section">
+      <h4>Paziņojumu aktivizēšana</h4>
+      <button type="button" id="activatePushButton" class="primary">Aktivizēt paziņojumus</button>
+      <p id="pushActivationStatus" role="status" aria-live="polite" style="margin:12px 0 0"></p>
+    </div>
   </section>
 
   <section class="card about-card">
@@ -1642,6 +1647,52 @@ dateInput.addEventListener('input',()=>{
   });
 });
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
+const PUSH_SERVER_URL='https://vardadienas-push.andris-maldups.workers.dev';
+const activatePushButton=document.getElementById('activatePushButton');
+const pushActivationStatus=document.getElementById('pushActivationStatus');
+function base64UrlToUint8Array(base64Url){
+  const padding='='.repeat((4-base64Url.length%4)%4);
+  const base64=(base64Url+padding).replace(/-/g,'+').replace(/_/g,'/');
+  const binary=atob(base64);
+  return Uint8Array.from(binary,char=>char.charCodeAt(0));
+}
+activatePushButton.addEventListener('click',async()=>{
+  activatePushButton.disabled=true;
+  pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
+  try{
+    if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window)){
+      throw new Error('Šī pārlūkprogramma neatbalsta Push paziņojumus. iPhone atver aplikāciju no sākuma ekrāna.');
+    }
+    const permission=await Notification.requestPermission();
+    if(permission!=='granted')throw new Error('Paziņojumu atļauja nav piešķirta.');
+    const registration=await navigator.serviceWorker.ready;
+    const response=await fetch(PUSH_SERVER_URL+'/api/vapid-public-key');
+    if(!response.ok)throw new Error('Neizdevās iegūt servera publisko atslēgu (HTTP '+response.status+').');
+    const data=await response.json();
+    if(!data.publicKey)throw new Error('Serveris neatgrieza publisko atslēgu.');
+    let subscription=await registration.pushManager.getSubscription();
+    if(!subscription){
+      subscription=await registration.pushManager.subscribe({
+        userVisibleOnly:true,
+        applicationServerKey:base64UrlToUint8Array(data.publicKey)
+      });
+    }
+    const save=await fetch(PUSH_SERVER_URL+'/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(subscription.toJSON())
+    });
+    if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
+    const result=await save.json();
+    if(!result.success)throw new Error('Serveris neapstiprināja abonementa saglabāšanu.');
+    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements saglabāts serverī.';
+  }catch(error){
+    console.error('Push aktivizēšanas kļūda',error);
+    pushActivationStatus.textContent='Neizdevās aktivizēt: '+(error.message||String(error));
+  }finally{
+    activatePushButton.disabled=false;
+  }
+});
 remindersEnabled.checked=savedRemindersEnabled;
 remindersEnabled.addEventListener('change',()=>localStorage.setItem('remindersEnabled',remindersEnabled.checked));
 
