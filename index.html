@@ -15,7 +15,7 @@
   border-radius:14px;
   background:#f6fbf7;
 }
-  .birthday-entry{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7;color:inherit;font:inherit;gap:12px}.birthday-entry strong{font-weight:700}.birthday-entry .birthday-chevron{color:#08783f;font-size:22px}.birthday-entry:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+  .birthday-entry{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7;color:inherit;font:inherit;gap:12px}.birthday-entry strong{font-weight:700}.birthday-home-content{display:grid;gap:5px;min-width:0}.birthday-today-names{font-size:15px;line-height:1.45;overflow-wrap:anywhere}.birthday-today-names[hidden]{display:none}.birthday-entry .birthday-chevron{color:#08783f;font-size:22px}.birthday-entry:focus-visible{outline:2px solid #08783f;outline-offset:2px}
   .birthday-form{display:grid;gap:12px;margin-top:14px}.birthday-form[hidden]{display:none}.birthday-form label{display:grid;gap:5px;font-weight:600}.birthday-form input{width:100%;box-sizing:border-box}.birthday-date-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}.birthday-date-fields input{min-width:0}.birthday-form-actions{display:flex;gap:10px;flex-wrap:wrap}.birthday-feedback{color:#b42318;font-size:14px}.birthday-sort{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:14px 0 8px;padding:3px;background:#eef2f0;border-radius:14px}.birthday-sort button{border:0;background:transparent;border-radius:11px;color:#52605a;font-size:15px;font-weight:600;padding:12px 7px}.birthday-sort button.active{background:#dff3e5;color:#0f7f43}.birthday-saved-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e4e9e6}.birthday-saved-row-info{min-width:0;overflow-wrap:anywhere}.birthday-edit-btn{flex-shrink:0;border:0;background:transparent;color:#08783f;font-size:20px;padding:10px;min-width:44px;min-height:44px}.birthday-row-actions{display:flex;align-items:center;flex-shrink:0;gap:0}.birthday-delete-btn{border:0;background:transparent;color:#a63838;font-size:23px;padding:10px;min-width:44px;min-height:44px}.birthday-saved-row:last-child{border-bottom:0}
   .menu-btn{border:0;background:transparent;padding:8px;font-size:24px;line-height:1;color:#123d2c}.side-menu{position:absolute;top:100px;left:0;width:220px;z-index:10;display:flex;flex-direction:column;gap:8px;background:white;padding:16px;border-radius:0 14px 14px 0;box-shadow:0 6px 20px rgba(0,0,0,.15)}.side-menu button{display:block;width:100%;border:0;border-radius:0;background:transparent;text-align:left;padding:12px 10px;font-size:16px;color:#123d2c}.side-menu[hidden]{display:none}.back-btn{border:0;background:transparent;padding:8px 0;color:#0f7f43;font-size:16px;font-weight:600}#favoritesList{white-space:pre-line;padding-left:12px}.remove-favorite{border:0;background:transparent;padding:8px;color:#718096;font-size:18px;line-height:1}.favorite-row{display:grid;grid-template-columns:minmax(0,1fr) 135px 36px;align-items:center;gap:8px}.favorites-sort{display:grid;grid-template-columns:1fr 1fr;margin:12px 0 16px;padding:3px;background:#eef2f0;border-radius:14px}.favorites-sort button{border:0;background:transparent;padding:12px 8px;border-radius:11px;color:#52605a;font-size:15px;font-weight:600}
 .favorites-sort button.active{background:#dff3e5;color:#0f7f43}#mainView[hidden]{display:none}.tag{display:inline-block;font-size:13px;padding:5px 9px;border-radius:999px;background:#edf2f7;margin:3px}.extra{background:#f4f0ff}.extra-title{font-size:13px;color:#718096;margin-top:18px;margin-bottom:4px;padding-top:18px;border-top:1px solid #dce3eb}
@@ -250,7 +250,7 @@
   <strong>Interesanti</strong>
   <div id="interestingNames">—</div>
 </div>
-  <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><strong>🎁 Dzimšanas dienas</strong><span class="birthday-chevron" aria-hidden="true">›</span></button>
+  <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><span class="birthday-home-content"><strong>🎁 Dzimšanas dienas</strong><span id="birthdayTodayNames" class="birthday-today-names" hidden></span></span><span class="birthday-chevron" aria-hidden="true">›</span></button>
   <div class="nav"><button id="prevDay">← Iepriekšējā diena</button><button id="nextDay">Nākamā diena →</button></div></section>
 <div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
 <div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><input id="dateInput" placeholder="Piemēram, 20. septembris"><div id="dateSuggestions" class="date-suggestions"></div>
@@ -570,6 +570,13 @@
     const stored=JSON.parse(localStorage.getItem('birthdays')||'[]');
     if(Array.isArray(stored))birthdays=stored.filter(p=>p&&typeof p.name==='string'&&Number.isInteger(p.day)&&Number.isInteger(p.month));
   }catch(error){console.warn('Neizdevās nolasīt dzimšanas dienas',error);}
+  function renderBirthdayHome(){
+    const target=document.getElementById('birthdayTodayNames');
+    const names=birthdays.filter(person=>person.day===selected.getDate()&&person.month===selected.getMonth()+1).map(person=>person.name);
+    target.replaceChildren();
+    target.hidden=names.length===0;
+    if(names.length)target.textContent=names.join(', ');
+  }
   function renderBirthdays(){
     birthdaysList.replaceChildren();
     if(!birthdays.length){
@@ -623,6 +630,7 @@
       return;
     }
     birthdays=updated;
+    renderBirthdayHome();
     if(editingBirthdayIndex!==null){
       if(editingBirthdayIndex===index)closeBirthdayForm();
       else if(editingBirthdayIndex>index)editingBirthdayIndex--;
@@ -689,6 +697,7 @@
     }
     birthdays=updated;
     renderBirthdays();
+    renderBirthdayHome();
     closeBirthdayForm();
   });
   renderBirthdays();
@@ -1544,7 +1553,7 @@ if(christmasJumperDayDates[d.getFullYear()]===k){
     interestingBlock.hidden=true;
   }
 }
-  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.innerHTML=x[0].length?x[0].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', ')+'</div>':'';renderCalendar();renderInteresting(selected)}
+  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.innerHTML=x[0].length?x[0].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', ')+'</div>':'';renderCalendar();renderInteresting(selected);renderBirthdayHome()}
 let activeDetailName='';
 function openNameDetail(name){
  activeDetailName=name;
