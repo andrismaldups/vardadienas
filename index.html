@@ -378,9 +378,30 @@
     "Daudz laimes vārdadienā, [Vārds]! Lai brīnišķīgi pārsteigumi!",
     "Mīļš sveiciens vārdadienā, [Vārds]! Lai priecīga diena!"
 ];
+  // Each fixed-style library is shuffled into a no-repeat deck.
+  const greetingDecks=Object.create(null);
+  function nextGreetingFromDeck(style,templates,name){
+    let deck=greetingDecks[style];
+    if(!deck||deck.remaining.length===0){
+      const remaining=templates.map((_,index)=>index);
+      for(let i=remaining.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [remaining[i],remaining[j]]=[remaining[j],remaining[i]];
+      }
+      if(deck&&remaining.length>1&&remaining[remaining.length-1]===deck.lastIndex){
+        const swapIndex=Math.floor(Math.random()*(remaining.length-1));
+        [remaining[remaining.length-1],remaining[swapIndex]]=[remaining[swapIndex],remaining[remaining.length-1]];
+      }
+      deck={remaining,lastIndex:deck?deck.lastIndex:null};
+      greetingDecks[style]=deck;
+    }
+    const index=deck.remaining.pop();
+    deck.lastIndex=index;
+    return templates[index].replace("[Vārds]",greetingVocative(name));
+  }
+
   function generateShortGreeting(name){
-    const template=GREETING_SHORT[Math.floor(Math.random()*GREETING_SHORT.length)];
-    return template.replace("[Vārds]",greetingVocative(name));
+    return nextGreetingFromDeck("Īss",GREETING_SHORT,name);
   }
 
   const GREETING_FUN=[
@@ -436,8 +457,7 @@
     "Sveiciens vārdadienā, [Vārds]! Lai šodien visi jautājumi sākas ar „Kādu kūku vēlies?”!"
 ];
   function generateFunGreeting(name){
-    const template=GREETING_FUN[Math.floor(Math.random()*GREETING_FUN.length)];
-    return template.replace("[Vārds]",greetingVocative(name));
+    return nextGreetingFromDeck("Jautrs",GREETING_FUN,name);
   }
 
   const GREETING_FORMAL=[
@@ -493,8 +513,7 @@
     "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus."
 ];
   function generateFormalGreeting(name){
-    const template=GREETING_FORMAL[Math.floor(Math.random()*GREETING_FORMAL.length)];
-    return template.replace("[Vārds]",greetingVocative(name));
+    return nextGreetingFromDeck("Formāls",GREETING_FORMAL,name);
   }
 
   greetingCreate.addEventListener('click',()=>{
