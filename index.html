@@ -191,8 +191,8 @@
     <button type="button" id="greetingRegenerate">↻ Izveidot vēlreiz</button>
     <div class="greeting-result-action-row">
       <button type="button" id="greetingEdit">Rediģēt</button>
-      <button type="button">Kopēt</button>
-      <button type="button">Dalīties</button>
+      <button type="button" id="greetingCopy">Kopēt</button>
+      <button type="button" id="greetingShare">Dalīties</button>
     </div>
   </div>
   <div class="greeting-back-bar">
@@ -432,6 +432,44 @@
     }
     greetingResultText.value=next;
     resizeGreetingResult();
+  });
+
+  const greetingCopy=document.getElementById('greetingCopy');
+  const greetingShare=document.getElementById('greetingShare');
+  const greetingCopyOriginalLabel=greetingCopy.textContent;
+  let greetingCopyFeedbackTimeout;
+  async function copyGreetingText(){
+    const value=greetingResultText.value;
+    if(!value.trim())return false;
+    if(navigator.clipboard&&window.isSecureContext){
+      try{await navigator.clipboard.writeText(value);return true;}catch(error){}
+    }
+    const oldReadOnly=greetingResultText.readOnly;
+    const start=greetingResultText.selectionStart,end=greetingResultText.selectionEnd;
+    greetingResultText.readOnly=false;
+    greetingResultText.focus();
+    greetingResultText.select();
+    let copied=false;
+    try{copied=document.execCommand('copy');}catch(error){}
+    greetingResultText.setSelectionRange(start,end);
+    greetingResultText.readOnly=oldReadOnly;
+    return copied;
+  }
+  greetingCopy.addEventListener('click',async()=>{
+    const success=await copyGreetingText();
+    greetingCopy.textContent=success?'Nokopēts ✓':'Neizdevās kopēt';
+    clearTimeout(greetingCopyFeedbackTimeout);
+    greetingCopyFeedbackTimeout=setTimeout(()=>{greetingCopy.textContent=greetingCopyOriginalLabel;},2200);
+  });
+  greetingShare.addEventListener('click',async()=>{
+    const value=greetingResultText.value;
+    if(!value.trim())return;
+    if(navigator.share){
+      try{await navigator.share({text:value});return;}
+      catch(error){if(error.name==='AbortError')return;}
+    }
+    const success=await copyGreetingText();
+    alert(success?'Kopīgošana nav pieejama. Apsveikuma teksts ir nokopēts — vari to ielīmēt ziņojumā.':'Kopīgošana šajā pārlūkā nav pieejama. Izmanto pogu Kopēt.');
   });
 
   greetingResultText.addEventListener('input',resizeGreetingResult);
