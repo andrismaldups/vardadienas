@@ -326,6 +326,25 @@
     return parts.map(part=>part.text.replace("[Vārds]",vocativeName)).join(" ");
   }
 
+  const GREETING_SHORT=[
+    "Daudz laimes vārdadienā, [Vārds]! Lai šī diena ir prieka un skaistu mirkļu pilna!",
+    "Sirsnīgi sveicieni vārdadienā, [Vārds]! Lai smaidi un veiksme Tevi pavada!",
+    "Sveicu vārdadienā, [Vārds]! Lai viss iecerētais izdodas!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien netrūkst patīkamu pārsteigumu!",
+    "Mīļi sveicieni vārdadienā, [Vārds]! Lai Tev skaista un saulaina diena!",
+    "Daudz laimes, [Vārds]! Lai katra diena atnes ko labu!",
+    "Sveiciens Tavā vārdadienā, [Vārds]! Lai prieks ir tepat blakus!",
+    "Lai brīnišķīga vārdadiena, [Vārds]! Veselību, laimi un daudz smaidu!",
+    "No sirds sveicu vārdadienā, [Vārds]! Lai piepildās kāda skaista vēlēšanās!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodiena paliek jaukā atmiņā!",
+    "Daudz prieka un mīļu sveicienu vārdadienā, [Vārds]!",
+    "Lai Tavā vārdadienā netrūkst smaidu, [Vārds]! Sirsnīgi sveicieni!"
+  ];
+  function generateShortGreeting(name){
+    const template=GREETING_SHORT[Math.floor(Math.random()*GREETING_SHORT.length)];
+    return template.replace("[Vārds]",greetingVocative(name));
+  }
+
   greetingCreate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
     const relationship=document.querySelector('[data-choice-group="relationship"] .active');
@@ -342,6 +361,8 @@
     greetingValidation.hidden=true;
     if(style.textContent.trim()==="Sirsnīgs"){
       greetingResultText.value=generateSincereGreeting(name);
+    }else if(style.textContent.trim()==="Īss"){
+      greetingResultText.value=generateShortGreeting(name);
     }else{
       greetingResultText.value="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
     }
@@ -429,11 +450,13 @@
   greetingRegenerate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
     const style=document.querySelector('[data-choice-group="style"] .active');
-    if(!name||!style||style.textContent.trim()!=="Sirsnīgs")return;
+    if(!name||!style)return;
+    const selectedStyle=style.textContent.trim();
+    if(selectedStyle!=="Sirsnīgs"&&selectedStyle!=="Īss")return;
     const previous=greetingResultText.value;
     let next=previous;
     for(let attempt=0;attempt<20&&next===previous;attempt++){
-      next=generateSincereGreeting(name);
+      next=selectedStyle==="Īss"?generateShortGreeting(name):generateSincereGreeting(name);
     }
     greetingResultText.value=next;
     resizeGreetingResult();
