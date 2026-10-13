@@ -1,5 +1,5 @@
 <!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vārdadienu kalendārs</title><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18392b;background:#f2f5f8}*{box-sizing:border-box}body{margin:0;padding:24px;-webkit-text-size-adjust:100%}.wrap{max-width:1120px;margin:auto}.card{background:#fff;border-radius:22px;padding:26px;box-shadow:0 8px 30px #17203312;margin-bottom:18px}h1,h2{margin:0 0 12px}h1{font-size:34px;line-height:1.15}#dateTitle{font-size:24px;font-weight:400;text-align:center;color:#718096;margin:0 0 18px}h2{font-size:22px}.muted{color:#718096}.app-title{font-size:32px;font-weight:700;text-align:center;margin-bottom:22px;color:#18392b}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.names{font-size:24px;font-weight:700;margin:12px 0;line-height:1.35;color:#08783f;text-align:center}
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18392b;background:#f2f5f8}*{box-sizing:border-box}body{margin:0;padding:24px;-webkit-text-size-adjust:100%}.wrap{max-width:1120px;margin:auto}.card{background:#fff;border-radius:22px;padding:26px;box-shadow:0 8px 30px #17203312;margin-bottom:18px}h1,h2{margin:0 0 12px}h1{font-size:34px;line-height:1.15}#dateTitle{font-size:24px;font-weight:400;text-align:center;color:#718096;margin:0 0 18px}h2{font-size:22px}.muted{color:#718096}.app-title{font-size:32px;font-weight:700;text-align:center;margin-bottom:22px;color:#18392b}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.name-link{border:0;background:transparent;padding:2px 1px;min-height:0;border-radius:3px;color:inherit;font:inherit;line-height:inherit;cursor:pointer}.name-link:hover{text-decoration:underline}.name-link:focus-visible{outline:2px solid #08783f;outline-offset:3px}.name-detail-card{text-align:center}.name-detail-card h3{font-size:30px;color:#08783f;margin:8px 0}.name-detail-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.name-detail-feedback{color:#08783f;margin-top:12px}.names{font-size:24px;font-weight:700;margin:12px 0;line-height:1.35;color:#08783f;text-align:center}
 .tomorrow{display:flex;align-items:center;gap:14px;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}
   .latvia-today{
   margin:12px 0 14px;
@@ -143,6 +143,12 @@
   <div id="favoritesList">Neviens vārds vēl nav pievienots.</div>
   <button class="back-btn" onclick="favoritesView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
 </section>
+<section id="nameDetailView" hidden>
+<h2>Vārda informācija</h2><section class="card name-detail-card">
+<h3 id="nameDetailTitle"></h3><p id="nameDetailDate"></p>
+<div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting">Izveidot apsveikumu</button><button type="button" id="nameDetailFavorite">Pievienot Maniem vārdiem</button></div>
+<div id="nameDetailFeedback" class="name-detail-feedback" hidden></div></section>
+<button type="button" class="back-btn" id="nameDetailBack">← Atpakaļ</button></section>
 <section id="greetingView" hidden>
   <h2>Apsveikums</h2>
   <section class="card greeting-form">
@@ -1142,7 +1148,29 @@ if(christmasJumperDayDates[d.getFullYear()]===k){
     interestingBlock.hidden=true;
   }
 }
-  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.textContent=x[0].length?x[0].join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(esc).join(', ')+'</div>':'';;renderCalendar();renderInteresting(selected)}
+  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.innerHTML=x[0].length?x[0].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', ')+'</div>':'';renderCalendar();renderInteresting(selected)}
+let activeDetailName='';
+function openNameDetail(name){
+ activeDetailName=name;
+ nameDetailTitle.textContent=name;
+ nameDetailDate.textContent='Vārdadiena: '+selected.getDate()+'. '+monthsLoc[selected.getMonth()];
+ nameDetailFeedback.hidden=true;
+ nameDetailFavorite.textContent=favorites.includes(name)?'Jau pievienots Maniem vārdiem':'Pievienot Maniem vārdiem';
+ mainView.hidden=true;nameDetailView.hidden=false;window.scrollTo(0,0);
+}
+function onNameLinkClick(event){const b=event.target.closest('button[data-name]');if(b)openNameDetail(b.dataset.name);}
+todayNames.addEventListener('click',onNameLinkClick);
+extraNames.addEventListener('click',onNameLinkClick);
+nameDetailBack.addEventListener('click',()=>{nameDetailView.hidden=true;mainView.hidden=false;});
+nameDetailFavorite.addEventListener('click',()=>{
+ addFavorite(activeDetailName);
+ nameDetailFavorite.textContent='Jau pievienots Maniem vārdiem';
+ nameDetailFeedback.textContent='Vārds saglabāts sadaļā „Mani vārdi”.';nameDetailFeedback.hidden=false;
+});
+nameDetailGreeting.addEventListener('click',()=>{
+ greetingName.value=activeDetailName;greetingValidation.hidden=true;
+ nameDetailView.hidden=true;greetingView.hidden=false;window.scrollTo(0,0);
+});
 
 function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
 let first=new Date(view.getFullYear(),view.getMonth(),1), offset=(first.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();for(let i=0;i<offset;i++){let e=document.createElement('div');calendar.appendChild(e)}for(let n=1;n<=days;n++){let d=new Date(view.getFullYear(),view.getMonth(),n),b=document.createElement('button');b.className='day';b.textContent=n;if(d.toDateString()==selected.toDateString())b.classList.add('sel');if(d.toDateString()==new Date().toDateString())b.classList.add('today');b.onclick=()=>{selected=d;
