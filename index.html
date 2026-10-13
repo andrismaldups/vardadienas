@@ -440,6 +440,63 @@
     return template.replace("[Vārds]",greetingVocative(name));
   }
 
+  const GREETING_FORMAL=[
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus."
+];
+  function generateFormalGreeting(name){
+    const template=GREETING_FORMAL[Math.floor(Math.random()*GREETING_FORMAL.length)];
+    return template.replace("[Vārds]",greetingVocative(name));
+  }
+
   greetingCreate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
     const relationship=document.querySelector('[data-choice-group="relationship"] .active');
@@ -460,6 +517,8 @@
       greetingResultText.value=generateShortGreeting(name);
     }else if(style.textContent.trim()==="Jautrs"){
       greetingResultText.value=generateFunGreeting(name);
+    }else if(style.textContent.trim()==="Formāls"){
+      greetingResultText.value=generateFormalGreeting(name);
     }else{
       greetingResultText.value="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
     }
@@ -549,11 +608,11 @@
     const style=document.querySelector('[data-choice-group="style"] .active');
     if(!name||!style)return;
     const selectedStyle=style.textContent.trim();
-    if(!["Sirsnīgs","Īss","Jautrs"].includes(selectedStyle))return;
+    if(!["Sirsnīgs","Īss","Jautrs","Formāls"].includes(selectedStyle))return;
     const previous=greetingResultText.value;
     let next=previous;
     for(let attempt=0;attempt<20&&next===previous;attempt++){
-      next=selectedStyle==="Īss"?generateShortGreeting(name):selectedStyle==="Jautrs"?generateFunGreeting(name):generateSincereGreeting(name);
+      next=selectedStyle==="Īss"?generateShortGreeting(name):selectedStyle==="Jautrs"?generateFunGreeting(name):selectedStyle==="Formāls"?generateFormalGreeting(name):generateSincereGreeting(name);
     }
     greetingResultText.value=next;
     resizeGreetingResult();
