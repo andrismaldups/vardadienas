@@ -345,6 +345,29 @@
     return template.replace("[Vārds]",greetingVocative(name));
   }
 
+  const GREETING_FUN=[
+    "Daudz laimes vārdadienā, [Vārds]! Lai kūka ir lielāka par rūpēm un svētku noskaņa turas ilgāk par brīvdienām!",
+    "Sveiciens vārdadienā, [Vārds]! Šodien visi darbi drīkst pagaidīt — izņemot kūkas ēšanu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai smaidu ir tik daudz, ka vaigiem jāprasa atvaļinājums!",
+    "Daudz laimes, [Vārds]! Lai šodien pārsteigumi ir tikai patīkami, bet kalorijas pašas sevi neskaita!",
+    "Sveicu vārdadienā, [Vārds]! Lai diena tik jauka, ka pat modinātājs nolemj netraucēt!",
+    "Lai jautra vārdadiena, [Vārds]! Novēlu pilnu šķīvi gardumu un tukšu sarakstu ar pienākumiem!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai šodien veiksme skrien Tev pakaļ, nevis Tu tai!",
+    "Priecīgu vārdadienu, [Vārds]! Lai smiekli skan skaļāk par telefona paziņojumiem!",
+    "Sveiciens svētkos, [Vārds]! Lai kafija garšīga, kūka garda un neviens nejautā, kad būsi atpakaļ pie darbiem!",
+    "Daudz laimes, [Vārds]! Lai šodien vienīgā nopietnā izvēle ir — vēl vienu kūkas gabaliņu vai uzreiz divus!",
+    "Lai lieliska vārdadiena, [Vārds]! Lai visi plāni izdodas, bet pārsteigumi ir vēl labāki par plāniem!",
+    "Sveicu vārdadienā, [Vārds]! Lai šodien smaids nepazūd pat tad, ja kūkas pēdējais gabaliņš jau apēsts!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien pietiek laika gan svinēšanai, gan nekā nedarīšanai!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai diena tik izdevusies, ka gribas tai nospiest pogu „Atkārtot”!",
+    "Sveiciens vārdadienā, [Vārds]! Lai dāvanas patīk, kūka garšo un svētku viesi palīdz novākt galdu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai dzīvē vairāk konfeti un mazāk steidzamu e-pastu!"
+  ];
+  function generateFunGreeting(name){
+    const template=GREETING_FUN[Math.floor(Math.random()*GREETING_FUN.length)];
+    return template.replace("[Vārds]",greetingVocative(name));
+  }
+
   greetingCreate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
     const relationship=document.querySelector('[data-choice-group="relationship"] .active');
@@ -363,6 +386,8 @@
       greetingResultText.value=generateSincereGreeting(name);
     }else if(style.textContent.trim()==="Īss"){
       greetingResultText.value=generateShortGreeting(name);
+    }else if(style.textContent.trim()==="Jautrs"){
+      greetingResultText.value=generateFunGreeting(name);
     }else{
       greetingResultText.value="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
     }
@@ -452,11 +477,11 @@
     const style=document.querySelector('[data-choice-group="style"] .active');
     if(!name||!style)return;
     const selectedStyle=style.textContent.trim();
-    if(selectedStyle!=="Sirsnīgs"&&selectedStyle!=="Īss")return;
+    if(!["Sirsnīgs","Īss","Jautrs"].includes(selectedStyle))return;
     const previous=greetingResultText.value;
     let next=previous;
     for(let attempt=0;attempt<20&&next===previous;attempt++){
-      next=selectedStyle==="Īss"?generateShortGreeting(name):generateSincereGreeting(name);
+      next=selectedStyle==="Īss"?generateShortGreeting(name):selectedStyle==="Jautrs"?generateFunGreeting(name):generateSincereGreeting(name);
     }
     greetingResultText.value=next;
     resizeGreetingResult();
