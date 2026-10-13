@@ -540,26 +540,34 @@
     greetingEmojiStart=greetingResultText.selectionStart;
     greetingEmojiEnd=greetingResultText.selectionEnd;
   });
+  function positionGreetingEmojiPanel(){
+    if(greetingEmojiPanel.hidden)return;
+    const viewport=window.visualViewport;
+    const viewportTop=viewport?viewport.offsetTop:0;
+    const viewportHeight=viewport?viewport.height:window.innerHeight;
+    const margin=12;
+    const textRect=greetingResultText.getBoundingClientRect();
+    // Always place the picker BELOW the greeting text, never over it.
+    const top=textRect.bottom+8;
+    const viewportBottom=viewportTop+viewportHeight;
+    const available=viewportBottom-top-margin;
+    greetingEmojiPanel.style.top=top+'px';
+    greetingEmojiPanel.style.maxHeight=Math.max(90,Math.min(520,available))+'px';
+    greetingEmojiPanel.style.right=Math.max(margin,window.innerWidth-textRect.right)+'px';
+  }
   function setGreetingEmojiOpen(open){
     greetingEmojiPanel.hidden=!open;
     greetingEmojiToggle.setAttribute('aria-expanded',String(open));
     if(open){
-      const viewport=window.visualViewport;
-      const viewportTop=viewport?viewport.offsetTop:0;
-      const viewportHeight=viewport?viewport.height:window.innerHeight;
-      const iconRect=greetingEmojiToggle.getBoundingClientRect();
-      const margin=12;
-      // Keep the picker a consistent size on every opening, including after editing.
-      // Limit it only when the visible viewport (e.g. the keyboard) is smaller.
-      const maxHeight=Math.min(520,Math.max(100,viewportHeight-2*margin));
-      greetingEmojiPanel.style.maxHeight=maxHeight+'px';
-      const panelHeight=Math.min(greetingEmojiPanel.scrollHeight,maxHeight);
-      const spaceAbove=iconRect.top-viewportTop;
-      const spaceBelow=viewportTop+viewportHeight-iconRect.bottom;
-      const proposedTop=spaceAbove>=spaceBelow?iconRect.top-panelHeight-8:iconRect.bottom+8;
-      greetingEmojiPanel.style.top=Math.max(viewportTop+margin,Math.min(proposedTop,viewportTop+viewportHeight-panelHeight-margin))+'px';
-      greetingEmojiPanel.style.right=Math.max(margin,window.innerWidth-iconRect.right)+'px';
+      // Close the iPhone keyboard before positioning the emoji picker.
+      greetingResultText.blur();
+      positionGreetingEmojiPanel();
+      // iOS may resize the visual viewport after the keyboard closes.
+      setTimeout(positionGreetingEmojiPanel,300);
     }
+  }
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',positionGreetingEmojiPanel);
   }
   greetingEmojiList.forEach(symbol=>{
     const button=document.createElement('button');
