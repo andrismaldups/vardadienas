@@ -1678,22 +1678,33 @@ activatePushButton.addEventListener('click',async()=>{
     if(!data.publicKey)throw new Error('Serveris neatgrieza publisko atslēgu.');
     pushActivationStatus.textContent='2/3: iPhone Push abonementa izveide…';
     let subscription=await registration.pushManager.getSubscription();
+    // Saglabā esošo abonementu, ja tas izmanto pašreizējo VAPID atslēgu.
+    // Ja atslēga ir mainīta, atjauno abonementu tikai vienu reizi.
+    const expectedKey=base64UrlToUint8Array(data.publicKey);
     if(subscription){
-      try{
-        const unsubscribed=await subscription.unsubscribe();
-        if(!unsubscribed)throw new Error('Neizdevās atcelt iepriekšējo abonementu.');
-        subscription=null;
-      }catch(error){
-        throw new Error('2/3: Neizdevās atjaunot iepriekšējo Push abonementu ('+(error.message||String(error))+').');
+      const existingKey=subscription.options?.applicationServerKey;
+      const existingBytes=existingKey ? new Uint8Array(existingKey) : null;
+      const keyMatches=existingBytes && existingBytes.length===expectedKey.length &&
+        existingBytes.every((byte,index)=>byte===expectedKey[index]);
+      if(!keyMatches){
+        try{
+          const unsubscribed=await subscription.unsubscribe();
+          if(!unsubscribed)throw new Error('Neizdevās atcelt iepriekšējo abonementu.');
+          subscription=null;
+        }catch(error){
+          throw new Error('2/3: Neizdevās atjaunot iepriekšējo Push abonementu ('+(error.message||String(error))+').');
+        }
       }
     }
-    try{
-      subscription=await registration.pushManager.subscribe({
-        userVisibleOnly:true,
-        applicationServerKey:base64UrlToUint8Array(data.publicKey)
-      });
-    }catch(error){
-      throw new Error('2/3: iPhone neizdevās izveidot Push abonementu ('+(error.message||String(error))+').');
+    if(!subscription){
+      try{
+        subscription=await registration.pushManager.subscribe({
+          userVisibleOnly:true,
+          applicationServerKey:expectedKey
+        });
+      }catch(error){
+        throw new Error('2/3: iPhone neizdevās izveidot Push abonementu ('+(error.message||String(error))+').');
+      }
     }
     pushActivationStatus.textContent='3/3: Abonementa saglabāšana serverī…';
     let save;
