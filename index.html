@@ -914,6 +914,22 @@
     if(!response.ok) throw new Error(result.error||'TEST servera kļūda');
     return result;
   }
+  // TEST datubāzes palīgfunkcijas; nav pieslēgtas lietotāja pogām.
+  async function loadTestFavorites(installationId, installationToken){
+    const data=await requestTestFavorites('GET',installationId,installationToken);
+    return Array.isArray(data.names)?data.names:[];
+  }
+  async function saveTestFavorite(installationId, installationToken, name){
+    const nameDay=getFavoriteDate(name);
+    if(!nameDay) throw new Error('Vārda datums nav atrasts');
+    return requestTestFavorites('POST',installationId,installationToken,{
+      name,
+      name_day:nameDay.replace(/\\.$/,'')
+    });
+  }
+  async function deleteTestFavorite(installationId, installationToken, name){
+    return requestTestFavorites('DELETE',installationId,installationToken,{name});
+  }
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
