@@ -896,6 +896,24 @@
       greetingName.blur();
     }
   });
+  // TEST vide: sagatave savienojumam ar Cloudflare D1.
+  // Netiek izsaukta automātiski; esošie localStorage favorīti paliek neskarti.
+  const FAVORITES_TEST_API='https://vardadienas-push-test.andris-maldups.workers.dev';
+  async function requestTestFavorites(method, installationId, installationToken, payload){
+    const headers={
+      'Authorization':'Bearer '+installationToken,
+      'X-Installation-Id':installationId
+    };
+    if(payload!==undefined) headers['Content-Type']='application/json';
+    const response=await fetch(FAVORITES_TEST_API+'/api/favorite-names',{
+      method,
+      headers,
+      ...(payload!==undefined?{body:JSON.stringify(payload)}:{})
+    });
+    const result=await response.json();
+    if(!response.ok) throw new Error(result.error||'TEST servera kļūda');
+    return result;
+  }
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
