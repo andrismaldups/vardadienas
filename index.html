@@ -924,7 +924,7 @@
     if(!nameDay) throw new Error('Vārda datums nav atrasts');
     return requestTestFavorites('POST',installationId,installationToken,{
       name,
-      name_day:nameDay.replace(/\\.$/,'')
+      name_day:nameDay.replace(/\.$/,'')
     });
   }
   async function deleteTestFavorite(installationId, installationToken, name){
