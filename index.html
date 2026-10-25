@@ -899,6 +899,34 @@
   // TEST vide: sagatave savienojumam ar Cloudflare D1.
   // Netiek izsaukta automātiski; esošie localStorage favorīti paliek neskarti.
   const FAVORITES_TEST_API='https://vardadienas-push-test.andris-maldups.workers.dev';
+  // TEST instalācijas piekļuves dati ir unikāli katrai pārlūka izcelsmei.
+  // Netiek izmantoti produkcijas vidē un netiek sūtīti uz GitHub.
+  const TEST_INSTALLATION_STORAGE_KEY='vardadienas_test_installation_v1';
+  let testInstallationPromise=null;
+  async function getOrCreateTestInstallation(){
+    if(testInstallationPromise) return testInstallationPromise;
+    testInstallationPromise=(async()=>{
+      try{
+        const saved=JSON.parse(localStorage.getItem(TEST_INSTALLATION_STORAGE_KEY)||'null');
+        if(saved && typeof saved.installationId==='string' && saved.installationId &&
+           typeof saved.token==='string' && saved.token) return saved;
+      }catch(_error){ /* Nederīgus lokālos datus aizstājam ar jaunu instalāciju. */ }
+      const response=await fetch(FAVORITES_TEST_API+'/api/installations',{method:'POST'});
+      if(!response.ok) throw new Error('TEST instalācijas reģistrācija neizdevās: '+response.status);
+      const installation=await response.json();
+      if(!installation || typeof installation.installationId!=='string' ||
+         !installation.installationId || typeof installation.token!=='string' ||
+         !installation.token) throw new Error('Nepareiza TEST instalācijas servera atbilde');
+      localStorage.setItem(TEST_INSTALLATION_STORAGE_KEY,JSON.stringify({
+        installationId:installation.installationId,
+        token:installation.token
+      }));
+      return installation;
+    })();
+    try{return await testInstallationPromise;}
+    catch(error){testInstallationPromise=null;throw error;}
+  }
+
   async function requestTestFavorites(method, installationId, installationToken, payload){
     const headers={
       'Authorization':'Bearer '+installationToken,
