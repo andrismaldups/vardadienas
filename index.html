@@ -1360,18 +1360,54 @@ const pad=n=>String(n).padStart(2,'0');
 const key=d=>pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.';
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // TEST sinhronizācija ir papildu darbība: lokālie favorīti paliek pieejami arī bez interneta.
-async function syncTestFavorite(method,name){
+// Offline-first: ierīces saraksts ir primārais; serverim sūtām tikai izmaiņas.
+const TEST_FAVORITES_QUEUE_KEY='vardadienas_test_favorites_queue_v1';
+let testFavoritesSyncPromise=null;
+function readTestFavoritesQueue(){
   try{
-    const installation=await getOrCreateTestInstallation();
-    if(method==='POST'){
-      await saveTestFavorite(installation.installationId,installation.token,name);
-    }else{
-      await deleteTestFavorite(installation.installationId,installation.token,name);
-    }
-  }catch(error){
-    console.warn('TEST vārda sinhronizācija neizdevās:',error);
-  }
+    const value=JSON.parse(localStorage.getItem(TEST_FAVORITES_QUEUE_KEY)||'[]');
+    return Array.isArray(value)?value.filter(x=>x && ['POST','DELETE'].includes(x.method) && typeof x.name==='string'):[];
+  }catch(_error){return [];}
 }
+function enqueueTestFavorite(method,name){
+  // Ja viens vārds vairākkārt mainīts bezsaistē, svarīgs ir pēdējais stāvoklis.
+  const queue=readTestFavoritesQueue().filter(item=>item.name!==name);
+  queue.push({method,name});
+  localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(queue));
+  void flushTestFavoritesQueue();
+}
+async function flushTestFavoritesQueue(){
+  if(testFavoritesSyncPromise) return testFavoritesSyncPromise;
+  if(typeof navigator!=='undefined' && navigator.onLine===false) return;
+  testFavoritesSyncPromise=(async()=>{
+    const installation=await getOrCreateTestInstallation();
+    while(true){
+      const queue=readTestFavoritesQueue();
+      if(!queue.length) break;
+      const item=queue[0];
+      if(item.method==='POST'){
+        await saveTestFavorite(installation.installationId,installation.token,item.name);
+      }else{
+        await deleteTestFavorite(installation.installationId,installation.token,item.name);
+      }
+      // Nenodzēšam jaunu izmaiņu, kas radusies, kamēr pieprasījums izpildījās.
+      const latest=readTestFavoritesQueue();
+      const index=latest.findIndex(x=>x.name===item.name && x.method===item.method);
+      if(index>=0){
+        latest.splice(index,1);
+        localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(latest));
+      }
+    }
+  })().catch(error=>{
+    console.warn('TEST vārdu sinhronizācija atlikta; lokālie dati saglabāti:',error);
+  }).finally(()=>{testFavoritesSyncPromise=null;});
+  return testFavoritesSyncPromise;
+}
+function syncTestFavorite(method,name){
+  enqueueTestFavorite(method,name);
+}
+window.addEventListener('online',()=>{void flushTestFavoritesQueue();});
+void flushTestFavoritesQueue();
 function removeFavorite(name){
   const existed=favorites.includes(name);
   favorites=favorites.filter(n=>n!==name);
