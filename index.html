@@ -958,6 +958,11 @@
   async function deleteTestFavorite(installationId, installationToken, name){
     return requestTestFavorites('DELETE',installationId,installationToken,{name});
   }
+  // Reģistrējam TEST instalāciju fonā, netraucējot lokālajiem favorītiem.
+  // Neveiksmes gadījumā aplikācija turpina darboties ar localStorage.
+  getOrCreateTestInstallation().catch(error=>{
+    console.warn('TEST instalācijas reģistrācija nav pieejama:',error);
+  });
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
   const savedReminderTime=localStorage.getItem('reminderTime');
