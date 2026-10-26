@@ -1828,10 +1828,15 @@ activatePushButton.addEventListener('click',async()=>{
     pushActivationStatus.textContent='3/3: Abonementa saglabāšana serverī…';
     let save;
     try{
-      save=await fetch(PUSH_SERVER_URL+'/api/subscribe',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(subscription.toJSON())
+      const installation=await getOrCreateTestInstallation();
+      save=await fetch(PUSH_SERVER_URL+'/api/subscribe-secure',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+installation.token,
+          'X-Installation-Id':installation.installationId
+        },
+        body:JSON.stringify(subscription.toJSON())
       });
     }catch(error){
       throw new Error('3/3: Neizdevās nosūtīt abonementu serverim ('+(error.message||String(error))+'). Iespējama CORS vai tīkla kļūda.');
