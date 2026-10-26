@@ -1862,7 +1862,9 @@ activatePushButton.addEventListener('click',async()=>{
     if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
     const result=await save.json();
     if(!result.success)throw new Error('Serveris neapstiprināja abonementa saglabāšanu.');
-    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements saglabāts serverī.';
+    pushActivationStatus.textContent='Abonements saglabāts. Saglabā atgādinājumu iestatījumus…';
+    await syncTestReminderSettings();
+    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements un iestatījumi saglabāti serverī.';
   }catch(error){
     console.error('Push aktivizēšanas kļūda',error);
     pushActivationStatus.textContent='Neizdevās aktivizēt: '+(error.message||String(error));
@@ -1871,7 +1873,7 @@ activatePushButton.addEventListener('click',async()=>{
   }
 });
 remindersEnabled.checked=savedRemindersEnabled;
-remindersEnabled.addEventListener('change',()=>localStorage.setItem('remindersEnabled',remindersEnabled.checked));
+remindersEnabled.addEventListener('change',()=>{localStorage.setItem('remindersEnabled',remindersEnabled.checked);queueTestReminderSync();});
 
 if(savedReminderEvening!==null){
   reminderEvening.checked=savedReminderEvening==="true";
@@ -1886,16 +1888,16 @@ if(savedReminderMorning!==null){
 if(savedReminderEveningTime)reminderEveningTime.value=savedReminderEveningTime;
 if(savedReminderMorningTime)reminderMorningTime.value=savedReminderMorningTime;
 
-reminderEvening.addEventListener('change',()=>localStorage.setItem('reminderEvening',reminderEvening.checked));
-reminderMorning.addEventListener('change',()=>localStorage.setItem('reminderMorning',reminderMorning.checked));
-reminderEveningTime.addEventListener('change',()=>localStorage.setItem('reminderEveningTime',reminderEveningTime.value));
-reminderMorningTime.addEventListener('change',()=>localStorage.setItem('reminderMorningTime',reminderMorningTime.value));
+reminderEvening.addEventListener('change',()=>{localStorage.setItem('reminderEvening',reminderEvening.checked);queueTestReminderSync();});
+reminderMorning.addEventListener('change',()=>{localStorage.setItem('reminderMorning',reminderMorning.checked);queueTestReminderSync();});
+reminderEveningTime.addEventListener('change',()=>{localStorage.setItem('reminderEveningTime',reminderEveningTime.value);queueTestReminderSync();});
+reminderMorningTime.addEventListener('change',()=>{localStorage.setItem('reminderMorningTime',reminderMorningTime.value);queueTestReminderSync();});
 
 reminderBirthdays.checked=savedReminderBirthdays;
-reminderBirthdays.addEventListener('change',()=>localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked)));
+reminderBirthdays.addEventListener('change',()=>{localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked));queueTestReminderSync();});
 document.querySelectorAll('input[name="reminderTarget"]').forEach(radio=>{
   if(radio.value===savedReminderTarget)radio.checked=true;
-  radio.addEventListener('change',()=>localStorage.setItem('reminderTarget',radio.value));
+  radio.addEventListener('change',()=>{localStorage.setItem('reminderTarget',radio.value);queueTestReminderSync();});
 });
 renderSelected();
 renderTomorrow();
