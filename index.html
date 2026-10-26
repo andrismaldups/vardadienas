@@ -1826,20 +1826,38 @@ activatePushButton.addEventListener('click',async()=>{
       }
     }
     pushActivationStatus.textContent='3/3: Abonementa saglabāšana serverī…';
-    let save;
-    try{
-      const installation=await getOrCreateTestInstallation();
-      save=await fetch(PUSH_SERVER_URL+'/api/subscribe-secure',{
+    const installation=await getOrCreateTestInstallation();
+    async function saveSecureSubscription(currentSubscription){
+      return fetch(PUSH_SERVER_URL+'/api/subscribe-secure',{
         method:'POST',
         headers:{
           'Content-Type':'application/json',
           'Authorization':'Bearer '+installation.token,
           'X-Installation-Id':installation.installationId
         },
-        body:JSON.stringify(subscription.toJSON())
+        body:JSON.stringify(currentSubscription.toJSON())
       });
+    }
+    let save;
+    try{
+      save=await saveSecureSubscription(subscription);
+      if(save.status===409){
+        // TEST: vecs abonements bez installation_id nav pārņemams.
+        // Atceļam tikai Push abonementu (nevis aplikācijas datus),
+        // izveidojam jaunu endpoint un mēģinām reģistrēt tikai vienreiz.
+        pushActivationStatus.textContent='3/3: Vecā Push abonementa atjaunošana…';
+        const removed=await subscription.unsubscribe();
+        if(!removed)throw new Error('Neizdevās atcelt veco Push abonementu.');
+        subscription=await registration.pushManager.subscribe({
+          userVisibleOnly:true,
+          applicationServerKey:expectedKey
+        });
+        if(!subscription)throw new Error('Neizdevās izveidot jaunu Push abonementu.');
+        save=await saveSecureSubscription(subscription);
+        if(save.status===409)throw new Error('Jaunais abonements joprojām konfliktē ar veco ierakstu. Nepieciešama servera puses pārbaude.');
+      }
     }catch(error){
-      throw new Error('3/3: Neizdevās nosūtīt abonementu serverim ('+(error.message||String(error))+'). Iespējama CORS vai tīkla kļūda.');
+      throw new Error('3/3: Push abonementa saglabāšana vai atjaunošana neizdevās ('+(error.message||String(error))+').');
     }
     if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
     const result=await save.json();
