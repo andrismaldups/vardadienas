@@ -1781,7 +1781,13 @@ async function syncTestReminderSettings(){
   const registration=await navigator.serviceWorker.ready;
   const subscription=await registration.pushManager.getSubscription();
   if(!subscription)return;
+  const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
+  if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0){
+    console.warn('TEST: subscription_id nav saglabāts; atkārtoti aktivizējiet Push paziņojumus.');
+    return;
+  }
   const payload={
+    subscription_id:subscriptionId,
     enabled:document.getElementById('remindersEnabled').checked,
     evening_enabled:document.getElementById('reminderEvening').checked,
     evening_time:document.getElementById('reminderEveningTime').value,
@@ -1899,6 +1905,9 @@ activatePushButton.addEventListener('click',async()=>{
     if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
     const result=await save.json();
     if(!result.success)throw new Error('Serveris neapstiprināja abonementa saglabāšanu.');
+    const subscriptionId=Number(result.subscriptionId);
+    if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0)throw new Error('Serveris neatgrieza derīgu subscriptionId.');
+    localStorage.setItem('testPushSubscriptionId',String(subscriptionId));
     pushActivationStatus.textContent='Abonements saglabāts. Saglabā atgādinājumu iestatījumus…';
     await syncTestReminderSettings();
     pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements un iestatījumi saglabāti serverī.';
