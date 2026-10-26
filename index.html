@@ -1775,6 +1775,43 @@ function base64UrlToUint8Array(base64Url){
   const binary=atob(base64);
   return Uint8Array.from(binary,char=>char.charCodeAt(0));
 }
+// TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
+async function syncTestReminderSettings(){
+  const installation=await getOrCreateTestInstallation();
+  const registration=await navigator.serviceWorker.ready;
+  const subscription=await registration.pushManager.getSubscription();
+  if(!subscription)return;
+  const payload={
+    enabled:document.getElementById('remindersEnabled').checked,
+    evening_enabled:document.getElementById('reminderEvening').checked,
+    evening_time:document.getElementById('reminderEveningTime').value,
+    morning_enabled:document.getElementById('reminderMorning').checked,
+    morning_time:document.getElementById('reminderMorningTime').value,
+    target:document.querySelector('input[name="reminderTarget"]:checked')?.value||'favorites',
+    birthdays_enabled:document.getElementById('reminderBirthdays').checked,
+    timezone:'Europe/Riga'
+  };
+  const response=await fetch(PUSH_SERVER_URL+'/api/reminder-settings',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':'Bearer '+installation.token,
+      'X-Installation-Id':installation.installationId
+    },
+    body:JSON.stringify(payload)
+  });
+  if(!response.ok){
+    const details=await response.json().catch(()=>({}));
+    throw new Error('Atgādinājumu iestatījumu saglabāšana neizdevās (HTTP '+response.status+'): '+(details.error||''));
+  }
+}
+function queueTestReminderSync(){
+  if(!('serviceWorker' in navigator))return;
+  syncTestReminderSettings().catch(error=>{
+    console.warn('TEST iestatījumi paliek lokāli; sinhronizācija neizdevās:',error);
+    pushActivationStatus.textContent='Iestatījumi saglabāti telefonā, bet serverī vēl nav sinhronizēti: '+error.message;
+  });
+}
 activatePushButton.addEventListener('click',async()=>{
   activatePushButton.disabled=true;
   pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
