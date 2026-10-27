@@ -576,6 +576,71 @@
     const stored=JSON.parse(localStorage.getItem('birthdays')||'[]');
     if(Array.isArray(stored))birthdays=stored.filter(p=>p&&typeof p.name==='string'&&Number.isInteger(p.day)&&Number.isInteger(p.month));
   }catch(error){console.warn('Neizdevās nolasīt dzimšanas dienas',error);}
+  // TEST: dzimšanas dienu sinhronizācija ar D1; lokālie dati ir primārie.
+  const BIRTHDAY_QUEUE_KEY='testBirthdaySyncQueueV1';
+  const BIRTHDAY_INITIALIZED_KEY='testBirthdaySyncInitializedV1';
+  let birthdaySyncPromise=null;
+  function birthdayId(){
+    const bytes=new Uint8Array(18);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function readBirthdayQueue(){
+    try{
+      const items=JSON.parse(localStorage.getItem(BIRTHDAY_QUEUE_KEY)||'[]');
+      return Array.isArray(items)?items.filter(x=>x&&['POST','DELETE'].includes(x.method)&&typeof x.id==='string'):[];
+    }catch(_error){return [];}
+  }
+  function queueBirthday(method,person){
+    const id=person.id;
+    const items=readBirthdayQueue().filter(x=>x.id!==id);
+    items.push({method,id,...(method==='POST'?{person:{id,name:person.name,day:person.day,month:person.month,year:person.year??null}}:{})});
+    localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(items));
+    void flushBirthdayQueue();
+  }
+  async function flushBirthdayQueue(){
+    if(birthdaySyncPromise)return birthdaySyncPromise;
+    if(navigator.onLine===false)return;
+    birthdaySyncPromise=(async()=>{
+      const installation=await getOrCreateTestInstallation();
+      while(true){
+        const queue=readBirthdayQueue();
+        if(!queue.length)break;
+        const item=queue[0];
+        const response=await fetch(FAVORITES_TEST_API+'/api/birthdays',{
+          method:item.method,
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+installation.token,'X-Installation-Id':installation.installationId},
+          body:JSON.stringify(item.method==='POST'?item.person:{id:item.id})
+        });
+        if(!response.ok)throw new Error('Dzimšanas dienu sinhronizācija: HTTP '+response.status);
+        const latest=readBirthdayQueue();
+        // Dzēšam tikai precīzi to darbību, kuru nosūtījām.
+        const index=latest.findIndex(x=>JSON.stringify(x)===JSON.stringify(item));
+        if(index>=0){latest.splice(index,1);localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(latest));}
+      }
+    })().catch(error=>console.warn('TEST dzimšanas dienas paliek lokāli; sinhronizācija atlikta:',error))
+      .finally(()=>{birthdaySyncPromise=null;});
+    return birthdaySyncPromise;
+  }
+  // Pirmreizējā migrācija: piešķiram ID, neko nezaudējot no esošā saraksta.
+  try{
+    const needsIds=birthdays.some(p=>!p.id);
+    if(needsIds){
+      birthdays=birthdays.map(p=>p.id?p:{...p,id:birthdayId()});
+      localStorage.setItem('birthdays',JSON.stringify(birthdays));
+    }
+    if(localStorage.getItem(BIRTHDAY_INITIALIZED_KEY)!=='true'){
+      const queue=readBirthdayQueue();
+      const ids=new Set(queue.map(x=>x.id));
+      for(const person of birthdays){
+        if(!ids.has(person.id))queue.push({method:'POST',id:person.id,person:{id:person.id,name:person.name,day:person.day,month:person.month,year:person.year??null}});
+      }
+      localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(queue));
+      localStorage.setItem(BIRTHDAY_INITIALIZED_KEY,'true');
+    }
+  }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
+  window.addEventListener('online',()=>{void flushBirthdayQueue();});
+  void flushBirthdayQueue();
   function renderBirthdayHome(){
     const target=document.getElementById('birthdayTodayNames');
     const names=birthdays.filter(person=>person.day===selected.getDate()&&person.month===selected.getMonth()+1).map(person=>person.name);
@@ -636,6 +701,7 @@
       return;
     }
     birthdays=updated;
+    try{queueBirthday('DELETE',person);}catch(error){console.warn('Dzimšanas dienas dzēšanas sinhronizācija atlikta:',error);}
     renderBirthdayHome();
     if(editingBirthdayIndex!==null){
       if(editingBirthdayIndex===index)closeBirthdayForm();
@@ -690,7 +756,7 @@
     }
     const updated=[...birthdays];
     if(editingBirthdayIndex===null){
-      updated.push({name,day,month,year});
+      updated.push({id:birthdayId(),name,day,month,year});
     }else{
       updated[editingBirthdayIndex]={...updated[editingBirthdayIndex],name,day,month,year};
     }
@@ -702,6 +768,7 @@
       return;
     }
     birthdays=updated;
+    try{queueBirthday('POST',updated[editingBirthdayIndex===null?updated.length-1:editingBirthdayIndex]);}catch(error){console.warn('Dzimšanas dienas saglabāšanas sinhronizācija atlikta:',error);}
     renderBirthdays();
     renderBirthdayHome();
     closeBirthdayForm();
