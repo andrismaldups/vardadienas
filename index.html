@@ -241,7 +241,7 @@
 <div class="hero">
     <button class="menu-btn" aria-label="Atvērt izvēlni" onclick="sideMenu.hidden=!sideMenu.hidden">☰</button>
     <div class="side-menu" id="sideMenu" hidden>
-  <button onclick="mainView.hidden=true;favoritesView.hidden=false;renderFavorites()">Mani vārdi</button>
+  <button onclick="sideMenu.hidden=true;mainView.hidden=true;favoritesView.hidden=false;renderFavorites()">Mani vārdi</button>
   <button onclick="mainView.hidden=true;settingsView.hidden=false;sideMenu.hidden=true">Iestatījumi</button>
 </div>
     <div><div class="app-title">Vārdadienas</div><h1 id="dateTitle">—</h1><div id="todayNames" class="names">—</div><div id="extraNames"></div></div><button class="primary" id="todayBtn">Šodien</button></div><div id="tomorrowBlock" class="tomorrow">
@@ -1823,6 +1823,11 @@ todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),s
 renderSelected();renderLatviaToday(selected)};
 prevMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
 nextMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+document.addEventListener('click', (event)=>{
+  if(!sideMenu.hidden && !sideMenu.contains(event.target) && !event.target.closest('.menu-btn')){
+    sideMenu.hidden=true;
+  }
+});
 nameBtn.onclick=findName;nameInput.onkeydown=e=>{if(e.key==='Enter')findName()};
   nameInput.addEventListener('input',()=>{clearName.style.display=nameInput.value?'inline-flex':'none'});
 clearName.onclick=()=>{nameInput.value='';nameResult.textContent='Ievadiet vārdu.';clearName.style.display='none';nameInput.focus()};
