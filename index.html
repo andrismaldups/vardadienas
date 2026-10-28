@@ -117,6 +117,44 @@ html[data-theme="dark"] .switch-slider{background:#566b60}
 html[data-theme="dark"] .switch input:checked+.switch-slider{background:#08783f}
 html[data-theme="dark"] .push-active-status,html[data-theme="dark"] .push-active-status:disabled{background:#233b32!important;color:#8fe0ac!important;border-color:#405c4f!important}
 html[data-theme="dark"] .name-detail-card h3,html[data-theme="dark"] .names,html[data-theme="dark"] .birthday-entry .birthday-chevron,html[data-theme="dark"] .greeting-entry-arrow{color:#6ad49a}
+
+/* TEST: tumšā režīma kontrasts un saskaņotas darbību pogas.
+   Apzināti tikai dark režīmā, lai gaišais dizains nemainītos. */
+html[data-theme="dark"] #calendar .day:not(.sel){
+  color:#e8f4ec;background:transparent;border:0;
+}
+html[data-theme="dark"] #calendar .day.today:not(.sel){
+  color:#a3e9bf;outline:1px solid #a3e9bf;
+}
+html[data-theme="dark"] #calendar .day.sel{
+  color:#fff;background:#08783f;border-color:#08783f;
+}
+html[data-theme="dark"] #prevDay,
+html[data-theme="dark"] #nextDay,
+html[data-theme="dark"] #prevMonth,
+html[data-theme="dark"] #nextMonth,
+html[data-theme="dark"] #nameBtn,
+html[data-theme="dark"] #dateBtn,
+html[data-theme="dark"] #favoriteAddCancel{
+  color:#c7f4d6;background:#233b32;border:1px solid #507561;
+}
+html[data-theme="dark"] #prevDay:hover,
+html[data-theme="dark"] #nextDay:hover,
+html[data-theme="dark"] #prevMonth:hover,
+html[data-theme="dark"] #nextMonth:hover,
+html[data-theme="dark"] #nameBtn:hover,
+html[data-theme="dark"] #dateBtn:hover,
+html[data-theme="dark"] #favoriteAddCancel:hover{
+  background:#2b4b3c;
+}
+html[data-theme="dark"] .settings-card input[type="time"]{
+  color:#a3e9bf;background:#233b32;border-color:#507561;
+}
+html[data-theme="dark"] input:focus-visible,
+html[data-theme="dark"] textarea:focus-visible,
+html[data-theme="dark"] #favoriteAddInput:focus{
+  outline:2px solid #6ad49a;outline-offset:1px;border-color:#6ad49a;
+}
 </style>
 <script>
 (function(){
