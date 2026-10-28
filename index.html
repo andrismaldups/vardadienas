@@ -86,7 +86,58 @@
 #dateBtn:focus-visible,#favoriteAddCancel:focus-visible{
   outline:2px solid #08783f;outline-offset:2px;
 }
-</style></head>
+
+/* Izskata režīmi: automātiskais seko sistēmas izvēlei. */
+.appearance-card{padding:18px}.appearance-card h3{margin:0 0 12px}.appearance-choice{display:flex;align-items:center;gap:12px;padding:11px 2px;cursor:pointer}.appearance-choice input{width:22px;min-width:22px;height:22px;min-height:22px;accent-color:#08783f}.appearance-choice small{display:block;font-size:13px;color:#718096;margin-top:3px}
+html[data-theme="dark"]{color-scheme:dark;background:#0f1f1a}
+html[data-theme="dark"] body{background:#0f1f1a;color:#e8f4ec}
+html[data-theme="dark"] .card,html[data-theme="dark"] .side-menu,html[data-theme="dark"] .about-content{background:#1e2d27;color:#e8f4ec;box-shadow:0 8px 30px #0003}
+html[data-theme="dark"] .app-title,html[data-theme="dark"] .menu-btn,html[data-theme="dark"] .side-menu button{color:#e8f4ec}
+html[data-theme="dark"] .muted,html[data-theme="dark"] .foot,html[data-theme="dark"] .week div,html[data-theme="dark"] #dateTitle,html[data-theme="dark"] .appearance-choice small,html[data-theme="dark"] .about-row span:last-child,html[data-theme="dark"] .about-app>div:last-child>div{color:#a7b9b0}
+html[data-theme="dark"] button,html[data-theme="dark"] .btn,html[data-theme="dark"] input,html[data-theme="dark"] textarea{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#a7b9b0}
+html[data-theme="dark"] .primary,html[data-theme="dark"] button.primary,html[data-theme="dark"] .day.sel{background:#08783f;color:white;border-color:#08783f}
+html[data-theme="dark"] .tomorrow,html[data-theme="dark"] .latvia-today,html[data-theme="dark"] .interesting,html[data-theme="dark"] .birthday-entry,html[data-theme="dark"] .greeting-result{background:#233b32;border-color:#405c4f;color:#e8f4ec}
+html[data-theme="dark"] .birthday-sort,html[data-theme="dark"] .favorites-sort{background:#142820}
+html[data-theme="dark"] .birthday-sort button,html[data-theme="dark"] .favorites-sort button{background:transparent;color:#b8cbc0;border:0}
+html[data-theme="dark"] .birthday-sort button.active,html[data-theme="dark"] .favorites-sort button.active{background:#275a40;color:#f2fff6}
+html[data-theme="dark"] .greeting-options button,html[data-theme="dark"] .greeting-result-actions>button,html[data-theme="dark"] .greeting-result-action-row button,html[data-theme="dark"] .greeting-back-bar .back-btn,html[data-theme="dark"] #settingsView .back-btn,html[data-theme="dark"] #favoritesView>.back-btn,html[data-theme="dark"] #birthdaysView>.back-btn,html[data-theme="dark"] #nameDetailView>.back-btn{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] .greeting-options button.active{background:#275a40;color:#f2fff6;border-color:#39a76b}
+html[data-theme="dark"] .greeting-emoji-panel{background:#1e2d27;border-color:#405c4f;color:#e8f4ec}
+html[data-theme="dark"] .greeting-emoji-grid button{background:#233b32;color:#e8f4ec}
+html[data-theme="dark"] .greeting-emoji-close,html[data-theme="dark"] .greeting-emoji-icon{color:#e8f4ec;background:transparent;border:0}
+html[data-theme="dark"] .settings-back-bar,html[data-theme="dark"] .greeting-back-bar{background:rgba(15,31,26,.96);border-color:#405c4f}
+html[data-theme="dark"] .settings-section,html[data-theme="dark"] .about-row,html[data-theme="dark"] .about-content,html[data-theme="dark"] .birthday-saved-row,html[data-theme="dark"] .favorite-add-panel{border-color:#405c4f}
+html[data-theme="dark"] .about-row-button{background:#1e2d27;color:#e8f4ec}
+html[data-theme="dark"] .date-suggestions button,html[data-theme="dark"] .favorite-add-selected button{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] .tag,html[data-theme="dark"] .extra{background:#233b32;color:#e8f4ec}
+html[data-theme="dark"] .day{background:transparent;color:#e8f4ec;border:0}
+html[data-theme="dark"] .day.sel{background:#08783f;color:#fff}
+html[data-theme="dark"] .switch-slider{background:#566b60}
+html[data-theme="dark"] .switch input:checked+.switch-slider{background:#08783f}
+html[data-theme="dark"] .push-active-status,html[data-theme="dark"] .push-active-status:disabled{background:#233b32!important;color:#8fe0ac!important;border-color:#405c4f!important}
+html[data-theme="dark"] .name-detail-card h3,html[data-theme="dark"] .names,html[data-theme="dark"] .birthday-entry .birthday-chevron,html[data-theme="dark"] .greeting-entry-arrow{color:#6ad49a}
+</style>
+<script>
+(function(){
+  const KEY='appearanceMode';
+  const allowed=['light','dark','auto'];
+  let mode='auto';
+  try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
+  const media=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;}
+  apply();
+  function init(){
+    document.querySelectorAll('input[name="appearanceMode"]').forEach(input=>{
+      input.checked=input.value===mode;
+      input.addEventListener('change',()=>{if(!input.checked)return;mode=input.value;try{localStorage.setItem(KEY,mode);}catch(e){}apply();});
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  if(media){if(media.addEventListener)media.addEventListener('change',()=>{if(mode==='auto')apply();});else if(media.addListener)media.addListener(()=>{if(mode==='auto')apply();});}
+})();
+</script>
+</head>
   <body><div class="wrap">
     <section id="settingsView" hidden>
   <h2>Iestatījumi</h2>
@@ -122,6 +173,14 @@
       <button type="button" id="activatePushButton" class="primary">Aktivizēt paziņojumus</button>
       <p id="pushActivationStatus" role="status" aria-live="polite" style="margin:12px 0 0"></p>
     </div>
+  </section>
+
+
+  <section class="card appearance-card" aria-labelledby="appearanceHeading">
+    <h3 id="appearanceHeading">Izskats</h3>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="light"><span>Gaišais</span></label>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="dark"><span>Tumšais</span></label>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="auto"><span>Automātiskais<small>Atbilstoši ierīces iestatījumiem</small></span></label>
   </section>
 
   <section class="card about-card">
