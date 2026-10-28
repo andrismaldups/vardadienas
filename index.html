@@ -68,6 +68,24 @@
   align-self:center;
 }@media(max-width:800px){body{padding:10px}.wrap{max-width:600px}.grid{grid-template-columns:1fr}.card{padding:18px;border-radius:18px;margin-bottom:12px}.hero{display:block}.hero .primary{width:100%;margin-top:8px}h1{font-size:29px}.names{font-size:22px}.nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav button{width:100%;padding:10px 8px}.calhead h2{font-size:20px;text-align:center}.week,.cal{gap:4px}.day{min-height:46px;border-radius:50%}.side .card{margin-bottom:12px}}
 @media(max-width:430px){body{padding:8px}.card{padding:16px}.searchrow{display:grid;grid-template-columns:1fr}.searchrow button{width:100%}.week div{font-size:13px}.day{min-height:46px;font-size:15px}h1{font-size:27px}.muted{font-size:14px}}
+
+/* TEST: vienota zaļā pogu un kalendāra krāsu sistēma */
+#prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,#favoriteAddCancel{
+  color:#08783f;background:#f6fbf7;border:1px solid #cfe5d5;
+}
+#prevDay,#nextDay{font-weight:600}
+#nameBtn,#dateBtn{background:#edf7f0;font-weight:600}
+#favoriteAddCancel{font-weight:500}
+#prevDay:hover,#nextDay:hover,#prevMonth:hover,#nextMonth:hover,
+#nameBtn:hover,#dateBtn:hover,#favoriteAddCancel:hover{background:#e2f3e7}
+#calendar .day{color:#18392b;background:transparent;border:0}
+#calendar .day.sel{color:#fff;background:#08783f}
+#calendar .day.today:not(.sel){outline:1px solid #a9d5b8;color:#08783f}
+#calendar .day:focus-visible,#prevDay:focus-visible,#nextDay:focus-visible,
+#prevMonth:focus-visible,#nextMonth:focus-visible,#nameBtn:focus-visible,
+#dateBtn:focus-visible,#favoriteAddCancel:focus-visible{
+  outline:2px solid #08783f;outline-offset:2px;
+}
 </style></head>
   <body><div class="wrap">
     <section id="settingsView" hidden>
