@@ -639,8 +639,22 @@
       localStorage.setItem(BIRTHDAY_INITIALIZED_KEY,'true');
     }
   }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
-  window.addEventListener('online',()=>{void flushBirthdayQueue();});
-  void flushBirthdayQueue();
+  // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
+  // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
+  function retryPendingBirthdays(){
+    if(readBirthdayQueue().length && navigator.onLine!==false){
+      void flushBirthdayQueue();
+    }
+  }
+  window.addEventListener('online',retryPendingBirthdays);
+  window.addEventListener('focus',retryPendingBirthdays);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')retryPendingBirthdays();
+  });
+  // Atvērtā aplikācijā mēģinām vēlreiz ik pēc 30 sekundēm;
+  // tukšai rindai un bezsaistē pieprasījumi netiek sūtīti.
+  setInterval(retryPendingBirthdays,30000);
+  retryPendingBirthdays();
   function renderBirthdayHome(){
     const target=document.getElementById('birthdayTodayNames');
     const names=birthdays.filter(person=>person.day===selected.getDate()&&person.month===selected.getMonth()+1).map(person=>person.name);
