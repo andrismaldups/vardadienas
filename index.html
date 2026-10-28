@@ -47,7 +47,7 @@
 .name-input-wrap input{
   padding-right:46px;
 }
-  #clearName{
+  #clearName, #clearDate{
   position:absolute;
   right:8px;
   top:52%;
@@ -259,7 +259,7 @@
   <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><span class="birthday-home-content"><strong>🎁 Dzimšanas dienas</strong><span id="birthdayTodayNames" class="birthday-today-names" hidden></span></span><span class="birthday-chevron" aria-hidden="true">›</span></button>
   <div class="nav"><button id="prevDay">← Iepriekšējā diena</button><button id="nextDay">Nākamā diena →</button></div></section>
 <div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
-<div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><input id="dateInput" placeholder="Piemēram, 20. septembris"><div id="dateSuggestions" class="date-suggestions"></div>
+<div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><div class="name-input-wrap"><input id="dateInput" placeholder="Piemēram, 20. septembris"><button id="clearDate" type="button" aria-label="Notīrīt datumu">×</button></div><div id="dateSuggestions" class="date-suggestions"></div>
 <button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section>
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
@@ -1827,6 +1827,7 @@ nameBtn.onclick=findName;nameInput.onkeydown=e=>{if(e.key==='Enter')findName()};
   nameInput.addEventListener('input',()=>{clearName.style.display=nameInput.value?'inline-flex':'none'});
 clearName.onclick=()=>{nameInput.value='';nameResult.textContent='Ievadiet vārdu.';clearName.style.display='none';nameInput.focus()};
 dateInput.addEventListener('input',()=>{
+  clearDate.style.display=dateInput.value?'inline-flex':'none';
   const m=dateInput.value.trim().toLocaleLowerCase('lv-LV').match(/^(\d{1,2})\.?\s+([a-zāčēģīķļņšūž]+)$/u);
   dateSuggestions.innerHTML='';
   if(!m)return;
@@ -1840,12 +1841,14 @@ dateInput.addEventListener('input',()=>{
     b.textContent=month;
     b.onclick=()=>{
       dateInput.value=m[1]+'. '+month;
+      clearDate.style.display='inline-flex';
       dateSuggestions.innerHTML='';
       dateInput.focus();
     };
     dateSuggestions.appendChild(b);
   });
 });
+clearDate.onclick=()=>{dateInput.value='';dateResult.textContent='Ievadiet datumu.';dateSuggestions.innerHTML='';clearDate.style.display='none';dateInput.focus()};
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
 const PUSH_SERVER_URL='https://vardadienas-push-test.andris-maldups.workers.dev';
 const activatePushButton=document.getElementById('activatePushButton');
