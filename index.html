@@ -155,6 +155,10 @@ html[data-theme="dark"] textarea:focus-visible,
 html[data-theme="dark"] #favoriteAddInput:focus{
   outline:2px solid #6ad49a;outline-offset:1px;border-color:#6ad49a;
 }
+/* TEST: pusstundu laiku izvēlne */
+.settings-card select[id^="reminder"][id$="Time"]{width:112px;max-width:100%;min-height:42px;padding:8px 10px;border:1px solid #d7dee8;border-radius:12px;background:#fff;color:#08783f;font:inherit;font-weight:600}
+html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{background:#233b32;color:#a3e9bf;border-color:#507561}
+@media(max-width:420px){.settings-card select[id^="reminder"][id$="Time"]{width:105px}}
 </style>
 <script>
 (function(){
@@ -192,11 +196,11 @@ html[data-theme="dark"] #favoriteAddInput:focus{
       <h4>Kad atgādināt</h4>
       <label class="reminder-row">
         <span class="reminder-choice"><input type="checkbox" id="reminderEvening"> Iepriekšējā dienā</span>
-        <input type="time" id="reminderEveningTime" value="18:00">
+        <select id="reminderEveningTime" aria-label="Atgādinājuma laiks"><option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00" selected>18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
       </label>
       <label class="reminder-row">
         <span class="reminder-choice"><input type="checkbox" id="reminderMorning"> Svētku dienā</span>
-        <input type="time" id="reminderMorningTime" value="07:00">
+        <select id="reminderMorningTime" aria-label="Atgādinājuma laiks"><option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00" selected>07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
       </label>
     </div>
 
@@ -2198,8 +2202,17 @@ if(savedReminderMorning!==null){
 }else if(savedReminderTime==="day"){
   reminderMorning.checked=true;
 }
-if(savedReminderEveningTime)reminderEveningTime.value=savedReminderEveningTime;
-if(savedReminderMorningTime)reminderMorningTime.value=savedReminderMorningTime;
+// Saglabājam agrāko nestandarta laiku, līdz lietotājs pats izvēlas jaunu.
+function restoreReminderTime(select,saved){
+ if(!saved)return;
+ if(!Array.from(select.options).some(option=>option.value===saved)){
+  const legacy=document.createElement('option');legacy.value=saved;
+  legacy.textContent=saved+' (iepriekšējais laiks)';select.appendChild(legacy);
+ }
+ select.value=saved;
+}
+restoreReminderTime(reminderEveningTime,savedReminderEveningTime);
+restoreReminderTime(reminderMorningTime,savedReminderMorningTime);
 
 reminderEvening.addEventListener('change',()=>{localStorage.setItem('reminderEvening',reminderEvening.checked);queueTestReminderSync();});
 reminderMorning.addEventListener('change',()=>{localStorage.setItem('reminderMorning',reminderMorning.checked);queueTestReminderSync();});
