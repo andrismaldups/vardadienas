@@ -1125,6 +1125,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // Datu dzēšanas aizsardzība: šobrīd funkcija TEST vidē ir atspējota.
   // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
   let deletionInProgress=false;
+  const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
   let pushActivationInProgress=false;
   let reminderSyncInProgress=0;
   const DELETE_LOCAL_KEYS=[
@@ -1145,8 +1146,11 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     status.textContent='Notiek datu dzēšana…';
     try{
       // Nedrīkst izveidot jaunu instalāciju tikai tādēļ, lai to dzēstu.
+      // Sagaidām arī fonā jau uzsāktu instalācijas reģistrāciju.
+      if(testInstallationPromise)await testInstallationPromise;
       const saved=JSON.parse(localStorage.getItem('vardadienas_test_installation_v1')||'null');
       if(saved?.installationId&&saved?.token){
+        localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
         // Pabeidzam iesākto dzimšanas dienu sinhronizāciju.
         if(birthdaySyncPromise)await birthdaySyncPromise;
         // Neizdzēšam instalāciju, kamēr atgādinājumu iestatījumi tiek sūtīti.
@@ -1169,6 +1173,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
         }catch(error){pushUnsubscribeFailed=true;console.warn('Push atcelšana ierīcē neizdevās:',error);}
       }
       for(const key of DELETE_LOCAL_KEYS)localStorage.removeItem(key);
+      localStorage.removeItem(DELETION_PENDING_KEY);
       status.textContent=pushUnsubscribeFailed?'Servera un lokālie dati dzēsti, bet ierīces Push abonementa atcelšanu nevarēja apstiprināt.':'Dati dzēsti. Aplikācija tiks pārlādēta.';
       window.location.reload();
     }catch(error){
