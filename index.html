@@ -227,9 +227,9 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
 
   <section class="card about-card" aria-labelledby="privacyDataHeading">
     <h3 id="privacyDataHeading">Mani dati</h3>
-    <p>TEST versijā tiek gatavota funkcija, kas ļaus dzēst saglabātos datus gan ierīcē, gan serverī.</p>
-    <button type="button" id="deleteMyDataButton" disabled aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
-    <p id="deleteMyDataStatus" role="status">Funkcija vēl nav aktivizēta. Pašlaik dati netiek dzēsti.</p>
+    <p>TEST versijā vari neatgriezeniski dzēst šīs instalācijas saglabātos vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan ierīcē, gan serverī.</p>
+    <button type="button" id="deleteMyDataButton" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
+    <p id="deleteMyDataStatus" role="status">Pirms dzēšanas tiks prasīts apstiprinājums.</p>
   </section>
 
   <section class="card about-card">
@@ -1128,6 +1128,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
   function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
   if(localStorage.getItem(DELETION_PENDING_KEY)){
+    document.getElementById('deleteMyDataButton').disabled=true;
     document.getElementById('deleteMyDataStatus').textContent='Iepriekšējā dzēšanas pieprasījuma rezultāts nav apstiprināts. Servera sinhronizācija apturēta, lokālie dati saglabāti.';
   }
   let pushActivationInProgress=false;
