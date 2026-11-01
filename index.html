@@ -729,7 +729,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     }catch(_error){return [];}
   }
   function queueBirthday(method,person){
-    if(deletionInProgress)return;
+    if(deletionSyncBlocked())return;
     const id=person.id;
     const items=readBirthdayQueue().filter(x=>x.id!==id);
     items.push({method,id,...(method==='POST'?{person:{id,name:person.name,day:person.day,month:person.month,year:person.year??null}}:{})});
@@ -737,12 +737,12 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     void flushBirthdayQueue();
   }
   async function flushBirthdayQueue(){
-    if(deletionInProgress)return;
+    if(deletionSyncBlocked())return;
     if(birthdaySyncPromise)return birthdaySyncPromise;
     if(navigator.onLine===false)return;
     birthdaySyncPromise=(async()=>{
       const installation=await getOrCreateTestInstallation();
-      while(!deletionInProgress){
+      while(!deletionSyncBlocked()){
         const queue=readBirthdayQueue();
         if(!queue.length)break;
         const item=queue[0];
@@ -781,7 +781,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
   // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
   function retryPendingBirthdays(){
-    if(deletionInProgress)return;
+    if(deletionSyncBlocked())return;
     if(readBirthdayQueue().length && navigator.onLine!==false){
       void flushBirthdayQueue();
     }
@@ -1126,6 +1126,10 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
   let deletionInProgress=false;
   const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
+  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
+  if(localStorage.getItem(DELETION_PENDING_KEY)){
+    document.getElementById('deleteMyDataStatus').textContent='Iepriekšējā dzēšanas pieprasījuma rezultāts nav apstiprināts. Servera sinhronizācija apturēta, lokālie dati saglabāti.';
+  }
   let pushActivationInProgress=false;
   let reminderSyncInProgress=0;
   const DELETE_LOCAL_KEYS=[
@@ -1136,7 +1140,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     'reminderEveningTime','reminderMorningTime','reminderTarget','reminderBirthdays'
   ];
   async function deleteInstallationDataAfterConfirmation(){
-    if(deletionInProgress)return;
+    if(deletionSyncBlocked())return;
     const status=document.getElementById('deleteMyDataStatus');
     const button=document.getElementById('deleteMyDataButton');
     if(!confirm('Neatgriezeniski dzēst visus šīs instalācijas vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan serverī, gan ierīcē?'))return;
@@ -1187,7 +1191,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   const TEST_INSTALLATION_STORAGE_KEY='vardadienas_test_installation_v1';
   let testInstallationPromise=null;
   async function getOrCreateTestInstallation(){
-    if(deletionInProgress)throw new Error('Notiek datu dzēšana');
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
     if(testInstallationPromise) return testInstallationPromise;
     testInstallationPromise=(async()=>{
       try{
@@ -1213,7 +1217,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   }
 
   async function requestTestFavorites(method, installationId, installationToken, payload){
-    if(deletionInProgress)throw new Error('Notiek datu dzēšana');
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
     const headers={
       'Authorization':'Bearer '+installationToken,
       'X-Installation-Id':installationId
@@ -1246,7 +1250,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   }
   // Reģistrējam TEST instalāciju fonā, netraucējot lokālajiem favorītiem.
   // Neveiksmes gadījumā aplikācija turpina darboties ar localStorage.
-  getOrCreateTestInstallation().catch(error=>{
+  if(!deletionSyncBlocked())getOrCreateTestInstallation().catch(error=>{
     console.warn('TEST instalācijas reģistrācija nav pieejama:',error);
   });
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
@@ -2121,7 +2125,7 @@ function base64UrlToUint8Array(base64Url){
 }
 // TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
 async function syncTestReminderSettings(){
-  if(deletionInProgress)return;
+  if(deletionSyncBlocked())return;
   reminderSyncInProgress++;
   try{
   const installation=await getOrCreateTestInstallation();
@@ -2160,7 +2164,7 @@ async function syncTestReminderSettings(){
   }finally{reminderSyncInProgress--;}
 }
 function queueTestReminderSync(){
-  if(deletionInProgress)return;
+  if(deletionSyncBlocked())return;
   if(!('serviceWorker' in navigator))return;
   syncTestReminderSettings().catch(error=>{
     console.warn('TEST iestatījumi paliek lokāli; sinhronizācija neizdevās:',error);
@@ -2168,7 +2172,7 @@ function queueTestReminderSync(){
   });
 }
 activatePushButton.addEventListener('click',async()=>{
-  if(deletionInProgress||pushActivationInProgress)return;
+  if(deletionSyncBlocked()||pushActivationInProgress)return;
   pushActivationInProgress=true;
   activatePushButton.disabled=true;
   pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
