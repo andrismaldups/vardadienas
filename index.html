@@ -778,6 +778,9 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
       localStorage.setItem(BIRTHDAY_INITIALIZED_KEY,'true');
     }
   }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
+  let deletionInProgress=false;
+  const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
+  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
   // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
   // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
   function retryPendingBirthdays(){
@@ -1124,9 +1127,6 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // Netiek izmantoti produkcijas vidē un netiek sūtīti uz GitHub.
   // Datu dzēšanas aizsardzība: šobrīd funkcija TEST vidē ir atspējota.
   // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
-  let deletionInProgress=false;
-  const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
-  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
   if(localStorage.getItem(DELETION_PENDING_KEY)){
     document.getElementById('deleteMyDataButton').disabled=true;
     document.getElementById('deleteMyDataStatus').textContent='Iepriekšējā dzēšanas pieprasījuma rezultāts nav apstiprināts. Servera sinhronizācija apturēta, lokālie dati saglabāti.';
