@@ -781,6 +781,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
   // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
   function retryPendingBirthdays(){
+    if(deletionInProgress)return;
     if(readBirthdayQueue().length && navigator.onLine!==false){
       void flushBirthdayQueue();
     }
@@ -1200,6 +1201,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   }
 
   async function requestTestFavorites(method, installationId, installationToken, payload){
+    if(deletionInProgress)throw new Error('Notiek datu dzēšana');
     const headers={
       'Authorization':'Bearer '+installationToken,
       'X-Installation-Id':installationId
@@ -2107,6 +2109,7 @@ function base64UrlToUint8Array(base64Url){
 }
 // TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
 async function syncTestReminderSettings(){
+  if(deletionInProgress)return;
   const installation=await getOrCreateTestInstallation();
   const registration=await navigator.serviceWorker.ready;
   const subscription=await registration.pushManager.getSubscription();
@@ -2142,6 +2145,7 @@ async function syncTestReminderSettings(){
   }
 }
 function queueTestReminderSync(){
+  if(deletionInProgress)return;
   if(!('serviceWorker' in navigator))return;
   syncTestReminderSettings().catch(error=>{
     console.warn('TEST iestatījumi paliek lokāli; sinhronizācija neizdevās:',error);
@@ -2149,6 +2153,7 @@ function queueTestReminderSync(){
   });
 }
 activatePushButton.addEventListener('click',async()=>{
+  if(deletionInProgress)return;
   activatePushButton.disabled=true;
   pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
   try{
