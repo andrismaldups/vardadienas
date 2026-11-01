@@ -2117,6 +2117,8 @@ function base64UrlToUint8Array(base64Url){
 // TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
 async function syncTestReminderSettings(){
   if(deletionInProgress)return;
+  reminderSyncInProgress++;
+  try{
   const installation=await getOrCreateTestInstallation();
   const registration=await navigator.serviceWorker.ready;
   const subscription=await registration.pushManager.getSubscription();
@@ -2150,6 +2152,7 @@ async function syncTestReminderSettings(){
     const details=await response.json().catch(()=>({}));
     throw new Error('Atgādinājumu iestatījumu saglabāšana neizdevās (HTTP '+response.status+'): '+(details.error||''));
   }
+  }finally{reminderSyncInProgress--;}
 }
 function queueTestReminderSync(){
   if(deletionInProgress)return;
@@ -2160,7 +2163,8 @@ function queueTestReminderSync(){
   });
 }
 activatePushButton.addEventListener('click',async()=>{
-  if(deletionInProgress)return;
+  if(deletionInProgress||pushActivationInProgress)return;
+  pushActivationInProgress=true;
   activatePushButton.disabled=true;
   pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
   try{
@@ -2259,6 +2263,7 @@ activatePushButton.addEventListener('click',async()=>{
     pushActivationStatus.textContent='Neizdevās aktivizēt: '+(error.message||String(error));
     setPushActivationAppearance(false);
   }finally{
+    pushActivationInProgress=false;
     if(!activatePushButton.classList.contains('push-active-status'))activatePushButton.disabled=false;
   }
 });
