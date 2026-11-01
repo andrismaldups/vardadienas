@@ -1139,6 +1139,18 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     'remindersEnabled','reminderTime','reminderEvening','reminderMorning',
     'reminderEveningTime','reminderMorningTime','reminderTarget','reminderBirthdays'
   ];
+  // Worker 11: dzēšanas statusa nolasīšana pēc neskaidras atbildes.
+  async function readDeletionReceipt(saved){
+    const response=await fetch(FAVORITES_TEST_API+'/api/installation-deletion-status',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+    });
+    if(!response.ok)throw new Error('Statusa pārbaude: HTTP '+response.status);
+    const result=await response.json();
+    if(result.deleted===true&&result.success===true)return 'deleted';
+    if(result.deleted===false&&result.active===true)return 'active';
+    throw new Error('Neatpazīta statusa atbilde');
+  }
   async function deleteInstallationDataAfterConfirmation(){
     if(deletionSyncBlocked())return;
     const status=document.getElementById('deleteMyDataStatus');
