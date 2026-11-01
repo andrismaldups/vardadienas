@@ -1175,13 +1175,25 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
         // Atzīmi saglabājam TIKAI tieši pirms DELETE. Ja sagatavošana neizdodas,
         // servera dati vēl nav dzēsti un sinhronizācija nav jābloķē pēc pārlādes.
         localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
-        const response=await fetch(FAVORITES_TEST_API+'/api/installation-data',{
-          method:'DELETE',
-          headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
-        });
-        if(!response.ok)throw new Error('Serveris neapstiprināja dzēšanu (HTTP '+response.status+').');
-        const result=await response.json();
-        if(result.success!==true)throw new Error('Serveris neapstiprināja pilnīgu dzēšanu.');
+        let confirmed=false;
+        try{
+          const response=await fetch(FAVORITES_TEST_API+'/api/installation-data',{
+            method:'DELETE',
+            headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+          });
+          if(!response.ok)throw new Error('Dzēšanas HTTP '+response.status);
+          const result=await response.json();
+          confirmed=result.success===true;
+        }catch(error){
+          console.warn('Dzēšanas atbilde nav apstiprināta:',error);
+        }
+        if(!confirmed){
+          // Statusu drīkst uzskatīt par dzēstu tikai ar autentificētu Worker 11 kvīti.
+          const state=await readDeletionReceipt(saved);
+          if(state==='deleted')confirmed=true;
+          else throw new Error('Serveris ziņo, ka instalācija vēl ir aktīva; dzēšana nav apstiprināta');
+        }
+        if(!confirmed)throw new Error('Servera dzēšana nav apstiprināta');
       }
       // Push atcelšana notiek tikai pēc servera apstiprinājuma.
       let pushUnsubscribeFailed=false;
