@@ -1125,6 +1125,8 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   // Datu dzēšanas aizsardzība: šobrīd funkcija TEST vidē ir atspējota.
   // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
   let deletionInProgress=false;
+  let pushActivationInProgress=false;
+  let reminderSyncInProgress=0;
   const DELETE_LOCAL_KEYS=[
     'favorites','birthdays','birthdaySortMode',
     'testBirthdaySyncQueueV1','testBirthdaySyncInitializedV1',
@@ -1137,6 +1139,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
     const status=document.getElementById('deleteMyDataStatus');
     const button=document.getElementById('deleteMyDataButton');
     if(!confirm('Neatgriezeniski dzēst visus šīs instalācijas vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan serverī, gan ierīcē?'))return;
+    if(pushActivationInProgress){status.textContent='Pagaidi, līdz beidzas Push aktivizēšana, un mēģini vēlreiz.';return;}
     deletionInProgress=true;
     button.disabled=true;
     status.textContent='Notiek datu dzēšana…';
@@ -1146,6 +1149,8 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
       if(saved?.installationId&&saved?.token){
         // Pabeidzam iesākto dzimšanas dienu sinhronizāciju.
         if(birthdaySyncPromise)await birthdaySyncPromise;
+        // Neizdzēšam instalāciju, kamēr atgādinājumu iestatījumi tiek sūtīti.
+        while(reminderSyncInProgress>0)await new Promise(resolve=>setTimeout(resolve,100));
         const response=await fetch(FAVORITES_TEST_API+'/api/installation-data',{
           method:'DELETE',
           headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
@@ -1155,18 +1160,19 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
         if(result.success!==true)throw new Error('Serveris neapstiprināja pilnīgu dzēšanu.');
       }
       // Push atcelšana notiek tikai pēc servera apstiprinājuma.
+      let pushUnsubscribeFailed=false;
       if('serviceWorker' in navigator){
         try{
           const registration=await navigator.serviceWorker.ready;
           const subscription=await registration.pushManager?.getSubscription();
-          if(subscription)await subscription.unsubscribe();
-        }catch(error){console.warn('Push atcelšana ierīcē neizdevās:',error);}
+          if(subscription && !(await subscription.unsubscribe()))pushUnsubscribeFailed=true;
+        }catch(error){pushUnsubscribeFailed=true;console.warn('Push atcelšana ierīcē neizdevās:',error);}
       }
       for(const key of DELETE_LOCAL_KEYS)localStorage.removeItem(key);
-      status.textContent='Dati dzēsti. Aplikācija tiks pārlādēta.';
+      status.textContent=pushUnsubscribeFailed?'Servera un lokālie dati dzēsti, bet ierīces Push abonementa atcelšanu nevarēja apstiprināt.':'Dati dzēsti. Aplikācija tiks pārlādēta.';
       window.location.reload();
     }catch(error){
-      status.textContent='Dzēšana nav apstiprināta: '+(error.message||String(error))+'. Lokālie dati saglabāti.';
+      status.textContent='Dzēšanas rezultātu nevar apstiprināt: '+(error.message||String(error))+'. Lokālie dati saglabāti; servera stāvoklis var būt mainījies. Pirms atkārtota mēģinājuma pārbaudi savienojumu.';
       button.disabled=false;
     }finally{
       deletionInProgress=false;
@@ -1190,6 +1196,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
       if(!installation || typeof installation.installationId!=='string' ||
          !installation.installationId || typeof installation.token!=='string' ||
          !installation.token) throw new Error('Nepareiza TEST instalācijas servera atbilde');
+      if(deletionInProgress)throw new Error('Instalācijas izveide pārtraukta datu dzēšanas dēļ');
       localStorage.setItem(TEST_INSTALLATION_STORAGE_KEY,JSON.stringify({
         installationId:installation.installationId,
         token:installation.token
