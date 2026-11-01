@@ -1153,12 +1153,16 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
       // Sagaidām arī fonā jau uzsāktu instalācijas reģistrāciju.
       if(testInstallationPromise)await testInstallationPromise;
       const saved=JSON.parse(localStorage.getItem('vardadienas_test_installation_v1')||'null');
+      if(saved && (!saved.installationId || !saved.token)){
+        throw new Error('Instalācijas piekļuves dati ir nepilnīgi; automātiska dzēšana apturēta');
+      }
       if(saved?.installationId&&saved?.token){
-        localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
-        // Pabeidzam iesākto dzimšanas dienu sinhronizāciju.
+        // Pirms servera DELETE sagaidām iesāktos rakstīšanas pieprasījumus.
         if(birthdaySyncPromise)await birthdaySyncPromise;
-        // Neizdzēšam instalāciju, kamēr atgādinājumu iestatījumi tiek sūtīti.
         while(reminderSyncInProgress>0)await new Promise(resolve=>setTimeout(resolve,100));
+        // Atzīmi saglabājam TIKAI tieši pirms DELETE. Ja sagatavošana neizdodas,
+        // servera dati vēl nav dzēsti un sinhronizācija nav jābloķē pēc pārlādes.
+        localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
         const response=await fetch(FAVORITES_TEST_API+'/api/installation-data',{
           method:'DELETE',
           headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
