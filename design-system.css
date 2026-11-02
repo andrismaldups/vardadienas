@@ -333,3 +333,62 @@ html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.card{
  background:rgba(255,247,220,.17)!important;
 }
 html[data-design="festive-s1"][data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){background:rgba(255,250,232,.91)}
+
+
+/* TEST S1.3 — gold theme finishing: unify remaining green controls.
+   Scoped to festive light theme; no background or application logic changes. */
+html[data-design="festive-s1"][data-theme="light"]{
+ --gold-focus:#a96612;
+ --gold-soft:#f7e4b6;
+}
+html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus,
+html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus-visible,
+html[data-design="festive-s1"][data-theme="light"] #favoriteAddInput:focus,
+html[data-design="festive-s1"][data-theme="light"] #nameInput:focus,
+html[data-design="festive-s1"][data-theme="light"] #dateInput:focus,
+html[data-design="festive-s1"][data-theme="light"] #birthdayAddForm input:focus{
+ outline:2px solid var(--gold-focus)!important;
+ border-color:var(--gold-focus)!important;
+ box-shadow:0 0 0 2px var(--gold-soft)!important;
+ caret-color:#875015!important;
+}
+html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select){caret-color:#875015!important}
+html[data-design="festive-s1"][data-theme="light"] :is(input[type="checkbox"],input[type="radio"]){accent-color:#a96612!important}
+html[data-design="festive-s1"][data-theme="light"] :is(
+ .favorite-add-matches button,.favorite-add-selected button,
+ #favoriteAddCancel,#birthdayAddCancel,#nameResult .search-add-favorite,
+ #dateSuggestions button,.search-add-favorite,
+ .greeting-options button.active,.greeting-result-actions>button,
+ .greeting-result-action-row button,.greeting-back-bar .back-btn,
+ .name-detail-actions button,.push-active-status,
+ #deleteMyDataButton
+){color:#88500f!important;border-color:#d9a34b!important}
+html[data-design="festive-s1"][data-theme="light"] :is(
+ .favorite-add-matches button,.favorite-add-selected button,
+ #favoriteAddCancel,#birthdayAddCancel,#nameResult .search-add-favorite,
+ #dateSuggestions button,.greeting-result-actions>button,
+ .greeting-result-action-row button,.greeting-back-bar .back-btn,
+ .greeting-options button.active
+){background:#fff3d5!important}
+html[data-design="festive-s1"][data-theme="light"] :is(
+ .name-link:focus-visible,.favorite-add-matches button:focus-visible,
+ #favoriteAddCancel:focus-visible,#birthdayAddCancel:focus-visible,
+ #nameResult .search-add-favorite:focus-visible,
+ #deleteMyDataButton:focus-visible
+){outline-color:#a96612!important}
+html[data-design="festive-s1"][data-theme="light"] :is(
+ .settings-card input[type="time"],.settings-card select[id^="reminder"][id$="Time"],
+ .name-detail-feedback,.birthday-edit-btn,.birthday-entry .birthday-chevron,
+ .greeting-entry-arrow
+){color:#88500f!important}
+html[data-design="festive-s1"][data-theme="light"] .switch input:checked+.switch-slider{background:#a96612!important}
+html[data-design="festive-s1"][data-theme="light"] .greeting-options button.active{background:#f8dfa8!important}
+html[data-design="festive-s1"][data-theme="light"] .push-active-status,
+html[data-design="festive-s1"][data-theme="light"] .push-active-status:disabled{background:#f7e6c5!important;color:#88500f!important}
+
+/* Emoji chooser must not be covered by the sticky navigation.
+   Restore navigation automatically when the chooser closes. */
+#greetingResultView:has(#greetingEmojiPanel:not([hidden])) .greeting-back-bar{
+ visibility:hidden!important;
+ pointer-events:none!important;
+}
