@@ -278,3 +278,41 @@ html[data-design="festive-s1"][data-theme="light"] .greeting-back-bar{
 html[data-design="festive-s1"][data-theme="light"] #deleteMyDataButton{
  background:#f7e6c5;color:#744311;border-color:#dba544;
 }
+
+
+/* TEST S1.1 — Zelta greznība. Scoped to light festive mode; previous S1 retained in Git history. */
+html[data-design="festive-s1"][data-theme="light"] body{
+ background-image:
+  url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22680%22%20viewBox%3D%220%200%20520%20680%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22petal%22%3E%3Cstop%20stop-color%3D%22%23fff4bd%22%2F%3E%3Cstop%20offset%3D%22.6%22%20stop-color%3D%22%23dca33b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2398500a%22%2F%3E%3C%2FradialGradient%3E%3ClinearGradient%20id%3D%22stem%22%3E%3Cstop%20stop-color%3D%22%23f9dc83%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a36a1c%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22url(%23stem)%22%20stroke-width%3D%223%22%20opacity%3D%22.7%22%3E%3Cpath%20d%3D%22M-30%20480%20Q140%20250%2080%20-50%22%2F%3E%3Cpath%20d%3D%22M520%20640%20Q300%20430%20440%20100%22%2F%3E%3Cpath%20d%3D%22M10%20260%20Q190%20230%20245%2065%22%2F%3E%3Cpath%20d%3D%22M510%20370%20Q340%20335%20265%20505%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22url(%23petal)%22%20opacity%3D%22.55%22%3E%3Cg%20transform%3D%22translate(100%20210)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(420%20450)%20scale(.85)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(265%2095)%20scale(.48)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23fff8d6%22%20stroke%3D%22%23c78a2d%22%20stroke-width%3D%221.5%22%20opacity%3D%22.78%22%3E%3Cpath%20d%3D%22M290%20290l7%2020%2020%207-20%207-7%2020-7-20-20-7%2020-7z%22%2F%3E%3Cpath%20d%3D%22M55%20530l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5z%22%2F%3E%3Cpath%20d%3D%22M390%2070l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
+  radial-gradient(ellipse 62% 20% at 4% 18%,rgba(220,145,25,.38),transparent 95%),
+  radial-gradient(ellipse 75% 23% at 95% 47%,rgba(201,112,16,.28),transparent 95%),
+  radial-gradient(ellipse 68% 20% at 7% 77%,rgba(246,196,75,.42),transparent 95%),
+  repeating-linear-gradient(155deg,transparent 0 280px,rgba(176,105,16,.08) 283px,rgba(255,247,207,.20) 291px,transparent 310px),
+  linear-gradient(125deg,#fff7d8 0%,#f6d483 31%,#ffefba 53%,#eac16c 77%,#fff5d4 100%);
+ background-size: min(100vw,700px) auto,cover,cover,cover,auto,cover;
+ background-position:center top,center,center,center,center,center;
+ background-repeat:repeat-y,no-repeat,no-repeat,no-repeat,repeat,no-repeat;
+ background-attachment:scroll,fixed,fixed,fixed,fixed,fixed;
+}
+html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child,
+html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.card,
+html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.card,
+html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.greeting-entry,
+html[data-design="festive-s1"][data-theme="light"] #greetingView>.card{
+ background:transparent!important;
+ backdrop-filter:none;-webkit-backdrop-filter:none;
+ box-shadow:none;
+ border-color:rgba(164,98,14,.48);
+}
+html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side input,
+html[data-design="festive-s1"][data-theme="light"] #greetingView input{background:#fffdf8!important}
+html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child .app-title,
+html[data-design="festive-s1"][data-theme="light"] #mainView h2,
+html[data-design="festive-s1"][data-theme="light"] #greetingView h2{text-shadow:0 1px 0 rgba(255,246,210,.8)}
+/* Preserve contrast in the small information cards and interactive fields. */
+html[data-design="festive-s1"][data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){
+ background:rgba(255,248,225,.87);
+}
+@media(max-width:430px){
+ html[data-design="festive-s1"][data-theme="light"] body{background-size:100vw auto,cover,cover,cover,auto,cover}
+}
