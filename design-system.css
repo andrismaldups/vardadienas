@@ -110,3 +110,77 @@ html[data-design] .push-active-status:disabled{color:var(--ds-primary)!important
 html[data-design] .day.today:not(.sel){outline-color:var(--ds-border)}
 html[data-design] .date-suggestions button{color:var(--ds-text);border-color:var(--ds-border)}
 /* Non-theme semantic states (errors, destructive actions) remain distinct. */
+
+/* Festive S1: one reusable visual shell for every screen.
+   Gold ornament is painted behind content, not over controls. */
+html[data-design="festive-s1"]{background:var(--ds-page-bg)}
+html[data-design="festive-s1"] body{
+  background:
+    radial-gradient(ellipse 105% 120px at 50% 0%,#ffe1a0 0%,transparent 78%),
+    radial-gradient(ellipse 105% 120px at 50% 100%,#ffe1a0 0%,transparent 78%),
+    linear-gradient(180deg,#fff9e9,#fff6df 52%,#fff9e9);
+  background-attachment:fixed;
+  color:var(--ds-text);
+}
+html[data-design="festive-s1"] .wrap{position:relative;isolation:isolate}
+html[data-design="festive-s1"] .wrap::before,
+html[data-design="festive-s1"] .wrap::after{
+  content:"";position:fixed;left:0;right:0;height:80px;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(110% 70px at 22% -20px,transparent 73%,#dfac47 75%,#ffe4a5 78%,transparent 81%),
+    radial-gradient(105% 75px at 72% -26px,transparent 73%,#f6c65f 75%,#fff2c9 78%,transparent 81%);
+  opacity:.85;
+}
+html[data-design="festive-s1"] .wrap::before{top:0}
+html[data-design="festive-s1"] .wrap::after{bottom:0;transform:rotate(180deg)}
+html[data-design="festive-s1"] .card{
+  background:var(--ds-surface);
+  border:1px solid var(--ds-soft-border);
+  box-shadow:0 8px 26px rgba(130,88,24,.09);
+}
+html[data-design="festive-s1"] .app-title,
+html[data-design="festive-s1"] h1,
+html[data-design="festive-s1"] h2,
+html[data-design="festive-s1"] h3{color:var(--ds-text)}
+html[data-design="festive-s1"] .names,
+html[data-design="festive-s1"] .name-detail-card h3{color:var(--ds-primary)}
+html[data-design="festive-s1"] .primary,
+html[data-design="festive-s1"] button.primary,
+html[data-design="festive-s1"] #calendar .day.sel{background:var(--ds-primary);color:#fff;border-color:var(--ds-primary)}
+html[data-design="festive-s1"] .tomorrow,
+html[data-design="festive-s1"] .latvia-today,
+html[data-design="festive-s1"] .interesting,
+html[data-design="festive-s1"] .birthday-entry{background:var(--ds-soft-bg);border-color:var(--ds-border)}
+html[data-design="festive-s1"] #prevDay,
+html[data-design="festive-s1"] #nextDay,
+html[data-design="festive-s1"] #prevMonth,
+html[data-design="festive-s1"] #nextMonth,
+html[data-design="festive-s1"] #nameBtn,
+html[data-design="festive-s1"] #dateBtn,
+html[data-design="festive-s1"] #favoriteAddCancel{background:var(--ds-soft-bg);color:var(--ds-primary);border-color:var(--ds-border)}
+html[data-design="festive-s1"] .settings-back-bar,
+html[data-design="festive-s1"] .greeting-back-bar{background:rgba(255,249,235,.96);border-color:var(--ds-border)}
+html[data-design="festive-s1"] .side-menu,
+html[data-design="festive-s1"] .about-content,
+html[data-design="festive-s1"] .about-row-button{background:var(--ds-surface)}
+html[data-design="festive-s1"] .favorites-sort,
+html[data-design="festive-s1"] .birthday-sort{background:#f7ecd4}
+html[data-design="festive-s1"] .favorites-sort button.active,
+html[data-design="festive-s1"] .birthday-sort button.active{background:#e3f3df;color:var(--ds-primary)}
+html[data-design="festive-s1"] .appearance-choice input{accent-color:var(--ds-primary)}
+html[data-design="festive-s1"] #deleteMyDataButton{background:#f4e7cf;color:var(--ds-primary);border-color:var(--ds-border)}
+/* Dark mode keeps accessible surfaces; decoration stays subdued. */
+html[data-design="festive-s1"][data-theme="dark"] body{background:#231e17;color:#f8ebd2}
+html[data-design="festive-s1"][data-theme="dark"] .card,
+html[data-design="festive-s1"][data-theme="dark"] .side-menu,
+html[data-design="festive-s1"][data-theme="dark"] .about-content,
+html[data-design="festive-s1"][data-theme="dark"] .about-row-button{background:#30291f;color:#f8ebd2;border-color:#705735}
+html[data-design="festive-s1"][data-theme="dark"] .app-title,
+html[data-design="festive-s1"][data-theme="dark"] h1,
+html[data-design="festive-s1"][data-theme="dark"] h2,
+html[data-design="festive-s1"][data-theme="dark"] h3{color:#f8ebd2}
+html[data-design="festive-s1"][data-theme="dark"] .settings-back-bar,
+html[data-design="festive-s1"][data-theme="dark"] .greeting-back-bar{background:rgba(35,30,23,.96)}
+html[data-design="festive-s1"][data-theme="dark"] .wrap::before,
+html[data-design="festive-s1"][data-theme="dark"] .wrap::after{opacity:.22}
+@media(prefers-reduced-motion:reduce){html[data-design="festive-s1"] .wrap::before,html[data-design="festive-s1"] .wrap::after{animation:none}}
