@@ -343,6 +343,22 @@ html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::aft
   html[data-design="lavender"] #mainView>.card:first-child::after{width:145px;height:110px}
   html[data-design="lavender"] #mainView .interesting::after{width:100px;height:125px}
 }
+
+/* TEST Z3: approved floral finishing touches — keep Interesanti unchanged. */
+html[data-design="lavender"] #mainView>.card:first-child::before{
+  opacity:1;
+}
+html[data-design="lavender"] #mainView>.card:first-child::after{
+  width:96px;height:82px;left:-6px;bottom:-2px;opacity:.88;
+}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::before{opacity:1}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::after{opacity:.78}
+@media(max-width:420px){
+  html[data-design="lavender"] #mainView>.card:first-child::after{
+    width:78px;height:70px;left:-5px;bottom:-2px;
+  }
+}
+
 </style>
 <script>
 (function(){
