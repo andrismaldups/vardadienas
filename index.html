@@ -87,6 +87,15 @@
   outline:2px solid #08783f;outline-offset:2px;
 }
 
+/* TEST: vienota zaļā palete vārdu pievienošanai un datu dzēšanai. */
+#favoriteAddInput:focus{outline:2px solid #08783f;outline-offset:1px;border-color:#08783f;box-shadow:0 0 0 2px #dff3e5}
+.favorite-add-matches button{color:#08783f;border-color:#d7e8dc;background:#fff}
+.favorite-add-matches button:hover,.favorite-add-matches button:focus-visible{background:#f0f8f2;border-color:#08783f;outline-color:#08783f}
+#deleteMyDataButton{background:#e8e8e8;color:#08783f;border:1px solid #d5dde5;box-shadow:none}
+#deleteMyDataButton:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+html[data-theme="dark"] .favorite-add-matches button{background:#233b32;color:#a3e9bf;border-color:#507561}
+html[data-theme="dark"] .favorite-add-matches button:hover,html[data-theme="dark"] .favorite-add-matches button:focus-visible{background:#2b4b3c}
+html[data-theme="dark"] #deleteMyDataButton{background:#34453d;color:#a3e9bf;border-color:#507561}
 /* Izskata režīmi: automātiskais seko sistēmas izvēlei. */
 .appearance-card{padding:18px}.appearance-card h3{margin:0 0 12px}.appearance-choice{display:flex;align-items:center;gap:12px;padding:11px 2px;cursor:pointer}.appearance-choice input{width:22px;min-width:22px;height:22px;min-height:22px;accent-color:#08783f}.appearance-choice small{display:block;font-size:13px;color:#718096;margin-top:3px}
 html[data-theme="dark"]{color-scheme:dark;background:#0f1f1a}
@@ -228,7 +237,7 @@ html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{backgr
   <section class="card about-card" aria-labelledby="privacyDataHeading">
     <h3 id="privacyDataHeading">Mani dati</h3>
     <p>TEST versijā vari neatgriezeniski dzēst šīs instalācijas saglabātos vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan ierīcē, gan serverī.</p>
-    <button type="button" id="deleteMyDataButton" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
+    <button type="button" id="deleteMyDataButton" class="delete-data-button" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
     <p id="deleteMyDataStatus" role="status">Pirms dzēšanas tiks prasīts apstiprinājums.</p>
   </section>
 
@@ -2294,7 +2303,7 @@ activatePushButton.addEventListener('click',async()=>{
     localStorage.setItem('testPushSubscriptionId',String(subscriptionId));
     pushActivationStatus.textContent='Abonements saglabāts. Saglabā atgādinājumu iestatījumus…';
     await syncTestReminderSettings();
-    pushActivationStatus.textContent='';
+    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements un atgādinājumu iestatījumi saglabāti serverī.';
     setPushActivationAppearance(true);
   }catch(error){
     console.error('Push aktivizēšanas kļūda',error);
