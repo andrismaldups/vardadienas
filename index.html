@@ -359,6 +359,18 @@ html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::aft
   }
 }
 
+/* TEST Z3: render the approved top lavender as an actual image, not a CSS background. */
+html[data-design="lavender"] #mainView>.card:first-child::before{content:none!important}
+#mainView>.card:first-child .lavender-top-art{display:none}
+html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{
+ display:block;position:absolute;top:0;right:0;width:190px;height:185px;
+ object-fit:contain;object-position:right top;opacity:1;filter:none;
+ pointer-events:none;z-index:0;
+}
+@media(max-width:420px){
+ html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{width:150px;height:145px}
+}
+
 </style>
 <script>
 (function(){
@@ -587,6 +599,7 @@ html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::aft
 </section>
 <div id="mainView">
 <section class="card">
+<img class="lavender-top-art" src="assets/lavanda_augsa.png" alt="" aria-hidden="true" decoding="async">
 <div class="hero">
     <button class="menu-btn" aria-label="Atvērt izvēlni" onclick="toggleSideMenu()">☰</button><div id="menuBackdrop" class="menu-backdrop" hidden onclick="closeSideMenu()"></div>
     <div class="side-menu" id="sideMenu" hidden>
