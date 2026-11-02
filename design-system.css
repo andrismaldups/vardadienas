@@ -392,3 +392,10 @@ html[data-design="festive-s1"][data-theme="light"] .push-active-status:disabled{
  visibility:hidden!important;
  pointer-events:none!important;
 }
+
+/* TEST S1.3 readability: white labels on dark gold name-detail action buttons. */
+html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-actions button,
+html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-actions button:disabled{
+ color:#fff!important;
+ -webkit-text-fill-color:#fff!important;
+}
