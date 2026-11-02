@@ -184,3 +184,97 @@ html[data-design="festive-s1"][data-theme="dark"] .greeting-back-bar{background:
 html[data-design="festive-s1"][data-theme="dark"] .wrap::before,
 html[data-design="festive-s1"][data-theme="dark"] .wrap::after{opacity:.22}
 @media(prefers-reduced-motion:reduce){html[data-design="festive-s1"] .wrap::before,html[data-design="festive-s1"] .wrap::after{animation:none}}
+
+
+/* S1 visual experiment: rich amber-gold palette and translucent cards, TEST only. */
+html[data-design="festive-s1"][data-theme="light"]{
+  --ds-page-bg:#fff1ce;--ds-surface:rgba(255,250,235,.80);
+  --ds-text:#4b280f;--ds-muted:#87633b;--ds-primary:#97540c;
+  --ds-on-primary:#fff9e9;--ds-accent:#c58a25;--ds-border:#dba544;
+  --ds-soft-bg:rgba(255,244,214,.75);--ds-soft-border:#e1b65e;
+  --ds-focus:#9d5b0b;--ds-caret:#7c440d;
+}
+html[data-design="festive-s1"][data-theme="light"] body{
+ background:
+ radial-gradient(ellipse 80% 25% at 12% 9%,rgba(255,220,122,.70),transparent 80%),
+ radial-gradient(ellipse 85% 28% at 88% 68%,rgba(244,185,67,.37),transparent 80%),
+ repeating-linear-gradient(163deg,transparent 0 330px,rgba(230,165,43,.10) 331px,transparent 339px),
+ linear-gradient(135deg,#fff6df,#ffe5a8 48%,#fff5dc);
+ background-attachment:fixed;
+}
+html[data-design="festive-s1"][data-theme="light"] .wrap::before,
+html[data-design="festive-s1"][data-theme="light"] .wrap::after{
+ height:115px;opacity:1;
+ background:
+ radial-gradient(105% 75px at 22% -17px,transparent 71%,#bd7918 73%,#fff0ae 76%,#dca53c 79%,transparent 82%),
+ radial-gradient(110% 88px at 75% -29px,transparent 71%,#c68c2c 73%,#fff2c2 76%,#e5ae4b 79%,transparent 82%);
+}
+html[data-design="festive-s1"][data-theme="light"] .card{
+ background:var(--ds-surface);border:1px solid #dfae53;
+ box-shadow:0 7px 25px rgba(122,69,8,.14),inset 0 1px 0 rgba(255,255,255,.85);
+ backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+}
+html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child{
+ background:rgba(255,249,225,.30);border-color:rgba(210,147,34,.55);
+}
+html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child .app-title,
+html[data-design="festive-s1"][data-theme="light"] .app-title,
+html[data-design="festive-s1"][data-theme="light"] h1,
+html[data-design="festive-s1"][data-theme="light"] h2,
+html[data-design="festive-s1"][data-theme="light"] h3{
+ color:#542a0e;font-family:Georgia,"Times New Roman",serif;
+}
+html[data-design="festive-s1"][data-theme="light"] .names,
+html[data-design="festive-s1"][data-theme="light"] .name-detail-card h3{
+ color:#a7640c;
+}
+html[data-design="festive-s1"][data-theme="light"] .primary,
+html[data-design="festive-s1"][data-theme="light"] button.primary,
+html[data-design="festive-s1"][data-theme="light"] .day.sel,
+html[data-design="festive-s1"][data-theme="light"] #calendar .day.sel{
+ color:#fff9eb;border:1px solid #a76a12;
+ background:linear-gradient(180deg,#d59b2d 0%,#a75f0d 58%,#824009 100%);
+ box-shadow:inset 0 2px 2px #ffe5a4,0 3px 9px #ad782f55;
+}
+html[data-design="festive-s1"][data-theme="light"] .tomorrow,
+html[data-design="festive-s1"][data-theme="light"] .latvia-today,
+html[data-design="festive-s1"][data-theme="light"] .interesting,
+html[data-design="festive-s1"][data-theme="light"] .birthday-entry{
+ background:rgba(255,247,222,.70);border:1px solid #e0ae4e;
+ box-shadow:0 2px 7px #b7802826;
+}
+html[data-design="festive-s1"][data-theme="light"] #prevDay,
+html[data-design="festive-s1"][data-theme="light"] #nextDay,
+html[data-design="festive-s1"][data-theme="light"] #prevMonth,
+html[data-design="festive-s1"][data-theme="light"] #nextMonth,
+html[data-design="festive-s1"][data-theme="light"] #nameBtn,
+html[data-design="festive-s1"][data-theme="light"] #dateBtn{
+ background:linear-gradient(180deg,#fff9e8,#ffeac0);color:#713a0b;border-color:#d9a34b;
+ box-shadow:0 2px 5px #b7802826;
+}
+html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select){
+ background:rgba(255,253,246,.94);border-color:#d9a34b;color:#452812;
+ caret-color:#7c440d;
+}
+html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus{
+ border-color:#9d5b0b;outline:2px solid #bd8329;outline-offset:1px;
+}
+html[data-design="festive-s1"][data-theme="light"] .week div,
+html[data-design="festive-s1"][data-theme="light"] #dateTitle,
+html[data-design="festive-s1"][data-theme="light"] .muted{
+ color:#85623c;
+}
+html[data-design="festive-s1"][data-theme="light"] .favorites-sort button.active,
+html[data-design="festive-s1"][data-theme="light"] .birthday-sort button.active{
+ background:#f5d68e;color:#693909;
+}
+html[data-design="festive-s1"][data-theme="light"] .favorites-sort,
+html[data-design="festive-s1"][data-theme="light"] .birthday-sort{background:#f7e7bf}
+html[data-design="festive-s1"][data-theme="light"] .birthday-gift-icon{filter:sepia(1) saturate(2) hue-rotate(350deg)}
+html[data-design="festive-s1"][data-theme="light"] .settings-back-bar,
+html[data-design="festive-s1"][data-theme="light"] .greeting-back-bar{
+ background:rgba(255,244,214,.95);border-color:#dba544;
+}
+html[data-design="festive-s1"][data-theme="light"] #deleteMyDataButton{
+ background:#f7e6c5;color:#744311;border-color:#dba544;
+}
