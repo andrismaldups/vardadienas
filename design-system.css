@@ -54,3 +54,59 @@ html[data-design="festive-s1"] {
   --ds-card-radius:22px;
   --ds-control-radius:12px;
 }
+
+/* Shared components: keep these declarations AFTER the legacy inline CSS.
+   Palette changes then apply consistently to every application view. */
+html[data-design] body{background:var(--ds-page-bg);color:var(--ds-text)}
+html[data-design] .card{background:var(--ds-surface);border-radius:var(--ds-card-radius)}
+html[data-design] .primary,
+html[data-design] .day.sel{background:var(--ds-primary);color:var(--ds-on-primary)}
+html[data-design] .name-detail-card h3,
+html[data-design] .name-detail-feedback,
+html[data-design] .names,
+html[data-design] .birthday-chevron,
+html[data-design] .birthday-edit-btn,
+html[data-design] .greeting-entry-arrow,
+html[data-design] .back-btn,
+html[data-design] .menu-btn,
+html[data-design] .side-menu button{color:var(--ds-primary)}
+html[data-design] button,
+html[data-design] input,
+html[data-design] textarea,
+html[data-design] select{border-color:var(--ds-border);border-radius:var(--ds-control-radius)}
+html[data-design] input,
+html[data-design] textarea,
+html[data-design] select{caret-color:var(--ds-caret)}
+html[data-design] :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
+html[data-design] .settings-card input[type="checkbox"],
+html[data-design] .settings-card input[type="radio"]{accent-color:var(--ds-primary)}
+html[data-design] .switch input:checked+.switch-slider{background:var(--ds-primary)}
+html[data-design] .settings-card input[type="time"]{color:var(--ds-primary)}
+html[data-design] .tomorrow,
+html[data-design] .interesting,
+html[data-design] .birthday-entry,
+html[data-design] .greeting-result,
+html[data-design] .greeting-result-actions>button,
+html[data-design] .greeting-result-action-row button,
+html[data-design] .greeting-back-bar .back-btn,
+html[data-design] #settingsView .back-btn,
+html[data-design] #favoritesView>.back-btn,
+html[data-design] #birthdaysView>.back-btn,
+html[data-design] #nameDetailView>.back-btn{background:var(--ds-soft-bg);border-color:var(--ds-soft-border)}
+html[data-design] .greeting-result-actions>button,
+html[data-design] .greeting-result-action-row button,
+html[data-design] .greeting-back-bar .back-btn,
+html[data-design] #settingsView .back-btn,
+html[data-design] #favoritesView>.back-btn,
+html[data-design] #birthdaysView>.back-btn,
+html[data-design] #nameDetailView>.back-btn{color:var(--ds-primary)}
+html[data-design] .greeting-options button.active{background:var(--ds-soft-bg);color:var(--ds-primary);border-color:var(--ds-primary)}
+html[data-design] .favorite-add-selected button{background:var(--ds-soft-bg);color:var(--ds-primary)}
+html[data-design] .favorite-add-matches button{color:var(--ds-primary)}
+html[data-design] .favorites-sort button.active,
+html[data-design] .birthday-sort button.active{background:var(--ds-soft-bg);color:var(--ds-primary)}
+html[data-design] .push-active-status,
+html[data-design] .push-active-status:disabled{color:var(--ds-primary)!important}
+html[data-design] .day.today:not(.sel){outline-color:var(--ds-border)}
+html[data-design] .date-suggestions button{color:var(--ds-text);border-color:var(--ds-border)}
+/* Non-theme semantic states (errors, destructive actions) remain distinct. */
