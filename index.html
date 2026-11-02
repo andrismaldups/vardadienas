@@ -208,10 +208,26 @@ html[data-theme="dark"] #favoriteAddInput{caret-color:#6ad49a}
 /* V2-11: apsveikuma teksta kursors un pārējo teksta lauku kursori */
 input,textarea{caret-color:#08783f}
 html[data-theme="dark"] input,html[data-theme="dark"] textarea{caret-color:#6ad49a}
+/* TEST: Z3 Lavandas tonis — dekoratīvs slānis, bez funkciju izmaiņām. */
+html[data-design="lavender"][data-theme="light"],html[data-design="lavender"][data-theme="light"] body{background:#f5f0f8;color:#30283b}
+html[data-design="lavender"][data-theme="light"] .card{background:#fffafd;border:1px solid #e7d8ec;box-shadow:0 8px 28px #6d4a7b12}
+html[data-design="lavender"][data-theme="light"] .app-title,html[data-design="lavender"][data-theme="light"] .menu-btn{color:#493457}
+html[data-design="lavender"][data-theme="light"] .tomorrow,html[data-design="lavender"][data-theme="light"] .interesting,html[data-design="lavender"][data-theme="light"] .latvia-today,html[data-design="lavender"][data-theme="light"] .birthday-entry{background:#f8f1fa;border-color:#dfcce6}
+html[data-design="lavender"][data-theme="light"] .settings-back-bar,html[data-design="lavender"][data-theme="light"] .greeting-back-bar{background:rgba(250,245,252,.97)}
+html[data-design="lavender"][data-theme="light"] #mainView>.card:first-child{position:relative;isolation:isolate}
+html[data-design="lavender"][data-theme="light"] #mainView>.card:first-child:before{content:"✿";position:absolute;right:23px;top:12px;color:#b99bc8;font-size:24px;opacity:.55;pointer-events:none;z-index:-1}
+html[data-design="lavender"][data-theme="dark"],html[data-design="lavender"][data-theme="dark"] body{background:#211c29}
+html[data-design="lavender"][data-theme="dark"] .card{background:#302838;border-color:#53435c;box-shadow:0 8px 28px #0003}
+html[data-design="lavender"][data-theme="dark"] .tomorrow,html[data-design="lavender"][data-theme="dark"] .interesting,html[data-design="lavender"][data-theme="dark"] .latvia-today,html[data-design="lavender"][data-theme="dark"] .birthday-entry{background:#3a3043;border-color:#6b5475}
+html[data-design="lavender"][data-theme="dark"] .settings-back-bar,html[data-design="lavender"][data-theme="dark"] .greeting-back-bar{background:rgba(33,28,41,.97)}
 </style>
 <script>
 (function(){
   const KEY='appearanceMode';
+  const DESIGN_KEY='designStyle';
+  let design='classic';
+  try{if(localStorage.getItem(DESIGN_KEY)==='lavender')design='lavender';}catch(e){}
+  document.documentElement.dataset.design=design;
   const allowed=['light','dark','auto'];
   let mode='auto';
   try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
@@ -219,6 +235,10 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea{caret-color:#6ad4
   function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;}
   apply();
   function init(){
+    document.querySelectorAll('input[name="designStyle"]').forEach(input=>{
+      input.checked=input.value===design;
+      input.addEventListener('change',()=>{if(!input.checked)return;design=input.value;document.documentElement.dataset.design=design;try{localStorage.setItem(DESIGN_KEY,design);}catch(e){}});
+    });
     document.querySelectorAll('input[name="appearanceMode"]').forEach(input=>{
       input.checked=input.value===mode;
       input.addEventListener('change',()=>{if(!input.checked)return;mode=input.value;try{localStorage.setItem(KEY,mode);}catch(e){}apply();});
@@ -269,6 +289,10 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea{caret-color:#6ad4
 
   <section class="card appearance-card" aria-labelledby="appearanceHeading">
     <h3 id="appearanceHeading">Izskats</h3>
+    <h4>Dizaina stils</h4>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="classic"><span>Klasiskais</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="lavender"><span>Lavandas tonis (Z3)<small>Maigi violeti foni un akcenti</small></span></label>
+    <h4>Krāsu režīms</h4>
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="light"><span>Gaišais</span></label>
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="dark"><span>Tumšais</span></label>
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="auto"><span>Automātiskais<small>Atbilstoši ierīces iestatījumiem</small></span></label>
