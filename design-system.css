@@ -1,0 +1,56 @@
+/* Vardadienas TEST: design-system foundation v1.
+   Semantic tokens only; component migration and S1 activation follow in separate commits.
+   Do not encode confirmation/error colors as decorative palette values. */
+:root,
+html[data-design="classic"] {
+  --ds-page-bg:#f2f5f8;
+  --ds-surface:#ffffff;
+  --ds-text:#18392b;
+  --ds-muted:#718096;
+  --ds-primary:#08783f;
+  --ds-on-primary:#ffffff;
+  --ds-accent:#08783f;
+  --ds-border:#d7dee8;
+  --ds-soft-bg:#f6fbf7;
+  --ds-soft-border:#d7e8dc;
+  --ds-focus:#08783f;
+  --ds-caret:#08783f;
+  --ds-card-radius:22px;
+  --ds-control-radius:12px;
+  --ds-decor-top:none;
+  --ds-decor-bottom:none;
+}
+html[data-design="lavender"] {
+  --ds-page-bg:#f5f0f8;
+  --ds-surface:#fffafd;
+  --ds-text:#30283b;
+  --ds-muted:#80618e;
+  --ds-primary:#69368a;
+  --ds-on-primary:#ffffff;
+  --ds-accent:#8b50a9;
+  --ds-border:#e7d8ec;
+  --ds-soft-bg:#f8f1fa;
+  --ds-soft-border:#dfcce6;
+  --ds-focus:#8b50a9;
+  --ds-caret:#9e62bb;
+  --ds-decor-top:url("assets/lavanda_augsa.png");
+  --ds-decor-bottom:url("assets/lavanda_apaksa.png");
+}
+/* S1 draft palette, not yet selectable. Gold is decorative; green remains
+   the high-contrast action color, consistent with the approved S1 mockup. */
+html[data-design="festive-s1"] {
+  --ds-page-bg:#fff7e5;
+  --ds-surface:#fffdf7;
+  --ds-text:#203a2a;
+  --ds-muted:#786e58;
+  --ds-primary:#08783f;
+  --ds-on-primary:#ffffff;
+  --ds-accent:#a36b13;
+  --ds-border:#e8c989;
+  --ds-soft-bg:#fff9eb;
+  --ds-soft-border:#e8c989;
+  --ds-focus:#a36b13;
+  --ds-caret:#08783f;
+  --ds-card-radius:22px;
+  --ds-control-radius:12px;
+}
