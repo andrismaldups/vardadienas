@@ -459,3 +459,110 @@ html[data-design="festive-s1"][data-theme="light"] #calendar .day.today:not(.sel
   outline:2px solid #d6a14c;
   color:#75451d;
 }
+
+
+/* TEST S1.9 — Zeltainais tumšais skats. Only festive-s1 + dark.
+   Keep approved S1.8 light theme, layouts and application logic untouched. */
+html[data-design="festive-s1"][data-theme="dark"]{
+  --ds-page-bg:#21170f;--ds-surface:#34271b;--ds-text:#fff0d3;
+  --ds-muted:#d6b98b;--ds-primary:#b77922;--ds-on-primary:#fff9ee;
+  --ds-accent:#f2c36b;--ds-border:#8a6438;--ds-soft-bg:#3d2e1f;
+  --ds-soft-border:#916a3c;--ds-focus:#f0c474;--ds-caret:#f0c474;
+  background:#21170f;
+}
+html[data-design="festive-s1"][data-theme="dark"] body{
+  background:transparent!important;color:#fff0d3;position:relative;isolation:isolate;
+}
+html[data-design="festive-s1"][data-theme="dark"] body::before,
+html[data-design="festive-s1"][data-theme="dark"] body::after{
+  content:"";position:fixed;inset:0;width:100%;height:100%;pointer-events:none;
+}
+html[data-design="festive-s1"][data-theme="dark"] body::before{
+  z-index:-2;background:
+    radial-gradient(ellipse 88% 35% at 48% 2%,rgba(135,93,39,.33),transparent 88%),
+    radial-gradient(ellipse 90% 46% at 95% 58%,rgba(117,73,26,.22),transparent 85%),
+    radial-gradient(ellipse 85% 32% at 5% 92%,rgba(178,119,38,.16),transparent 84%),
+    linear-gradient(180deg,#2c2117 0%,#21170f 46%,#332316 83%,#241910 100%);
+}
+html[data-design="festive-s1"][data-theme="dark"] body::after{
+  z-index:-1;
+  background-image:url("assets/gold-ornaments.svg?v=20261103-upper-glow14");
+  background-size:100% 100%;background-position:center;background-repeat:no-repeat;
+  opacity:.68;filter:brightness(1.28) saturate(1.08);
+}
+html[data-design="festive-s1"][data-theme="dark"] .wrap{position:relative;z-index:1}
+html[data-design="festive-s1"][data-theme="dark"] .wrap::before,
+html[data-design="festive-s1"][data-theme="dark"] .wrap::after{content:none!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ #mainView>.card:first-child,#mainView>.grid>.card,
+ #mainView>.grid>.side>.card,#mainView>.grid>.side>.greeting-entry,
+ #greetingView>.card
+){background:rgba(64,44,26,.24)!important;box-shadow:none;border-color:rgba(217,164,85,.55)}
+html[data-design="festive-s1"][data-theme="dark"] :is(.card,.settings-card,.about-content,.side-menu,.about-row-button){
+ background:#34271b;color:#fff0d3;border-color:#8a6438;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(.app-title,h1,h2,h3,.menu-btn,.side-menu button){
+ color:#ffe6b3!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(.names,.name-detail-card h3){
+ color:#ffd07a!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result
+){background:rgba(68,48,29,.94)!important;border-color:#916a3c;color:#fff0d3}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .muted,.foot,.week div,#dateTitle,.extra-title,.about-app>div:last-child>div
+){color:#d6b98b!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ button,.btn,input,textarea,select,.greeting-options button,
+ .favorite-add-matches button,.favorite-add-selected button
+){background:#3e2d1d;color:#fff0d3;border-color:#967044}
+html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea)::placeholder{color:#c4aa85}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .primary,button.primary,.name-detail-actions button
+){background:linear-gradient(180deg,#d39437,#93500e)!important;color:#fff9ee!important;border-color:#e3b361!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
+ #favoriteAddCancel,#birthdayAddCancel,.greeting-back-bar .back-btn,
+ .greeting-result-actions>button,.greeting-result-action-row button,
+ #settingsView .back-btn,#favoritesView>.back-btn,
+ #birthdaysView>.back-btn,#nameDetailView>.back-btn
+){background:#46311f!important;color:#ffe2ac!important;border-color:#b98745!important}
+html[data-design="festive-s1"][data-theme="dark"] #calendar .day:not(.sel){
+ background:transparent;color:#fff0d3;border:0;
+}
+html[data-design="festive-s1"][data-theme="dark"] #calendar .day.sel{
+ background:linear-gradient(180deg,#d39437,#93500e)!important;
+ color:#fff!important;border-color:#dba354!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] #calendar .day.today:not(.sel){
+ outline:2px solid #dba354!important;color:#ffe0a2!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .birthday-sort,.favorites-sort
+){background:#302216}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .birthday-sort button.active,.favorites-sort button.active,.greeting-options button.active
+){background:#74502a!important;color:#fff0d3!important;border-color:#c9954c!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select){
+ caret-color:#f0c474!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select):focus,
+html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select):focus-visible{
+ outline:2px solid #f0c474!important;outline-offset:1px;
+ border-color:#f0c474!important;box-shadow:0 0 0 2px rgba(240,196,116,.19)!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(input[type="checkbox"],input[type="radio"]){
+ accent-color:#d39b4d!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .switch input:checked+.switch-slider{background:#b77922!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+ .birthday-entry .birthday-chevron,.greeting-entry-arrow,.birthday-edit-btn,
+ .settings-card select[id^="reminder"][id$="Time"]
+){color:#f2c36b!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(.settings-back-bar,.greeting-back-bar){
+ background:rgba(35,24,15,.96)!important;border-color:#8a6438!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(.push-active-status,.push-active-status:disabled,#deleteMyDataButton){
+ background:#49341f!important;color:#f2c36b!important;border-color:#967044!important;
+}
