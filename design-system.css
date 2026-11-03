@@ -799,3 +799,19 @@ html[data-design="festive-s1"] .reminder-time-control>.reminder-time-trigger,
 html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
   color:var(--ds-primary)!important;
 }
+
+/* Gold-specific picker overrides: the legacy S1 primary token is green. */
+html[data-design="festive-s1"] .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+ color:#995b0d!important;
+}
+html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+ background:#f5e5c5!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
+ color:#f6c775!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
+ background:#624524!important;
+}
