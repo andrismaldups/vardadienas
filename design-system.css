@@ -738,3 +738,12 @@ html[data-design="nature-d3"][data-theme="light"] :is(
 html[data-design="nature-d3"][data-theme="light"] .about-row span:last-child{
   color:#58734E!important;
 }
+
+
+/* TEST D3.3 — S1-equivalent transparency for all main-view panels (light mode). */
+html[data-design="nature-d3"][data-theme="light"] #mainView>.card:first-child,
+html[data-design="nature-d3"][data-theme="light"] #mainView>.grid>.card,
+html[data-design="nature-d3"][data-theme="light"] #mainView>.grid>.side>.card{
+  background:rgba(245,248,233,.17)!important;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
