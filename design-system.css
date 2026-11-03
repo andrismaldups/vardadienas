@@ -405,7 +405,7 @@ html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-
    Layer 2: body::after paints ONLY the transparent SVG ornaments.
    Both remain fixed; content and controls scroll above them.
    Existing gold UI colors, panel styling and functionality remain unchanged. */
-html[data-design="festive-s1"][data-theme="light"]{background:#fff1ce;}
+html[data-design="festive-s1"][data-theme="light"]{background:#ffdc78;}
 html[data-design="festive-s1"][data-theme="light"] body{
   background:transparent!important;
   position:relative;
@@ -423,13 +423,15 @@ html[data-design="festive-s1"][data-theme="light"] body::after{
 /* 1. PAMATFONS: no flowers, lines, stars or SVG here. */
 html[data-design="festive-s1"][data-theme="light"] body::before{
   z-index:-2;
-  background-color:#fff1ce;
+  background-color:#ffdc78;
   background-image:
-    radial-gradient(ellipse 85% 30% at 50% 3%,rgba(255,250,228,.94),transparent 88%),
-    linear-gradient(135deg,#fff7de 0%,#f7d894 48%,#fff0c7 100%);
-  background-size:cover,cover;
-  background-position:center,center;
-  background-repeat:no-repeat,no-repeat;
+    radial-gradient(ellipse 90% 34% at 48% 2%,rgba(255,255,236,.97) 0%,rgba(255,250,210,.62) 42%,transparent 89%),
+    radial-gradient(ellipse 82% 44% at 91% 57%,rgba(255,194,35,.42) 0%,transparent 83%),
+    radial-gradient(ellipse 90% 38% at 6% 88%,rgba(255,225,120,.53) 0%,transparent 84%),
+    linear-gradient(145deg,#fff4bd 0%,#ffe28c 24%,#ffd15c 48%,#ffdf83 70%,#fff0b2 100%);
+  background-size:cover,cover,cover,cover;
+  background-position:center,center,center,center;
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
 }
 /* 2. DEKORATIVAIS SLANIS: transparent standalone artwork only. */
 html[data-design="festive-s1"][data-theme="light"] body::after{
