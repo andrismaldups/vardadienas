@@ -747,3 +747,55 @@ html[data-design="nature-d3"][data-theme="light"] #mainView>.grid>.side>.card{
   background:rgba(245,248,233,.17)!important;
   backdrop-filter:none;-webkit-backdrop-filter:none;
 }
+
+
+/* TEST UI refinements 2026-11-03: use each design's existing palette. */
+html[data-design] .about-card .about-row-button{
+  width:100%;max-width:100%;min-height:48px;box-sizing:border-box;
+  padding:10px 14px!important;margin:0!important;
+  border:1px solid var(--ds-soft-border)!important;
+  border-radius:12px!important;
+  background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
+  display:flex;align-items:center;gap:12px;overflow:hidden;
+}
+html[data-design] .about-card .about-row-button>span:first-child{flex:1;min-width:0}
+html[data-design] .about-card .about-row-button .about-chevron{
+  flex:0 0 20px;text-align:center;margin:0;color:var(--ds-muted)!important;
+}
+html[data-design] .about-card .about-content{padding-left:12px;padding-right:12px}
+html[data-design] .reminder-time-control{
+  --picker-bg:var(--ds-surface);--picker-border:var(--ds-border);
+  --picker-text:var(--ds-text);--picker-selected:var(--ds-soft-bg);
+}
+html[data-design] .reminder-time-control>.reminder-time-trigger{
+  background:var(--ds-soft-bg)!important;color:var(--ds-primary)!important;
+  border:1px solid var(--ds-border)!important;
+}
+html[data-design] .reminder-time-control>.reminder-time-menu{
+  background:var(--ds-surface)!important;color:var(--ds-text)!important;
+  border-color:var(--ds-border)!important;padding:5px!important;
+}
+html[data-design] .reminder-time-menu button{
+  background:transparent!important;color:var(--ds-text)!important;
+  border:0!important;border-radius:8px!important;
+}
+html[data-design] .reminder-time-menu button[aria-selected="true"]{
+  background:var(--ds-soft-bg)!important;color:var(--ds-primary)!important;
+}
+html[data-design] .greeting-emoji-panel{
+  --picker-bg:var(--ds-surface);--picker-border:var(--ds-border);
+  --picker-text:var(--ds-text);--picker-item:var(--ds-soft-bg);
+  background:var(--ds-surface)!important;color:var(--ds-text)!important;
+  border-color:var(--ds-border)!important;
+}
+html[data-design] .greeting-emoji-panel .greeting-emoji-grid button{
+  background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
+}
+html[data-design] .greeting-emoji-panel .greeting-emoji-close{
+  color:var(--ds-text)!important;background:transparent!important;
+}
+/* Gold S1 has its own brown/gold palette, not the classic green. */
+html[data-design="festive-s1"] .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+  color:var(--ds-primary)!important;
+}
