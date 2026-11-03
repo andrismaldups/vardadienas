@@ -405,7 +405,7 @@ html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-
    Layer 2: body::after paints ONLY the transparent SVG ornaments.
    Both remain fixed; content and controls scroll above them.
    Existing gold UI colors, panel styling and functionality remain unchanged. */
-html[data-design="festive-s1"][data-theme="light"]{background:#ffe033;}
+html[data-design="festive-s1"][data-theme="light"]{background:#ffe7a0;}
 html[data-design="festive-s1"][data-theme="light"] body{
   background:transparent!important;
   position:relative;
@@ -420,15 +420,16 @@ html[data-design="festive-s1"][data-theme="light"] body::after{
   height:100%;
   pointer-events:none;
 }
-/* 1. PAMATFONS: no flowers, lines, stars or SVG here. */
+/* 1. PAMATFONS S1.8 — Maigi zeltainais.
+   Only the base colors and gradients change; ornaments remain independent. */
 html[data-design="festive-s1"][data-theme="light"] body::before{
   z-index:-2;
-  background-color:#ffe033;
+  background-color:#ffe7a0;
   background-image:
-    radial-gradient(ellipse 90% 34% at 48% 2%,rgba(255,255,238,.94) 0%,rgba(255,251,212,.54) 42%,transparent 89%),
-    radial-gradient(ellipse 82% 44% at 91% 57%,rgba(255,210,22,.30) 0%,transparent 83%),
-    radial-gradient(ellipse 90% 38% at 6% 88%,rgba(255,239,105,.34) 0%,transparent 84%),
-    linear-gradient(145deg,#fff7c4 0%,#ffed83 24%,#ffe033 48%,#ffe65b 70%,#fff3a4 100%);
+    radial-gradient(ellipse 90% 34% at 48% 2%,rgba(255,255,244,.94) 0%,rgba(255,250,225,.54) 42%,transparent 89%),
+    radial-gradient(ellipse 82% 44% at 91% 57%,rgba(248,216,120,.16) 0%,transparent 83%),
+    radial-gradient(ellipse 90% 38% at 6% 88%,rgba(255,246,216,.26) 0%,transparent 84%),
+    linear-gradient(180deg,#fff6d8 0%,#fff0bf 24%,#ffe7a0 53%,#f8d878 84%,#ffe7a0 100%);
   background-size:cover,cover,cover,cover;
   background-position:center,center,center,center;
   background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
