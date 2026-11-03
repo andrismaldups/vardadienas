@@ -566,3 +566,49 @@ html[data-design="festive-s1"][data-theme="dark"] :is(.settings-back-bar,.greeti
 html[data-design="festive-s1"][data-theme="dark"] :is(.push-active-status,.push-active-status:disabled,#deleteMyDataButton){
  background:#49341f!important;color:#f2c36b!important;border-color:#967044!important;
 }
+
+
+/* TEST S1.10 — approved gold dark palette cleanup.
+   Scoped to festive-s1 dark; no markup, logic, or other themes changed. */
+html[data-design="festive-s1"][data-theme="dark"] :is(
+  .date-suggestions button,.favorite-add-selected button
+){
+  background:#46311f!important;color:#fff0d3!important;border-color:#b98745!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+  #favoritesView>.back-btn,#birthdaysView>.back-btn,
+  #favoritesView .back-btn,#birthdaysView .back-btn
+){
+  background:#46311f!important;color:#ffe2ac!important;border:1px solid #b98745!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+  .favorite-add-panel,.birthday-saved-row
+){border-color:#8a6438!important}
+html[data-design="festive-s1"][data-theme="dark"] .greeting-emoji-panel{
+  background:#34271b!important;color:#fff0d3!important;border-color:#b98745!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .greeting-emoji-grid button{
+  background:#46311f!important;color:#fff0d3!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] :is(
+  .greeting-emoji-close,.greeting-emoji-icon
+){color:#ffe2ac!important}
+html[data-design="festive-s1"][data-theme="dark"] :is(#clearName,#clearDate){
+  color:#f0c474!important;background:transparent!important;border:0!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .name-detail-feedback{
+  color:#f0c474!important;
+}
+/* SVG gift icon: override the original inline SVG presentation attributes. */
+html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon rect:first-child{
+  fill:#d39b4d!important;stroke:#74502a!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon rect:nth-child(2){
+  fill:#edbd69!important;stroke:#74502a!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:nth-child(3){
+  fill:#ffe2a3!important;stroke:#74502a!important;
+}
+html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:last-child{
+  fill:#74502a!important;
+}
