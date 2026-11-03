@@ -453,3 +453,9 @@ html[data-design="festive-s1"][data-theme="light"] .wrap::before,
 html[data-design="festive-s1"][data-theme="light"] .wrap::after{
   content:none!important;
 }
+
+/* S1.8: šodienas datuma rāmītis saskaņots ar zeltaino kalendāra paleti. */
+html[data-design="festive-s1"][data-theme="light"] #calendar .day.today:not(.sel){
+  outline:2px solid #d6a14c;
+  color:#75451d;
+}
