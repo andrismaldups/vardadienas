@@ -400,31 +400,46 @@ html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-
  -webkit-text-fill-color:#fff!important;
 }
 
-/* TEST S1.4 — one viewport-fixed decorative artwork layer.
-   Existing gold colors and UI controls are unchanged. This supersedes
-   the earlier scrolling body SVG and the separate wrap edge ornaments.
-   The fixed layer is independent of document scroll, including iOS PWA. */
+/* TEST S1.5 — independent fixed background and ornament layers.
+   Layer 1: body::before paints ONLY the gold base color/gradients.
+   Layer 2: body::after paints ONLY the transparent SVG ornaments.
+   Both remain fixed; content and controls scroll above them.
+   Existing gold UI colors, panel styling and functionality remain unchanged. */
 html[data-design="festive-s1"][data-theme="light"]{background:#fff1ce;}
 html[data-design="festive-s1"][data-theme="light"] body{
   background:transparent!important;
   position:relative;
+  isolation:isolate;
 }
-html[data-design="festive-s1"][data-theme="light"] body::before{
+html[data-design="festive-s1"][data-theme="light"] body::before,
+html[data-design="festive-s1"][data-theme="light"] body::after{
   content:"";
   position:fixed;
   inset:0;
   width:100%;
   height:100%;
   pointer-events:none;
-  z-index:0;
+}
+/* 1. PAMATFONS: no flowers, lines, stars or SVG here. */
+html[data-design="festive-s1"][data-theme="light"] body::before{
+  z-index:-2;
+  background-color:#fff1ce;
   background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22440%22%20height%3D%221020%22%20viewBox%3D%220%200%20440%201020%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22petal%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff6d3%22%2F%3E%3Cstop%20offset%3D%22.48%22%20stop-color%3D%22%23e9ba61%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ad6c21%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M-30%2080%20Q100%2025%20245%2064%20T490%2020%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.2%22%20opacity%3D%22.65%22%2F%3E%3Cpath%20d%3D%22M-30%2088%20Q120%2040%20250%2072%20T490%2028%22%20stroke%3D%22%23fff8d9%22%20stroke-width%3D%223%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M470%20900%20Q270%20960%20120%20932%20T-20%20965%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.55%22%2F%3E%3Cpath%20d%3D%22M470%20911%20Q270%20971%20120%20944%20T-20%20977%22%20stroke%3D%22%23fff9dd%22%20stroke-width%3D%223%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M462%200%20Q330%2074%20408%20200%20Q453%20268%20442%20340%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M-40%20750%20Q105%20820%2024%201040%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.42%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(439%20100)%20rotate(15)%20scale(0.68)%22%3E%3Cg%20fill%3D%22url(%23petal)%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%221.2%22%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(0)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(60)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(120)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(180)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(240)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(300)%22%2F%3E%3C%2Fg%3E%3Ccircle%20r%3D%2220%22%20fill%3D%22%23fff4c7%22%20stroke%3D%22%23d7a443%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20r%3D%228%22%20fill%3D%22%23f8c965%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(-22%20914)%20rotate(-35)%20scale(0.66)%22%3E%3Cg%20fill%3D%22url(%23petal)%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%221.2%22%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(0)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(60)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(120)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(180)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(240)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(300)%22%2F%3E%3C%2Fg%3E%3Ccircle%20r%3D%2220%22%20fill%3D%22%23fff4c7%22%20stroke%3D%22%23d7a443%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20r%3D%228%22%20fill%3D%22%23f8c965%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23fff8dc%22%20stroke%3D%22%23c98e34%22%20stroke-width%3D%221.7%22%20opacity%3D%22.85%22%3E%3Cpath%20d%3D%22M52%20285%20l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5Z%22%2F%3E%3Cpath%20d%3D%22M392%20746%20l4%2011%2011%204-11%204-4%2011-4-11-11-4%2011-4Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
     radial-gradient(ellipse 85% 30% at 50% 3%,rgba(255,250,228,.94),transparent 88%),
     linear-gradient(135deg,#fff7de 0%,#f7d894 48%,#fff0c7 100%);
-  background-size:min(100vw,700px) auto,cover,cover;
-  background-position:center top,center,center;
-  background-repeat:no-repeat,no-repeat,no-repeat;
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
 }
+/* 2. DEKORATIVAIS SLANIS: transparent standalone artwork only. */
+html[data-design="festive-s1"][data-theme="light"] body::after{
+  z-index:-1;
+  background-image:url("assets/gold-ornaments.svg");
+  background-size:min(100vw,700px) auto;
+  background-position:center top;
+  background-repeat:no-repeat;
+}
+/* 3–4. Panels and controls remain in normal scrollable content. */
 html[data-design="festive-s1"][data-theme="light"] .wrap{
   position:relative;
   z-index:1;
