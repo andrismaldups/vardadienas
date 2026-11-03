@@ -815,3 +815,29 @@ html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[ari
 html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
  background:#624524!important;
 }
+
+/* V1.1 TEST: anchor the emoji picker immediately below the greeting text.
+   Opaque surfaces prevent action buttons and background art showing through. */
+html[data-design] .greeting-text-wrap .greeting-emoji-panel{
+  position:absolute!important;
+  top:calc(100% + 8px)!important;
+  right:0!important;
+  width:min(340px,calc(100vw - 36px))!important;
+  max-height:min(520px,65dvh)!important;
+  overflow-y:auto!important;
+  background:var(--ds-surface,#fff)!important;
+  color:var(--ds-text)!important;
+  border:1px solid var(--ds-border)!important;
+  opacity:1!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  z-index:1100!important;
+}
+html[data-design="nature-d3"] .greeting-text-wrap .greeting-emoji-panel{
+  background:#f0f5df!important;
+}
+html[data-design="nature-d3"] .reminder-time-menu button[aria-selected="true"]{
+  background:#d1e5b5!important;
+  color:#426d31!important;
+  font-weight:700!important;
+}
