@@ -371,6 +371,24 @@ html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{
  html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{width:150px;height:145px}
 }
 
+\n
+/* TEST UI: about rows, themed reminder time menu, emoji overlay */
+.about-card .about-row-button{box-sizing:border-box;max-width:100%;padding:0 12px;gap:12px;min-width:0}
+.about-card .about-row-button>span:first-child{min-width:0;overflow-wrap:anywhere}
+.about-card .about-row-button .about-chevron{flex:0 0 auto;margin-left:auto}
+.greeting-emoji-panel{background:var(--picker-bg,#fff);border-color:var(--picker-border,#d7e8dc);color:var(--picker-text,#18392b)}
+.greeting-emoji-grid button{background:var(--picker-item,#f5f7f5)}
+html[data-theme="dark"] .greeting-emoji-panel{--picker-bg:#1e2d27;--picker-border:#405c4f;--picker-text:#e8f4ec;--picker-item:#233b32}
+html[data-design="lavender"][data-theme="light"] .greeting-emoji-panel{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-item:#f8f1fa}
+.reminder-time-control{position:relative;display:inline-flex;flex:0 0 auto}
+.reminder-time-control>select{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.reminder-time-trigger{min-width:92px;padding:9px 12px;border:1px solid #b8d9c3;border-radius:10px;background:var(--picker-bg,#f6fbf7);color:var(--picker-text,#08783f);font:inherit;font-weight:600;cursor:pointer}
+.reminder-time-menu{position:absolute;right:0;top:calc(100% + 5px);z-index:1001;width:124px;max-height:260px;overflow-y:auto;overscroll-behavior:contain;background:var(--picker-bg,#fff);color:var(--picker-text,#18392b);border:1px solid var(--picker-border,#b8d9c3);border-radius:12px;box-shadow:0 8px 24px #0002;padding:5px}
+.reminder-time-menu[hidden]{display:none}
+.reminder-time-menu button{display:block;width:100%;padding:9px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}
+.reminder-time-menu button[aria-selected="true"]{background:var(--picker-selected,#dff3e5);font-weight:700}
+html[data-theme="dark"] .reminder-time-control{--picker-bg:#1e2d27;--picker-border:#405c4f;--picker-text:#e8f4ec;--picker-selected:#345b46}
+html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-selected:#efddf3}
 </style>
 <link rel="stylesheet" href="design-system.css">
 <script>
@@ -1222,7 +1240,7 @@ html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{
     const margin=12;
     const textRect=greetingResultText.getBoundingClientRect();
     // Always place the picker BELOW the greeting text, never over it.
-    const top=textRect.bottom+8;
+    const top=Math.max(viewportTop+margin,Math.min(textRect.bottom+8,viewportTop+viewportHeight-110));
     const viewportBottom=viewportTop+viewportHeight;
     const available=viewportBottom-top-margin;
     greetingEmojiPanel.style.top=top+'px';
@@ -2582,4 +2600,31 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js");
   });
 }
+</script>
+<script>
+/* TEST: themed half-hour picker; original selects and change handlers remain authoritative. */
+(function(){
+  const controls=[];
+  for(const id of ['reminderEveningTime','reminderMorningTime']){
+    const select=document.getElementById(id);
+    if(!select)continue;
+    const wrapper=document.createElement('span');wrapper.className='reminder-time-control';
+    select.parentNode.insertBefore(wrapper,select);wrapper.appendChild(select);
+    const trigger=document.createElement('button');trigger.type='button';trigger.className='reminder-time-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
+    const menu=document.createElement('div');menu.className='reminder-time-menu';menu.setAttribute('role','listbox');menu.hidden=true;
+    const close=()=>{menu.hidden=true;trigger.setAttribute('aria-expanded','false')};
+    for(const opt of select.options){
+      const item=document.createElement('button');item.type='button';item.textContent=opt.textContent;item.dataset.value=opt.value;item.setAttribute('role','option');
+      item.addEventListener('click',()=>{select.value=opt.value;select.dispatchEvent(new Event('change',{bubbles:true}));close();trigger.focus()});
+      menu.appendChild(item);
+    }
+    const refresh=()=>{trigger.textContent=select.options[select.selectedIndex]?.textContent||select.value;menu.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.value===select.value)))};
+    select.addEventListener('change',refresh);refresh();
+    trigger.addEventListener('click',()=>{const opening=menu.hidden;controls.forEach(c=>c.close());if(opening){menu.hidden=false;trigger.setAttribute('aria-expanded','true');const active=menu.querySelector('[aria-selected="true"]');if(active)active.scrollIntoView({block:'nearest'})}});
+    trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){if(menu.hidden){e.preventDefault();trigger.click()}}});
+    wrapper.addEventListener('keydown',e=>{if(e.key==='Escape'){close();trigger.focus()}});
+    wrapper.append(trigger,menu);controls.push({wrapper,close});
+  }
+  document.addEventListener('pointerdown',e=>{for(const c of controls)if(!c.wrapper.contains(e.target))c.close()});
+})();
 </script></body></html>
