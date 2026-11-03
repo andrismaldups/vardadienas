@@ -2367,7 +2367,11 @@ async function refreshPushActivationAppearance(){
     const registration=await navigator.serviceWorker.ready;
     const subscription=await registration.pushManager.getSubscription();
     const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
-    setPushActivationAppearance(Boolean(subscription&&Number.isSafeInteger(subscriptionId)&&subscriptionId>0));
+    const active=Boolean(subscription&&Number.isSafeInteger(subscriptionId)&&subscriptionId>0);
+    setPushActivationAppearance(active);
+    if(active&&!pushActivationStatus.textContent.trim()){
+      pushActivationStatus.textContent='Paziņojumu abonements atrasts šajā ierīcē. Servera iestatījumu saglabāšanas statuss šobrīd nav atkārtoti pārbaudīts.';
+    }
   }catch(error){
     console.warn('Neizdevās pārbaudīt Push statusu:',error);
     setPushActivationAppearance(false);
