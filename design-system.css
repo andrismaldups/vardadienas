@@ -722,3 +722,19 @@ html[data-design="nature-d3"][data-theme="dark"] :is(.settings-back-bar,.greetin
 html[data-design="nature-d3"][data-theme="dark"] :is(button.primary,.primary,.day.sel){
   background:#a8c984!important;color:#203421!important;border-color:#a8c984!important;
 }
+
+/* TEST D3.2 — approved Rīta rasa refinements (light mode only).
+   Gold S1 uses a 0.17 main-panel alpha; match it without copying gold hues. */
+html[data-design="nature-d3"][data-theme="light"] #mainView>.card:first-child{
+  background:rgba(245,248,233,.17)!important;
+}
+html[data-design="nature-d3"][data-theme="light"]{
+  --ds-muted:#58734E;
+}
+html[data-design="nature-d3"][data-theme="light"] :is(
+  .muted,.foot,.week div,#dateTitle,.extra-title,
+  .appearance-choice small,.about-app>div:last-child>div
+){color:#58734E!important;}
+html[data-design="nature-d3"][data-theme="light"] .about-row span:last-child{
+  color:#58734E!important;
+}
