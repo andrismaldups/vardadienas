@@ -434,7 +434,7 @@ html[data-design="festive-s1"][data-theme="light"] body::before{
 /* 2. DEKORATIVAIS SLANIS: transparent standalone artwork only. */
 html[data-design="festive-s1"][data-theme="light"] body::after{
   z-index:-1;
-  background-image:url("assets/gold-ornaments.svg?v=20261103-gold-waves9");
+  background-image:url("assets/gold-ornaments.svg?v=20261103-gold-waves10");
   background-size:min(100vw,700px) auto;
   background-position:center top;
   background-repeat:no-repeat;
