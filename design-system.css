@@ -435,8 +435,10 @@ html[data-design="festive-s1"][data-theme="light"] body::before{
 html[data-design="festive-s1"][data-theme="light"] body::after{
   z-index:-1;
   background-image:url("assets/gold-ornaments.svg?v=20261103-gold-waves13");
-  background-size:min(100vw,700px) auto;
-  background-position:center top;
+  /* Fit the single ornament artwork to the fixed viewport: the lower waves
+     must be visible at the screen bottom, not below the viewport. */
+  background-size:100% 100%;
+  background-position:center center;
   background-repeat:no-repeat;
 }
 /* 3–4. Panels and controls remain in normal scrollable content. */
