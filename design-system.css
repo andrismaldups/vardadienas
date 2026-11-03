@@ -628,3 +628,97 @@ html[data-design="festive-s1"][data-theme="dark"] .settings-card select[id^="rem
 html[data-design="festive-s1"][data-theme="dark"] .settings-card .settings-section{
   border-top-color:#8a6438!important;
 }
+
+
+/* TEST D3.1 — Rīta rasa: independent SVG background and transparent decoration.
+   Scope all overrides to nature-d3; existing designs are unchanged. */
+html[data-design="nature-d3"]{
+  --ds-page-bg:#d8e9ac;--ds-surface:rgba(245,248,233,.84);
+  --ds-text:#30482d;--ds-muted:#526b43;--ds-primary:#527b3d;
+  --ds-on-primary:#fffdf3;--ds-accent:#8caa60;--ds-border:#a3bb7e;
+  --ds-soft-bg:rgba(245,248,233,.73);--ds-soft-border:#a3bb7e;
+  --ds-focus:#527b3d;--ds-caret:#527b3d;
+  background:#d8e9ac;color:var(--ds-text);
+}
+html[data-design="nature-d3"] body{
+  background:#d8e9ac url("assets/d3-rita-gaisma.svg") center top / cover fixed no-repeat!important;
+  color:var(--ds-text);position:relative;isolation:isolate;
+}
+html[data-design="nature-d3"] body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:url("assets/d3-rita-rasa.svg") center top / 100% 100% no-repeat;
+}
+html[data-design="nature-d3"] .wrap{position:relative;z-index:1;isolation:isolate}
+html[data-design="nature-d3"] .wrap::before,
+html[data-design="nature-d3"] .wrap::after{content:none!important}
+html[data-design="nature-d3"] .card,
+html[data-design="nature-d3"] .about-content,
+html[data-design="nature-d3"] .side-menu{
+  background:rgba(245,248,233,.84)!important;
+  border:1px solid rgba(163,187,126,.86)!important;
+  color:#30482d!important;
+  box-shadow:0 8px 24px rgba(45,79,30,.12);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+html[data-design="nature-d3"] :is(.app-title,h1,h2,h3,.menu-btn,.side-menu button){color:#30482d!important}
+html[data-design="nature-d3"] :is(.names,.name-detail-card h3,.birthday-chevron,.greeting-entry-arrow){color:#527b3d!important}
+html[data-design="nature-d3"] :is(.tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result,.favorite-add-panel){
+  background:rgba(249,251,239,.68)!important;
+  border-color:#a3bb7e!important;color:#30482d!important;
+}
+html[data-design="nature-d3"] :is(button.primary,.primary,.day.sel){
+  background:#527b3d!important;color:#fffdf3!important;border-color:#527b3d!important;
+}
+html[data-design="nature-d3"] :is(input,textarea,select){
+  background:rgba(249,251,239,.91)!important;color:#30482d!important;
+  border-color:#a3bb7e!important;caret-color:#527b3d!important;
+}
+html[data-design="nature-d3"] :is(button,input,textarea,select,a):focus-visible{
+  outline:2px solid #527b3d!important;outline-offset:2px;
+}
+html[data-design="nature-d3"] :is(.settings-back-bar,.greeting-back-bar){
+  background:rgba(245,248,233,.93)!important;border-color:#a3bb7e!important;
+}
+html[data-design="nature-d3"] :is(.back-btn,.push-active-status,#deleteMyDataButton){
+  background:rgba(245,248,233,.87)!important;color:#527b3d!important;
+  border-color:#a3bb7e!important;
+}
+html[data-design="nature-d3"] .switch input:checked+.switch-slider{background:#8caa60!important}
+html[data-design="nature-d3"] :is(input[type="checkbox"],input[type="radio"]){accent-color:#527b3d}
+html[data-design="nature-d3"] .settings-card .settings-section{border-top-color:#a3bb7e!important}
+html[data-design="nature-d3"] .lavender-top-art{display:none!important}
+@media(max-width:420px){
+  html[data-design="nature-d3"] body::before{background-size:100% 100%}
+}
+/* Dark mode preserves the nature palette, with contrast-focused translucent surfaces. */
+html[data-design="nature-d3"][data-theme="dark"]{
+  --ds-page-bg:#1d3023;--ds-surface:rgba(34,55,38,.87);
+  --ds-text:#edf5df;--ds-muted:#c6d7ae;--ds-primary:#a8c984;
+  --ds-on-primary:#203421;--ds-accent:#a8c984;--ds-border:#73925f;
+  --ds-soft-bg:rgba(39,65,44,.84);--ds-soft-border:#73925f;
+  --ds-focus:#c0dda1;--ds-caret:#c0dda1;
+  background:#1d3023;color:#edf5df;
+}
+html[data-design="nature-d3"][data-theme="dark"] body{
+  background:linear-gradient(rgba(15,32,21,.76),rgba(15,32,21,.81)),
+  url("assets/d3-rita-gaisma.svg") center top / cover fixed no-repeat!important;
+  color:#edf5df;
+}
+html[data-design="nature-d3"][data-theme="dark"] .card,
+html[data-design="nature-d3"][data-theme="dark"] .about-content,
+html[data-design="nature-d3"][data-theme="dark"] .side-menu{
+  background:rgba(34,55,38,.87)!important;border-color:#73925f!important;color:#edf5df!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(.app-title,h1,h2,h3,.menu-btn,.side-menu button,.names,.name-detail-card h3,.birthday-chevron,.greeting-entry-arrow){color:#edf5df!important}
+html[data-design="nature-d3"][data-theme="dark"] :is(.tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result,.favorite-add-panel){
+  background:rgba(39,65,44,.85)!important;color:#edf5df!important;border-color:#73925f!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(input,textarea,select){
+  background:#294531!important;color:#edf5df!important;border-color:#73925f!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(.settings-back-bar,.greeting-back-bar,.back-btn,.push-active-status,#deleteMyDataButton){
+  background:rgba(34,55,38,.95)!important;color:#d8edbe!important;border-color:#73925f!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(button.primary,.primary,.day.sel){
+  background:#a8c984!important;color:#203421!important;border-color:#a8c984!important;
+}
