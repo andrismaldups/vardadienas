@@ -612,3 +612,19 @@ html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:nth-c
 html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:last-child{
   fill:#74502a!important;
 }
+
+
+/* TEST S1.11 — Settings: golden-dark time selectors and section dividers. */
+html[data-design="festive-s1"][data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{
+  background:#46311f!important;
+  color:#f2c36b!important;
+  border:1px solid #b98745!important;
+  color-scheme:dark;
+}
+html[data-design="festive-s1"][data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]:focus-visible{
+  outline:2px solid #f0c474!important;
+  outline-offset:2px;
+}
+html[data-design="festive-s1"][data-theme="dark"] .settings-card .settings-section{
+  border-top-color:#8a6438!important;
+}
