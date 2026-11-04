@@ -875,3 +875,30 @@ html[data-design="nature-d3"][data-theme="dark"] .greeting-text-wrap .greeting-e
 html[data-design="nature-d3"][data-theme="dark"] .greeting-emoji-grid button{
  background:#294a2e!important;
 }
+
+/* TEST D3.5 — Nakts mežs: softer foliage and coherent green controls.
+   Keep the approved moon position and the existing component geometry. */
+html[data-design="nature-d3"][data-theme="dark"] #mainView>.card:first-child,
+html[data-design="nature-d3"][data-theme="dark"] #mainView>.grid>.card,
+html[data-design="nature-d3"][data-theme="dark"] #mainView>.grid>.side>.card{
+  background:rgba(24,53,29,.17)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .menu-btn,.side-menu button,.btn:not(.primary),button:not(.primary):not(.day):not(.about-row-button),
+  .birthday-edit-btn,.birthday-delete-btn,.favorite-remove-btn,
+  .favorites-sort button,.birthday-sort button,.greeting-result-actions button,
+  .greeting-result-action-row button,.greeting-options button
+){
+  background-color:#294a35;
+  border-color:#527b60;
+  color:#d8edbe;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .greeting-text-wrap textarea,.greeting-result textarea,
+  #greetingText,.greeting-text
+){
+  background-color:#294531!important;
+  color:#f0f4df!important;
+  border-color:#638a4c!important;
+}
