@@ -150,3 +150,46 @@ test('capture light and dark C01-C18 gallery screenshots', async ({ page }, test
     });
   }
 });
+
+test('320px narrow phone: all 18 cards fit and modal stays operable', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    await expect(page.locator('.lab-section')).toHaveCount(18);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.locator('#openModal').click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    const rect = await page.getByRole('dialog').boundingBox();
+    expect(rect).not.toBeNull();
+    expect(rect.x).toBeGreaterThanOrEqual(-1);
+    expect(rect.x + rect.width).toBeLessThanOrEqual(321);
+    await page.locator('#closeModal').click();
+  }
+});
+
+test('both modes: interactive states use declared CSS variables', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const result = await page.evaluate(() => {
+      const app = document.querySelector('#app');
+      const root = getComputedStyle(app);
+      const hexToRgb = hex => {
+        let h = hex.trim().slice(1);
+        if (h.length === 3) h = [...h].map(x => x + x).join('');
+        return 'rgb(' + [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
+      };
+      const matches = (selector, prop, token) =>
+        getComputedStyle(document.querySelector(selector))[prop] ===
+        hexToRgb(root.getPropertyValue('--ds-' + token));
+      return {
+        selected: matches('.ds-choice[aria-pressed="true"]', 'backgroundColor', 'selected-bg'),
+        error: matches('.ds-input[aria-invalid="true"]', 'borderTopColor', 'error'),
+        readonly: matches('.ds-input[readonly]', 'backgroundColor', 'readonly-bg'),
+        modal: matches('.ds-modal', 'backgroundColor', 'popup-bg'),
+        danger: matches('.ds-button--danger', 'backgroundColor', 'danger'),
+      };
+    });
+    expect(result).toEqual({ selected: true, error: true, readonly: true, modal: true, danger: true });
+  }
+});
