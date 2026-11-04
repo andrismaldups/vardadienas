@@ -67,3 +67,62 @@ test('keyboard: modal focus stays inside dialog', async ({ page }) => {
   await page.keyboard.press('Shift+Tab');
   await expect(page.locator('#closeModal')).toBeFocused();
 });
+
+test('state colors come from semantic tokens in both modes', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const values = await page.evaluate(() => {
+      const app = document.querySelector('#app');
+      const style = getComputedStyle(app);
+      const token = name => style.getPropertyValue('--ds-' + name).trim();
+      const computed = selector => getComputedStyle(document.querySelector(selector));
+      return {
+        primary: computed('.ds-button--primary').backgroundColor,
+        primaryToken: token('primary'),
+        primaryText: computed('.ds-button--primary').color,
+        onPrimary: token('on-primary'),
+        popup: computed('.ds-popup').backgroundColor,
+        popupToken: token('popup-bg'),
+        inputCaret: computed('.ds-input').caretColor,
+        caretToken: token('caret'),
+        disabled: computed('.ds-button--primary:disabled').backgroundColor,
+        disabledToken: token('disabled-bg'),
+      };
+    });
+    const rgb = hex => {
+      const h = hex.slice(1);
+      const full = h.length === 3 ? [...h].map(c => c + c).join('') : h;
+      return 'rgb(' + [0,2,4].map(i => parseInt(full.slice(i,i+2),16)).join(', ') + ')';
+    };
+    expect(values.primary).toBe(rgb(values.primaryToken));
+    expect(values.primaryText).toBe(rgb(values.onPrimary));
+    expect(values.popup).toBe(rgb(values.popupToken));
+    expect(values.inputCaret).toBe(rgb(values.caretToken));
+    expect(values.disabled).toBe(rgb(values.disabledToken));
+  }
+});
+
+test('popup is opaque, and hidden panels cannot intercept input', async ({ page }) => {
+  const panel = page.locator('#emojiPopup');
+  await expect(panel).toBeVisible();
+  const bg = await panel.evaluate(el => getComputedStyle(el).backgroundColor);
+  expect(bg).toMatch(/^rgb\(/);
+  await page.locator('#emojiToggle').click();
+  await expect(panel).toBeHidden();
+  await page.locator('#emojiToggle').click();
+  await expect(panel).toBeVisible();
+});
+
+test('iPhone-sized viewport: interactive controls remain inside viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const offscreen = await page.locator('.ds-card button, .ds-card input, .ds-card textarea').evaluateAll(els =>
+      els.filter(el => {
+        const r = el.getBoundingClientRect();
+        return r.left < -1 || r.right > window.innerWidth + 1;
+      }).map(el => el.outerHTML.slice(0, 100))
+    );
+    expect(offscreen).toEqual([]);
+  }
+});
