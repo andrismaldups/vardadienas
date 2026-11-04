@@ -902,3 +902,45 @@ html[data-design="nature-d3"][data-theme="dark"] :is(
   color:#f0f4df!important;
   border-color:#638a4c!important;
 }
+
+/* TEST D3.6 — Nakts mežs visual refinements, no layout changes. */
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .menu-btn,#mainView .menu-btn
+){background:transparent!important;border:0!important;box-shadow:none!important;color:#e4f2ce!important}
+html[data-design="nature-d3"][data-theme="dark"] .side-menu{
+  background:#173a24!important;border:1px solid #638a4c!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] .side-menu button{
+  background:#285339!important;color:#e4f2ce!important;border:1px solid #547f5b!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .btn:not(.primary),.calhead button,.nav button,.searchrow button,
+  .date-suggestions button,.remove-favorite,.birthday-edit-btn,.birthday-delete-btn,
+  .favorites-sort button,.birthday-sort button,.greeting-options button,
+  .greeting-result-actions button,.greeting-result-action-row button,
+  .greeting-back-bar button
+){
+  background:#285039!important;color:#e3f2cf!important;border-color:#628d64!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(.favorites-sort,.birthday-sort){
+  background:#102f1e!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .greeting-options button.active,.favorites-sort button.active,.birthday-sort button.active
+){
+  background:#a8ca7f!important;color:#18341e!important;border-color:#b8da90!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  #mainView input,#mainView .searchrow input,#mainView .date-suggestions button
+){
+  background:#20432d!important;color:#edf5df!important;border-color:#638a4c!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  #mainView .names .tag,#mainView .extra-list .tag,#mainView .names span,
+  #mainView .extra-list span.tag
+){
+  background:transparent!important;box-shadow:none!important;border-color:transparent!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(
+  .remove-favorite,.birthday-edit-btn,.birthday-delete-btn
+){background:#285039!important;color:#d9efc0!important}
