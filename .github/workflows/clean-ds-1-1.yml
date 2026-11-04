@@ -1,0 +1,46 @@
+name: Clean design system 1.1 checks
+
+on:
+  push:
+    branches: [design-system-clean-v1-1]
+    paths:
+      - 'clean-ds-1.1/**'
+      - '.github/workflows/clean-ds-1-1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Static token contract
+        run: python3 clean-ds-1.1/validate.py
+      - name: Contrast audit
+        run: python3 clean-ds-1.1/contrast_audit.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        working-directory: clean-ds-1.1
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium webkit
+      - name: Browser and mobile-WebKit checks
+        working-directory: clean-ds-1.1
+        run: npm test
+      - name: Upload failure traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clean-ds-playwright-failure
+          path: |
+            clean-ds-1.1/test-results
+            clean-ds-1.1/playwright-report
+          if-no-files-found: ignore
