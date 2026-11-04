@@ -2654,9 +2654,9 @@ if ("serviceWorker" in navigator) {
   if(!button)return;
   const message='DESIGN TEST: paziņojumi ir atspējoti, lai aizsargātu esošos TEST abonementus.';
   function lock(){
-    button.disabled=true;
-    button.textContent='Paziņojumi DESIGN TEST nav pieejami';
-    if(status)status.textContent=message;
+    if(!button.disabled)button.disabled=true;
+    if(button.textContent!=='Paziņojumi DESIGN TEST nav pieejami')button.textContent='Paziņojumi DESIGN TEST nav pieejami';
+    if(status && status.textContent!==message)status.textContent=message;
   }
   button.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();lock();},true);
   lock();
