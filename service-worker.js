@@ -1,10 +1,11 @@
 /* DESIGN TEST only: independent offline cache; no push listeners. */
-const CACHE_NAME = "vardadienas-design-test-v2";
+const CACHE_NAME = "vardadienas-design-test-v3";
 const CACHE_PREFIX = "vardadienas-design-test-";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./design-system.css",
+  "./design-water-j1.css",
   "./manifest.json",
   "./design-test-icon-192.png",
   "./design-test-icon-512.png"
