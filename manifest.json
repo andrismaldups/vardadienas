@@ -1,7 +1,7 @@
 {
-  "name": "Vārdadienas",
-  "short_name": "Vārdadienas",
-  "description": "Latviešu vārdadienu kalendārs",
+  "name": "Vārdadienas — DESIGN TEST",
+  "short_name": "VD Design",
+  "description": "Vārdadienas dizaina sistēmas iPhone testa vide",
   "lang": "lv",
   "start_url": "./",
   "scope": "./",
@@ -19,5 +19,6 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "id": "./?app=design-test"
 }
