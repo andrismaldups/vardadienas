@@ -391,12 +391,13 @@ html[data-theme="dark"] .reminder-time-control{--picker-bg:#1e2d27;--picker-bord
 html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-selected:#efddf3}
 </style>
 <link rel="stylesheet" href="design-system.css">
+<link rel="stylesheet" href="design-water-j1.css">
 <script>
 (function(){
   const KEY='appearanceMode';
   const DESIGN_KEY='designStyle';
   let design='classic';
-  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','lavender','festive-s1','nature-d3'].includes(saved))design=saved;}catch(e){}
+  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','lavender','festive-s1','nature-d3','water-j1'].includes(saved))design=saved;}catch(e){}
   document.documentElement.dataset.design=design;
   const allowed=['light','dark','auto'];
   let mode='auto';
@@ -483,6 +484,7 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
     <label class="appearance-choice"><input type="radio" name="designStyle" value="lavender"><span>Lavandas tonis (Z3)<small>Maigi violeti foni un akcenti</small></span></label>
     <label class="appearance-choice"><input type="radio" name="designStyle" value="nature-d3"><span>Dabas stils — D3 Rīta rasa<small>Silti zaļš fons, rasa un caurspīdīgi paneļi</small></span></label>
     <label class="appearance-choice"><input type="radio" name="designStyle" value="festive-s1"><span>Svētku stils — S1 Zeltainie akcenti<small>Zeltains fons un akcenti visās sadaļās</small></span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="water-j1"><span>Jūras tēma — J1-E Saules atspīdumi ūdenī<small>Dzidrs ūdens, saules gaismas raksti un zilganas krāsas</small></span></label>
     <h4>Krāsu režīms</h4>
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="light"><span>Gaišais</span></label>
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="dark"><span>Tumšais</span></label>
