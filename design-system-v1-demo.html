@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vārdadienas · Dizaina sistēma 1.0 — demonstrācija</title>
+<link rel="stylesheet" href="design-system-v1.css">
+<style>
+  :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  body{margin:0;background:#f2f5f8}
+  .ds-v1{min-height:100vh;background:var(--ds1-page);padding:24px}
+  .demo-wrap{max-width:960px;margin:0 auto}
+  .demo-header{margin:0 0 20px}
+  .demo-header h1{font-size:clamp(24px,4vw,34px);margin:0 0 8px}
+  .demo-header p{margin:0;color:var(--ds1-muted);line-height:1.5}
+  .demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .demo-grid .ds-card{min-width:0}
+  .demo-grid h2{font-size:20px;margin:0 0 14px}
+  .demo-stack{display:grid;gap:12px}
+  .demo-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .demo-label{font-weight:600;display:block;margin-bottom:6px}
+  .demo-note{font-size:13px;color:var(--ds1-muted);margin:6px 0 0}
+  .demo-full{grid-column:1/-1}
+  .demo-choices{display:flex;flex-wrap:wrap;gap:6px}
+  .demo-swatch{width:32px;height:32px;border-radius:50%;border:1px solid var(--ds1-border);display:inline-block}
+  .demo-nav{display:flex;justify-content:center}
+  .demo-nav .ds-button{width:min(100%,220px)}
+  .demo-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:380px}
+  .demo-calendar .demo-day{display:flex;align-items:center;justify-content:center;min-height:46px;border:0;border-radius:50%;background:transparent;color:var(--ds1-text);font:inherit;cursor:pointer}
+  .demo-calendar .demo-day[aria-pressed="true"]{background:var(--ds1-primary);color:var(--ds1-on-primary)}
+  .demo-popup-wrap{position:relative}
+  .demo-popup-wrap .ds-popup{position:absolute;top:calc(100% + 8px);left:0;z-index:2;padding:12px;box-shadow:0 8px 24px var(--ds1-overlay);width:260px}
+  .demo-popup-wrap .ds-popup[hidden]{display:none}
+  .demo-theme-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0}
+  .demo-theme-controls label{font-weight:600}
+  .demo-theme-controls select{min-height:44px;padding:8px 12px;border:1px solid var(--ds1-border);border-radius:12px;background:var(--ds1-surface);color:var(--ds1-text)}
+  .ds-v1[data-demo-theme="d3"]{--ds1-page:#d8e9ac;--ds1-surface:rgba(245,248,233,.84);--ds1-surface-soft:rgba(249,251,239,.68);--ds1-text:#30482d;--ds1-muted:#526b43;--ds1-primary:#527b3d;--ds1-on-primary:#fffdf3;--ds1-border:#a3bb7e;--ds1-border-soft:#a3bb7e;--ds1-focus:#527b3d;--ds1-caret:#527b3d}
+  .ds-v1[data-demo-theme="contrast"]{--ds1-page:#14241c;--ds1-surface:#21352a;--ds1-surface-soft:#2b4536;--ds1-text:#f2f9f2;--ds1-muted:#c4d4c9;--ds1-primary:#b2e6bf;--ds1-on-primary:#163122;--ds1-border:#62836e;--ds1-border-soft:#62836e;--ds1-focus:#d5f4dd;--ds1-caret:#d5f4dd;--ds1-danger:#f6a6a6;--ds1-on-danger:#351515;--ds1-error:#ffb4b4;--ds1-success:#b2e6bf;--ds1-info:#b8dfff}
+  @media(max-width:700px){.ds-v1{padding:10px}.demo-grid{grid-template-columns:1fr}.demo-full{grid-column:auto}}
+</style>
+</head>
+<body>
+<main class="ds-v1" id="demoRoot" data-demo-theme="classic">
+ <div class="demo-wrap">
+  <header class="demo-header">
+   <h1>Vārdadienas · Dizaina sistēma 1.0</h1>
+   <p>Izolēta komponentu demonstrācija. Šī nav lietotnes sākumlapa un neietekmē TEST versiju.</p>
+   <div class="demo-theme-controls"><label for="theme">Testa palete</label>
+    <select id="theme"><option value="classic">Klasiskā (neitrāls pamats)</option><option value="d3">D3 krāsu etalons (bez dekorācijām)</option><option value="contrast">Tumšs kontrasta tests</option></select>
+   </div>
+  </header>
+  <div class="demo-grid">
+   <section class="ds-card"><h2>C01–C02 · Paneļi</h2><div class="demo-stack"><div class="ds-inset">Informācijas panelis: vārdadienas šodien.</div><p class="demo-note">Ārējais panelis izmanto kopīgo noapaļojumu un atkāpes.</p></div></section>
+   <section class="ds-card"><h2>C03–C05, C17 · Pogas</h2><div class="demo-row"><button type="button" class="ds-button ds-button--primary" id="primary">Primārā</button><button type="button" class="ds-button" id="secondary">Sekundārā</button><button type="button" class="ds-button ds-button--danger" id="danger">Dzēst</button><button type="button" class="ds-icon-button" aria-label="Rediģēt" id="edit">✎</button><button type="button" class="ds-icon-button ds-icon-button--danger" aria-label="Noņemt" id="remove">×</button></div><p class="demo-note">Dzēšanas darbība šeit ir tikai demonstrācija.</p></section>
+   <section class="ds-card"><h2>C06–C08 · Izvēle un ievade</h2><div class="demo-stack"><div class="demo-choices" role="group" aria-label="Kārtošana"><button class="ds-choice" type="button" aria-pressed="true">Pēc datuma</button><button class="ds-choice" type="button" aria-pressed="false">Pēc vārda</button></div><div><label class="demo-label" for="name">Vārds</label><input class="ds-input" id="name" placeholder="Ievadi vārdu"></div><div><label class="demo-label" for="date">Datums</label><input class="ds-input" id="date" type="date"></div><div><label class="demo-label" for="time">Laiks</label><input class="ds-input" id="time" type="time" value="09:00"></div></div></section>
+   <section class="ds-card"><h2>C10–C12 · Saraksts un saite</h2><div class="ds-list-row"><span>Anna · 26. jūlijs</span><button class="ds-icon-button" type="button" aria-label="Rediģēt Annu">✎</button></div><div class="ds-list-row"><span>Jānis · 24. jūnijs</span><button class="ds-icon-button ds-icon-button--danger" type="button" aria-label="Noņemt Jāni">×</button></div><p><button type="button" class="ds-link" id="link">Atvērt informāciju</button></p><p class="demo-note">Saraksts ir piemērs, nevis lietotnes dati.</p></section>
+   <section class="ds-card"><h2>C11 · Paziņojumi</h2><div class="demo-stack"><div class="ds-status ds-status--info" role="status">Informācija: šī ir testa lapa.</div><div class="ds-status ds-status--success" role="status">Veiksmīgi: stils ielādēts.</div><div class="ds-status ds-status--error" role="alert">Kļūda: demonstrācijas piemērs.</div></div></section>
+   <section class="ds-card"><h2>C13 · Uznirstošs panelis</h2><div class="demo-popup-wrap"><button class="ds-button" type="button" id="popupToggle" aria-expanded="false" aria-controls="popup">Atvērt izvēlni</button><div class="ds-popup" id="popup" hidden><strong>Testa izvēlne</strong><p>Uznirstošs panelis ar ierobežotu platumu un ritināšanu.</p><button type="button" class="ds-button" id="popupClose">Aizvērt</button></div></div></section>
+   <section class="ds-card"><h2>C14–C15 · Pārslēgs un redaktors</h2><div class="demo-stack"><label class="demo-row"><input type="checkbox" id="toggle" checked> Atgādinājumi ieslēgti (funkcionāls piemērs)</label><div><label class="demo-label" for="greeting">Apsveikuma teksts</label><textarea class="ds-textarea" id="greeting">Daudz laimes vārdadienā!</textarea></div></div></section>
+   <section class="ds-card"><h2>C16 · Kalendāra dienas</h2><div class="demo-calendar" role="group" aria-label="Testa kalendāra dienas"><button type="button" class="demo-day" aria-pressed="false">1</button><button type="button" class="demo-day" aria-pressed="false">2</button><button type="button" class="demo-day" aria-pressed="true">3</button><button type="button" class="demo-day" aria-pressed="false">4</button><button type="button" class="demo-day" aria-pressed="false">5</button><button type="button" class="demo-day" aria-pressed="false">6</button><button type="button" class="demo-day" aria-pressed="false">7</button></div></section>
+   <section class="ds-card demo-full"><h2>C18 · Izvēršamās sadaļas</h2><div class="demo-stack"><div><button type="button" class="ds-accordion-trigger" aria-expanded="false" aria-controls="accordion1"><span>Datu avoti</span><span aria-hidden="true">⌄</span></button><div class="ds-accordion-panel" id="accordion1" hidden>Šeit būs informācija par izmantotajiem datu avotiem.</div></div><div><button type="button" class="ds-accordion-trigger" aria-expanded="false" aria-controls="accordion2"><span>Privātums</span><span aria-hidden="true">⌄</span></button><div class="ds-accordion-panel" id="accordion2" hidden>Privātuma informācijas demonstrācijas saturs.</div></div></div></section>
+   <section class="ds-card demo-full"><h2>C09 · Navigācija</h2><div class="ds-sticky-nav demo-nav"><button class="ds-button" type="button" id="home">Uz sākumu</button></div><p class="demo-note">Poga atgriež šīs demonstrācijas lapas augšdaļā.</p></section>
+  </div>
+  <p id="feedback" role="status" aria-live="polite" class="demo-note" style="padding:16px 0">Gatavs testēšanai.</p>
+ </div>
+</main>
+<script>
+(function(){
+ const root=document.getElementById('demoRoot');
+ const feedback=document.getElementById('feedback');
+ const note=s=>{feedback.textContent=s;};
+ document.getElementById('theme').addEventListener('change',e=>{root.dataset.demoTheme=e.target.value;note('Izvēlēta testa palete: '+e.target.selectedOptions[0].textContent);});
+ for(const [id,message] of [['primary','Primārā poga darbojas.'],['secondary','Sekundārā poga darbojas.'],['danger','Dzēšanas piemērs: dati netiek dzēsti.'],['edit','Rediģēšanas ikonas piemērs.'],['remove','Noņemšanas ikonas piemērs: dati netiek dzēsti.'],['link','Teksta saite darbojas.']]){
+  document.getElementById(id).addEventListener('click',()=>note(message));
+ }
+ document.querySelectorAll('.demo-choices .ds-choice').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.demo-choices .ds-choice').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  note('Izvēlēts: '+b.textContent);
+ }));
+ document.querySelectorAll('.demo-day').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.demo-day').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  note('Izvēlēta diena: '+b.textContent);
+ }));
+ const popup=document.getElementById('popup'), trigger=document.getElementById('popupToggle');
+ function setPopup(open){popup.hidden=!open;trigger.setAttribute('aria-expanded',String(open));}
+ trigger.addEventListener('click',()=>setPopup(popup.hidden));
+ document.getElementById('popupClose').addEventListener('click',()=>{setPopup(false);trigger.focus();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!popup.hidden){setPopup(false);trigger.focus();}});
+ document.querySelectorAll('.ds-accordion-trigger').forEach(b=>b.addEventListener('click',()=>{
+  const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));document.getElementById(b.getAttribute('aria-controls')).hidden=!open;
+ }));
+ document.getElementById('toggle').addEventListener('change',e=>note('Atgādinājumu demonstrācija: '+(e.target.checked?'ieslēgta':'izslēgta')));
+ document.getElementById('home').addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});note('Atgriezts demonstrācijas sākumā.');});
+})();
+</script>
+</body></html>
