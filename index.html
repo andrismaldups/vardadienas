@@ -418,6 +418,25 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
   if(media){if(media.addEventListener)media.addEventListener('change',()=>{if(mode==='auto')apply();});else if(media.addListener)media.addListener(()=>{if(mode==='auto')apply();});}
 })();
 </script>
+<!-- DESIGN TEST: isolate legacy TEST server endpoints before application scripts. -->
+<script>
+/* DESIGN TEST only. The existing TEST server and its D1 data must never be touched
+   by this experimental PWA. Keep this before every application script. */
+(function(){
+  const protectedOrigin='https://vardadienas-push-test.andris-maldups.workers.dev';
+  const originalFetch=window.fetch.bind(window);
+  window.fetch=function(input,init){
+    let url;
+    try{url=new URL(typeof input==='string'?input:input.url,location.href);}
+    catch(error){return Promise.reject(error);}
+    if(url.origin===protectedOrigin){
+      return Promise.reject(new Error('DESIGN TEST: savienojums ar esošo TEST serveri ir atspējots.'));
+    }
+    return originalFetch(input,init);
+  };
+  window.DESIGN_TEST_ISOLATED=true;
+})();
+</script>
 </head>
   <body><div class="wrap">
     <section id="settingsView" hidden>
@@ -2627,4 +2646,22 @@ if ("serviceWorker" in navigator) {
   }
   document.addEventListener('pointerdown',e=>{for(const c of controls)if(!c.wrapper.contains(e.target))c.close()});
 })();
-</script></body></html>
+</script><!-- DESIGN TEST: push UI disabled; no TEST subscriptions are created. -->
+<script>
+(function(){
+  const status=document.getElementById('pushActivationStatus');
+  const button=document.getElementById('activatePushButton');
+  if(!button)return;
+  const message='DESIGN TEST: paziņojumi ir atspējoti, lai aizsargātu esošos TEST abonementus.';
+  function lock(){
+    button.disabled=true;
+    button.textContent='Paziņojumi DESIGN TEST nav pieejami';
+    if(status)status.textContent=message;
+  }
+  button.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();lock();},true);
+  lock();
+  /* Legacy status refresh can change the button asynchronously; re-lock after mutations. */
+  new MutationObserver(lock).observe(button,{attributes:true,attributeFilter:['disabled'],childList:true});
+})();
+</script>
+</body></html>
