@@ -988,3 +988,46 @@ html[data-design] .greeting-result textarea{
 html[data-design] .greeting-result .greeting-result-text:focus{
   outline:2px solid var(--ds-focus);outline-offset:1px;
 }
+
+
+/* TEST D3/S1 2026-11-04: exact-element overrides.
+   Keep all decoration SVGs unchanged.  Explicit selectors outrank the
+   general themed button and textarea rules, including their !important flags. */
+html[data-design="nature-d3"] .side-menu > button,
+html[data-design="festive-s1"] .side-menu > button {
+  appearance:none!important;-webkit-appearance:none!important;
+  background:none!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;outline-offset:2px;
+}
+html[data-design="nature-d3"] #favoritesList button.remove-favorite,
+html[data-design="nature-d3"] #birthdayView button.birthday-edit-btn,
+html[data-design="nature-d3"] #birthdayView button.birthday-delete-btn,
+html[data-design="festive-s1"] #favoritesList button.remove-favorite,
+html[data-design="festive-s1"] #birthdayView button.birthday-edit-btn,
+html[data-design="festive-s1"] #birthdayView button.birthday-delete-btn {
+  appearance:none!important;-webkit-appearance:none!important;
+  background:none!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;
+  border-radius:0!important;box-shadow:none!important;
+}
+/* Additional selectors for birthday list irrespective of its enclosing view ID. */
+html[data-design="nature-d3"] .birthday-saved-row button.birthday-edit-btn,
+html[data-design="nature-d3"] .birthday-saved-row button.birthday-delete-btn,
+html[data-design="festive-s1"] .birthday-saved-row button.birthday-edit-btn,
+html[data-design="festive-s1"] .birthday-saved-row button.birthday-delete-btn {
+  background:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html[data-design="nature-d3"] #greetingResultView .greeting-result textarea#greetingResultText,
+html[data-design="festive-s1"] #greetingResultView .greeting-result textarea#greetingResultText {
+  appearance:none!important;-webkit-appearance:none!important;
+  background:transparent!important;background-color:transparent!important;
+  background-image:none!important;box-shadow:none!important;
+  border:0!important;color:inherit!important;
+  opacity:1!important;-webkit-text-fill-color:currentColor!important;
+}
+html[data-design="nature-d3"] #greetingResultView .greeting-result .greeting-text-wrap,
+html[data-design="festive-s1"] #greetingResultView .greeting-result .greeting-text-wrap {
+  background:transparent!important;box-shadow:none!important;
+}
