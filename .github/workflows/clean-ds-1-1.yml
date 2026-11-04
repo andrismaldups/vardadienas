@@ -35,6 +35,12 @@ jobs:
       - name: Browser and mobile-WebKit checks
         working-directory: clean-ds-1.1
         run: npm test
+      - name: Summarize test outcome
+        if: always()
+        run: |
+          echo '## Clean DS 1.1 — automated checks' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Review the job steps for the static contract, contrast audit, and browser results.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Screenshots, HTML report and traces (when available) are attached below as an artifact.' >> "$GITHUB_STEP_SUMMARY"
       - name: Upload browser test evidence
         if: always()
         uses: actions/upload-artifact@v4
