@@ -1031,3 +1031,35 @@ html[data-design="nature-d3"] #greetingResultView .greeting-result .greeting-tex
 html[data-design="festive-s1"] #greetingResultView .greeting-result .greeting-text-wrap {
   background:transparent!important;box-shadow:none!important;
 }
+
+
+/* TEST D3/S1 follow-up: higher-specificity reset for native interactive
+   controls.  The theme's generic dark-mode button rule has specificity
+   higher than earlier component-only resets. Decorations stay untouched. */
+html[data-design="nature-d3"][data-theme="dark"] .side-menu button,
+html[data-design="nature-d3"][data-theme="light"] .side-menu button,
+html[data-design="festive-s1"][data-theme="dark"] .side-menu button,
+html[data-design="festive-s1"][data-theme="light"] .side-menu button {
+  background:transparent!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;
+  border-radius:0!important;box-shadow:none!important;
+  -webkit-appearance:none!important;appearance:none!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] .birthday-saved-row .birthday-row-actions button,
+html[data-design="nature-d3"][data-theme="light"] .birthday-saved-row .birthday-row-actions button,
+html[data-design="festive-s1"][data-theme="dark"] .birthday-saved-row .birthday-row-actions button,
+html[data-design="festive-s1"][data-theme="light"] .birthday-saved-row .birthday-row-actions button {
+  background:transparent!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;
+  border-radius:0!important;box-shadow:none!important;
+  -webkit-appearance:none!important;appearance:none!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
+html[data-design="nature-d3"][data-theme="light"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
+html[data-design="festive-s1"][data-theme="dark"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
+html[data-design="festive-s1"][data-theme="light"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon {
+  background:transparent!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;
+  border-radius:0!important;box-shadow:none!important;
+  -webkit-appearance:none!important;appearance:none!important;
+}
