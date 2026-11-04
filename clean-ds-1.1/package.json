@@ -1,0 +1,12 @@
+{
+  "name": "vardadienas-clean-design-system-1-1",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:browser": "playwright test --project=chromium",
+    "test:webkit": "playwright test --project=webkit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
