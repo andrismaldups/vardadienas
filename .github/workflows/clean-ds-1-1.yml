@@ -35,11 +35,11 @@ jobs:
       - name: Browser and mobile-WebKit checks
         working-directory: clean-ds-1.1
         run: npm test
-      - name: Upload failure traces
-        if: failure()
+      - name: Upload browser test evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: clean-ds-playwright-failure
+          name: clean-ds-playwright-evidence
           path: |
             clean-ds-1.1/test-results
             clean-ds-1.1/playwright-report
