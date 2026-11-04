@@ -137,3 +137,16 @@ test('modal blocks only background, not the dialog', async ({ page }) => {
   await expect(page.locator('.lab-grid')).not.toHaveAttribute('inert', '');
   await expect(page.locator('#openModal')).toBeFocused();
 });
+
+test('capture light and dark C01-C18 gallery screenshots', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    await expect(page.locator('#validation')).toContainText('Definēti visi');
+    await page.screenshot({
+      path: testInfo.outputPath('ds11-' + mode + '-' + testInfo.project.name + '.png'),
+      fullPage: true,
+      animations: 'disabled',
+    });
+  }
+});
