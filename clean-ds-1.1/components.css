@@ -62,10 +62,10 @@
 @media(max-width:430px){.ds-app .ds-card{border-radius:18px;padding:16px}.ds-app .ds-emoji-grid{gap:3px}}
 
 /* DS 1.1 state contract: one implementation shared by every theme. */
-.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:var(--ds-hover-bg);color:var(--ds-secondary-text)}
+@media(hover:hover){.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:var(--ds-hover-bg);color:var(--ds-secondary-text)}
 .ds-app .ds-button--primary:not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
 .ds-app .ds-button--danger:not(:disabled):hover{background:var(--ds-danger-hover);color:var(--ds-on-danger)}
-.ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):hover{background:var(--ds-selected-hover);color:var(--ds-selected-text)}
+.ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):hover{background:var(--ds-selected-hover);color:var(--ds-selected-text)}}
 .ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):active{background:var(--ds-pressed-bg)}
 .ds-app .ds-button--primary:not(:disabled):active{background:var(--ds-primary-pressed)}
 .ds-app .ds-button--danger:not(:disabled):active{background:var(--ds-danger-pressed)}
@@ -79,4 +79,4 @@
 .ds-app .ds-popup[hidden]{display:none}
 .ds-app .ds-emoji-grid .ds-icon-button[aria-pressed=true]{background:var(--ds-popup-selected-bg);color:var(--ds-popup-text);border-color:var(--ds-selected-border)}
 .ds-app .ds-switch input:disabled{accent-color:var(--ds-disabled-text)}
-@media(hover:none){.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:revert-layer;color:inherit}}
+
