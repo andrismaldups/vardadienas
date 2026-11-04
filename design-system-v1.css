@@ -1,0 +1,67 @@
+/* Vārdadienas — Design System 1.0 foundation
+ * Isolated prototype: NOT linked by index.html.
+ * Legacy TEST themes K1/Z3/D3/S1 remain unchanged.
+ * Component classes ds-* are opt-in; no global element selectors.
+ */
+.ds-v1 {
+  --ds1-radius-card:22px;
+  --ds1-radius-card-mobile:18px;
+  --ds1-radius-control:12px;
+  --ds1-radius-inset:14px;
+  --ds1-space-1:4px;
+  --ds1-space-2:8px;
+  --ds1-space-3:12px;
+  --ds1-space-4:16px;
+  --ds1-space-5:18px;
+  --ds1-space-6:26px;
+  --ds1-touch-min:44px;
+  --ds1-input-min:46px;
+  --ds1-accordion-min:48px;
+  --ds1-focus-width:2px;
+  --ds1-focus-offset:2px;
+  --ds1-page:#f2f5f8;
+  --ds1-surface:#fff;
+  --ds1-surface-soft:#f6fbf7;
+  --ds1-text:#18392b;
+  --ds1-muted:#718096;
+  --ds1-primary:#08783f;
+  --ds1-on-primary:#fff;
+  --ds1-border:#d7dee8;
+  --ds1-border-soft:#d7e8dc;
+  --ds1-focus:#08783f;
+  --ds1-caret:#08783f;
+  --ds1-danger:#a63838;
+  --ds1-on-danger:#fff;
+  --ds1-error:#b42318;
+  --ds1-success:#08783f;
+  --ds1-info:#345c78;
+  --ds1-overlay:rgba(0,0,0,.18);
+  color:var(--ds1-text);
+}
+.ds-v1, .ds-v1 * {box-sizing:border-box}
+.ds-v1 .ds-card {background:var(--ds1-surface);border-radius:var(--ds1-radius-card);padding:var(--ds1-space-6)}
+.ds-v1 .ds-inset {background:var(--ds1-surface-soft);border:1px solid var(--ds1-border-soft);border-radius:var(--ds1-radius-inset);padding:12px 14px}
+.ds-v1 .ds-button {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--ds1-touch-min);border:1px solid var(--ds1-border);border-radius:var(--ds1-radius-control);padding:10px 15px;background:var(--ds1-surface-soft);color:var(--ds1-text);font:inherit;cursor:pointer;touch-action:manipulation}
+.ds-v1 .ds-button--primary {background:var(--ds1-primary);border-color:var(--ds1-primary);color:var(--ds1-on-primary)}
+.ds-v1 .ds-button--danger {background:var(--ds1-danger);border-color:var(--ds1-danger);color:var(--ds1-on-danger)}
+.ds-v1 .ds-icon-button {display:inline-flex;align-items:center;justify-content:center;min-width:var(--ds1-touch-min);min-height:var(--ds1-touch-min);padding:8px;border:0;border-radius:var(--ds1-radius-control);background:transparent;color:var(--ds1-primary);font:inherit;cursor:pointer}
+.ds-v1 .ds-icon-button--danger {color:var(--ds1-danger)}
+.ds-v1 .ds-input, .ds-v1 .ds-textarea {width:100%;min-width:0;min-height:var(--ds1-input-min);border:1px solid var(--ds1-border);border-radius:var(--ds1-radius-control);padding:12px 14px;background:var(--ds1-surface);color:var(--ds1-text);caret-color:var(--ds1-caret);font:inherit}
+.ds-v1 .ds-textarea {min-height:110px;line-height:1.45;resize:vertical}
+.ds-v1 .ds-choice {min-height:var(--ds1-touch-min);border:0;border-radius:11px;padding:12px 8px;background:transparent;color:var(--ds1-muted);font:inherit;cursor:pointer}
+.ds-v1 .ds-choice[aria-pressed="true"],.ds-v1 .ds-choice[aria-selected="true"] {background:var(--ds1-surface-soft);color:var(--ds1-primary);font-weight:600}
+.ds-v1 .ds-link {background:transparent;border:0;color:var(--ds1-primary);font:inherit;text-decoration:underline;cursor:pointer}
+.ds-v1 .ds-list-row {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--ds1-border)}
+.ds-v1 .ds-accordion-trigger {display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:var(--ds1-accordion-min);padding:10px 14px;border:1px solid var(--ds1-border-soft);border-radius:var(--ds1-radius-control);background:var(--ds1-surface-soft);color:var(--ds1-text);font:inherit;text-align:left;cursor:pointer}
+.ds-v1 .ds-accordion-trigger > :first-child {flex:1;min-width:0;overflow-wrap:anywhere}
+.ds-v1 .ds-accordion-panel {padding:12px}
+.ds-v1 .ds-status {padding:10px 14px;border:1px solid var(--ds1-border);border-radius:var(--ds1-radius-control)}
+.ds-v1 .ds-status--error {color:var(--ds1-error)}
+.ds-v1 .ds-status--success {color:var(--ds1-success)}
+.ds-v1 .ds-status--info {color:var(--ds1-info)}
+.ds-v1 .ds-popup {max-width:min(340px,calc(100vw - 36px));max-height:min(520px,65dvh);overflow:auto;border:1px solid var(--ds1-border);border-radius:var(--ds1-radius-control);background:var(--ds1-surface);color:var(--ds1-text)}
+.ds-v1 .ds-sticky-nav {position:sticky;bottom:0;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:var(--ds1-surface);border-top:1px solid var(--ds1-border)}
+.ds-v1 :is(.ds-button,.ds-icon-button,.ds-input,.ds-textarea,.ds-choice,.ds-link,.ds-accordion-trigger):focus-visible {outline:var(--ds1-focus-width) solid var(--ds1-focus);outline-offset:var(--ds1-focus-offset)}
+.ds-v1 :is(.ds-button,.ds-icon-button,.ds-choice,.ds-accordion-trigger):disabled {cursor:default;opacity:.65}
+@media(max-width:800px){.ds-v1 .ds-card{padding:18px;border-radius:var(--ds1-radius-card-mobile)}}
+@media(max-width:430px){.ds-v1 .ds-card{padding:16px}}
