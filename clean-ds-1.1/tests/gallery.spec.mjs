@@ -126,3 +126,14 @@ test('iPhone-sized viewport: interactive controls remain inside viewport', async
     expect(offscreen).toEqual([]);
   }
 });
+
+test('modal blocks only background, not the dialog', async ({ page }) => {
+  await page.locator('#openModal').click();
+  await expect(page.locator('.lab-grid')).toHaveAttribute('inert', '');
+  await expect(page.locator('.lab-head')).toHaveAttribute('inert', '');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.locator('#closeModal')).toBeEnabled();
+  await page.locator('#closeModal').click();
+  await expect(page.locator('.lab-grid')).not.toHaveAttribute('inert', '');
+  await expect(page.locator('#openModal')).toBeFocused();
+});
