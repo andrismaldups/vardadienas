@@ -841,3 +841,37 @@ html[data-design="nature-d3"] .reminder-time-menu button[aria-selected="true"]{
   color:#426d31!important;
   font-weight:700!important;
 }
+
+
+/* TEST D3.4 — Nakts mežs: independent dark background and moonlit decorations. */
+html[data-design="nature-d3"][data-theme="dark"] body{
+ background:#061c0e url("assets/d3-nakts-mezs-fons.svg") center top / cover fixed no-repeat!important;
+ color:#edf5df;
+}
+html[data-design="nature-d3"][data-theme="dark"] body::before{
+ background:url("assets/d3-nakts-mezs-dekoracijas.svg") center top / 100% 100% no-repeat!important;
+}
+html[data-design="nature-d3"][data-theme="dark"]{
+ --ds-page-bg:#061c0e;--ds-surface:#203a25;--ds-text:#f0f4df;
+ --ds-muted:#cadbb2;--ds-primary:#b6d58a;--ds-on-primary:#102814;
+ --ds-accent:#8ab75b;--ds-border:#638a4c;
+ --ds-soft-bg:#294a2e;--ds-soft-border:#638a4c;
+ --ds-focus:#c8e4a4;--ds-caret:#c8e4a4;
+}
+html[data-design="nature-d3"][data-theme="dark"] .card,
+html[data-design="nature-d3"][data-theme="dark"] .about-content,
+html[data-design="nature-d3"][data-theme="dark"] .side-menu{
+ background:rgba(24,53,29,.92)!important;border-color:#638a4c!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] :is(.tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result){
+ background:rgba(31,70,37,.92)!important;border-color:#638a4c!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
+ background:#426b35!important;color:#f0f4df!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] .greeting-text-wrap .greeting-emoji-panel{
+ background:#203a25!important;color:#f0f4df!important;
+}
+html[data-design="nature-d3"][data-theme="dark"] .greeting-emoji-grid button{
+ background:#294a2e!important;
+}
