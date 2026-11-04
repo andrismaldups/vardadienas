@@ -22,4 +22,14 @@
 <circle cx="19" cy="386" r="3"/><circle cx="9" cy="502" r="2.4"/>
 <circle cx="410" cy="465" r="3.2"/><circle cx="419" cy="704" r="2.6"/>
 <circle cx="23" cy="912" r="3"/><circle cx="403" cy="913" r="2.7"/>
+</g><g fill="none" stroke-linecap="round" opacity=".83">
+<path d="M8 930 Q8 710 52 468 M16 930 Q30 690 108 535 M28 930 Q43 770 145 608 M39 930 Q83 721 196 585 M6 930 Q-5 690 29 544 M52 930 Q93 810 166 740 M66 930 Q116 822 221 698" stroke="#76b744" stroke-width="2.7"/>
+<path d="M14 930 Q29 741 73 600 M31 930 Q66 783 124 664 M46 930 Q87 762 181 638 M3 930 Q2 791 18 705 M75 930 Q126 852 205 788" stroke="#a7d45c" stroke-width="1.6"/>
+<path d="M429 930 Q416 801 393 741 M426 930 Q400 850 357 801 M416 930 Q384 872 328 836" stroke="#579b39" stroke-width="2.2"/>
+</g>
+<g fill="#78b64a" opacity=".7">
+<path d="M53 468 Q39 454 45 437 Q60 446 53 468Z M108 535 Q111 515 127 508 Q126 526 108 535Z M145 608 Q129 594 135 578 Q151 585 145 608Z M196 585 Q200 566 214 559 Q211 578 196 585Z M393 741 Q380 730 385 713 Q401 721 393 741Z"/>
+</g>
+<g fill="url(#drop)" stroke="#c4ead1" stroke-width=".8" opacity=".82">
+<ellipse cx="53" cy="468" rx="3" ry="5"/><ellipse cx="108" cy="535" rx="3.5" ry="5.5"/><ellipse cx="145" cy="608" rx="2.7" ry="4.5"/><ellipse cx="196" cy="585" rx="3" ry="4"/><ellipse cx="73" cy="600" rx="2.5" ry="4"/>
 </g></svg>
