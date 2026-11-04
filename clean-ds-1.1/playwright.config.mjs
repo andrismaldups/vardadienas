@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   timeout: 20_000,
+  reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
+  retries: process.env.CI ? 1 : 0,
   use: {
     baseURL: 'http://127.0.0.1:8765',
     trace: 'retain-on-failure',
