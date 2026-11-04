@@ -60,3 +60,23 @@
 .ds-app :is(button,input,textarea,select,a,summary):focus-visible{outline:2px solid var(--ds-focus-ring);outline-offset:2px}
 .ds-app :is(button,input,textarea,select):disabled{background:var(--ds-disabled-bg);color:var(--ds-disabled-text);border-color:var(--ds-disabled-bg);cursor:not-allowed;opacity:1}
 @media(max-width:430px){.ds-app .ds-card{border-radius:18px;padding:16px}.ds-app .ds-emoji-grid{gap:3px}}
+
+/* DS 1.1 state contract: one implementation shared by every theme. */
+.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:var(--ds-hover-bg);color:var(--ds-secondary-text)}
+.ds-app .ds-button--primary:not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
+.ds-app .ds-button--danger:not(:disabled):hover{background:var(--ds-danger-hover);color:var(--ds-on-danger)}
+.ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):hover{background:var(--ds-selected-hover);color:var(--ds-selected-text)}
+.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):active{background:var(--ds-pressed-bg)}
+.ds-app .ds-button--primary:not(:disabled):active{background:var(--ds-primary-pressed)}
+.ds-app .ds-button--danger:not(:disabled):active{background:var(--ds-danger-pressed)}
+.ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):active{background:var(--ds-selected-pressed)}
+.ds-app .ds-input[aria-invalid=true],.ds-app .ds-textarea[aria-invalid=true],.ds-app .ds-select[aria-invalid=true]{border-color:var(--ds-error);box-shadow:inset 0 0 0 1px var(--ds-error)}
+.ds-app :is(.ds-input,.ds-textarea,.ds-select):read-only{background:var(--ds-readonly-bg);color:var(--ds-readonly-text)}
+.ds-app :is(.ds-input,.ds-textarea,.ds-select):focus-visible{outline:2px solid var(--ds-focus-ring);outline-offset:2px}
+.ds-app .ds-modal-backdrop{position:fixed;inset:0;display:grid;place-items:center;padding:20px;background:var(--ds-backdrop);z-index:30}
+.ds-app .ds-modal-backdrop[hidden]{display:none}
+.ds-app .ds-modal{width:min(100%,460px);max-height:calc(100dvh - 40px);overflow:auto;padding:20px;border:1px solid var(--ds-popup-border);border-radius:18px;background:var(--ds-popup-bg);color:var(--ds-popup-text);box-shadow:0 12px 36px var(--ds-shadow)}
+.ds-app .ds-popup[hidden]{display:none}
+.ds-app .ds-emoji-grid .ds-icon-button[aria-pressed=true]{background:var(--ds-popup-selected-bg);color:var(--ds-popup-text);border-color:var(--ds-selected-border)}
+.ds-app .ds-switch input:disabled{accent-color:var(--ds-disabled-text)}
+@media(hover:none){.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:revert-layer;color:inherit}}
