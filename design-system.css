@@ -944,3 +944,47 @@ html[data-design="nature-d3"][data-theme="dark"] :is(
 html[data-design="nature-d3"][data-theme="dark"] :is(
   .remove-favorite,.birthday-edit-btn,.birthday-delete-btn
 ){background:#285039!important;color:#d9efc0!important}
+
+
+/* TEST UI refinement 2026-11-04: D3/S1 interface consistency.
+   Decoration assets and fixed decorative layers are intentionally untouched. */
+html[data-design="nature-d3"] :is(.names .name-link,.extra-list .name-link),
+html[data-design="festive-s1"] :is(.names .name-link,.extra-list .name-link){
+  background:transparent!important;box-shadow:none!important;border-color:transparent!important;
+}
+html[data-design="nature-d3"] :is(.remove-favorite,.birthday-edit-btn,.birthday-delete-btn),
+html[data-design="festive-s1"] :is(.remove-favorite,.birthday-edit-btn,.birthday-delete-btn){
+  background:transparent!important;box-shadow:none!important;border-color:transparent!important;
+}
+html[data-design="nature-d3"] .side-menu button,
+html[data-design="festive-s1"] .side-menu button{
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  border-radius:0!important;text-align:left;
+}
+html[data-design="nature-d3"] :is(#clearName,#clearDate),
+html[data-design="festive-s1"] :is(#clearName,#clearDate){
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  border-radius:0!important;
+}
+html[data-design="nature-d3"] #nameResult .search-add-favorite{
+  background:var(--ds-soft-bg)!important;color:var(--ds-primary)!important;
+  border-color:var(--ds-soft-border)!important;
+}
+html[data-design="nature-d3"] :is(#favoriteAddCancel,#birthdayAddCancel){
+  background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
+  border-color:var(--ds-soft-border)!important;
+}
+html[data-design="festive-s1"] :is(#favoriteAddCancel,#birthdayAddCancel){
+  background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
+  border-color:var(--ds-soft-border)!important;
+}
+/* Match the editable area to its enclosing greeting panel in every theme. */
+html[data-design] .greeting-result .greeting-text-wrap,
+html[data-design] .greeting-result .greeting-result-text,
+html[data-design] .greeting-result textarea{
+  background:transparent!important;background-color:transparent!important;
+  box-shadow:none!important;border-color:transparent!important;
+}
+html[data-design] .greeting-result .greeting-result-text:focus{
+  outline:2px solid var(--ds-focus);outline-offset:1px;
+}
