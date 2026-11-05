@@ -1,0 +1,29 @@
+/* DS 1.1 / VD Design: D3 Rīta rasa semantic theme tokens.
+   Values are taken from approved nature-d3 theme in design-system.css.
+   Opt-in only; no changes to the existing nature-d3 theme. */
+html[data-design="ds11"][data-theme="light"]{
+ --ds-page-bg:#d8e9ac;--ds-surface:rgba(245,248,233,.84);--ds-text:#30482d;
+ --ds-muted:#58734e;--ds-primary:#527b3d;--ds-on-primary:#fffdf3;
+ --ds-border:#a3bb7e;--ds-soft-bg:rgba(249,251,239,.68);
+ --ds-soft-border:#a3bb7e;--ds-focus:#527b3d;--ds-caret:#527b3d;
+ --ds-heading:#30482d;--ds-surface-border:#a3bb7e;
+ --ds-shadow:rgba(45,79,30,.12);--ds-input-bg:rgba(249,251,239,.91);
+ --ds-input-text:#30482d;--ds-input-border:#a3bb7e;
+ --ds-selected-bg:#527b3d;--ds-selected-text:#fffdf3;
+ --ds-unselected-bg:rgba(249,251,239,.68);--ds-unselected-text:#30482d;
+ --ds-unselected-border:#a3bb7e;
+ --ds-popup-bg:rgba(245,248,233,.96);--ds-popup-text:#30482d;--ds-popup-border:#a3bb7e;
+}
+html[data-design="ds11"][data-theme="dark"]{
+ --ds-page-bg:#1d3023;--ds-surface:rgba(34,55,38,.87);--ds-text:#edf5df;
+ --ds-muted:#c6d7ae;--ds-primary:#a8c984;--ds-on-primary:#203421;
+ --ds-border:#73925f;--ds-soft-bg:rgba(39,65,44,.84);
+ --ds-soft-border:#73925f;--ds-focus:#c0dda1;--ds-caret:#c0dda1;
+ --ds-heading:#edf5df;--ds-surface-border:#73925f;
+ --ds-shadow:rgba(0,0,0,.28);--ds-input-bg:#294531;
+ --ds-input-text:#edf5df;--ds-input-border:#73925f;
+ --ds-selected-bg:#a8c984;--ds-selected-text:#203421;
+ --ds-unselected-bg:rgba(39,65,44,.84);--ds-unselected-text:#edf5df;
+ --ds-unselected-border:#73925f;
+ --ds-popup-bg:#223726;--ds-popup-text:#edf5df;--ds-popup-border:#73925f;
+}
