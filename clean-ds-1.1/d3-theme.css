@@ -2,7 +2,7 @@
    Values are taken from approved nature-d3 theme in design-system.css.
    Opt-in only; no changes to the existing nature-d3 theme. */
 html[data-design="ds11"][data-theme="light"]{
- --ds-page-bg:#d8e9ac;--ds-surface:rgba(245,248,233,.84);--ds-text:#30482d;
+ --ds-home-panel-bg:rgba(245,248,233,.17);--ds-page-bg:#d8e9ac;--ds-surface:rgba(245,248,233,.84);--ds-text:#30482d;
  --ds-muted:#58734e;--ds-primary:#527b3d;--ds-on-primary:#fffdf3;
  --ds-border:#a3bb7e;--ds-soft-bg:rgba(249,251,239,.68);
  --ds-soft-border:#a3bb7e;--ds-focus:#527b3d;--ds-caret:#527b3d;
@@ -15,7 +15,7 @@ html[data-design="ds11"][data-theme="light"]{
  --ds-popup-bg:rgba(245,248,233,.96);--ds-popup-text:#30482d;--ds-popup-border:#a3bb7e;
 }
 html[data-design="ds11"][data-theme="dark"]{
- --ds-page-bg:#1d3023;--ds-surface:rgba(34,55,38,.87);--ds-text:#edf5df;
+ --ds-home-panel-bg:rgba(24,53,29,.17);--ds-page-bg:#1d3023;--ds-surface:rgba(34,55,38,.87);--ds-text:#edf5df;
  --ds-muted:#c6d7ae;--ds-primary:#a8c984;--ds-on-primary:#203421;
  --ds-border:#73925f;--ds-soft-bg:rgba(39,65,44,.84);
  --ds-soft-border:#73925f;--ds-focus:#c0dda1;--ds-caret:#c0dda1;
