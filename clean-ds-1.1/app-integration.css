@@ -49,10 +49,19 @@ html[data-design="ds11"] body.ds-app :is(
  .tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result,
  .favorite-add-panel,.birthday-saved-row,.settings-section,.about-row
 ){background:var(--ds-soft-bg);border-color:var(--ds-soft-border);color:var(--ds-text)}
-html[data-design="ds11"] body.ds-app :is(
- button.primary,.primary,.day.sel,.favorites-sort button.active,
- .birthday-sort button.active,.greeting-options button.active
-){background:var(--ds-primary);border-color:var(--ds-primary);color:var(--ds-on-primary)}
+html[data-design="ds11"] body.ds-app :is(button.primary,.primary,.day.sel){
+ background:var(--ds-primary);border-color:var(--ds-primary);color:var(--ds-on-primary)
+}
+/* G01/G02: C06 is a selection, not a C03 primary action. */
+html[data-design="ds11"] body.ds-app :is(.favorites-sort,.birthday-sort){
+ background:var(--ds-unselected-bg);border:1px solid var(--ds-unselected-border)
+}
+html[data-design="ds11"] body.ds-app :is(.favorites-sort button,.birthday-sort button,.greeting-options button){
+ background:var(--ds-unselected-bg);color:var(--ds-unselected-text);border-color:var(--ds-unselected-border)
+}
+html[data-design="ds11"] body.ds-app :is(.favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active){
+ background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
+}
 html[data-design="ds11"] body.ds-app :is(
  #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
  .back-btn,.greeting-options button,.birthday-sort button,.favorites-sort button
