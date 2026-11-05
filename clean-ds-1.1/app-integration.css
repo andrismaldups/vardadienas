@@ -27,3 +27,57 @@ html[data-design="ds11"] body.ds-app .muted{color:var(--ds-muted)}
 /* This bridge is deliberately narrow: native input widgets, menus, dialogs,
    notification controls and navigation remain untouched until their behavior
    and selectors are verified against the real application. */
+
+/* DS 1.1: existing functional application component mappings. */
+html[data-design="ds11"] body.ds-app::before{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background:url("../assets/d3-rita-rasa.svg") center top / 100% 100% no-repeat;
+}
+html[data-design="ds11"] body.ds-app{position:relative;isolation:isolate}
+html[data-design="ds11"] body.ds-app::after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
+}
+html[data-design="ds11"][data-theme="dark"] body.ds-app::after{
+ background:linear-gradient(rgba(15,32,21,.76),rgba(15,32,21,.81)),url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
+}
+html[data-design="ds11"] body.ds-app .wrap{position:relative;z-index:1}
+html[data-design="ds11"] body.ds-app :is(.side-menu,.about-content){
+ background:var(--ds-surface);color:var(--ds-text);border:1px solid var(--ds-surface-border);
+}
+html[data-design="ds11"] body.ds-app :is(
+ .tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result,
+ .favorite-add-panel,.birthday-saved-row,.settings-section,.about-row
+){background:var(--ds-soft-bg);border-color:var(--ds-soft-border);color:var(--ds-text)}
+html[data-design="ds11"] body.ds-app :is(
+ button.primary,.primary,.day.sel,.favorites-sort button.active,
+ .birthday-sort button.active,.greeting-options button.active
+){background:var(--ds-primary);border-color:var(--ds-primary);color:var(--ds-on-primary)}
+html[data-design="ds11"] body.ds-app :is(
+ #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
+ .back-btn,.greeting-options button,.birthday-sort button,.favorites-sort button
+):not(.active){
+ background:var(--ds-soft-bg);border-color:var(--ds-border);color:var(--ds-text)
+}
+html[data-design="ds11"] body.ds-app :is(
+ .names,.name-link,.menu-btn,.birthday-chevron,.birthday-edit-btn,
+ .greeting-entry-arrow,.name-detail-card h3
+){color:var(--ds-primary)}
+html[data-design="ds11"] body.ds-app :is(
+ input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
+ textarea,select
+){background:var(--ds-input-bg);color:var(--ds-input-text);border-color:var(--ds-input-border);caret-color:var(--ds-caret)}
+html[data-design="ds11"] body.ds-app :is(input,textarea)::placeholder{color:var(--ds-muted);opacity:1}
+html[data-design="ds11"] body.ds-app :is(input[type="checkbox"],input[type="radio"]){accent-color:var(--ds-primary)}
+html[data-design="ds11"] body.ds-app .switch input:checked+.switch-slider{background:var(--ds-primary)}
+html[data-design="ds11"] body.ds-app :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
+html[data-design="ds11"] body.ds-app :is(.settings-back-bar,.greeting-back-bar){background:var(--ds-surface);border-color:var(--ds-surface-border)}
+html[data-design="ds11"] body.ds-app :is(.reminder-time-menu,.greeting-emoji-panel){background:var(--ds-popup-bg);color:var(--ds-popup-text);border-color:var(--ds-popup-border)}
+html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+ box-sizing:border-box;max-width:100%;width:100%;display:flex;align-items:center;
+ gap:12px;min-width:0;padding:10px 14px;overflow:hidden;
+ background:var(--ds-soft-bg);color:var(--ds-text);border:1px solid var(--ds-soft-border)
+}
+html[data-design="ds11"] body.ds-app .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+html[data-design="ds11"] body.ds-app .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
+html[data-design="ds11"] body.ds-app .day.today:not(.sel){outline-color:var(--ds-focus)}
