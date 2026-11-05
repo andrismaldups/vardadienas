@@ -27,3 +27,38 @@ html[data-design="ds11"][data-theme="dark"]{
  --ds-unselected-border:#73925f;
  --ds-popup-bg:#223726;--ds-popup-text:#edf5df;--ds-popup-border:#73925f;
 }
+
+/* Complete C01–C18 semantic contract; D3 approved greens preserved. */
+html[data-design="ds11"][data-theme="light"]{
+ --ds-backdrop:rgba(17,37,18,.48);--ds-bg-gradient:none;--ds-decor-image:none;
+ --ds-decor-opacity:1;--ds-decor-position:center;--ds-decor-size:cover;
+ --ds-danger:#a52f40;--ds-danger-hover:#8d2635;--ds-danger-pressed:#741f2b;
+ --ds-on-danger:#fff;--ds-error:#a52f40;--ds-success:#286b39;--ds-info:#315f63;
+ --ds-disabled-bg:#e1e8d6;--ds-disabled-text:#586551;
+ --ds-focus-ring:#527b3d;--ds-hover-bg:#dcebc6;--ds-pressed-bg:#cbdcad;
+ --ds-icon:#527b3d;--ds-link:#3b642e;--ds-link-hover:#244c20;
+ --ds-placeholder:#58734e;--ds-popup-selected-bg:#dcebc6;
+ --ds-primary-border:#527b3d;--ds-primary-hover:#446b32;--ds-primary-pressed:#365827;
+ --ds-readonly-bg:#e7eedb;--ds-readonly-text:#526b43;
+ --ds-secondary-bg:rgba(249,251,239,.82);--ds-secondary-border:#a3bb7e;
+ --ds-secondary-text:#30482d;--ds-selected-border:#527b3d;
+ --ds-selected-hover:#446b32;--ds-selected-pressed:#365827;
+ --ds-surface-elevated:rgba(245,248,233,.96);--ds-surface-soft:rgba(249,251,239,.68);
+}
+
+html[data-design="ds11"][data-theme="dark"]{
+ --ds-backdrop:rgba(0,0,0,.68);--ds-bg-gradient:none;--ds-decor-image:none;
+ --ds-decor-opacity:1;--ds-decor-position:center;--ds-decor-size:cover;
+ --ds-danger:#ffb1ba;--ds-danger-hover:#ffc4cc;--ds-danger-pressed:#ffd5db;
+ --ds-on-danger:#4c101b;--ds-error:#ffb1ba;--ds-success:#b3e1a5;--ds-info:#b9dbcf;
+ --ds-disabled-bg:#3b4d3d;--ds-disabled-text:#b3c0a6;
+ --ds-focus-ring:#c0dda1;--ds-hover-bg:#375b3e;--ds-pressed-bg:#45684a;
+ --ds-icon:#c0dda1;--ds-link:#c0dda1;--ds-link-hover:#e1f2cb;
+ --ds-placeholder:#c6d7ae;--ds-popup-selected-bg:#375b3e;
+ --ds-primary-border:#a8c984;--ds-primary-hover:#bad79c;--ds-primary-pressed:#cce5b4;
+ --ds-readonly-bg:#294531;--ds-readonly-text:#c6d7ae;
+ --ds-secondary-bg:rgba(39,65,44,.92);--ds-secondary-border:#73925f;
+ --ds-secondary-text:#edf5df;--ds-selected-border:#a8c984;
+ --ds-selected-hover:#bad79c;--ds-selected-pressed:#cce5b4;
+ --ds-surface-elevated:rgba(34,55,38,.96);--ds-surface-soft:rgba(39,65,44,.84);
+}
