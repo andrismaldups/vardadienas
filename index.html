@@ -392,18 +392,20 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
 </style>
 <link rel="stylesheet" href="design-system.css">
 <link rel="stylesheet" href="design-water-j1.css">
+<link rel="stylesheet" href="clean-ds-1.1/reference-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/app-integration.css">
 <script>
 (function(){
   const KEY='appearanceMode';
   const DESIGN_KEY='designStyle';
   let design='classic';
-  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','lavender','festive-s1','nature-d3','water-j1'].includes(saved))design=saved;}catch(e){}
+  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','lavender','festive-s1','nature-d3','water-j1','ds11'].includes(saved))design=saved;}catch(e){}
   document.documentElement.dataset.design=design;
   const allowed=['light','dark','auto'];
   let mode='auto';
   try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
   const media=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;}
+  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;if(document.body&&document.body.classList.contains("ds-app"))document.body.dataset.mode=document.documentElement.dataset.theme;}
   apply();
   function init(){
     document.querySelectorAll('input[name="designStyle"]').forEach(input=>{
@@ -439,7 +441,7 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
 })();
 </script>
 </head>
-  <body><div class="wrap">
+  <body><script>(function(){if(document.documentElement.dataset.design==="ds11"){document.body.classList.add("ds-app");document.body.dataset.mode=document.documentElement.dataset.theme||"light";}})();</script><div class="wrap">
     <section id="settingsView" hidden>
   <h2>Iestatījumi</h2>
   <section class="card settings-card">
