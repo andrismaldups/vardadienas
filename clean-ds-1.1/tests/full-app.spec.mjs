@@ -52,3 +52,30 @@ test('full VD Design: DS 1.1 fits iPhone viewport', async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(overflow).toBe(false);
 });
+
+
+test('full VD Design: switch themes and light/dark modes in real settings', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'nature-d3');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  await page.locator('.menu-btn').click();
+  await page.locator('#sideMenu').getByRole('button', { name: 'Iestatījumi' }).click();
+  await expect(page.locator('#settingsView')).toBeVisible();
+
+  await page.locator('input[name="designStyle"][value="ds11"]').check();
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
+  await expect(page.locator('body')).toHaveClass(/ds-app/);
+  await expect(page.locator('.card').first()).toHaveClass(/ds-card/);
+
+  await page.locator('input[name="appearanceMode"][value="dark"]').check();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('body')).toHaveAttribute('data-mode', 'dark');
+
+  await page.locator('input[name="designStyle"][value="nature-d3"]').check();
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'nature-d3');
+  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
+  await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
+  await expect(page.locator('#calendar')).toBeAttached();
+});
