@@ -239,3 +239,15 @@ html[data-design="ds11"] body.ds-app #favoriteAddInput:focus{
  outline-offset:2px;
  border-color:var(--ds-focus-ring);
 }
+
+/* N26: supporting copy must use the approved semantic muted text token.
+   The old #718096 and dark-mode #a7b9b0 are not D3 palette values. */
+html[data-design="ds11"] body.ds-app :is(
+ .extra-title,.foot,.week div,#dateTitle,
+ .appearance-choice small,.about-app>div:last-child>div,
+ .about-row span:last-child,
+ .settings-card small,.settings-section small,
+ .settings-card .hint,.settings-section .hint
+){
+ color:var(--ds-muted);
+}
