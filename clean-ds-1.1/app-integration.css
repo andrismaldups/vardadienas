@@ -212,12 +212,12 @@ html[data-design="ds11"] body.ds-app .about-card .about-row-button{
  margin-bottom:0;
 }
 
-/* N23 / C16: calendar selection is a selected day, not a C03 action.
-   Specificity intentionally overrides the earlier .day.sel primary mapping. */
+/* N23 / G09 / C16: selected calendar date borrows C03 color roles,
+   while its circular geometry and today's unselected outline remain C16. */
 html[data-design="ds11"] body.ds-app #calendar .day.sel{
- background:var(--ds-selected-bg);
- color:var(--ds-selected-text);
- border-color:var(--ds-selected-border);
+ background:var(--ds-primary);
+ color:var(--ds-on-primary);
+ border-color:var(--ds-primary-border);
 }
 html[data-design="ds11"] body.ds-app #calendar .day.today.sel{
  outline:none;
@@ -250,4 +250,31 @@ html[data-design="ds11"] body.ds-app :is(
  .settings-card .hint,.settings-section .hint
 ){
  color:var(--ds-muted);
+}
+
+/* D3 reference alignment / N21: destructive semantics do not imply a red
+   fill. C17 retains its confirmation behavior, and uses C04 visual roles. */
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button,
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
+ background:var(--ds-secondary-bg);
+ color:var(--ds-secondary-text);
+ border:1px solid var(--ds-secondary-border);
+}
+/* N22: 8px between C18 buttons, regardless of hidden accordion panels.
+   Override legacy adjoining-row border rules without altering open content. */
+html[data-design="ds11"] body.ds-app .about-card .about-row-button ~ .about-row-button{
+ margin-top:8px;
+}
+html[data-design="ds11"] body.ds-app .about-card .about-row-button .about-row{
+ border-top:0;
+}
+/* N25: all four birthday form inputs share a single semantic focus ring.
+   This overrides the legacy #08783f/#6ad49a outline and box-shadow. */
+html[data-design="ds11"] body.ds-app #birthdayAddForm input:focus,
+html[data-design="ds11"] body.ds-app #birthdayAddForm input:focus-visible{
+ outline:2px solid var(--ds-focus-ring);
+ outline-offset:2px;
+ border-color:var(--ds-focus-ring);
+ box-shadow:none;
+ caret-color:var(--ds-caret);
 }
