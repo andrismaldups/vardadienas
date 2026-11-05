@@ -135,3 +135,32 @@ html[data-design="ds11"] body.ds-app :is(
 ){
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
 }
+
+/* G04 / C18: fixed 8px separation, retaining the approved row geometry. */
+html[data-design="ds11"] body.ds-app .about-card .about-row-button + .about-content + .about-row-button{
+ margin-top:8px;
+}
+html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+ min-height:48px;
+}
+/* G06 / C17: destructive action never inherits C03 primary styling. */
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button{
+ background:var(--ds-danger-bg);
+ color:var(--ds-danger-text);
+ border:1px solid var(--ds-danger-border);
+}
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:active{
+ background:var(--ds-danger-pressed);
+}
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disabled{
+ opacity:.55;
+}
+/* G02: selected reminder time is a C06 choice, not a primary action. */
+html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="true"]{
+ background:var(--ds-selected-bg);
+ color:var(--ds-selected-text);
+}
+/* C05: edit icon keeps the semantic icon role, not the C03 color. */
+html[data-design="ds11"] body.ds-app .birthday-edit-btn{
+ color:var(--ds-icon);
+}
