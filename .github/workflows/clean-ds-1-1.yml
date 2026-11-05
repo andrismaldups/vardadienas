@@ -5,6 +5,9 @@ on:
     branches: [design-system-clean-v1-1]
     paths:
       - 'clean-ds-1.1/**'
+      - 'index.html'
+      - 'manifest.json'
+      - 'design-system.css'
       - '.github/workflows/clean-ds-1-1.yml'
   workflow_dispatch:
 
@@ -22,6 +25,8 @@ jobs:
           python-version: '3.12'
       - name: Static token contract
         run: python3 clean-ds-1.1/validate.py
+      - name: Full VD Design integration contract
+        run: python3 clean-ds-1.1/validate-app-integration.py
       - name: Contrast audit
         run: python3 clean-ds-1.1/contrast_audit.py
       - uses: actions/setup-node@v4
