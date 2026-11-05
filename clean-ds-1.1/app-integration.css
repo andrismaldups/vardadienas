@@ -103,3 +103,35 @@ html[data-design="ds11"] body.ds-app #mainView>.grid>.side>.card{
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
 }
+
+/* G10–G12: palette-bound surfaces and icon actions (light and dark).
+   Preserve HTML, events, hit targets and menu geometry. */
+html[data-design="ds11"] body.ds-app #sideMenu.side-menu{
+ background:var(--ds-menu-bg);color:var(--ds-menu-text);border-color:var(--ds-menu-border)
+}
+html[data-design="ds11"] body.ds-app #sideMenu.side-menu button{
+ background:transparent;color:var(--ds-menu-text)
+}
+html[data-design="ds11"] body.ds-app :is(.names .name-link,.tag,.extra,#nameResult .tag){
+ background:var(--ds-highlight-bg);color:var(--ds-highlight-text)
+}
+html[data-design="ds11"] body.ds-app :is(
+ .remove-favorite,.birthday-edit-btn,.birthday-delete-btn,
+ .birthday-row-actions button,#clearName,#clearDate
+){
+ background:var(--ds-icon-bg);border-color:var(--ds-icon-border);color:var(--ds-icon)
+}
+html[data-design="ds11"] body.ds-app :is(.remove-favorite,.birthday-delete-btn){
+ color:var(--ds-danger)
+}
+html[data-design="ds11"] body.ds-app :is(
+ #dateSuggestions button,.date-suggestions button,#nameResult .search-add-favorite
+){
+ background:var(--ds-secondary-bg);color:var(--ds-secondary-text);border-color:var(--ds-secondary-border)
+}
+/* C06 active state must win over the earlier generic inactive button rule. */
+html[data-design="ds11"] body.ds-app :is(
+ .favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active
+){
+ background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
+}
