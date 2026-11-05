@@ -154,13 +154,14 @@ html[data-design="ds11"] body.ds-app .about-card .about-row-button{
  min-height:48px;
 }
 /* G06 / C17: destructive action never inherits C03 primary styling. */
+/* N21: C17 uses the exact component contract, not a parallel red palette. */
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button{
- background:var(--ds-danger-bg);
- color:var(--ds-danger-text);
- border:1px solid var(--ds-danger-border);
+ background:var(--ds-danger);
+ color:var(--ds-on-danger);
+ border:1px solid var(--ds-danger);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:active{
- background:var(--ds-danger-pressed);
+ filter:brightness(.92);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disabled{
  opacity:.55;
@@ -200,4 +201,13 @@ html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="t
  color:var(--ds-selected-text);
  box-shadow:inset 0 0 0 1px var(--ds-selected-border);
  font-weight:700;
+}
+
+/* N22: every C18 row after the first gets exactly 8px separation,
+   including when the previous accordion content is hidden. */
+html[data-design="ds11"] body.ds-app .about-card .about-row-button ~ .about-row-button{
+ margin-top:8px;
+}
+html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+ margin-bottom:0;
 }
