@@ -41,7 +41,7 @@ html[data-design="ds11"][data-theme="light"]{
  --ds-primary-border:#527b3d;--ds-primary-hover:#446b32;--ds-primary-pressed:#365827;
  --ds-readonly-bg:#e7eedb;--ds-readonly-text:#526b43;
  --ds-secondary-bg:rgba(249,251,239,.82);--ds-secondary-border:#a3bb7e;
- --ds-secondary-text:#30482d;--ds-selected-border:#527b3d;
+ --ds-secondary-text:#30482d;--ds-calendar-today-border:#a3bb7e;--ds-selected-border:#527b3d;
  --ds-selected-hover:#446b32;--ds-selected-pressed:#365827;
  --ds-surface-elevated:rgba(245,248,233,.96);--ds-surface-soft:rgba(249,251,239,.68);
 }
@@ -58,7 +58,7 @@ html[data-design="ds11"][data-theme="dark"]{
  --ds-primary-border:#a8c984;--ds-primary-hover:#bad79c;--ds-primary-pressed:#cce5b4;
  --ds-readonly-bg:#294531;--ds-readonly-text:#c6d7ae;
  --ds-secondary-bg:rgba(39,65,44,.92);--ds-secondary-border:#73925f;
- --ds-secondary-text:#edf5df;--ds-selected-border:#a8c984;
+ --ds-secondary-text:#edf5df;--ds-calendar-today-border:#73925f;--ds-selected-border:#a8c984;
  --ds-selected-hover:#bad79c;--ds-selected-pressed:#cce5b4;
  --ds-surface-elevated:rgba(34,55,38,.96);--ds-surface-soft:rgba(39,65,44,.84);
 }
