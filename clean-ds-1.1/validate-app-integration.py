@@ -48,6 +48,18 @@ for missing in sorted(required - defined):
 for mode in ("light", "dark"):
     check(f'html[data-design="ds11"][data-theme="{mode}"]' in theme,
           f"Missing D3 {mode} token set")
+# Offline contract: all new styles and decorative assets must be precached.
+worker = (root / "service-worker.js").read_text(encoding="utf-8")
+for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
+              "clean-ds-1.1/app-integration.css", "assets/d3-rita-rasa.svg",
+              "assets/d3-rita-gaisma.svg"):
+    check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
+    check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
+check('vardadienas-design-test-v4' in worker,
+      "Service worker cache version was not advanced to v4")
+check('addEventListener("push"' not in worker and
+      'addEventListener("notificationclick"' not in worker,
+      "Design-only service worker must not register push listeners")
 print(f"DS 1.1 integration: {len(required)} component tokens checked")
 if errors:
     for issue in errors:
