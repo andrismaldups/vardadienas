@@ -81,3 +81,14 @@ html[data-design="ds11"] body.ds-app .about-card .about-row-button{
 html[data-design="ds11"] body.ds-app .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
 html[data-design="ds11"] body.ds-app .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
 html[data-design="ds11"] body.ds-app .day.today:not(.sel){outline-color:var(--ds-focus)}
+
+/* Approved D3 specification: ONLY the three home-view main panel positions
+   use 17% opacity. Inner controls and other views keep their own tokens.
+   Specificity deliberately beats legacy .card declarations. */
+html[data-design="ds11"] body.ds-app #mainView>.card:first-child,
+html[data-design="ds11"] body.ds-app #mainView>.grid>.card,
+html[data-design="ds11"] body.ds-app #mainView>.grid>.side>.card{
+  background:var(--ds-home-panel-bg);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
