@@ -117,7 +117,12 @@ html[data-design="ds11"] body.ds-app #sideMenu.side-menu{
 html[data-design="ds11"] body.ds-app #sideMenu.side-menu button{
  background:transparent;color:var(--ds-menu-text)
 }
-html[data-design="ds11"] body.ds-app :is(.names .name-link,.tag,.extra,#nameResult .tag){
+/* N15/N16: text links for traditional and extended names have no pill.
+   Keep semantic highlights only for actual tag/badge elements. */
+html[data-design="ds11"] body.ds-app :is(.names .name-link,.extra-list .name-link){
+ background:transparent;color:inherit;box-shadow:none
+}
+html[data-design="ds11"] body.ds-app :is(.tag,#nameResult .tag){
  background:var(--ds-highlight-bg);color:var(--ds-highlight-text)
 }
 html[data-design="ds11"] body.ds-app :is(
@@ -168,4 +173,10 @@ html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="t
 /* C05: edit icon keeps the semantic icon role, not the C03 color. */
 html[data-design="ds11"] body.ds-app .birthday-edit-btn{
  color:var(--ds-icon);
+}
+
+/* N17: hamburger trigger is an icon-only control; menu surface is separate. */
+html[data-design="ds11"] body.ds-app .menu-btn{
+ background:transparent;border-color:transparent;box-shadow:none;
+ color:var(--ds-icon)
 }
