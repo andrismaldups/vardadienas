@@ -90,6 +90,11 @@ html[data-design="ds11"] body.ds-app .about-card .about-row-button{
 html[data-design="ds11"] body.ds-app .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
 html[data-design="ds11"] body.ds-app .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
 /* G09: today's outline is a theme role, not the keyboard focus ring. */
+/* G09 dimensions apply to today's date regardless of selection. */
+html[data-design="ds11"] body.ds-app #calendar .day.today{
+ box-sizing:border-box;width:46px;height:46px;min-width:46px;min-height:46px;
+ margin-inline:auto;
+}
 html[data-design="ds11"] body.ds-app #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
 html[data-design="ds11"] body.ds-app #calendar .day.today.sel{outline:none}
 
