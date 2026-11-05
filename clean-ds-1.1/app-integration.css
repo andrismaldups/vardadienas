@@ -211,3 +211,31 @@ html[data-design="ds11"] body.ds-app .about-card .about-row-button ~ .about-row-
 html[data-design="ds11"] body.ds-app .about-card .about-row-button{
  margin-bottom:0;
 }
+
+/* N23 / C16: calendar selection is a selected day, not a C03 action.
+   Specificity intentionally overrides the earlier .day.sel primary mapping. */
+html[data-design="ds11"] body.ds-app #calendar .day.sel{
+ background:var(--ds-selected-bg);
+ color:var(--ds-selected-text);
+ border-color:var(--ds-selected-border);
+}
+html[data-design="ds11"] body.ds-app #calendar .day.today.sel{
+ outline:none;
+}
+/* N24 / C03: name-detail actions must share the same semantic primary
+   colors as the rest of the application, overriding legacy #08783f. */
+html[data-design="ds11"] body.ds-app #nameDetailView .name-detail-actions button.primary{
+ background:var(--ds-primary);
+ color:var(--ds-on-primary);
+ border-color:var(--ds-primary-border);
+}
+/* N25 / C07/C15: override legacy hard-coded #6ad49a focus outline,
+   including mouse/touch focus on the favorite-name input. */
+html[data-design="ds11"] body.ds-app :is(
+ input:not([type="hidden"]),textarea,select
+):focus-visible,
+html[data-design="ds11"] body.ds-app #favoriteAddInput:focus{
+ outline:2px solid var(--ds-focus-ring);
+ outline-offset:2px;
+ border-color:var(--ds-focus-ring);
+}
