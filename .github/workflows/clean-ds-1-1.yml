@@ -8,6 +8,8 @@ on:
       - 'index.html'
       - 'manifest.json'
       - 'design-system.css'
+      - 'service-worker.js'
+      - 'assets/**'
       - '.github/workflows/clean-ds-1-1.yml'
   workflow_dispatch:
 
