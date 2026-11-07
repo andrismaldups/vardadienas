@@ -278,3 +278,31 @@ html[data-design="ds11"] body.ds-app #birthdayAddForm input:focus-visible{
  box-shadow:none;
  caret-color:var(--ds-caret);
 }
+
+/* N25 follow-up: one shared focus geometry for all application inputs.
+   Legacy ID-specific focus rules and shadows must not win by specificity.
+   Keep the same double-line appearance as the birthday form. */
+html[data-design="ds11"] body.ds-app :is(
+ #nameInput,#dateInput,#favoriteAddInput,
+ #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
+ input:not([type="hidden"]),textarea,select
+):focus,
+html[data-design="ds11"] body.ds-app :is(
+ #nameInput,#dateInput,#favoriteAddInput,
+ #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
+ input:not([type="hidden"]),textarea,select
+):focus-visible{
+ outline:2px solid var(--ds-focus-ring);
+ outline-offset:2px;
+ border-color:var(--ds-focus-ring);
+ box-shadow:none;
+ caret-color:var(--ds-caret);
+}
+/* N22 follow-up: explicit bottom gap on each C18 button except the
+   last, instead of margin-top on a sibling across hidden panels. */
+html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+ margin-top:0;
+}
+html[data-design="ds11"] body.ds-app .about-card .about-row-button:not(:last-of-type){
+ margin-bottom:8px;
+}
