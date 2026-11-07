@@ -443,7 +443,7 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
   window.DESIGN_TEST_ISOLATED=true;
 })();
 </script>
-<style id="ds11-about-row-gap">html[data-design="ds11"] body.ds-app .about-card .about-row-gap{display:block;height:8px;min-height:8px;flex:none;clear:both}html[data-design="ds11"] body.ds-app .about-card .about-row-button{margin-top:0!important;margin-bottom:0!important}</style></head>
+<style id="ds11-about-row-gap">html[data-design="ds11"] body.ds-app .about-card .about-accordion-list{display:flex;flex-direction:column;gap:8px}html[data-design="ds11"] body.ds-app .about-card .about-accordion-item{min-width:0}html[data-design="ds11"] body.ds-app .about-card .about-row-button{margin:0!important}html[data-design="ds11"] body.ds-app .about-card .about-content[hidden]{display:none!important}</style></head>
   <body><script>(function(){if(document.documentElement.dataset.design==="ds11"){document.body.classList.add("ds-app");document.body.dataset.mode=document.documentElement.dataset.theme||"light";}})();</script><div class="wrap">
     <section id="settingsView" hidden>
   <h2>Iestatījumi</h2>
@@ -514,6 +514,8 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
         <div class="about-version">Versija 1.0</div>
       </div>
     </div>
+    <div class="about-accordion-list">
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Datu avoti</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Vārdadienas</strong><br>Vārdadienu dati balstīti uz Valsts valodas centra Kalendārvārdu ekspertu komisijas publicēto Latviešu tradicionālo vārdadienu sarakstu un Paplašināto vārdadienu sarakstu.</p>
@@ -521,7 +523,8 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
       <p><strong>Interesanti</strong><br>Informācija par starptautiskajām, tematiskajām un citām atzīmējamām dienām apkopota no publiski pieejamiem avotiem, priekšroku dodot oficiālu organizāciju un attiecīgo dienu izveidotāju publicētajai informācijai.</p>
       <p><strong>Piezīme</strong><br>Informācija aplikācijā tiek apkopota un pārbaudīta pēc iespējas rūpīgi, tomēr atsevišķu tematisko dienu nosaukumi vai datumi dažādos avotos var atšķirties.</p>
     </div>
-    <div class="about-row-gap" aria-hidden="true"></div>
+      </div>
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Privātums</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Personas dati</strong><br>Aplikācijas lietošanai nav nepieciešams izveidot lietotāja kontu. Aplikācija neprasa lietotāja vārdu, e-pasta adresi, kontaktpersonu sarakstu, atrašanās vietu vai citus personas datus.</p>
@@ -530,13 +533,16 @@ html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker
       <p><strong>Piekļuve ierīces datiem</strong><br>Aplikācijai nav nepieciešama piekļuve lietotāja kontaktiem, atrašanās vietai, kamerai, mikrofonam vai fotogrāfijām.</p>
       <p><strong>Datu nodošana trešajām personām</strong><br>Aplikācijā saglabātie “Mani vārdi” un lietotāja iestatījumi netiek nodoti reklāmas vai mārketinga pakalpojumu sniedzējiem.</p>
     </div>
-    <div class="about-row-gap" aria-hidden="true"></div>
+      </div>
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Lietošanas noteikumi</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Aplikācijas mērķis</strong><br>“Vārdadienas” ir informatīva aplikācija, kas palīdz uzzināt Latvijas vārdadienas, svētku, atceres un atzīmējamās dienas, kā arī citu ar konkrētiem datumiem saistītu interesantu informāciju.</p>
       <p><strong>Informācijas precizitāte</strong><br>Aplikācijā publicētā informācija tiek apkopota un pārbaudīta pēc iespējas rūpīgi. Tomēr nevar garantēt, ka visa informācija vienmēr ir pilnīga un bez kļūdām. Ja oficiālajos avotos informācija tiek mainīta, aplikācijas dati var tikt atjaunināti ar laika nobīdi.</p>
       <p><strong>Atgādinājumi</strong><br>Vārdadienu atgādinājumi ir palīgfunkcija. To saņemšana var būt atkarīga no lietotāja ierīces, operētājsistēmas un paziņojumu iestatījumiem, tādēļ aplikācija nevar garantēt katra atgādinājuma saņemšanu noteiktajā laikā.</p>
       <p><strong>Izmaiņas aplikācijā</strong><br>Aplikācijas saturs, funkcijas un šie lietošanas noteikumi var tikt papildināti vai mainīti, attīstot aplikāciju un izlaižot jaunas versijas.</p>
+    </div>
+      </div>
     </div>
   </section>
 
