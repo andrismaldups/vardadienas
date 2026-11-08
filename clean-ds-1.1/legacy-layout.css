@@ -387,5 +387,5 @@ html[data-design="lavender"][data-theme="light"] .greeting-emoji-panel{--picker-
 .reminder-time-menu button{display:block;width:100%;padding:9px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}
 .reminder-time-menu button[aria-selected="true"]{background:var(--picker-selected,#dff3e5);font-weight:700}
 html[data-theme="dark"] .reminder-time-control{--picker-bg:#1e2d27;--picker-border:#405c4f;--picker-text:#e8f4ec;--picker-selected:#345b46}
-html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-selected:#efddf3}
+
 

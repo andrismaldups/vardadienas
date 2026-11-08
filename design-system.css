@@ -20,22 +20,6 @@ html[data-design="classic"] {
   --ds-decor-top:none;
   --ds-decor-bottom:none;
 }
-html[data-design="lavender"] {
-  --ds-page-bg:#f5f0f8;
-  --ds-surface:#fffafd;
-  --ds-text:#30283b;
-  --ds-muted:#80618e;
-  --ds-primary:#69368a;
-  --ds-on-primary:#ffffff;
-  --ds-accent:#8b50a9;
-  --ds-border:#e7d8ec;
-  --ds-soft-bg:#f8f1fa;
-  --ds-soft-border:#dfcce6;
-  --ds-focus:#8b50a9;
-  --ds-caret:#9e62bb;
-  --ds-decor-top:url("assets/lavanda_augsa.png");
-  --ds-decor-bottom:url("assets/lavanda_apaksa.png");
-}
 /* S1 draft palette, not yet selectable. Gold is decorative; green remains
    the high-contrast action color, consistent with the approved S1 mockup. */
 html[data-design="festive-s1"] {

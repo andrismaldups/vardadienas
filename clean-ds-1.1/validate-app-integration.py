@@ -91,3 +91,5 @@ print("NOTE: browser/iPhone functionality and Cloudflare deployment are NOT veri
 
 check('href="design-water-j1.css"' not in app, "Retired Sea theme CSS still loaded")
 check('"./design-water-j1.css"' not in worker, "Retired Sea theme still precached")
+
+check('html[data-design="lavender"] {' not in (root / "design-system.css").read_text(encoding="utf-8"), "Retired Lavender palette still active")
