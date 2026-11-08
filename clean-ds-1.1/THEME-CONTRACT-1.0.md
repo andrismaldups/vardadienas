@@ -6,7 +6,7 @@ Viena funkcionāla aplikācija ar vairākām vizuālām tēmām. Dizaina pārsl�
 ## Esošais līgums
 - `html[data-design]`: `classic`, `festive-s1`, `ds11`. Saglabāšana: `localStorage.designStyle`.
 - `html[data-theme]`: `light`, `dark` (vai `auto` izvēles aprēķinātais režīms). Saglabāšana: `localStorage.appearanceMode`.
-- `body.ds-app`: pagaidu DS11 noformējuma ieslēgšanas slēdzis, **nevis** funkcionalitātes pazīme.
+- `html[data-design="ds11"]`: DS11 komponentu noformējuma slēdzis; `body.ds-app` paliek tikai atsevišķās komponentu galerijas ietvarā.
 - `body[data-mode]`: pagaidu DS11 krāsu režīma sinhronizācija.
 - `[data-ui-component="card"]`: nemainīgs kartītes komponenta identifikators.
 - `[data-ui-component="primary-action"]`: nemainīgs primārās darbības identifikators.
@@ -36,4 +36,4 @@ Vēsturiskie K1/S1 stili pagaidām paliek. DS11 izmanto `clean-ds-1.1/components
 6. Pēc automatizētām pārbaudēm — reāla iPhone PWA pārbaude ar lietotāja iesaisti.
 
 ## Nākamais tehniskais uzdevums
-Samazināt `body.ds-app` nepieciešamību, pārceļot DS11 vizuālo ieslēgšanu uz `html[data-design="ds11"]`, bet tikai pēc atbilstošu testu un stilu specifiskuma audita. Atsevišķi vēlāk izdalīt K1/S1 paletes no kopīgā izkārtojuma.
+Pārbaudīt `html[data-design="ds11"]` piesaistes darbību Chromium, WebKit un mobile-WebKit; pēc tam reālā iPhone PWA vidē. Atsevišķi vēlāk izdalīt K1/S1 paletes no kopīgā izkārtojuma.
