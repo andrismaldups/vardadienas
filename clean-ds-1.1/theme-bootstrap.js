@@ -9,7 +9,7 @@
   let mode='auto';
   try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
   const media=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;if(document.body&&document.body.classList.contains("ds-app"))document.body.dataset.mode=document.documentElement.dataset.theme;}
+  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;if(document.body&&document.documentElement.dataset.design==='ds11')document.body.dataset.mode=document.documentElement.dataset.theme;}
   apply();
   function init(){
     syncDs11();
