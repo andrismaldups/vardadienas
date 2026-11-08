@@ -4,7 +4,7 @@
   let design='classic';
   try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','festive-s1','ds11'].includes(saved))design=saved;}catch(e){}
   document.documentElement.dataset.design=design;
-  function syncDs11(){if(!document.body)return;const active=document.documentElement.dataset.design==='ds11';document.body.classList.toggle('ds-app',active);if(active)document.body.dataset.mode=document.documentElement.dataset.theme||'light';else delete document.body.dataset.mode;/* Component identity stays in HTML; theme switching only changes the theme state. */}
+  function syncDs11(){if(!document.body)return;const active=document.documentElement.dataset.design==='ds11';/* DS11 component styling follows html[data-design], not a body class. */if(active)document.body.dataset.mode=document.documentElement.dataset.theme||'light';else delete document.body.dataset.mode;/* Component identity stays in HTML; theme switching only changes the theme state. */}
   const allowed=['light','dark','auto'];
   let mode='auto';
   try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
