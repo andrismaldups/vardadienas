@@ -125,3 +125,9 @@ for (const retired of ["lavender", "nature-d3", "water-j1"]) {
     await expect(page.locator(`input[name="designStyle"][value="${retired}"]`)).toHaveCount(0);
   });
 }
+
+test("retired Sea theme stylesheet is not loaded", async ({ page }) => {
+  await page.goto("/index.html");
+  const sheets = await page.locator('link[rel="stylesheet"]').evaluateAll(nodes => nodes.map(n => n.getAttribute("href")));
+  expect(sheets).not.toContain("design-water-j1.css");
+});

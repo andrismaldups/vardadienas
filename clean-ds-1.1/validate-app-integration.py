@@ -88,3 +88,6 @@ if errors:
     sys.exit(1)
 print("PASS: static integration invariants")
 print("NOTE: browser/iPhone functionality and Cloudflare deployment are NOT verified")
+
+check('href="design-water-j1.css"' not in app, "Retired Sea theme CSS still loaded")
+check('"./design-water-j1.css"' not in worker, "Retired Sea theme still precached")
