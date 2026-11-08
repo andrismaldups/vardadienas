@@ -91,12 +91,12 @@ html[data-design="ds11"] body.ds-app .about-row-button>span:first-child{flex:1;m
 html[data-design="ds11"] body.ds-app .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
 /* G09: today's outline is a theme role, not the keyboard focus ring. */
 /* G09 dimensions apply to today's date regardless of selection. */
-html[data-design="ds11"] body.ds-app #calendar .day.today{
+html[data-design="ds11"] body #calendar .day.today{
  box-sizing:border-box;width:46px;height:46px;min-width:46px;min-height:46px;
  margin-inline:auto;
 }
-html[data-design="ds11"] body.ds-app #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
-html[data-design="ds11"] body.ds-app #calendar .day.today.sel{outline:none}
+html[data-design="ds11"] body #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
+html[data-design="ds11"] body #calendar .day.today.sel{outline:none}
 
 /* Approved D3 specification: ONLY the three home-view main panel positions
    use 17% opacity. Inner controls and other views keep their own tokens.
@@ -119,10 +119,10 @@ html[data-design="ds11"] body.ds-app #sideMenu.side-menu button{
 }
 /* N15/N16: text links for traditional and extended names have no pill.
    Keep semantic highlights only for actual tag/badge elements. */
-html[data-design="ds11"] body.ds-app :is(.names .name-link,.extra-list .name-link){
+html[data-design="ds11"] body :is(.names .name-link,.extra-list .name-link){
  background:transparent;color:inherit;box-shadow:none
 }
-html[data-design="ds11"] body.ds-app :is(.tag,#nameResult .tag){
+html[data-design="ds11"] body :is(.tag,#nameResult .tag){
  background:var(--ds-highlight-bg);color:var(--ds-highlight-text)
 }
 html[data-design="ds11"] body.ds-app :is(
@@ -170,7 +170,7 @@ html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disa
  opacity:.55;
 }
 /* G02: selected reminder time is a C06 choice, not a primary action. */
-html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="true"]{
+html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]{
  background:var(--ds-selected-bg);
  color:var(--ds-selected-text);
 }
