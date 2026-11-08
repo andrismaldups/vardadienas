@@ -334,7 +334,7 @@ test('DS11 semantic pointer states are root-scoped and do not require ds-app', a
 });
 
 test('design switching never adds the gallery-only ds-app class to the application', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('designStyle', 'classic'));
+  await page.addInitScript(() => { if (!localStorage.getItem('designStyle')) localStorage.setItem('designStyle', 'classic'); });
   await page.goto('/index.html');
   for (const design of ['classic', 'ds11', 'festive-s1', 'ds11']) {
     await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
