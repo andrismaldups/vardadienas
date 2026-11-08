@@ -1,5 +1,5 @@
 /* Vārdadienas DS 1.1. CLEAN implementation; no legacy selectors.
-   Theme files supply semantic --ds-* tokens. The root selector gates this shared component layer to DS11; component rules never name K1/S1. */
+   Theme files supply semantic --ds-* tokens. The root selector gates this shared component layer to DS11; component rules do not name alternative themes. */
 html[data-design="ds11"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.45;color:var(--ds-text);background:var(--ds-page-bg);min-height:100dvh;position:relative;isolation:isolate;padding:clamp(12px,3vw,28px)}
 html[data-design="ds11"] body::before{content:"";position:fixed;inset:0;background-image:var(--ds-bg-gradient),var(--ds-decor-image);background-position:center,var(--ds-decor-position);background-size:cover,var(--ds-decor-size);background-repeat:no-repeat;opacity:var(--ds-decor-opacity);pointer-events:none;z-index:-1}
 html[data-design="ds11"] body,html[data-design="ds11"] body *{box-sizing:border-box}
