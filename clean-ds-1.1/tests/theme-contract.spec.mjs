@@ -224,3 +224,24 @@ test('switching design does not alter calendar dates or typed search values', as
     expect(after).toEqual(before);
   }
 });
+
+test('DS11 theme attribute alone activates base surface styling', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const body = page.locator('body');
+  const baseline = await body.evaluate(el => ({
+    bg: getComputedStyle(el).backgroundColor,
+    cardBg: getComputedStyle(document.querySelector('.card')).backgroundColor
+  }));
+  expect(baseline.bg).not.toBe('rgba(0, 0, 0, 0)');
+  await body.evaluate(el => el.classList.remove('ds-app'));
+  const after = await body.evaluate(el => ({
+    bg: getComputedStyle(el).backgroundColor,
+    cardBg: getComputedStyle(document.querySelector('.card')).backgroundColor
+  }));
+  expect(after.bg).toBe(baseline.bg);
+  expect(after.cardBg).toBe(baseline.cardBg);
+});
