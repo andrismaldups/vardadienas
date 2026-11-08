@@ -247,7 +247,7 @@ test('DS11 theme attribute alone activates base surface styling', async ({ page 
 });
 
 test('component gallery keeps its standalone ds-app scope', async ({ page }) => {
-  await page.goto('/clean-ds-1.1/index.html');
+  await page.goto('/clean-ds-1.1/gallery.html');
   const gallery = page.locator('.ds-app').first();
   await expect(gallery).toBeAttached();
   const card = page.locator('.ds-card').first();
