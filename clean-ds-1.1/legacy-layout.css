@@ -1,0 +1,391 @@
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18392b;background:#f2f5f8}*{box-sizing:border-box}body{margin:0;padding:24px;-webkit-text-size-adjust:100%}.wrap{max-width:1120px;margin:auto}.card{background:#fff;border-radius:22px;padding:26px;box-shadow:0 8px 30px #17203312;margin-bottom:18px}h1,h2{margin:0 0 12px}h1{font-size:34px;line-height:1.15}#dateTitle{font-size:24px;font-weight:400;text-align:center;color:#718096;margin:0 0 18px}h2{font-size:22px}.muted{color:#718096}.app-title{font-size:32px;font-weight:700;text-align:center;margin-bottom:22px;color:#18392b}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.name-link{border:0;background:transparent;padding:2px 1px;min-height:0;border-radius:3px;color:inherit;font:inherit;line-height:inherit;cursor:pointer}.name-link:hover{text-decoration:underline}.name-link:focus-visible{outline:2px solid #08783f;outline-offset:3px}.name-detail-card{text-align:center}.name-detail-card h3{font-size:30px;color:#08783f;margin:8px 0}.name-detail-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.name-detail-feedback{color:#08783f;margin-top:12px}.names{font-size:24px;font-weight:700;margin:12px 0;line-height:1.35;color:#08783f;text-align:center}
+.tomorrow{display:flex;align-items:center;gap:14px;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}
+  .latvia-today{
+  margin:12px 0 14px;
+  padding:12px 14px;
+  border:1px solid #d7e8dc;
+  border-radius:14px;
+  background:#f6fbf7;
+}
+  .interesting{
+  margin:12px 0 14px;
+  padding:12px 14px;
+  border:1px solid #d7e8dc;
+  border-radius:14px;
+  background:#f6fbf7;
+}
+  .birthday-home-title{display:inline-flex;align-items:center;gap:9px}.birthday-gift-icon{display:inline-block;width:28px;height:28px;flex:none;vertical-align:middle}
+  .birthday-entry{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7;color:inherit;font:inherit;gap:12px}.birthday-entry strong{font-weight:700}.birthday-home-content{display:grid;gap:5px;min-width:0}.birthday-today-names{font-size:15px;line-height:1.45;overflow-wrap:anywhere}.birthday-today-names[hidden]{display:none}.birthday-entry .birthday-chevron{color:#08783f;font-size:22px}.birthday-entry:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+  .birthday-form{display:grid;gap:12px;margin-top:14px}.birthday-form[hidden]{display:none}.birthday-form label{display:grid;gap:5px;font-weight:600}.birthday-form input{width:100%;box-sizing:border-box}.birthday-date-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}.birthday-date-fields input{min-width:0}.birthday-form-actions{display:flex;gap:10px;flex-wrap:wrap}.birthday-feedback{color:#b42318;font-size:14px}.birthday-sort{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:14px 0 8px;padding:3px;background:#eef2f0;border-radius:14px}.birthday-sort button{border:0;background:transparent;border-radius:11px;color:#52605a;font-size:15px;font-weight:600;padding:12px 7px}.birthday-sort button.active{background:#dff3e5;color:#0f7f43}.birthday-saved-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e4e9e6}.birthday-saved-row-info{min-width:0;overflow-wrap:anywhere}.birthday-edit-btn{flex-shrink:0;border:0;background:transparent;color:#08783f;font-size:20px;padding:10px;min-width:44px;min-height:44px}.birthday-row-actions{display:flex;align-items:center;flex-shrink:0;gap:0}.birthday-delete-btn{border:0;background:transparent;color:#a63838;font-size:23px;padding:10px;min-width:44px;min-height:44px}.birthday-saved-row:last-child{border-bottom:0}
+  .menu-btn{border:0;background:transparent;padding:8px;font-size:24px;line-height:1;color:#123d2c}.menu-backdrop{position:fixed;inset:0;z-index:9;background:transparent}.menu-backdrop[hidden]{display:none}.side-menu{position:absolute;top:100px;left:0;width:220px;z-index:10;display:flex;flex-direction:column;gap:8px;background:white;padding:16px;border-radius:0 14px 14px 0;box-shadow:0 6px 20px rgba(0,0,0,.15)}.side-menu button{display:block;width:100%;border:0;border-radius:0;background:transparent;text-align:left;padding:12px 10px;font-size:16px;color:#123d2c}.side-menu[hidden]{display:none}.back-btn{border:0;background:transparent;padding:8px 0;color:#0f7f43;font-size:16px;font-weight:600}#favoritesView,#settingsView,#birthdaysView,#nameDetailView,#greetingView,#greetingResultView{padding-top:32px}#favoriteAddOpen{margin-bottom:12px}.favorite-add-panel{padding:14px 0;border-top:1px solid #e4e9e6}.favorite-add-panel[hidden]{display:none}.favorite-add-panel input{width:100%;margin-bottom:8px}.favorite-add-matches{max-height:190px;overflow:auto}.favorite-add-matches button{display:flex;justify-content:space-between;width:100%;text-align:left;margin:3px 0}.favorite-add-selected{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.favorite-add-selected button{min-height:36px;padding:6px 10px;background:#e2f3e7;color:#08783f}.favorite-add-actions{display:flex;gap:8px;flex-wrap:wrap}#favoritesList{white-space:pre-line;padding-left:12px}.remove-favorite{border:0;background:transparent;padding:8px;color:#718096;font-size:18px;line-height:1}.favorite-row{display:grid;grid-template-columns:minmax(0,1fr) 135px 36px;align-items:center;gap:8px}.favorites-sort{display:grid;grid-template-columns:1fr 1fr;margin:12px 0 16px;padding:3px;background:#eef2f0;border-radius:14px}.favorites-sort button{border:0;background:transparent;padding:12px 8px;border-radius:11px;color:#52605a;font-size:15px;font-weight:600}
+.favorites-sort button.active{background:#dff3e5;color:#0f7f43}#mainView[hidden]{display:none}.tag{display:inline-block;font-size:13px;padding:5px 9px;border-radius:999px;background:#edf2f7;margin:3px}.extra{background:#f4f0ff}.extra-title{font-size:13px;color:#718096;margin-top:18px;margin-bottom:4px;padding-top:18px;border-top:1px solid #dce3eb}
+.extra-list{font-size:16px;line-height:1.5}.btn,button{border:1px solid #d7dee8;background:white;border-radius:12px;padding:12px 15px;font-size:16px;cursor:pointer;touch-action:manipulation;min-height:44px}.primary{background:#08783f;color:white}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.calhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.calhead button{width:46px;height:46px;padding:0;display:flex;align-items:center;justify-content:center}.week,.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.week div{text-align:center;color:#718096;padding:8px 2px}.day{min-height:56px;border:0;border-radius:50%;background:transparent;padding:8px 4px}.day.sel{background:#08783f;color:white;border-radius:50%;width:46px;height:46px;min-height:46px;padding:0;justify-self:center}.day.today{outline:1px solid #d7dee8;width:46px;height:46px;min-height:46px;padding:0;justify-self:center}.day.today.sel{outline:none}.side .card{margin-bottom:18px}input{width:100%;min-width:0;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font-size:16px;min-height:46px}input[type="time"]{display:block;width:100%;max-width:100%;border-radius:12px;-webkit-appearance:none;appearance:none}.settings-card{padding:0;overflow:hidden}.settings-main-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px}.settings-main-row h3{margin:0}.settings-section{padding:18px;border-top:1px solid #e4e9e6}.settings-section h4{margin:0 0 14px}.reminder-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;align-items:center;gap:12px;margin-top:12px}.reminder-choice,.target-row{display:flex;align-items:center;gap:10px}.settings-card input[type="checkbox"],.settings-card input[type="radio"]{width:22px;height:22px;min-height:22px;padding:0;flex:0 0 22px;accent-color:#08783f}.push-active-status,.push-active-status:disabled{background:#e8e8e8!important;color:#08783f!important;border:1px solid #d5dde5!important;opacity:1!important;cursor:default!important;box-shadow:none!important}.settings-card input[type="time"]{width:112px;min-height:42px;padding:8px 10px;color:#08783f;font-weight:600}.target-row{margin-top:12px}.about-card{margin-top:16px;padding:18px}.about-card h3{margin:0 0 14px}.about-app{display:flex;align-items:center;gap:12px;padding-bottom:14px}.about-app-icon{display:block;width:48px;height:48px;flex:0 0 48px;border-radius:12px;object-fit:cover}.settings-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.settings-back-bar .back-btn{margin:0}.about-app strong{display:block;margin-bottom:2px}.about-app>div:last-child>div{color:#5f6f67;font-size:14px;line-height:1.4}.about-version{margin-top:2px}.about-row{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-top:1px solid #e4e9e6;font-size:16px}.about-row span:last-child{color:#718096;font-size:20px}.about-row-button{width:100%;padding:0;background:white;border-left:0;border-right:0;border-bottom:0;border-radius:0;color:inherit;text-align:left;font:inherit;cursor:pointer}.about-content{padding:2px 0 14px;background:white;border-top:1px solid #eef1ef}.about-content p{margin:12px 0 0;line-height:1.5}.about-content p:first-child{margin-top:12px}.switch{position:relative;display:inline-block;width:52px;height:30px;flex:0 0 52px}.switch input{opacity:0;width:0!important;height:0!important;min-height:0!important;position:absolute}.switch-slider{position:absolute;inset:0;background:#cbd3cf;border-radius:999px;transition:.2s}.switch-slider:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:white;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}.switch input:checked+.switch-slider{background:#08783f}.switch input:checked+.switch-slider:before{transform:translateX(22px)}@media(max-width:420px){.reminder-row{grid-template-columns:minmax(0,1fr) 105px}.settings-card input[type="time"]{width:105px}}.searchrow{display:flex;gap:8px} .date-suggestions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
+}
+
+.date-suggestions:empty{
+  display:none;
+}
+.date-suggestions button{
+  min-height:auto;
+  padding:6px 10px;
+  font-size:14px;
+  color:#18392b;
+  background:#f2f5f8;
+  border:1px solid #d7dee8;
+  border-radius:10px;
+}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-options button.active{background:#f0f8f2;color:#08783f;border-color:#08783f}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-validation{margin-top:12px;color:#a33;font-size:14px;line-height:1.4}.greeting-result{padding:18px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}.greeting-result .muted{margin-top:8px;font-size:19px;line-height:1.45}.greeting-result-text{display:block;width:100%;min-height:110px;box-sizing:border-box;border:0;background:transparent;padding:0;color:inherit;font:inherit;line-height:1.45;resize:none;overflow:hidden;white-space:pre-wrap}.greeting-result-text:focus{outline:1px solid #d7e8dc;border-radius:8px;padding:6px}.greeting-text-wrap{position:relative}.greeting-text-wrap .greeting-result-text{padding-bottom:30px}.greeting-emoji-icon{position:absolute;right:8px;bottom:6px;display:flex;align-items:center;justify-content:center;width:30px;height:30px;color:#333;background:transparent;border:0;padding:0;cursor:pointer}.greeting-emoji-panel{position:fixed;right:12px;top:80px;z-index:1000;width:min(320px,calc(100vw - 24px));max-height:min(520px,calc(100dvh - 24px));overflow-y:auto;box-sizing:border-box;background:#fff;border:1px solid #d7e8dc;border-radius:12px;box-shadow:0 6px 24px #0002;padding:10px}.greeting-emoji-panel[hidden]{display:none}.greeting-emoji-heading{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:8px}.greeting-emoji-close{border:0;background:transparent;font-size:22px;padding:0 5px;color:#444}.greeting-emoji-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}.greeting-emoji-grid button{border:0;background:#f5f7f5;border-radius:7px;font-size:25px;min-height:43px;padding:3px 0}.greeting-result-actions{margin-top:12px}.greeting-result-actions>button{width:100%;background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-result-action-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.greeting-result-action-row button{background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.greeting-back-bar .back-btn{margin:0;width:100%;display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;white-space:nowrap;background:#f6fbf7;color:#08783f;border:1px solid #d7e8dc;border-radius:12px;padding:12px 8px;min-height:44px}
+#settingsView .back-btn,#favoritesView>.back-btn,#birthdaysView>.back-btn,#nameDetailView>.back-btn{display:flex;align-items:center;justify-content:center;width:min(100%,220px);min-height:44px;padding:12px 16px;background:#f6fbf7;color:#08783f;border:1px solid #d7e8dc;border-radius:12px;text-align:center}
+#settingsView .settings-back-bar .back-btn{margin:0}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
+.name-input-wrap{
+  position:relative;
+  flex:1;
+  min-width:0;
+}
+
+.name-input-wrap input{
+  padding-right:46px;
+}
+  #clearName, #clearDate{
+  position:absolute;
+  right:8px;
+  top:52%;
+  transform:translateY(calc(-50% + 3px));
+  min-height:auto;
+  width:38px;
+  height:38px;
+  padding:0;
+  border:none;
+  background:transparent;
+  color:#718096;
+  font-size:26px;
+  line-height:1;
+  border-radius:50%;
+  display:none;
+  align-self:center;
+}@media(max-width:800px){body{padding:10px}.wrap{max-width:600px}.grid{grid-template-columns:1fr}.card{padding:18px;border-radius:18px;margin-bottom:12px}.hero{display:block}.hero .primary{width:100%;margin-top:8px}h1{font-size:29px}.names{font-size:22px}.nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav button{width:100%;padding:10px 8px}.calhead h2{font-size:20px;text-align:center}.week,.cal{gap:4px}.day{min-height:46px;border-radius:50%}.side .card{margin-bottom:12px}}
+@media(max-width:430px){body{padding:8px}.card{padding:16px}.searchrow{display:grid;grid-template-columns:1fr}.searchrow button{width:100%}.week div{font-size:13px}.day{min-height:46px;font-size:15px}h1{font-size:27px}.muted{font-size:14px}}
+
+/* TEST: vienota zaļā pogu un kalendāra krāsu sistēma */
+#prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,#favoriteAddCancel{
+  color:#08783f;background:#f6fbf7;border:1px solid #cfe5d5;
+}
+#prevDay,#nextDay{font-weight:600}
+#nameBtn,#dateBtn{background:#edf7f0;font-weight:600}
+#favoriteAddCancel{font-weight:500}
+#prevDay:hover,#nextDay:hover,#prevMonth:hover,#nextMonth:hover,
+#nameBtn:hover,#dateBtn:hover,#favoriteAddCancel:hover{background:#e2f3e7}
+#calendar .day{color:#18392b;background:transparent;border:0}
+#calendar .day.sel{color:#fff;background:#08783f}
+#calendar .day.today:not(.sel){outline:1px solid #a9d5b8;color:#08783f}
+#calendar .day:focus-visible,#prevDay:focus-visible,#nextDay:focus-visible,
+#prevMonth:focus-visible,#nextMonth:focus-visible,#nameBtn:focus-visible,
+#dateBtn:focus-visible,#favoriteAddCancel:focus-visible{
+  outline:2px solid #08783f;outline-offset:2px;
+}
+
+/* TEST: vienota zaļā palete vārdu pievienošanai un datu dzēšanai. */
+#favoriteAddInput:focus{outline:2px solid #08783f;outline-offset:1px;border-color:#08783f;box-shadow:0 0 0 2px #dff3e5}
+.favorite-add-matches button{color:#08783f;border-color:#d7e8dc;background:#fff}
+.favorite-add-matches button:hover,.favorite-add-matches button:focus-visible{background:#f0f8f2;border-color:#08783f;outline-color:#08783f}
+#deleteMyDataButton{background:#e8e8e8;color:#08783f;border:1px solid #d5dde5;box-shadow:none}
+#deleteMyDataButton:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+html[data-theme="dark"] .favorite-add-matches button{background:#233b32;color:#a3e9bf;border-color:#507561}
+html[data-theme="dark"] .favorite-add-matches button:hover,html[data-theme="dark"] .favorite-add-matches button:focus-visible{background:#2b4b3c}
+html[data-theme="dark"] #deleteMyDataButton{background:#34453d;color:#a3e9bf;border-color:#507561}
+/* Izskata režīmi: automātiskais seko sistēmas izvēlei. */
+.appearance-card{padding:18px}.appearance-card h3{margin:0 0 12px}.appearance-choice{display:flex;align-items:center;gap:12px;padding:11px 2px;cursor:pointer}.appearance-choice input{width:22px;min-width:22px;height:22px;min-height:22px;accent-color:#08783f}.appearance-choice small{display:block;font-size:13px;color:#718096;margin-top:3px}
+html[data-theme="dark"]{color-scheme:dark;background:#0f1f1a}
+html[data-theme="dark"] body{background:#0f1f1a;color:#e8f4ec}
+html[data-theme="dark"] .card,html[data-theme="dark"] .side-menu,html[data-theme="dark"] .about-content{background:#1e2d27;color:#e8f4ec;box-shadow:0 8px 30px #0003}
+html[data-theme="dark"] .app-title,html[data-theme="dark"] .menu-btn,html[data-theme="dark"] .side-menu button{color:#e8f4ec}
+html[data-theme="dark"] .muted,html[data-theme="dark"] .foot,html[data-theme="dark"] .week div,html[data-theme="dark"] #dateTitle,html[data-theme="dark"] .appearance-choice small,html[data-theme="dark"] .about-row span:last-child,html[data-theme="dark"] .about-app>div:last-child>div{color:#a7b9b0}
+html[data-theme="dark"] button,html[data-theme="dark"] .btn,html[data-theme="dark"] input,html[data-theme="dark"] textarea{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#a7b9b0}
+html[data-theme="dark"] .primary,html[data-theme="dark"] button.primary,html[data-theme="dark"] .day.sel{background:#08783f;color:white;border-color:#08783f}
+html[data-theme="dark"] .tomorrow,html[data-theme="dark"] .latvia-today,html[data-theme="dark"] .interesting,html[data-theme="dark"] .birthday-entry,html[data-theme="dark"] .greeting-result{background:#233b32;border-color:#405c4f;color:#e8f4ec}
+html[data-theme="dark"] .birthday-sort,html[data-theme="dark"] .favorites-sort{background:#142820}
+html[data-theme="dark"] .birthday-sort button,html[data-theme="dark"] .favorites-sort button{background:transparent;color:#b8cbc0;border:0}
+html[data-theme="dark"] .birthday-sort button.active,html[data-theme="dark"] .favorites-sort button.active{background:#275a40;color:#f2fff6}
+html[data-theme="dark"] .greeting-options button,html[data-theme="dark"] .greeting-result-actions>button,html[data-theme="dark"] .greeting-result-action-row button,html[data-theme="dark"] .greeting-back-bar .back-btn,html[data-theme="dark"] #settingsView .back-btn,html[data-theme="dark"] #favoritesView>.back-btn,html[data-theme="dark"] #birthdaysView>.back-btn,html[data-theme="dark"] #nameDetailView>.back-btn{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] .greeting-options button.active{background:#275a40;color:#f2fff6;border-color:#39a76b}
+html[data-theme="dark"] .greeting-emoji-panel{background:#1e2d27;border-color:#405c4f;color:#e8f4ec}
+html[data-theme="dark"] .greeting-emoji-grid button{background:#233b32;color:#e8f4ec}
+html[data-theme="dark"] .greeting-emoji-close,html[data-theme="dark"] .greeting-emoji-icon{color:#e8f4ec;background:transparent;border:0}
+html[data-theme="dark"] .settings-back-bar,html[data-theme="dark"] .greeting-back-bar{background:rgba(15,31,26,.96);border-color:#405c4f}
+html[data-theme="dark"] .settings-section,html[data-theme="dark"] .about-row,html[data-theme="dark"] .about-content,html[data-theme="dark"] .birthday-saved-row,html[data-theme="dark"] .favorite-add-panel{border-color:#405c4f}
+html[data-theme="dark"] .about-row-button{background:#1e2d27;color:#e8f4ec}
+html[data-theme="dark"] .date-suggestions button,html[data-theme="dark"] .favorite-add-selected button{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+html[data-theme="dark"] .tag,html[data-theme="dark"] .extra{background:#233b32;color:#e8f4ec}
+html[data-theme="dark"] .day{background:transparent;color:#e8f4ec;border:0}
+html[data-theme="dark"] .day.sel{background:#08783f;color:#fff}
+html[data-theme="dark"] .switch-slider{background:#566b60}
+html[data-theme="dark"] .switch input:checked+.switch-slider{background:#08783f}
+html[data-theme="dark"] .push-active-status,html[data-theme="dark"] .push-active-status:disabled{background:#233b32!important;color:#8fe0ac!important;border-color:#405c4f!important}
+html[data-theme="dark"] .name-detail-card h3,html[data-theme="dark"] .names,html[data-theme="dark"] .birthday-entry .birthday-chevron,html[data-theme="dark"] .greeting-entry-arrow{color:#6ad49a}
+
+/* TEST: tumšā režīma kontrasts un saskaņotas darbību pogas.
+   Apzināti tikai dark režīmā, lai gaišais dizains nemainītos. */
+html[data-theme="dark"] #calendar .day:not(.sel){
+  color:#e8f4ec;background:transparent;border:0;
+}
+html[data-theme="dark"] #calendar .day.today:not(.sel){
+  color:#a3e9bf;outline:1px solid #a3e9bf;
+}
+html[data-theme="dark"] #calendar .day.sel{
+  color:#fff;background:#08783f;border-color:#08783f;
+}
+html[data-theme="dark"] #prevDay,
+html[data-theme="dark"] #nextDay,
+html[data-theme="dark"] #prevMonth,
+html[data-theme="dark"] #nextMonth,
+html[data-theme="dark"] #nameBtn,
+html[data-theme="dark"] #dateBtn,
+html[data-theme="dark"] #favoriteAddCancel{
+  color:#c7f4d6;background:#233b32;border:1px solid #507561;
+}
+html[data-theme="dark"] #prevDay:hover,
+html[data-theme="dark"] #nextDay:hover,
+html[data-theme="dark"] #prevMonth:hover,
+html[data-theme="dark"] #nextMonth:hover,
+html[data-theme="dark"] #nameBtn:hover,
+html[data-theme="dark"] #dateBtn:hover,
+html[data-theme="dark"] #favoriteAddCancel:hover{
+  background:#2b4b3c;
+}
+html[data-theme="dark"] .settings-card input[type="time"]{
+  color:#a3e9bf;background:#233b32;border-color:#507561;
+}
+html[data-theme="dark"] input:focus-visible,
+html[data-theme="dark"] textarea:focus-visible,
+html[data-theme="dark"] #favoriteAddInput:focus{
+  outline:2px solid #6ad49a;outline-offset:1px;border-color:#6ad49a;
+}
+/* TEST: pusstundu laiku izvēlne */
+.settings-card select[id^="reminder"][id$="Time"]{width:112px;max-width:100%;min-height:42px;padding:8px 10px;border:1px solid #d7dee8;border-radius:12px;background:#fff;color:#08783f;font:inherit;font-weight:600}
+html[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{background:#233b32;color:#a3e9bf;border-color:#507561}
+@media(max-width:420px){.settings-card select[id^="reminder"][id$="Time"]{width:105px}}
+
+/* V2-06–08: vienota navigācija, darbību pogas un meklēšanas krāsas. */
+.name-detail-actions{display:grid;grid-template-columns:minmax(0,1fr);width:max-content;max-width:100%;margin-inline:auto;gap:10px}
+.name-detail-actions button{width:100%;max-width:100%;white-space:normal;background:#08783f;color:#fff;border-color:#08783f}
+#settingsView .settings-back-bar,#favoritesView .settings-back-bar,#birthdaysView .settings-back-bar{display:flex;justify-content:center;align-items:center}
+#settingsView .settings-back-bar .back-btn,#favoritesView .settings-back-bar .back-btn,#birthdaysView .settings-back-bar .back-btn{margin-inline:auto;flex:0 1 220px;max-width:100%}
+#nameDetailView>.back-btn{margin-inline:auto}
+#greetingView .greeting-back-bar{display:flex;justify-content:center;align-items:center}
+#greetingView .greeting-back-bar .back-btn{width:min(100%,220px);flex:0 1 220px}
+#greetingResultView .greeting-back-bar{grid-template-columns:repeat(2,minmax(0,220px));justify-content:center}
+#nameInput:focus,#dateInput:focus{outline:2px solid #08783f;outline-offset:1px;border-color:#08783f;box-shadow:0 0 0 2px #dff3e5}
+#nameInput,#dateInput{caret-color:#08783f}
+#nameResult .search-add-favorite{color:#08783f;background:#f6fbf7;border-color:#cfe5d5}
+#nameResult .search-add-favorite:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+#dateSuggestions button{color:#08783f;background:#f0f8f2;border-color:#d7e8dc}
+html[data-theme="dark"] #nameInput:focus,html[data-theme="dark"] #dateInput:focus{outline-color:#6ad49a;border-color:#6ad49a;box-shadow:none}
+html[data-theme="dark"] #nameInput,html[data-theme="dark"] #dateInput{caret-color:#6ad49a}
+html[data-theme="dark"] #nameResult .search-add-favorite,html[data-theme="dark"] #dateSuggestions button{color:#a3e9bf;background:#233b32;border-color:#507561}
+html[data-theme="dark"] #nameDetailView .name-detail-actions button{background:#08783f;color:#fff;border-color:#08783f}
+html[data-theme="dark"] #favoritesView .settings-back-bar,html[data-theme="dark"] #birthdaysView .settings-back-bar{background:rgba(15,31,26,.96);border-color:#405c4f}
+html[data-theme="dark"] #favoritesView .settings-back-bar .back-btn,html[data-theme="dark"] #birthdaysView .settings-back-bar .back-btn{background:#233b32;color:#e8f4ec;border-color:#405c4f}
+
+/* V2-09: dzimšanas dienu ievades formas krāsas */
+#birthdayAddForm input{caret-color:#08783f}
+#birthdayAddForm input:focus{outline:2px solid #08783f;outline-offset:1px;border-color:#08783f;box-shadow:0 0 0 2px #dff3e5}
+#birthdayAddCancel{background:#f6fbf7;color:#08783f;border-color:#cfe5d5}
+#birthdayAddCancel:focus-visible{outline:2px solid #08783f;outline-offset:2px}
+html[data-theme="dark"] #birthdayAddForm input{caret-color:#6ad49a}
+html[data-theme="dark"] #birthdayAddForm input:focus{outline-color:#6ad49a;border-color:#6ad49a;box-shadow:none}
+html[data-theme="dark"] #birthdayAddCancel{background:#233b32;color:#a3e9bf;border-color:#507561}
+html[data-theme="dark"] #birthdayAddCancel:focus-visible{outline-color:#6ad49a}
+
+/* V2-10: zaļš kursors 'Mani vārdi' pievienošanas laukā */
+#favoriteAddInput{caret-color:#08783f}
+html[data-theme="dark"] #favoriteAddInput{caret-color:#6ad49a}
+
+/* V2-11: apsveikuma teksta kursors un pārējo teksta lauku kursori */
+input,textarea{caret-color:#08783f}
+html[data-theme="dark"] input,html[data-theme="dark"] textarea{caret-color:#6ad49a}
+/* TEST: Z3 Lavandas tonis — dekoratīvs slānis, bez funkciju izmaiņām. */
+html[data-design="lavender"][data-theme="light"],html[data-design="lavender"][data-theme="light"] body{background:#f5f0f8;color:#30283b}
+html[data-design="lavender"][data-theme="light"] .card{background:#fffafd;border:1px solid #e7d8ec;box-shadow:0 8px 28px #6d4a7b12}
+html[data-design="lavender"][data-theme="light"] .app-title,html[data-design="lavender"][data-theme="light"] .menu-btn{color:#493457}
+html[data-design="lavender"][data-theme="light"] .tomorrow,html[data-design="lavender"][data-theme="light"] .interesting,html[data-design="lavender"][data-theme="light"] .latvia-today,html[data-design="lavender"][data-theme="light"] .birthday-entry{background:#f8f1fa;border-color:#dfcce6}
+html[data-design="lavender"][data-theme="light"] .settings-back-bar,html[data-design="lavender"][data-theme="light"] .greeting-back-bar{background:rgba(250,245,252,.97)}
+html[data-design="lavender"][data-theme="light"] #mainView>.card:first-child{position:relative;isolation:isolate}
+html[data-design="lavender"][data-theme="light"] #mainView>.card:first-child:before{content:"✿";position:absolute;right:23px;top:12px;color:#b99bc8;font-size:24px;opacity:.55;pointer-events:none;z-index:-1}
+html[data-design="lavender"][data-theme="dark"],html[data-design="lavender"][data-theme="dark"] body{background:#211c29}
+html[data-design="lavender"][data-theme="dark"] .card{background:#302838;border-color:#53435c;box-shadow:0 8px 28px #0003}
+html[data-design="lavender"][data-theme="dark"] .tomorrow,html[data-design="lavender"][data-theme="dark"] .interesting,html[data-design="lavender"][data-theme="dark"] .latvia-today,html[data-design="lavender"][data-theme="dark"] .birthday-entry{background:#3a3043;border-color:#6b5475}
+html[data-design="lavender"][data-theme="dark"] .settings-back-bar,html[data-design="lavender"][data-theme="dark"] .greeting-back-bar{background:rgba(33,28,41,.97)}
+
+/* Z3 Lavender floral accents and accessible purple palette — TEST only. */
+html[data-design="lavender"] #mainView>.card:first-child{position:relative;isolation:isolate}
+html[data-design="lavender"] #mainView>.card:first-child::before{content:"";position:absolute;right:9px;top:9px;width:96px;height:102px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22155%22%20viewBox%3D%220%200%20150%20155%22%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M146%205Q99%2042%2042%20145M133%2024Q103%2022%2087%208M113%2046Q138%2047%20148%2062M89%2072Q59%2068%2049%2049M69%2095Q88%20102%2096%20121%22%20stroke%3D%22%2366825f%22%20stroke-width%3D%222.3%22%2F%3E%3Cg%20fill%3D%22%239c71c2%22%20stroke%3D%22%237952a2%22%20stroke-width%3D%22.7%22%3E%3Cellipse%20cx%3D%22107%22%20cy%3D%2239%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%20107%2039)%22%2F%3E%3Cellipse%20cx%3D%22100%22%20cy%3D%2248%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%20100%2048)%22%2F%3E%3Cellipse%20cx%3D%2293%22%20cy%3D%2255%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2093%2055)%22%2F%3E%3Cellipse%20cx%3D%2286%22%20cy%3D%2264%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2086%2064)%22%2F%3E%3Cellipse%20cx%3D%2279%22%20cy%3D%2272%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2079%2072)%22%2F%3E%3Cellipse%20cx%3D%2272%22%20cy%3D%2281%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2072%2081)%22%2F%3E%3Cellipse%20cx%3D%2265%22%20cy%3D%2289%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2065%2089)%22%2F%3E%3Cellipse%20cx%3D%2258%22%20cy%3D%2298%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2058%2098)%22%2F%3E%3Cellipse%20cx%3D%2251%22%20cy%3D%22106%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2051%20106)%22%2F%3E%3Cellipse%20cx%3D%2244%22%20cy%3D%22115%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2044%20115)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b997da%22%3E%3Ccircle%20cx%3D%22108%22%20cy%3D%2231%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2294%22%20cy%3D%2247%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2279%22%20cy%3D%2264%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2265%22%20cy%3D%2281%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2298%22%20r%3D%223%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;opacity:.78;z-index:0;pointer-events:none}
+html[data-design="lavender"] #mainView>.card:first-child::after{content:"";position:absolute;left:9px;bottom:9px;width:75px;height:79px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22155%22%20viewBox%3D%220%200%20150%20155%22%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M146%205Q99%2042%2042%20145M133%2024Q103%2022%2087%208M113%2046Q138%2047%20148%2062M89%2072Q59%2068%2049%2049M69%2095Q88%20102%2096%20121%22%20stroke%3D%22%2366825f%22%20stroke-width%3D%222.3%22%2F%3E%3Cg%20fill%3D%22%239c71c2%22%20stroke%3D%22%237952a2%22%20stroke-width%3D%22.7%22%3E%3Cellipse%20cx%3D%22107%22%20cy%3D%2239%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%20107%2039)%22%2F%3E%3Cellipse%20cx%3D%22100%22%20cy%3D%2248%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%20100%2048)%22%2F%3E%3Cellipse%20cx%3D%2293%22%20cy%3D%2255%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2093%2055)%22%2F%3E%3Cellipse%20cx%3D%2286%22%20cy%3D%2264%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2086%2064)%22%2F%3E%3Cellipse%20cx%3D%2279%22%20cy%3D%2272%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2079%2072)%22%2F%3E%3Cellipse%20cx%3D%2272%22%20cy%3D%2281%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2072%2081)%22%2F%3E%3Cellipse%20cx%3D%2265%22%20cy%3D%2289%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2065%2089)%22%2F%3E%3Cellipse%20cx%3D%2258%22%20cy%3D%2298%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2058%2098)%22%2F%3E%3Cellipse%20cx%3D%2251%22%20cy%3D%22106%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(-45%2051%20106)%22%2F%3E%3Cellipse%20cx%3D%2244%22%20cy%3D%22115%22%20rx%3D%225%22%20ry%3D%229%22%20transform%3D%22rotate(36%2044%20115)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b997da%22%3E%3Ccircle%20cx%3D%22108%22%20cy%3D%2231%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2294%22%20cy%3D%2247%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2279%22%20cy%3D%2264%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2265%22%20cy%3D%2281%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2298%22%20r%3D%223%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;transform:rotate(180deg);opacity:.5;z-index:0;pointer-events:none}
+html[data-design="lavender"] #mainView>.card:first-child>*{position:relative;z-index:1}
+html[data-design="lavender"][data-theme="light"] .names,
+html[data-design="lavender"][data-theme="light"] .name-detail-card h3{color:#603478}
+html[data-design="lavender"][data-theme="dark"] .names,
+html[data-design="lavender"][data-theme="dark"] .name-detail-card h3{color:#f0dfff}
+html[data-design="lavender"][data-theme="dark"] .name-link{background:transparent;color:inherit}
+html[data-design="lavender"][data-theme="dark"] .names .name-link{background:rgba(120,75,145,.24);color:#f0dfff}
+html[data-design="lavender"][data-theme="light"] .primary,
+html[data-design="lavender"][data-theme="light"] button.primary,
+html[data-design="lavender"][data-theme="light"] .day.sel{background:#69368a;color:#fff;border-color:#69368a}
+html[data-design="lavender"][data-theme="dark"] .primary,
+html[data-design="lavender"][data-theme="dark"] button.primary,
+html[data-design="lavender"][data-theme="dark"] .day.sel{background:#8849ad;color:#fff;border-color:#a76dca}
+html[data-design="lavender"] .birthday-entry .birthday-chevron,
+html[data-design="lavender"] .back-btn,
+html[data-design="lavender"] .greeting-entry-arrow{color:#a578c5}
+html[data-design="lavender"][data-theme="light"] .nav button,
+html[data-design="lavender"][data-theme="light"] .calhead button{color:#603478;background:#f9f0fc;border-color:#d9bde6}
+html[data-design="lavender"][data-theme="dark"] .nav button,
+html[data-design="lavender"][data-theme="dark"] .calhead button{color:#f0dfff;background:#493552;border-color:#9269a7}
+html[data-design="lavender"] .name-link:focus-visible{outline-color:#9a60bd}
+@media(max-width:420px){html[data-design="lavender"] #mainView>.card:first-child::before{width:70px;height:75px;opacity:.62}html[data-design="lavender"] #mainView>.card:first-child::after{width:56px;height:60px;opacity:.38}}
+
+/* Z3 Lavender — botanical polish and complete theme-specific accents (TEST). */
+html[data-design="lavender"] #mainView>.card:first-child{overflow:hidden}
+html[data-design="lavender"] #mainView>.card:first-child::before{content:"";right:-4px;top:-8px;width:180px;height:166px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20220%20200%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23728f69%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M214%205Q151%2053%20100%20191M194%2026Q169%2018%20153%208M178%2047Q200%2047%20217%2063M163%2062Q133%2047%20122%2024M146%2087Q168%2095%20178%20117M128%20111Q99%20100%2084%2073M113%20137Q133%20151%20136%20173%22%2F%3E%3C%2Fg%3E%3Cg%20stroke%3D%22%238052a6%22%20stroke-width%3D%22.8%22%3E%3Cg%20fill%3D%22%239964c7%22%3E%3Cellipse%20cx%3D%22185%22%20cy%3D%2235%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20185%2035)%22%2F%3E%3Cellipse%20cx%3D%22177%22%20cy%3D%2243%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20177%2043)%22%2F%3E%3Cellipse%20cx%3D%22170%22%20cy%3D%2251%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20170%2051)%22%2F%3E%3Cellipse%20cx%3D%22162%22%20cy%3D%2259%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20162%2059)%22%2F%3E%3Cellipse%20cx%3D%22154%22%20cy%3D%2268%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20154%2068)%22%2F%3E%3Cellipse%20cx%3D%22146%22%20cy%3D%2277%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20146%2077)%22%2F%3E%3Cellipse%20cx%3D%22139%22%20cy%3D%2285%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20139%2085)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2294%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20131%2094)%22%2F%3E%3Cellipse%20cx%3D%22124%22%20cy%3D%22103%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20124%20103)%22%2F%3E%3Cellipse%20cx%3D%22117%22%20cy%3D%22112%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20117%20112)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b28cdb%22%3E%3Cellipse%20cx%3D%22150%22%20cy%3D%2226%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20150%2026)%22%2F%3E%3Cellipse%20cx%3D%22143%22%20cy%3D%2235%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20143%2035)%22%2F%3E%3Cellipse%20cx%3D%22137%22%20cy%3D%2243%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20137%2043)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2251%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20131%2051)%22%2F%3E%3Cellipse%20cx%3D%22125%22%20cy%3D%2260%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20125%2060)%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;opacity:.92;z-index:0}
+html[data-design="lavender"] #mainView>.card:first-child::after{content:"";left:-24px;bottom:-37px;width:154px;height:140px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20220%20200%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23728f69%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M214%205Q151%2053%20100%20191M194%2026Q169%2018%20153%208M178%2047Q200%2047%20217%2063M163%2062Q133%2047%20122%2024M146%2087Q168%2095%20178%20117M128%20111Q99%20100%2084%2073M113%20137Q133%20151%20136%20173%22%2F%3E%3C%2Fg%3E%3Cg%20stroke%3D%22%238052a6%22%20stroke-width%3D%22.8%22%3E%3Cg%20fill%3D%22%239964c7%22%3E%3Cellipse%20cx%3D%22185%22%20cy%3D%2235%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20185%2035)%22%2F%3E%3Cellipse%20cx%3D%22177%22%20cy%3D%2243%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20177%2043)%22%2F%3E%3Cellipse%20cx%3D%22170%22%20cy%3D%2251%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20170%2051)%22%2F%3E%3Cellipse%20cx%3D%22162%22%20cy%3D%2259%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20162%2059)%22%2F%3E%3Cellipse%20cx%3D%22154%22%20cy%3D%2268%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20154%2068)%22%2F%3E%3Cellipse%20cx%3D%22146%22%20cy%3D%2277%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20146%2077)%22%2F%3E%3Cellipse%20cx%3D%22139%22%20cy%3D%2285%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20139%2085)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2294%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20131%2094)%22%2F%3E%3Cellipse%20cx%3D%22124%22%20cy%3D%22103%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20124%20103)%22%2F%3E%3Cellipse%20cx%3D%22117%22%20cy%3D%22112%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20117%20112)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b28cdb%22%3E%3Cellipse%20cx%3D%22150%22%20cy%3D%2226%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20150%2026)%22%2F%3E%3Cellipse%20cx%3D%22143%22%20cy%3D%2235%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20143%2035)%22%2F%3E%3Cellipse%20cx%3D%22137%22%20cy%3D%2243%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20137%2043)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2251%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20131%2051)%22%2F%3E%3Cellipse%20cx%3D%22125%22%20cy%3D%2260%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20125%2060)%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;transform:rotate(170deg);opacity:.67;z-index:0}
+html[data-design="lavender"] #mainView .interesting{position:relative;overflow:hidden;padding-right:94px;min-height:110px}
+html[data-design="lavender"] #mainView .interesting::after{content:"";position:absolute;right:-15px;bottom:-17px;width:112px;height:110px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20220%20200%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23728f69%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M214%205Q151%2053%20100%20191M194%2026Q169%2018%20153%208M178%2047Q200%2047%20217%2063M163%2062Q133%2047%20122%2024M146%2087Q168%2095%20178%20117M128%20111Q99%20100%2084%2073M113%20137Q133%20151%20136%20173%22%2F%3E%3C%2Fg%3E%3Cg%20stroke%3D%22%238052a6%22%20stroke-width%3D%22.8%22%3E%3Cg%20fill%3D%22%239964c7%22%3E%3Cellipse%20cx%3D%22185%22%20cy%3D%2235%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20185%2035)%22%2F%3E%3Cellipse%20cx%3D%22177%22%20cy%3D%2243%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20177%2043)%22%2F%3E%3Cellipse%20cx%3D%22170%22%20cy%3D%2251%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20170%2051)%22%2F%3E%3Cellipse%20cx%3D%22162%22%20cy%3D%2259%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20162%2059)%22%2F%3E%3Cellipse%20cx%3D%22154%22%20cy%3D%2268%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20154%2068)%22%2F%3E%3Cellipse%20cx%3D%22146%22%20cy%3D%2277%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20146%2077)%22%2F%3E%3Cellipse%20cx%3D%22139%22%20cy%3D%2285%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20139%2085)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2294%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20131%2094)%22%2F%3E%3Cellipse%20cx%3D%22124%22%20cy%3D%22103%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(-42%20124%20103)%22%2F%3E%3Cellipse%20cx%3D%22117%22%20cy%3D%22112%22%20rx%3D%225%22%20ry%3D%2211%22%20transform%3D%22rotate(38%20117%20112)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b28cdb%22%3E%3Cellipse%20cx%3D%22150%22%20cy%3D%2226%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20150%2026)%22%2F%3E%3Cellipse%20cx%3D%22143%22%20cy%3D%2235%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20143%2035)%22%2F%3E%3Cellipse%20cx%3D%22137%22%20cy%3D%2243%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20137%2043)%22%2F%3E%3Cellipse%20cx%3D%22131%22%20cy%3D%2251%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(35%20131%2051)%22%2F%3E%3Cellipse%20cx%3D%22125%22%20cy%3D%2260%22%20rx%3D%224%22%20ry%3D%229%22%20transform%3D%22rotate(-40%20125%2060)%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;transform:rotate(-20deg);opacity:.75;pointer-events:none}
+html[data-design="lavender"][data-theme="light"] #prevDay,
+html[data-design="lavender"][data-theme="light"] #nextDay,
+html[data-design="lavender"][data-theme="light"] #prevMonth,
+html[data-design="lavender"][data-theme="light"] #nextMonth,
+html[data-design="lavender"][data-theme="light"] #nameBtn,
+html[data-design="lavender"][data-theme="light"] #dateBtn,
+html[data-design="lavender"][data-theme="light"] #favoriteAddCancel{background:#f7effb;color:#63357d;border-color:#d9bce9}
+html[data-design="lavender"][data-theme="dark"] #prevDay,
+html[data-design="lavender"][data-theme="dark"] #nextDay,
+html[data-design="lavender"][data-theme="dark"] #prevMonth,
+html[data-design="lavender"][data-theme="dark"] #nextMonth,
+html[data-design="lavender"][data-theme="dark"] #nameBtn,
+html[data-design="lavender"][data-theme="dark"] #dateBtn,
+html[data-design="lavender"][data-theme="dark"] #favoriteAddCancel{background:#493650;color:#f1ddff;border-color:#80618e}
+html[data-design="lavender"] #calendar .day{color:inherit;background:transparent}
+html[data-design="lavender"][data-theme="light"] #calendar .day.sel{background:#703a90;color:#fff}
+html[data-design="lavender"][data-theme="dark"] #calendar .day.sel{background:#9a63bd;color:#fff}
+html[data-design="lavender"] #calendar .day.today:not(.sel){color:#8b4bad;outline-color:#bc92d0}
+html[data-design="lavender"] .birthday-gift-icon rect:first-child{fill:#d5a6ef;stroke:#5d317b}
+html[data-design="lavender"] .birthday-gift-icon rect:nth-child(2){fill:#ba82dc;stroke:#5d317b}
+html[data-design="lavender"] .birthday-gift-icon path:nth-child(3){fill:#edccfa;stroke:#5d317b}
+html[data-design="lavender"] .birthday-gift-icon path:last-child{fill:#5d317b}
+html[data-design="lavender"] .birthday-chevron,
+html[data-design="lavender"] .greeting-entry-arrow{color:#9e62bb}
+html[data-design="lavender"][data-theme="light"] #favoriteAddInput:focus,
+html[data-design="lavender"][data-theme="light"] #birthdayAddForm input:focus{outline-color:#8b50a9;border-color:#8b50a9;box-shadow:0 0 0 2px #ebdaf4;caret-color:#8b50a9}
+html[data-design="lavender"] #favoriteAddInput,
+html[data-design="lavender"] #birthdayAddForm input{caret-color:#9e62bb}
+html[data-design="lavender"] .favorite-add-matches button{color:#8c4eab;border-color:#d9bce9}
+html[data-design="lavender"] #prevDay:focus-visible,
+html[data-design="lavender"] #nextDay:focus-visible,
+html[data-design="lavender"] #prevMonth:focus-visible,
+html[data-design="lavender"] #nextMonth:focus-visible,
+html[data-design="lavender"] #nameBtn:focus-visible,
+html[data-design="lavender"] #dateBtn:focus-visible,
+html[data-design="lavender"] #calendar .day:focus-visible{outline:2px solid #a06bbf;outline-offset:2px}
+@media(max-width:430px){html[data-design="lavender"] #mainView>.card:first-child::before{width:126px;height:122px;opacity:.88}html[data-design="lavender"] #mainView>.card:first-child::after{width:105px;height:100px;opacity:.52}html[data-design="lavender"] #mainView .interesting{padding-right:72px}html[data-design="lavender"] #mainView .interesting::after{width:84px;height:90px;opacity:.7}}
+
+/* Z3 botanical refinement — natural clustered sprigs, safe text margins. */
+html[data-design="lavender"] #mainView>.card:first-child{overflow:visible}
+html[data-design="lavender"] #mainView>.card:first-child::before{
+  top:-9px;right:-3px;width:154px;height:134px;opacity:.9;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20270%20205%22%3E%3Cpath%20d%3D%22M242%2012%20Q196%2045%20157%20106%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M239%200%20Q217%2065%20205%20133%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M218%208%20Q176%2072%20135%20153%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M253%2022%20Q224%2091%20218%20162%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%22220.7%22%20cy%3D%2221.8%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20220.7%2021.8)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22223.1%22%20cy%3D%2228.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20223.1%2028.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22205.7%22%20cy%3D%2235.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20205.7%2035.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22208.3%22%20cy%3D%2243.0%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20208.3%2043.0)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22191.1%22%20cy%3D%2250.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20191.1%2050.9)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22193.9%22%20cy%3D%2259.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20193.9%2059.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22176.9%22%20cy%3D%2267.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20176.9%2067.9)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22179.9%22%20cy%3D%2277.0%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20179.9%2077.0)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22163.1%22%20cy%3D%2286.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20163.1%2086.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22226.4%22%20cy%3D%2220.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20226.4%2020.5)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22233.0%22%20cy%3D%2231.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20233.0%2031.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22219.8%22%20cy%3D%2242.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20219.8%2042.9)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22226.8%22%20cy%3D%2254.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20226.8%2054.1)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22213.8%22%20cy%3D%2265.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20213.8%2065.4)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22221.0%22%20cy%3D%2276.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20221.0%2076.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22208.4%22%20cy%3D%2288.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20208.4%2088.1)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22215.9%22%20cy%3D%2299.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20215.9%2099.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22203.6%22%20cy%3D%22111.0%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20203.6%20111.0)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22197.9%22%20cy%3D%2228.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20197.9%2028.6)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22200.8%22%20cy%3D%2240.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20200.8%2040.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22183.7%22%20cy%3D%2251.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20183.7%2051.9)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22186.6%22%20cy%3D%2263.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20186.6%2063.9)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22169.6%22%20cy%3D%2276.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20169.6%2076.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22172.5%22%20cy%3D%2288.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20172.5%2088.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22155.5%22%20cy%3D%22101.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20155.5%20101.4)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22158.5%22%20cy%3D%22114.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20158.5%20114.4)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22141.5%22%20cy%3D%22127.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20141.5%20127.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22238.3%22%20cy%3D%2243.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20238.3%2043.9)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22244.2%22%20cy%3D%2255.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20244.2%2055.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22230.5%22%20cy%3D%2267.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20230.5%2067.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22237.1%22%20cy%3D%2279.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20237.1%2079.4)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22224.1%22%20cy%3D%2291.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20224.1%2091.3)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22231.3%22%20cy%3D%22103.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20231.3%20103.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22218.9%22%20cy%3D%22115.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20218.9%20115.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22226.9%22%20cy%3D%22127.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20226.9%20127.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22215.1%22%20cy%3D%22139.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20215.1%20139.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3C%2Fsvg%3E");background-size:contain;background-repeat:no-repeat;
+  pointer-events:none;
+}
+html[data-design="lavender"] #mainView>.card:first-child::after{
+  left:-9px;bottom:-23px;width:188px;height:108px;opacity:.8;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20270%20205%22%3E%3Cpath%20d%3D%22M95%20175%20Q82%20116%2043%2012%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M155%20185%20Q124%20115%2091%2013%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M208%20179%20Q171%20109%20139%2020%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2284.5%22%20cy%3D%22149.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2084.5%20149.3)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2291.3%22%20cy%3D%22137.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2091.3%20137.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2277.7%22%20cy%3D%22125.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2077.7%20125.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2283.8%22%20cy%3D%22112.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2083.8%20112.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2269.4%22%20cy%3D%2298.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2069.4%2098.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2274.8%22%20cy%3D%2284.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2074.8%2084.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2259.7%22%20cy%3D%2269.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2059.7%2069.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2264.2%22%20cy%3D%2253.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2064.2%2053.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2248.4%22%20cy%3D%2237.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2048.4%2037.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22138.8%22%20cy%3D%22155.8%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20138.8%20155.8)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22143.4%22%20cy%3D%22142.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20143.4%20142.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22128.1%22%20cy%3D%22129.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20128.1%20129.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22132.7%22%20cy%3D%22115.0%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20132.7%20115.0)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22117.2%22%20cy%3D%22100.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20117.2%20100.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22121.8%22%20cy%3D%2285.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20121.8%2085.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22106.3%22%20cy%3D%2270.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20106.3%2070.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22110.7%22%20cy%3D%2254.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20110.7%2054.3)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2295.2%22%20cy%3D%2237.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2095.2%2037.9)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22189.8%22%20cy%3D%22150.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20189.8%20150.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22193.7%22%20cy%3D%22137.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20193.7%20137.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22177.7%22%20cy%3D%22124.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20177.7%20124.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22181.8%22%20cy%3D%22111.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20181.8%20111.5)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22165.9%22%20cy%3D%2298.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20165.9%2098.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22170.1%22%20cy%3D%2284.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20170.1%2084.3)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22154.3%22%20cy%3D%2270.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20154.3%2070.4)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22158.7%22%20cy%3D%2256.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20158.7%2056.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22143.1%22%20cy%3D%2241.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20143.1%2041.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3C%2Fsvg%3E");background-size:contain;background-repeat:no-repeat;
+  transform:none;pointer-events:none;
+}
+html[data-design="lavender"] #mainView .interesting::after{
+  right:-11px;bottom:-12px;width:106px;height:115px;opacity:.85;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20270%20205%22%3E%3Cpath%20d%3D%22M95%20175%20Q82%20116%2043%2012%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M155%20185%20Q124%20115%2091%2013%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M208%20179%20Q171%20109%20139%2020%22%20fill%3D%22none%22%20stroke%3D%22%23718b68%22%20stroke-width%3D%222.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2284.5%22%20cy%3D%22149.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2084.5%20149.3)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2291.3%22%20cy%3D%22137.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2091.3%20137.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2277.7%22%20cy%3D%22125.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2077.7%20125.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2283.8%22%20cy%3D%22112.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2083.8%20112.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2269.4%22%20cy%3D%2298.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2069.4%2098.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2274.8%22%20cy%3D%2284.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2074.8%2084.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2259.7%22%20cy%3D%2269.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2059.7%2069.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2264.2%22%20cy%3D%2253.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%2064.2%2053.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2248.4%22%20cy%3D%2237.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2048.4%2037.2)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22138.8%22%20cy%3D%22155.8%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20138.8%20155.8)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22143.4%22%20cy%3D%22142.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20143.4%20142.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22128.1%22%20cy%3D%22129.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20128.1%20129.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22132.7%22%20cy%3D%22115.0%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20132.7%20115.0)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22117.2%22%20cy%3D%22100.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20117.2%20100.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22121.8%22%20cy%3D%2285.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20121.8%2085.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22106.3%22%20cy%3D%2270.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20106.3%2070.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22110.7%22%20cy%3D%2254.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20110.7%2054.3)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%2295.2%22%20cy%3D%2237.9%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%2095.2%2037.9)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22189.8%22%20cy%3D%22150.2%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20189.8%20150.2)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22193.7%22%20cy%3D%22137.6%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20193.7%20137.6)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22177.7%22%20cy%3D%22124.7%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20177.7%20124.7)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22181.8%22%20cy%3D%22111.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20181.8%20111.5)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22165.9%22%20cy%3D%2298.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20165.9%2098.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22170.1%22%20cy%3D%2284.3%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20170.1%2084.3)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22154.3%22%20cy%3D%2270.4%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20154.3%2070.4)%22%20fill%3D%22%23b88bdb%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22158.7%22%20cy%3D%2256.1%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(46%20158.7%2056.1)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3Cellipse%20cx%3D%22143.1%22%20cy%3D%2241.5%22%20rx%3D%223.4%22%20ry%3D%227.2%22%20transform%3D%22rotate(-46%20143.1%2041.5)%22%20fill%3D%22%239761c3%22%20opacity%3D%22.93%22%2F%3E%3C%2Fsvg%3E");background-size:contain;background-repeat:no-repeat;
+  transform:rotate(-8deg);
+}
+html[data-design="lavender"] #mainView>.card:first-child .nav{position:relative;z-index:2}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::before,
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::after,
+html[data-design="lavender"][data-theme="dark"] #mainView .interesting::after{opacity:.65}
+@media(max-width:430px){
+ html[data-design="lavender"] #mainView>.card:first-child::before{width:122px;height:106px;right:-5px;top:-5px}
+ html[data-design="lavender"] #mainView>.card:first-child::after{width:132px;height:80px;bottom:-15px;left:-7px;opacity:.7}
+ html[data-design="lavender"] #mainView .interesting::after{width:86px;height:92px;opacity:.75}
+}
+
+/* TEST Z3: use approved transparent PNG lavender illustrations instead of schematic SVGs. */
+html[data-design="lavender"] #mainView>.card:first-child::before{
+  content:"";background:url("assets/lavanda_augsa.png") right top/contain no-repeat;
+  position:absolute;right:0;top:0;width:190px;height:185px;
+  opacity:1;filter:none;transform:none;pointer-events:none;z-index:0;
+}
+html[data-design="lavender"] #mainView>.card:first-child::after{
+  content:"";background:url("assets/lavanda_apaksa.png") left bottom/contain no-repeat;
+  position:absolute;left:0;bottom:0;width:190px;height:130px;
+  opacity:.72;transform:none;pointer-events:none;z-index:0;
+}
+html[data-design="lavender"] #mainView .interesting::after{
+  content:"";background:url("assets/lavanda_interesanti.png") right bottom/contain no-repeat;
+  position:absolute;right:0;bottom:0;width:125px;height:145px;
+  opacity:.9;transform:none;pointer-events:none;
+}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::before{opacity:1;filter:none}
+html[data-design="lavender"][data-theme="dark"] #mainView .interesting::after{opacity:.78}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::after{opacity:.6}
+@media(max-width:420px){
+  html[data-design="lavender"] #mainView>.card:first-child::before{width:150px;height:145px}
+  html[data-design="lavender"] #mainView>.card:first-child::after{width:145px;height:110px}
+  html[data-design="lavender"] #mainView .interesting::after{width:100px;height:125px}
+}
+
+/* TEST Z3: approved floral finishing touches — keep Interesanti unchanged. */
+html[data-design="lavender"] #mainView>.card:first-child::before{
+  opacity:1;
+}
+html[data-design="lavender"] #mainView>.card:first-child::after{
+  width:96px;height:82px;left:-6px;bottom:-2px;opacity:.88;
+}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::before{opacity:1}
+html[data-design="lavender"][data-theme="dark"] #mainView>.card:first-child::after{opacity:.78}
+@media(max-width:420px){
+  html[data-design="lavender"] #mainView>.card:first-child::after{
+    width:78px;height:70px;left:-5px;bottom:-2px;
+  }
+}
+
+/* TEST Z3: render the approved top lavender as an actual image, not a CSS background. */
+html[data-design="lavender"] #mainView>.card:first-child::before{content:none!important}
+#mainView>.card:first-child .lavender-top-art{display:none}
+html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{
+ display:block;position:absolute;top:0;right:0;width:190px;height:185px;
+ object-fit:contain;object-position:right top;opacity:1;filter:none;
+ pointer-events:none;z-index:0;
+}
+@media(max-width:420px){
+ html[data-design="lavender"] #mainView>.card:first-child .lavender-top-art{width:150px;height:145px}
+}
+
+\n
+/* TEST UI: about rows, themed reminder time menu, emoji overlay */
+.about-card .about-row-button{box-sizing:border-box;max-width:100%;padding:0 12px;gap:12px;min-width:0}
+.about-card .about-row-button>span:first-child{min-width:0;overflow-wrap:anywhere}
+.about-card .about-row-button .about-chevron{flex:0 0 auto;margin-left:auto}
+.greeting-emoji-panel{background:var(--picker-bg,#fff);border-color:var(--picker-border,#d7e8dc);color:var(--picker-text,#18392b)}
+.greeting-emoji-grid button{background:var(--picker-item,#f5f7f5)}
+html[data-theme="dark"] .greeting-emoji-panel{--picker-bg:#1e2d27;--picker-border:#405c4f;--picker-text:#e8f4ec;--picker-item:#233b32}
+html[data-design="lavender"][data-theme="light"] .greeting-emoji-panel{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-item:#f8f1fa}
+.reminder-time-control{position:relative;display:inline-flex;flex:0 0 auto}
+.reminder-time-control>select{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.reminder-time-trigger{min-width:92px;padding:9px 12px;border:1px solid #b8d9c3;border-radius:10px;background:var(--picker-bg,#f6fbf7);color:var(--picker-text,#08783f);font:inherit;font-weight:600;cursor:pointer}
+.reminder-time-menu{position:absolute;right:0;top:calc(100% + 5px);z-index:1001;width:124px;max-height:260px;overflow-y:auto;overscroll-behavior:contain;background:var(--picker-bg,#fff);color:var(--picker-text,#18392b);border:1px solid var(--picker-border,#b8d9c3);border-radius:12px;box-shadow:0 8px 24px #0002;padding:5px}
+.reminder-time-menu[hidden]{display:none}
+.reminder-time-menu button{display:block;width:100%;padding:9px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}
+.reminder-time-menu button[aria-selected="true"]{background:var(--picker-selected,#dff3e5);font-weight:700}
+html[data-theme="dark"] .reminder-time-control{--picker-bg:#1e2d27;--picker-border:#405c4f;--picker-text:#e8f4ec;--picker-selected:#345b46}
+html[data-design="lavender"][data-theme="light"] .reminder-time-control{--picker-bg:#fffafd;--picker-border:#dfcce6;--picker-text:#493457;--picker-selected:#efddf3}
+
