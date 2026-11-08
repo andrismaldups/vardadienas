@@ -342,9 +342,9 @@ test('design switching never adds the gallery-only ds-app class to the applicati
       el.dispatchEvent(new Event('change', { bubbles: true }));
     });
     await expect(page.locator('html')).toHaveAttribute('data-design', design);
-    await expect(page.locator('body')).not.toHaveClass(/\\bds-app\\b/);
+    await expect(page.locator('body')).not.toHaveClass(/\bds-app\b/);
   }
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
-  await expect(page.locator('body')).not.toHaveClass(/\\bds-app\\b/);
+  await expect(page.locator('body')).not.toHaveClass(/\bds-app\b/);
 });
