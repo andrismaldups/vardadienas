@@ -1,5 +1,5 @@
 /* VD Design: first opt-in integration layer for DS 1.1.
-   IMPORTANT: inactive until <html data-design="ds11">; shared layout styles below still use body.ds-app.
+   IMPORTANT: active only when <html data-design="ds11">; this integration layer no longer depends on body.ds-app.
    Never load on production/TEST. No app logic or push code is changed.
    DS 1.1 semantic tokens are defined in reference-theme.css. */
 html[data-design="ds11"] body{
@@ -62,17 +62,17 @@ html[data-design="ds11"] body :is(.favorites-sort button,.birthday-sort button,.
 html[data-design="ds11"] body :is(.favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active){
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
 }
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
  .back-btn,.greeting-options button,.birthday-sort button,.favorites-sort button
 ):not(.active){
  background:var(--ds-soft-bg);border-color:var(--ds-border);color:var(--ds-text)
 }
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  .names,.name-link,.menu-btn,.birthday-chevron,.birthday-edit-btn,
  .greeting-entry-arrow,.name-detail-card h3
 ){color:var(--ds-primary)}
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
  textarea,select
 ){background:var(--ds-input-bg);color:var(--ds-input-text);border-color:var(--ds-input-border);caret-color:var(--ds-caret)}
@@ -125,7 +125,7 @@ html[data-design="ds11"] body :is(.names .name-link,.extra-list .name-link){
 html[data-design="ds11"] body :is(.tag,#nameResult .tag){
  background:var(--ds-highlight-bg);color:var(--ds-highlight-text)
 }
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  .remove-favorite,.birthday-edit-btn,.birthday-delete-btn,
  .birthday-row-actions button,#clearName,#clearDate
 ){
@@ -134,13 +134,13 @@ html[data-design="ds11"] body.ds-app :is(
 html[data-design="ds11"] body :is(.remove-favorite,.birthday-delete-btn){
  color:var(--ds-danger)
 }
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  #dateSuggestions button,.date-suggestions button,#nameResult .search-add-favorite
 ){
  background:var(--ds-secondary-bg);color:var(--ds-secondary-text);border-color:var(--ds-secondary-border)
 }
 /* C06 active state must win over the earlier generic inactive button rule. */
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  .favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active
 ){
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
@@ -225,7 +225,7 @@ html[data-design="ds11"] body #nameDetailView .name-detail-actions button.primar
 }
 /* N25 / C07/C15: override legacy hard-coded #6ad49a focus outline,
    including mouse/touch focus on the favorite-name input. */
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  input:not([type="hidden"]),textarea,select
 ):focus-visible,
 html[data-design="ds11"] body #favoriteAddInput:focus{
@@ -236,7 +236,7 @@ html[data-design="ds11"] body #favoriteAddInput:focus{
 
 /* N26: supporting copy must use the approved semantic muted text token.
    The old #718096 and dark-mode #a7b9b0 are not D3 palette values. */
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  .extra-title,.foot,.week div,#dateTitle,
  .appearance-choice small,.about-app>div:last-child>div,
  .about-row span:last-child,
@@ -260,12 +260,12 @@ html[data-design="ds11"] body #birthdayAddForm input:focus-visible{
 /* N25 follow-up: one shared focus geometry for all application inputs.
    Legacy ID-specific focus rules and shadows must not win by specificity.
    Keep the same double-line appearance as the birthday form. */
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  #nameInput,#dateInput,#favoriteAddInput,
  #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
  input:not([type="hidden"]),textarea,select
 ):focus,
-html[data-design="ds11"] body.ds-app :is(
+html[data-design="ds11"] body :is(
  #nameInput,#dateInput,#favoriteAddInput,
  #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
  input:not([type="hidden"]),textarea,select
