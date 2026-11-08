@@ -16,7 +16,7 @@
 .ds-app .ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 15px;border:1px solid var(--ds-secondary-border);border-radius:12px;background:var(--ds-secondary-bg);color:var(--ds-secondary-text);font:inherit;cursor:pointer;touch-action:manipulation}
 .ds-app .ds-button--primary{background:var(--ds-primary);color:var(--ds-on-primary);border-color:var(--ds-primary-border)}
 .ds-app .ds-button--danger{background:var(--ds-danger);color:var(--ds-on-danger);border-color:var(--ds-danger)}
-.ds-app .ds-button:active{filter:brightness(.92)}
+/* Pressed button colors are supplied by semantic state tokens below; no extra brightness filter. */
 /* C05 */
 .ds-app .ds-icon-button{display:inline-grid;place-items:center;min-width:44px;min-height:44px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ds-icon);font:inherit;cursor:pointer}
 .ds-app .ds-icon-button--danger{color:var(--ds-danger)}
