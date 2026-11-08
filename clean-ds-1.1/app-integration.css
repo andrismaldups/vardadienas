@@ -82,13 +82,13 @@ html[data-design="ds11"] body .switch input:checked+.switch-slider{background:va
 html[data-design="ds11"] body :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
 html[data-design="ds11"] body :is(.settings-back-bar,.greeting-back-bar){background:var(--ds-surface);border-color:var(--ds-surface-border)}
 html[data-design="ds11"] body :is(.reminder-time-menu,.greeting-emoji-panel){background:var(--ds-popup-bg);color:var(--ds-popup-text);border-color:var(--ds-popup-border)}
-html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+html[data-design="ds11"] body .about-card .about-row-button{
  box-sizing:border-box;max-width:100%;width:100%;display:flex;align-items:center;
  gap:12px;min-width:0;padding:10px 14px;overflow:hidden;
  background:var(--ds-soft-bg);color:var(--ds-text);border:1px solid var(--ds-soft-border)
 }
-html[data-design="ds11"] body.ds-app .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
-html[data-design="ds11"] body.ds-app .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
+html[data-design="ds11"] body .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+html[data-design="ds11"] body .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
 /* G09: today's outline is a theme role, not the keyboard focus ring. */
 /* G09 dimensions apply to today's date regardless of selection. */
 html[data-design="ds11"] body #calendar .day.today{
@@ -148,10 +148,10 @@ html[data-design="ds11"] body.ds-app :is(
 
 /* G04 / C18: spacing belongs to actual accordion item wrappers,
    not buttons separated by content elements. */
-html[data-design="ds11"] body.ds-app .about-accordion-list>.about-accordion-item+.about-accordion-item{
+html[data-design="ds11"] body .about-accordion-list>.about-accordion-item+.about-accordion-item{
  margin-top:8px;
 }
-html[data-design="ds11"] body.ds-app .about-card .about-row-button{
+html[data-design="ds11"] body .about-card .about-row-button{
  min-height:48px;margin:0;
 }
 /* G06 / C17: deletion is confirmed separately in the application.
