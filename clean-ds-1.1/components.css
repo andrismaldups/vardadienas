@@ -87,3 +87,7 @@
 html[data-design="ds11"] body [data-ui-component="card"]{padding:clamp(16px,2vw,26px);border:1px solid var(--ds-surface-border);border-radius:22px;background:var(--ds-surface);box-shadow:0 8px 24px var(--ds-shadow)}
 html[data-design="ds11"] body [data-ui-component="primary-action"]{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 15px;border:1px solid var(--ds-secondary-border);border-radius:12px;background:var(--ds-secondary-bg);color:var(--ds-secondary-text);font:inherit;cursor:pointer;touch-action:manipulation}
 html[data-design="ds11"] body [data-ui-component="primary-action"]{background:var(--ds-primary);color:var(--ds-on-primary);border-color:var(--ds-primary-border)}
+
+/* DS11 semantic action states, without the gallery class. */
+html[data-design="ds11"] body [data-ui-component="primary-action"]:not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
+html[data-design="ds11"] body [data-ui-component="primary-action"]:not(:disabled):active{background:var(--ds-primary-pressed)}
