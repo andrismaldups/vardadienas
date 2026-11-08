@@ -131,3 +131,9 @@ test("retired Sea theme stylesheet is not loaded", async ({ page }) => {
   const sheets = await page.locator('link[rel="stylesheet"]').evaluateAll(nodes => nodes.map(n => n.getAttribute("href")));
   expect(sheets).not.toContain("design-water-j1.css");
 });
+
+test("shared controls survive retirement of Z3 decorations", async ({ page }) => {
+  await page.goto("/index.html");
+  await expect(page.locator("html")).toHaveAttribute("data-design", /classic|festive-s1|ds11/);
+  await expect(page.locator('input[name="designStyle"]')).toHaveCount(3);
+});
