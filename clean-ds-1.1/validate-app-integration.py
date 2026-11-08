@@ -101,6 +101,12 @@ check(".reminder-time-control" in legacy_css, "Shared reminder picker layout was
 
 check(app.count('data-ui-component="primary-action"') >= 8, "Stable primary-action identity missing")
 
+# Component styling must not depend on JavaScript toggling visual classes.
+check("classList.toggle('ds-card'" not in theme_bootstrap, "Theme bootstrap still toggles card presentation classes")
+check("classList.toggle('ds-button'" not in theme_bootstrap, "Theme bootstrap still toggles button presentation classes")
+check('[data-ui-component="card"]' in components, "Shared card styling does not recognize semantic component identity")
+check('[data-ui-component="primary-action"]' in components, "Shared action styling does not recognize semantic component identity")
+
 print(f"DS 1.1 integration: {len(required)} component tokens checked")
 if errors:
     for issue in errors:

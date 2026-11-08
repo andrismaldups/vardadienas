@@ -142,3 +142,28 @@ test('switching designs never adds or removes visual component classes', async (
     }))).toEqual(baseline);
   }
 });
+
+test('DS11 primary action uses semantic tokens in both appearance modes', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const button = page.locator('[data-ui-component="primary-action"]').first();
+  const card = page.locator('[data-ui-component="card"]').first();
+  for (const mode of ['light', 'dark']) {
+    await page.locator('input[name="appearanceMode"][value="' + mode + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
+    const values = await button.evaluate(el => {
+      const style = getComputedStyle(el);
+      const root = getComputedStyle(document.body);
+      return { bg: style.backgroundColor, token: root.getPropertyValue('--ds-primary').trim() };
+    });
+    expect(values.token).not.toBe('');
+    expect(values.bg).not.toBe('rgba(0, 0, 0, 0)');
+    await expect(card).toHaveAttribute('data-ui-component', 'card');
+  }
+});
