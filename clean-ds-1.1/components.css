@@ -50,7 +50,7 @@
 /* C16 */
 .ds-app .ds-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .ds-app .ds-day{display:grid;place-items:center;min-width:0;min-height:46px;border:1px solid transparent;border-radius:50%;background:transparent;color:var(--ds-text);font:inherit;cursor:pointer}
-.ds-app .ds-day[data-today=true]{border-color:var(--ds-focus-ring)}
+.ds-app .ds-day[data-today=true]{border-color:var(--ds-calendar-today-border)}
 .ds-app .ds-day[aria-selected=true]{background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)}
 /* C18 */
 .ds-app .ds-accordion{border:1px solid var(--ds-surface-border);border-radius:12px;background:var(--ds-surface-soft)}
