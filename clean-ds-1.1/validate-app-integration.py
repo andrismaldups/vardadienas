@@ -34,7 +34,11 @@ check(f'src="{guard_path}"' in app, "Design test isolation script not loaded")
 check("window.DESIGN_TEST_ISOLATED=true" in guard, "Design test API isolation absent")
 check("protectedOrigin=" in guard, "Protected push origin interception absent")
 check(app.find(f'src="{guard_path}"') < app.find('const GREETING_SINCERE='), "Isolation guard must precede application script")
-check("Paziņojumi DESIGN TEST nav pieejami" in app,
+for script in ("sw-register.js", "reminder-time-picker.js", "push-design-guard.js"):
+    check(f'src="clean-ds-1.1/{script}"' in app, f"Extracted script not loaded: {script}")
+check(app.find('src="clean-ds-1.1/sw-register.js"') < app.find('src="clean-ds-1.1/reminder-time-picker.js"') < app.find('src="clean-ds-1.1/push-design-guard.js"'), "Extracted scripts changed order")
+push_guard = (root / "clean-ds-1.1/push-design-guard.js").read_text(encoding="utf-8")
+check("Paziņojumi DESIGN TEST nav pieejami" in push_guard,
       "Design test push activation lock absent")
 check('id="calendar"' in app and 'id="dateInput"' in app,
       "Existing calendar or date search input absent")
@@ -55,7 +59,8 @@ for mode in ("light", "dark"):
 # Offline contract: all new styles and decorative assets must be precached.
 worker = (root / "service-worker.js").read_text(encoding="utf-8")
 for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
-              "clean-ds-1.1/app-integration.css", "clean-ds-1.1/isolation-guard.js", "assets/d3-rita-rasa.svg",
+              "clean-ds-1.1/app-integration.css", "clean-ds-1.1/isolation-guard.js", "clean-ds-1.1/sw-register.js",
+              "clean-ds-1.1/reminder-time-picker.js", "clean-ds-1.1/push-design-guard.js", "assets/d3-rita-rasa.svg",
               "assets/d3-rita-gaisma.svg"):
     check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
     check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
