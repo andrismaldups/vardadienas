@@ -11,7 +11,7 @@ for (const mode of ['light', 'dark']) {
     await page.goto('/index.html');
     await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
     await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
-    await expect(page.locator('body')).toHaveClass(/ds-app/);
+    await expect(page.locator('body')).not.toHaveClass(/ds-app/);
     await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
     await expect(page.locator('#calendar')).toBeAttached();
     await expect(page.locator('#dateInput')).toBeAttached();
@@ -48,7 +48,7 @@ test('full VD Design: DS 1.1 fits iPhone viewport', async ({ page }) => {
     localStorage.setItem('appearanceMode', 'light');
   });
   await page.goto('/index.html');
-  await expect(page.locator('body')).toHaveClass(/ds-app/);
+  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(overflow).toBe(false);
 });
@@ -66,7 +66,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
 
   await page.locator('input[name="designStyle"][value="ds11"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
-  await expect(page.locator('body')).toHaveClass(/ds-app/);
+  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
   await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
 
   await page.locator('input[name="appearanceMode"][value="dark"]').check();
