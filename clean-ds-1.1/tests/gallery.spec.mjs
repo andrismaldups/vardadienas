@@ -243,3 +243,37 @@ test('calendar today border is independent of focus ring token', async ({ page }
     expect(result.border).toBe(rgb);
   }
 });
+
+
+test('semantic pressed colors are not modified by a brightness filter', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    for (const selector of ['.ds-button--primary:not(:disabled)', '.ds-button--danger:not(:disabled)', '.lab-section .ds-button:not(.ds-button--primary):not(.ds-button--danger)']) {
+      const button = page.locator(selector).first();
+      await button.scrollIntoViewIfNeeded();
+      const rect = await button.boundingBox();
+      expect(rect).not.toBeNull();
+      await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
+      await page.mouse.down();
+      await expect(button).toHaveCSS('filter', 'none');
+      await page.mouse.up();
+    }
+  }
+});
+
+test('selected calendar day border takes priority over today border', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const day = page.locator('.ds-day[aria-selected="true"]');
+    await day.evaluate(el => el.setAttribute('data-today', 'true'));
+    const result = await day.evaluate(el => {
+      const root = getComputedStyle(document.querySelector('#app'));
+      return {
+        actual: getComputedStyle(el).borderTopColor,
+        expected: root.getPropertyValue('--ds-selected-border').trim()
+      };
+    });
+    const h = result.expected.slice(1);
+    expect(result.actual).toBe('rgb(' + [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')');
+  }
+});
