@@ -57,3 +57,12 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - `reference-theme.css` nebija definēti `--ds-calendar-today-border`, `--ds-danger-bg`, `--ds-danger-text` un `--ds-danger-border` tokeni, ko izmanto C16 un C05; tas var radīt kļūdainus galerijas rezultātus.
 - Labots ar commit `fd48c56d`: pievienoti tokeni gaišajai un tumšajai **atsauces** paletei, nemainot saskaņoto D3 tēmu.
 - **Tests nav izpildīts:** šis ir koda līmeņa labojums; pārlūka/WebKit rezultāts joprojām jāiegūst.
+
+
+## Koda statiskā salīdzināšana (2026-11-08)
+- No GitHub nolasīti `components.css`, `reference-theme.css`, `d3-theme.css`, `gallery.html`, `tests/gallery.spec.mjs`.
+- Neatkarīga tokenu salīdzināšana: **61 unikāla `var(--ds-*)` atsauce komponentu CSS; 0 trūkstošu deklarāciju abos `reference-theme.css` režīmos**.
+- `components.css` atlasītie `:active` noteikumi rāda vispārīgo stāvokli un specifiskus primārās, destruktīvās un izvēles pogas noteikumus. Tas **nav pierādījums faktiskam konfliktam**; jāskatās computed styles reālā renderējumā.
+- Pārbaudīta C05/C16 testu esamība. Testi nav izpildīti.
+- Šis ir **statiskas koda analīzes rezultāts**, nevis `validate.py`, `contrast_audit.py` vai Playwright izpildes protokols. GitHub Actions veiksmīgs rezultāts joprojām nav iegūts.
+- Tālāk: GitHub Actions izpildes protokols (statiskie testi, kontrasts, Chromium, WebKit, mobile-WebKit), pēc tam iPhone VD Design. Līdz tam **nepārcelt statusu uz “tehniski apstiprināts”**.
