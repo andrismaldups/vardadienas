@@ -42,3 +42,12 @@ Avoti: iepriekšējās sarunas saskaņojumi (novembra 5.–8. datums), `SPEC-1.1
 
 ## Tuvākais izpildāmais solis
 Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kaskādes testiem, nevis akli mainīt dizainu. Pēc tehniskās pārbaudes nodot lietotājam konkrētu izmaiņu sarakstu iPhone salīdzinājumam.
+
+
+## 2026-11-08 — tehnisko labojumu un testu žurnāls
+- C16 K02: `9dbb8b71` — šodienas datumam pieslēgts `--ds-calendar-today-border`.
+- C05 K01: `c992be91` — destruktīvajai ikonai pievienoti atsevišķi hover/active stāvokļi.
+- Regresijas testi: `50e0df1e`, `d5c4e26a` — papildinātas C05 un C16 computed-style pārbaudes, tostarp reāls pointer-down.
+- CI pārbaude: pēdējam pārbaudītajam commit `50e0df1e` GitHub combined statuses un PR-triggered workflow runs atgrieza tukšus sarakstus. Tas **nepierāda**, ka CI nav palaists; **nav pieejams izpildes apliecinājums**. Statuss: **nav apstiprināts**.
+- `.github/workflows/clean-ds-1-1.yml` paredz `validate.py`, `validate-app-integration.py`, `contrast_audit.py`, un Playwright chromium/webkit/mobile-webkit. Pirms iPhone pārbaudes nepieciešams redzēt faktisko izpildes rezultātu.
+- K03/K04/K05/K06 nav automātiski atzīmēti kā defekti. Jāapstiprina ar kaskādes un reālās integrācijas testiem.
