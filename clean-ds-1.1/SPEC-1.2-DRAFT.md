@@ -197,3 +197,64 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 
 **Saskaņošanas lēmums:** 1.2 dokumentu drīkst nodot **satura pārskatīšanai**, bet ne pasludināt par pilnībā pierādītu visu 46 attēlu, visu tēmu vai offline/push pieņemšanu. Atvērtie punkti nav automātiski aplikācijas defekti.
 
+
+## Pielikums C — faktisko pievienoto attēlu failu inventarizācija
+
+**Avots:** šīs sarunas pielikumu lokālās kopijas, pārskatītas 2026-11-08. Lietotājs norādīja **46** ekrānattēlus; pašreiz pieejamajā failu kopā ir **50 iPhone attēlu faili un 6 darbvirsmas ekrānattēli**. Daļa attēlu rāda līdzīgus vai atkārtotus stāvokļus. Tāpēc failu skaits nav automātiski unikālo ekrānattēlu skaits. Šeit inventarizēti visi pieejamie mobilie faili; to nosaukuma sākums ir lokāla atsauce, nevis GitHub URL.
+
+| ID | Faila nosaukuma sākums | Režīms | Redzamais stāvoklis |
+|---|---|---|---|
+| M01 | `1089C81B` | gaišs | Apsveikums — emoji panelis |
+| M02 | `118B3920` | tumšs | Kalendārs un meklēšana |
+| M03 | `13EF6365` | tumšs | Vārda meklēšana un tastatūra |
+| M04 | `227536E0` | gaišs | Iestatījumi — atgādinājumi |
+| M05 | `22C4F02A` | tumšs | Apsveikuma rediģēšana |
+| M06 | `2AC58A69` | gaišs | Vārda un datuma meklēšana |
+| M07 | `31C14CD3` | gaišs | Apsveikuma izvēles |
+| M08 | `3338EFB2` | gaišs | Dzimšanas dienu saraksts |
+| M09 | `33649048` | tumšs | Iestatījumi — dizaina stili |
+| M10 | `36D02AF1` | tumšs | iOS kopīgošanas lapa |
+| M11 | `3C8D3FAE` | tumšs | Mani vārdi — ieteikumi |
+| M12 | `418498D2` | gaišs | Iestatījumi — dizaina stili |
+| M13 | `47B9FA0F` | tumšs | Dzimšanas dienu saraksts |
+| M14 | `4A176FAA` | tumšs | Dzimšanas dienu ievade |
+| M15 | `4AE274D8` | tumšs | Iestatījumi — atgādinājumi |
+| M16 | `4ECAB5B1` | gaišs | Iestatījumi — par aplikāciju |
+| M17 | `55033BC6` | gaišs | Sākumskats |
+| M18 | `55034CE0` | tumšs | Dzimšanas dienu datuma ievade |
+| M19 | `575EE392` | tumšs | Sākumskats un kalendārs |
+| M20 | `576B34D2` | tumšs | Apsveikuma izvēles |
+| M21 | `5E64E616` | gaišs | Manu vārdu saraksts |
+| M22 | `5F336AAD` | gaišs | Iestatījumi — par aplikāciju |
+| M23 | `6063F9AF` | tumšs | Vārda informācija |
+| M24 | `646D3414` | tumšs | Mani vārdi — ievade |
+| M25 | `65AE5205` | tumšs | Mani vārdi — pievienošana |
+| M26 | `670E5BB5` | gaišs | Gatavais apsveikums |
+| M27 | `70D067BB` | gaišs | Sākumskats |
+| M28 | `732BD184` | tumšs | Iestatījumi — režīms |
+| M29 | `74A20C30` | tumšs | Manu vārdu saraksts |
+| M30 | `79A3A579` | gaišs | Vārda informācija |
+| M31 | `7F4DD2F0` | tumšs | Meklēšana ar tastatūru |
+| M32 | `8013C5DF` | gaišs | Iestatījumi — par aplikāciju |
+| M33 | `80C70226` | tumšs | Dzimšanas dienu datuma ievade |
+| M34 | `9401D4C4` | gaišs | Iestatījumi — atgādinājumi |
+| M35 | `9A12E461` | gaišs | Mēnešu ieteikumi |
+| M36 | `9A546B53` | tumšs | Hamburgera izvēlne |
+| M37 | `9F423541` | tumšs | Gatavais apsveikums |
+| M38 | `9F7117B5` | gaišs | Kalendārs — atlasīta diena |
+| M39 | `A29C0020` | gaišs | Kalendārs — atlasīta diena |
+| M40 | `A54190B3` | tumšs | Mani vārdi — ievade |
+| M41 | `B3FB7034` | tumšs | Apsveikums — emoji panelis |
+| M42 | `BF2410DD` | tumšs | Vārda un datuma meklēšana |
+| M43 | `CECA3841` | tumšs | Dzimšanas dienu datuma ievade |
+| M44 | `D1D86415` | tumšs | iOS kopīgošanas lapa |
+| M45 | `D53A88ED` | tumšs | Kalendāra dienas atlase |
+| M46 | `D6837E6A` | gaišs | Gatavais apsveikums |
+| M47 | `D8E6138E` | tumšs | Iestatījumi — par aplikāciju |
+| M48 | `F26BAA83` | tumšs | Iestatījumi — par aplikāciju |
+| M49 | `F3C84706` | tumšs | Iestatījumi — par aplikāciju |
+| M50 | `FAB6FBA3` | tumšs | Iestatījumi — atgādinājumi |
+
+**Darbvirsmas tehniskie attēli D01–D06:** `Screenshot 2026-11-08 at 09.07.50.png`, `09.08.01.png`, `09.08.12.png`, `09.10.34.png`, `09.10.46.png`, `09.11.52.png`. Tie jāvērtē kā GitHub/darbvirsmas pārbaudes, nevis iPhone dizaina apstiprinājumi.
+
+**Izsekojamības ierobežojums:** iepriekšējie A01–A20/B01–B05 ir sūtīšanas secības apraksti; M01–M50 ir failu nosaukumu alfabētiska inventarizācija. **Nedrīkst mehāniski pielīdzināt A/B un M numurus.** Lai galīgi saskaņotu lietotāja minētos 46 attēlus, vēl jāpārbauda oriģinālo ziņojumu secība un atkārtotie kadri.
