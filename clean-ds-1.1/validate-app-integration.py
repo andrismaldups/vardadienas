@@ -28,8 +28,12 @@ check("document.body.classList.toggle('ds-app',active)" in app,
 check("document.body.dataset.mode" in app, "Light/dark mode sync absent")
 check('value="nature-d3"' in app, "Existing D3 option absent")
 check('value="classic"' in app, "Existing classic option absent")
-check('window.DESIGN_TEST_ISOLATED=true' in app, "Design test API isolation absent")
-check("protectedOrigin=" in app, "Protected push origin interception absent")
+guard_path = "clean-ds-1.1/isolation-guard.js"
+guard = (root / guard_path).read_text(encoding="utf-8") if (root / guard_path).is_file() else ""
+check(f'src="{guard_path}"' in app, "Design test isolation script not loaded")
+check("window.DESIGN_TEST_ISOLATED=true" in guard, "Design test API isolation absent")
+check("protectedOrigin=" in guard, "Protected push origin interception absent")
+check(app.find(f'src="{guard_path}"') < app.find('const GREETING_SINCERE='), "Isolation guard must precede application script")
 check("Paziņojumi DESIGN TEST nav pieejami" in app,
       "Design test push activation lock absent")
 check('id="calendar"' in app and 'id="dateInput"' in app,
@@ -51,7 +55,7 @@ for mode in ("light", "dark"):
 # Offline contract: all new styles and decorative assets must be precached.
 worker = (root / "service-worker.js").read_text(encoding="utf-8")
 for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
-              "clean-ds-1.1/app-integration.css", "assets/d3-rita-rasa.svg",
+              "clean-ds-1.1/app-integration.css", "clean-ds-1.1/isolation-guard.js", "assets/d3-rita-rasa.svg",
               "assets/d3-rita-gaisma.svg"):
     check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
     check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
