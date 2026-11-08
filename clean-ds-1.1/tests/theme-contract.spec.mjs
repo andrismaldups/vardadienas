@@ -245,3 +245,17 @@ test('DS11 theme attribute alone activates base surface styling', async ({ page 
   expect(after.bg).toBe(baseline.bg);
   expect(after.cardBg).toBe(baseline.cardBg);
 });
+
+test('component gallery keeps its standalone ds-app scope', async ({ page }) => {
+  await page.goto('/clean-ds-1.1/index.html');
+  const gallery = page.locator('.ds-app').first();
+  await expect(gallery).toBeAttached();
+  const card = page.locator('.ds-card').first();
+  await expect(card).toBeAttached();
+  const computed = await card.evaluate(el => ({
+    bg: getComputedStyle(el).backgroundColor,
+    border: getComputedStyle(el).borderTopStyle
+  }));
+  expect(computed.bg).not.toBe('rgba(0, 0, 0, 0)');
+  expect(computed.border).toBe('solid');
+});
