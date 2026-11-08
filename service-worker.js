@@ -1,5 +1,5 @@
 /* DESIGN TEST only: independent offline cache; no push listeners. */
-const CACHE_NAME = "vardadienas-design-test-v8";
+const CACHE_NAME = "vardadienas-design-test-v9";
 const CACHE_PREFIX = "vardadienas-design-test-";
 const FILES_TO_CACHE = [
   "./",
@@ -15,6 +15,7 @@ const FILES_TO_CACHE = [
   "./clean-ds-1.1/push-design-guard.js",
   "./clean-ds-1.1/theme-bootstrap.js",
   "./clean-ds-1.1/body-theme-init.js",
+  "./clean-ds-1.1/app-core.js",
   "./assets/d3-rita-rasa.svg",
   "./assets/d3-rita-gaisma.svg",
   "./manifest.json",
