@@ -10,11 +10,11 @@
 .ds-app .ds-heading{color:var(--ds-heading);margin:0 0 12px}
 .ds-app .ds-muted{color:var(--ds-muted)}
 /* C01, C02 */
-.ds-app .ds-card{padding:clamp(16px,2vw,26px);border:1px solid var(--ds-surface-border);border-radius:22px;background:var(--ds-surface);box-shadow:0 8px 24px var(--ds-shadow)}
+.ds-app :is(.ds-card,[data-ui-component="card"]){padding:clamp(16px,2vw,26px);border:1px solid var(--ds-surface-border);border-radius:22px;background:var(--ds-surface);box-shadow:0 8px 24px var(--ds-shadow)}
 .ds-app .ds-inset{padding:12px 14px;border:1px solid var(--ds-surface-border);border-radius:14px;background:var(--ds-surface-soft)}
 /* C03, C04, C17 */
-.ds-app .ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 15px;border:1px solid var(--ds-secondary-border);border-radius:12px;background:var(--ds-secondary-bg);color:var(--ds-secondary-text);font:inherit;cursor:pointer;touch-action:manipulation}
-.ds-app .ds-button--primary{background:var(--ds-primary);color:var(--ds-on-primary);border-color:var(--ds-primary-border)}
+.ds-app :is(.ds-button,[data-ui-component="primary-action"]){display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 15px;border:1px solid var(--ds-secondary-border);border-radius:12px;background:var(--ds-secondary-bg);color:var(--ds-secondary-text);font:inherit;cursor:pointer;touch-action:manipulation}
+.ds-app :is(.ds-button--primary,[data-ui-component="primary-action"]){background:var(--ds-primary);color:var(--ds-on-primary);border-color:var(--ds-primary-border)}
 .ds-app .ds-button--danger{background:var(--ds-danger);color:var(--ds-on-danger);border-color:var(--ds-danger)}
 /* Pressed button colors are supplied by semantic state tokens below; no extra brightness filter. */
 /* C05 */
@@ -59,16 +59,16 @@
 /* Single visible focus ring; never double-outline an input */
 .ds-app :is(button,input,textarea,select,a,summary):focus-visible{outline:2px solid var(--ds-focus-ring);outline-offset:2px}
 .ds-app :is(button,input,textarea,select):disabled{background:var(--ds-disabled-bg);color:var(--ds-disabled-text);border-color:var(--ds-disabled-bg);cursor:not-allowed;opacity:1}
-@media(max-width:430px){.ds-app .ds-card{border-radius:18px;padding:16px}.ds-app .ds-emoji-grid{gap:3px}}
+@media(max-width:430px){.ds-app :is(.ds-card,[data-ui-component="card"]){border-radius:18px;padding:16px}.ds-app .ds-emoji-grid{gap:3px}}
 
 /* DS 1.1 state contract: one implementation shared by every theme. */
 @media(hover:hover){.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:var(--ds-hover-bg);color:var(--ds-secondary-text)}
-.ds-app .ds-button--primary:not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
+.ds-app :is(.ds-button--primary,[data-ui-component="primary-action"]):not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
 .ds-app .ds-button--danger:not(:disabled):hover{background:var(--ds-danger-hover);color:var(--ds-on-danger)}
 .ds-app .ds-icon-button--danger:not(:disabled):hover{background:var(--ds-danger-bg);color:var(--ds-danger-text);border-color:var(--ds-danger-border)}
 .ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):hover{background:var(--ds-selected-hover);color:var(--ds-selected-text)}}
 .ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):active{background:var(--ds-pressed-bg)}
-.ds-app .ds-button--primary:not(:disabled):active{background:var(--ds-primary-pressed)}
+.ds-app :is(.ds-button--primary,[data-ui-component="primary-action"]):not(:disabled):active{background:var(--ds-primary-pressed)}
 .ds-app .ds-button--danger:not(:disabled):active{background:var(--ds-danger-pressed)}
 .ds-app .ds-icon-button--danger:not(:disabled):active{background:var(--ds-danger-pressed);color:var(--ds-danger-text);border-color:var(--ds-danger-border)}
 .ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):active{background:var(--ds-selected-pressed)}
