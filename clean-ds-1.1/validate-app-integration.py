@@ -27,7 +27,9 @@ theme_bootstrap = (root / "clean-ds-1.1/theme-bootstrap.js").read_text(encoding=
 check("document.body.classList.toggle('ds-app',active)" in theme_bootstrap,
       "Opt-in DS class toggle absent")
 check("document.body.dataset.mode" in theme_bootstrap, "Light/dark mode sync absent")
-check('value="nature-d3"' in app, "Existing D3 option absent")
+for retired in ("lavender", "nature-d3", "water-j1"):
+    check(f'name="designStyle" value="{retired}"' not in app, f"Retired theme still offered: {retired}")
+check("['classic','festive-s1','ds11']" in theme_bootstrap, "Retired theme persisted in bootstrap allowlist")
 check('value="classic"' in app, "Existing classic option absent")
 guard_path = "clean-ds-1.1/isolation-guard.js"
 guard = (root / guard_path).read_text(encoding="utf-8") if (root / guard_path).is_file() else ""

@@ -2,7 +2,7 @@
   const KEY='appearanceMode';
   const DESIGN_KEY='designStyle';
   let design='classic';
-  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','lavender','festive-s1','nature-d3','water-j1','ds11'].includes(saved))design=saved;}catch(e){}
+  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','festive-s1','ds11'].includes(saved))design=saved;}catch(e){}
   document.documentElement.dataset.design=design;
   function syncDs11(){if(!document.body)return;const active=document.documentElement.dataset.design==='ds11';document.body.classList.toggle('ds-app',active);if(active)document.body.dataset.mode=document.documentElement.dataset.theme||'light';else delete document.body.dataset.mode;document.querySelectorAll('.card').forEach(el=>el.classList.toggle('ds-card',active));document.querySelectorAll('button.primary').forEach(el=>{el.classList.toggle('ds-button',active);el.classList.toggle('ds-button--primary',active);});}
   const allowed=['light','dark','auto'];

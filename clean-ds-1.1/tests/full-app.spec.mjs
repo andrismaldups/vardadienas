@@ -30,13 +30,13 @@ for (const mode of ['light', 'dark']) {
   });
 }
 
-test('full VD Design: original D3 does not inherit DS 1.1 classes', async ({ page }) => {
+test('full VD Design: classic does not inherit DS 1.1 classes', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('designStyle', 'nature-d3');
+    localStorage.setItem('designStyle', 'classic');
     localStorage.setItem('appearanceMode', 'light');
   });
   await page.goto('/index.html');
-  await expect(page.locator('html')).toHaveAttribute('data-design', 'nature-d3');
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'classic');
   await expect(page.locator('body')).not.toHaveClass(/ds-app/);
   await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
 });
@@ -56,7 +56,7 @@ test('full VD Design: DS 1.1 fits iPhone viewport', async ({ page }) => {
 
 test('full VD Design: switch themes and light/dark modes in real settings', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('designStyle', 'nature-d3');
+    localStorage.setItem('designStyle', 'classic');
     localStorage.setItem('appearanceMode', 'light');
   });
   await page.goto('/index.html');
@@ -73,8 +73,8 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('body')).toHaveAttribute('data-mode', 'dark');
 
-  await page.locator('input[name="designStyle"][value="nature-d3"]').check();
-  await expect(page.locator('html')).toHaveAttribute('data-design', 'nature-d3');
+  await page.locator('input[name="designStyle"][value="classic"]').check();
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'classic');
   await expect(page.locator('body')).not.toHaveClass(/ds-app/);
   await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
   await expect(page.locator('#calendar')).toBeAttached();
@@ -113,5 +113,15 @@ for (const mode of ['light', 'dark']) {
     expect(styles.background).toBe(styles.expectedBackground);
     expect(styles.text).toBe(styles.expectedText);
     expect(styles.border).toBe(styles.expectedBorder);
+  });
+}
+
+for (const retired of ["lavender", "nature-d3", "water-j1"]) {
+  test(`retired design ${retired} falls back to classic`, async ({ page }) => {
+    await page.addInitScript(value => localStorage.setItem("designStyle", value), retired);
+    await page.goto("/index.html");
+    await expect(page.locator("html")).toHaveAttribute("data-design", "classic");
+    await expect(page.locator('input[name="designStyle"][value="classic"]')).toBeChecked();
+    await expect(page.locator(`input[name="designStyle"][value="${retired}"]`)).toHaveCount(0);
   });
 }
