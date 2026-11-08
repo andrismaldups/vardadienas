@@ -91,3 +91,12 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - Iepriekšējais #68: 71/72 pārlūku testi; pēdējā mobilā WebKit testa simulācijas neatbilstība labota, un #70 ir sekmīgs.
 - **Tehniskais CI vārtejas posms slēgts.** Nākamais: iPhone PWA vizuālais un funkcionālais tests gaišajā/tumšajā režīmā; pēc lietotāja apstiprinājuma specifikācija 1.2.
 - Šis statuss neapstiprina faktisku Cloudflare izvietojumu vai reāla iPhone pārbaudi.
+
+
+## iPhone vizuālās pārbaudes rezultāts — 2026-11-08
+- Lietotājs pārskatīja VD Design D3 gaišo un tumšo režīmu iPhone PWA; sākotnēji vienīgā novērotā neatbilstība bija sarkanā C17 poga **Dzēst manus datus**.
+- C17 labots kopīgajā `clean-ds-1.1/app-integration.css` kartējumā: sekundārās pogas semantiskās krāsas, nemainot dzēšanas apstiprināšanas loģiku. Commit `447637caa797442cf8c56d4707aa47c9933d7126`.
+- Lietotājs atsūtīja jaunus ekrānattēlus abos režīmos un nepārprotami apstiprināja: **“Tagad poga ‘Dzēst manus datus’ redzama pareizi.”** Vizuālais C17 jautājums slēgts.
+- GitHub Actions #72 par CSS labojumu: **success** (https://github.com/andrismaldups/vardadienas/actions/runs/42458789362).
+- Papildu automatizētais regresijas tests abiem režīmiem pievienots commit `a3147e85dbde88e1bded792af4945dcb814c78f8`; GitHub Actions #73 vēl tiek izpildīts, tāpēc tā iznākumu nepiedēvēt kā sekmīgu pirms apstiprinājuma.
+- Vizuālā D3 iPhone pārbaude pabeigta lietotāja apstiprinātajā tvērumā; pārējo tēmu individuāla iPhone vizuālā pārbaude šeit nav apliecināta.
