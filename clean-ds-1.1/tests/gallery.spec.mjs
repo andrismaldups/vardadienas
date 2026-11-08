@@ -204,7 +204,8 @@ test('destructive icon hover and pressed states preserve semantic colors', async
       return {
         hoverText: s.getPropertyValue('--ds-danger-text').trim(),
         hoverBg: s.getPropertyValue('--ds-danger-bg').trim(),
-        pressedBg: s.getPropertyValue('--ds-danger-pressed').trim()
+        pressedBg: s.getPropertyValue('--ds-danger-pressed').trim(),
+        restingText: s.getPropertyValue('--ds-danger').trim()
       };
     });
     const toRgb = hex => {
@@ -228,7 +229,7 @@ test('destructive icon hover and pressed states preserve semantic colors', async
     } else {
       // Touch WebKit does not emulate an active finger with page.mouse.down().
       // Verify the touch target and its semantic resting color instead.
-      await expect(icon).toHaveCSS('color', toRgb(mode === 'light' ? '#a52f40' : '#ffb1ba'));
+      await expect(icon).toHaveCSS('color', toRgb(colors.restingText));
       await expect(icon).toBeEnabled();
       await icon.tap();
     }
