@@ -333,6 +333,29 @@ test('DS11 semantic pointer states are root-scoped and do not require ds-app', a
   expect(result).toEqual({ hover: true, pressed: true, root: 'ds11', classAbsent: true });
 });
 
+test('DS11 root-only styles preserve calendar and form visibility at iPhone width', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'dark');
+  });
+  await page.goto('/index.html');
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
+  await expect(page.locator('body')).not.toHaveClass(/\bds-app\b/);
+  const result = await page.evaluate(() => ({
+    overflow: document.documentElement.scrollWidth > innerWidth + 1,
+    calendar: !!document.querySelector('#calendar'),
+    search: !!document.querySelector('#nameInput'),
+    primary: getComputedStyle(document.querySelector('[data-ui-component="primary-action"]')).backgroundColor,
+    card: getComputedStyle(document.querySelector('[data-ui-component="card"]')).backgroundColor
+  }));
+  expect(result.overflow).toBe(false);
+  expect(result.calendar).toBe(true);
+  expect(result.search).toBe(true);
+  expect(result.primary).not.toBe('rgba(0, 0, 0, 0)');
+  expect(result.card).not.toBe('rgba(0, 0, 0, 0)');
+});
+
 test('design switching never adds the gallery-only ds-app class to the application', async ({ page }) => {
   await page.addInitScript(() => { if (!localStorage.getItem('designStyle')) localStorage.setItem('designStyle', 'classic'); });
   await page.goto('/index.html');
