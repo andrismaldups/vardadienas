@@ -1,5 +1,5 @@
 # Vārdadienas — Dizaina sistēmas specifikācija 1.2
-**Redakcija:** tehniski pabeigta, iesniegta lietotāja galīgajai saskaņošanai. **Datums:** 2026-11-08.  
+**Redakcija:** precizēts darba projekts; tehniskie testi sekmīgi, vizuālā kataloga pārskatīšana turpinās. **Datums:** 2026-11-08.  
 **Tvērums:** izolētais VD Design zars `design-system-clean-v1-1`, integrācija `clean-ds-1.1/`.  
 **Svarīgi:** šis dokuments neapliecina produkcijas/TEST pārveidošanu, pilnu iPhone funkcionālo auditu vai visu tēmu individuālu vizuālu apstiprinājumu.
 
@@ -106,7 +106,34 @@ Minimālais mērķa skārienlaukums 44×44 px; C16 šodienas diena 46×46 px. Ne
 
 Iepriekš saskaņotie N21/N22/N23/N25 nav atvērti no jauna. N26 atsevišķa pilna vizuālā slēgšanas protokola šajā iterācijā nav.
 
-## 11. Vizuālais katalogs un galīgā pieņemšana
-2026-11-08 saņemtie D3 gaišā/tumšā režīma iPhone ekrānattēli pierāda **“Mani dati” / “Par aplikāciju” / C17** stāvokli pirms un pēc labojuma. Tie glabājas sarunas pielikumos; **nav iegulti GitHub dokumentā** un nav jāuzdod par visu C01–C18 pilnu katalogu.
+## 11. iPhone vizuālo pierādījumu katalogs — 46 ekrānattēli
+Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. Šis skaits ir kataloga avotu kopskaits, **nevis** 46 atsevišķi pārbaudīti komponenti vai 46 apstiprināti testgadījumi. Attēli paliek sarunas pielikumos; šajā GitHub Markdown dokumentā tie nav automātiski iegulti vai piesaistīti ar stabilām failu saitēm.
 
-**1.2 redakcijas statuss:** tehniski pabeigta un sagatavota galīgajai saskaņošanai, bet **nav automātiski lietotāja apstiprināta**. Pirms publiskās versijas migrācijas atsevišķi jāvienojas par pārējo tēmu pieņemšanu, offline/push regresiju un vizuālā kataloga pilnu tvērumu.
+| Pierādījumu grupa | Redzamie stāvokļi un ekrāni | Specifikācijas nozīme |
+|---|---|---|
+| D3 tēma | Gaišais “Rīta rasa” un tumšais “Nakts mežs” | Salīdzināt virsmas, tekstu, dekorācijas un kontrastu abos režīmos |
+| Sākums un kalendārs | Dienu navigācija, šodiena, atlasītā diena, kalendāra režģis | C11/C16 atlases un navigācijas semantika |
+| Meklētāji | Vārda/datuma ievade, ieteikumi, rezultāti, fokusēta tastatūra | C07/C15; iOS tastatūra nedrīkst neatgriezeniski aizsegt darbību |
+| Mani vārdi / dzimšanas dienas | Saraksts, kārtošana, pievienošanas un ievades stāvokļi | C05/C06/C07; saraksta darbību pieejamība |
+| Apsveikumi | Izveide, rediģēšana, emoji panelis, sistēmas kopīgošanas lapa | C07/C12; saglabāt teksta un darbību pieejamību |
+| Iestatījumi | Atgādinājumi, atvērta laika izvēlne, izskata radio izvēle, datu dzēšana | C06/C12/C17; izvēles redzamība un pārklājumu hierarhija |
+| Par aplikāciju | Datu avoti, privātums, lietošanas noteikumi | C18; pilni pogu gali un vienādas atstarpes |
+
+### 11.1. Precizētie vizuālie un uzvedības noteikumi
+1. **Atvērta laika izvēlne:** atlasītajai vērtībai jābūt atšķiramai no citām; izvēlnei jābūt redzamai virs pamatpaneļa, bez apgrieztām malām. Ekrānattēls pierāda attēlojumu, nevis visu vērtību saglabāšanas loģiku. Atvērta izvēlne drīkst īslaicīgi pārklāt saturu, bet tai jābūt aizveramai un lietojamai ar skārienu.
+2. **iOS tastatūra un AutoFill josla:** fokusēta ievade, ieteikumu saraksts un galvenās darbības nedrīkst kļūt neatgriezeniski nepieejamas; atļauta vertikāla ritināšana. Ekrānattēli parāda šo stāvokļu esamību, bet nepierāda visas iPhone tastatūras konfigurācijas.
+3. **Dekoratīvie D3 slāņi:** zāles stiebri, rasa un lokveida elements ir dekorācija, ne interaktīva virsma. Tiem nedrīkst pārtvert skārienus, mainīt fokusa secību vai aizsegt lasāmību tik lielā mērā, ka darbība kļūst nesaprotama. Saglabāt lietotāja apstiprināto dabisko, asimetrisko kompozīciju; nepārveidot dekorāciju tikai tāpēc, ka tā redzama caur caurspīdīgu paneli.
+4. **Fiksētā “Uz sākumu” josla:** vienots centrējums un vizuālā loma visos skatos; tai jāpaliek sasniedzamai, ņemot vērā iPhone drošo apakšējo zonu. Atsevišķu skatu pogu izvietojumu nevajag pārveidot bez konstatētas neatbilstības.
+5. **C17 dzēšana:** gaišajā un tumšajā D3 režīmā neitrāla sekundārā poga; izskata apstiprinājums nav pierādījums servera datu dzēšanas funkcijas izpildei. Datu dzēšanu vizuālā audita ietvaros neveikt.
+6. **C18 trīs izvēršamās rindas:** “Datu avoti”, “Privātums”, “Lietošanas noteikumi” — pilnas sānu apmales, 8 px savstarpējā atstarpe, teksts un bultiņa ar pietiekamu iekšējo atkāpi.
+
+### 11.2. Pieņemšanas robežas
+- **Vizuāli apliecināts:** attēlos redzamie D3 gaišā/tumšā režīma skati un C17 labotais izskats, saskaņā ar iepriekšējo lietotāja apstiprinājumu.
+- **CI apliecināts:** konkrētajā automatizēto testu tvērumā pārbaudītā statika, kontrasts un Chromium/WebKit/mobile-WebKit regresija.
+- **Nav automātiski apliecināts:** katras pogas pilna darbība, visu 46 attēlu precīza sasaite ar C01–C18, visu V02–V05 alfa vērtību mērījumi, push/offline regresija, kā arī K1/Z3/S1/J1-E tēmu individuāla pieņemšana.
+- **Kataloga nākamais solis:** katram no 46 attēliem piešķirt pastāvīgu identifikatoru, skatu, režīmu, komponentu ID un novērtējumu; attēlu indeksu neizdomāt, kamēr nav izveidota pārbaudāma attēlu-failu atbilstība.
+
+## 12. Galīgā pieņemšana
+2026-11-08 saņemtie D3 gaišā/tumšā režīma iPhone ekrānattēli, tostarp **“Mani dati” / “Par aplikāciju” / C17** stāvoklis pirms un pēc labojuma, veido vizuālā audita pierādījumu kopumu. Tie glabājas sarunas pielikumos; **nav iegulti GitHub dokumentā** un nav jāuzdod par visu C01–C18 pilnu katalogu.
+
+**1.2 redakcijas statuss:** tehniski pārbaudīta un papildināta ar 46 attēlu kataloga tvērumu; pilnais individuāli indeksētais vizuālais katalogs vēl nav pabeigts, bet **nav automātiski lietotāja apstiprināta**. Pirms publiskās versijas migrācijas atsevišķi jāvienojas par pārējo tēmu pieņemšanu, offline/push regresiju un vizuālā kataloga pilnu tvērumu.
