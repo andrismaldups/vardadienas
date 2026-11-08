@@ -81,3 +81,13 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - Commit `dbe7619b`: liekais filtrs noņemts; paliek tikai kopīgie semantiskie `:active` stāvokļi. Tā ir pamatnoteikuma korekcija, nevis tēmas izņēmums.
 - Commit `42cec8e7`: pievienoti regresijas testi filtram un C16 selected/today prioritātei.
 - **CI/pārlūka izpilde vēl nav apstiprināta.** Šis labojums jāvērtē arī iPhone VD Design, jo nospiešanas animācijas izskats var nedaudz mainīties.
+
+
+## Tehnisko pārbaužu slēgšana — GitHub Actions #70
+- Izpilde: https://github.com/andrismaldups/vardadienas/actions/runs/42458001687
+- Pārbaudītais commit: `fda6fd65fae0bdaba12fd479c6f4d1703d5b9afe`.
+- GitHub Actions kopējais statuss: **completed / success**.
+- Darba soļi: **Static token contract**, **Full VD Design integration contract**, **Contrast audit**, **Browser and mobile-WebKit checks** — visi **success**.
+- Iepriekšējais #68: 71/72 pārlūku testi; pēdējā mobilā WebKit testa simulācijas neatbilstība labota, un #70 ir sekmīgs.
+- **Tehniskais CI vārtejas posms slēgts.** Nākamais: iPhone PWA vizuālais un funkcionālais tests gaišajā/tumšajā režīmā; pēc lietotāja apstiprinājuma specifikācija 1.2.
+- Šis statuss neapstiprina faktisku Cloudflare izvietojumu vai reāla iPhone pārbaudi.
