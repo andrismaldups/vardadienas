@@ -157,16 +157,16 @@ html[data-design="ds11"] body .about-card .about-row-button{
 /* G06 / C17: deletion is confirmed separately in the application.
    The trigger itself uses the shared secondary button palette in both modes,
    matching the approved D3 presentation rather than a red warning surface. */
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button,
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
+html[data-design="ds11"] body #deleteMyDataButton.delete-data-button,
+html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border:1px solid var(--ds-secondary-border);
 }
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:active{
+html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:active{
  background:var(--ds-pressed-bg);
 }
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disabled{
+html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:disabled{
  opacity:.55;
 }
 /* G02: selected reminder time is a C06 choice, not a primary action. */
@@ -191,15 +191,15 @@ html[data-design="ds11"] body :is(#favoriteAddCancel,#birthdayAddCancel){
  color:var(--ds-secondary-text);
  border:1px solid var(--ds-secondary-border);
 }
-html[data-design="ds11"] body.ds-app :is(#favoriteAddCancel,#birthdayAddCancel):is(:hover,:focus-visible){
+html[data-design="ds11"] body :is(#favoriteAddCancel,#birthdayAddCancel):is(:hover,:focus-visible){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border-color:var(--ds-secondary-border);
 }
 /* N19/N20 / C06: explicitly selected time must be visually filled
    in both modes; do not inherit the old --picker-selected values. */
-html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="true"],
-html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="true"]:is(:hover,:focus-visible){
+html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"],
+html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]:is(:hover,:focus-visible){
  background:var(--ds-selected-bg);
  color:var(--ds-selected-text);
  box-shadow:inset 0 0 0 1px var(--ds-selected-border);
