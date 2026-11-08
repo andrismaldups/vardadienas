@@ -51,3 +51,9 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - CI pārbaude: pēdējam pārbaudītajam commit `50e0df1e` GitHub combined statuses un PR-triggered workflow runs atgrieza tukšus sarakstus. Tas **nepierāda**, ka CI nav palaists; **nav pieejams izpildes apliecinājums**. Statuss: **nav apstiprināts**.
 - `.github/workflows/clean-ds-1-1.yml` paredz `validate.py`, `validate-app-integration.py`, `contrast_audit.py`, un Playwright chromium/webkit/mobile-webkit. Pirms iPhone pārbaudes nepieciešams redzēt faktisko izpildes rezultātu.
 - K03/K04/K05/K06 nav automātiski atzīmēti kā defekti. Jāapstiprina ar kaskādes un reālās integrācijas testiem.
+
+
+## Papildu konstatējums — izolētās galerijas atsauces palete
+- `reference-theme.css` nebija definēti `--ds-calendar-today-border`, `--ds-danger-bg`, `--ds-danger-text` un `--ds-danger-border` tokeni, ko izmanto C16 un C05; tas var radīt kļūdainus galerijas rezultātus.
+- Labots ar commit `fd48c56d`: pievienoti tokeni gaišajai un tumšajai **atsauces** paletei, nemainot saskaņoto D3 tēmu.
+- **Tests nav izpildīts:** šis ir koda līmeņa labojums; pārlūka/WebKit rezultāts joprojām jāiegūst.
