@@ -337,3 +337,32 @@ test('DS11 primary action hover and pressed colors use semantic tokens without d
   });
   expect(hoverColor).toBe(expectedHover);
 });
+
+test('DS11 pressed primary action resolves its token without ds-app class', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const action = page.locator('[data-ui-component="primary-action"]').first();
+  await page.locator('body').evaluate(el => el.classList.remove('ds-app'));
+  const expected = await page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.backgroundColor = 'var(--ds-primary-pressed)';
+    document.body.append(probe);
+    const color = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return color;
+  });
+  expect(expected).not.toBe('rgba(0, 0, 0, 0)');
+  await action.scrollIntoViewIfNeeded();
+  const bounds = await action.boundingBox();
+  expect(bounds).not.toBeNull();
+  await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+  await page.mouse.down();
+  try {
+    await expect(action).toHaveCSS('background-color', expected);
+  } finally {
+    await page.mouse.up();
+  }
+});
