@@ -55,8 +55,9 @@ for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
               "assets/d3-rita-gaisma.svg"):
     check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
     check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
-check('vardadienas-design-test-v4' in worker,
-      "Service worker cache version was not advanced to v4")
+cache_version = re.search(r'const\\s+CACHE_NAME\\s*=\\s*["\\']vardadienas-design-test-v(\\d+)["\\']', worker)
+check(cache_version is not None and int(cache_version.group(1)) >= 4,
+      "Service worker cache version must be at least v4")
 check('addEventListener("push"' not in worker and
       'addEventListener("notificationclick"' not in worker,
       "Design-only service worker must not register push listeners")
