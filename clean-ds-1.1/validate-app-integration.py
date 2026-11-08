@@ -59,6 +59,16 @@ check('body.ds-app' not in bridge.split('*/', 1)[-1],
       "DS11 integration selectors still depend on body.ds-app")
 check("data-design=\"nature-d3\"" not in bridge,
       "Integration CSS unexpectedly targets existing D3")
+# Keep the standalone gallery class-based while app components are theme-root scoped.
+check('.ds-app :is(.ds-card,[data-ui-component="card"])' in components,
+      "Standalone gallery card styling absent")
+check('.ds-app :is(.ds-button,[data-ui-component="primary-action"])' in components,
+      "Standalone gallery action styling absent")
+check('html[data-design="ds11"] body [data-ui-component="card"]' in components,
+      "DS11 semantic cards still require the gallery class")
+check('html[data-design="ds11"] body [data-ui-component="primary-action"]' in components,
+      "DS11 semantic actions still require the gallery class")
+
 required = set(re.findall(r"var\((--ds-[a-z0-9-]+)", components))
 defined = set(re.findall(r"(--ds-[a-z0-9-]+)\s*:", theme))
 for missing in sorted(required - defined):
