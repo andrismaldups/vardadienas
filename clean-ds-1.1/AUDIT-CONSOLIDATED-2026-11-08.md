@@ -74,3 +74,10 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - Zemākais no šiem pāriem: gaišajā režīmā disabled-text/disabled-bg **4,89:1**; tumšajā **4,97:1**.
 - Komponentu CSS (bez komentāriem) **nav fiksētu heksadecimālu vai rgb/rgba krāsu vērtību**; semantisko tokenu līgums saglabāts.
 - Šie rezultāti iegūti ar neatkarīgu statisku aprēķinu no GitHub failu satura, **nevis** ar GitHub Actions vai reālu pārlūka renderēšanu. Neattiecas uz caurspīdīgiem slāņiem, fokusa indikatoriem vai saskaņotā D3 dizaina gala kontrastu.
+
+
+## Papildu kaskādes labojums
+- `components.css` saturēja vispārīgu `.ds-button:active { filter:brightness(.92) }` **papildus** specifiskajām `--ds-*-pressed` krāsām. Filtrs mainīja faktiski attēloto nospiešanas krāsu pēc tokena piemērošanas.
+- Commit `dbe7619b`: liekais filtrs noņemts; paliek tikai kopīgie semantiskie `:active` stāvokļi. Tā ir pamatnoteikuma korekcija, nevis tēmas izņēmums.
+- Commit `42cec8e7`: pievienoti regresijas testi filtram un C16 selected/today prioritātei.
+- **CI/pārlūka izpilde vēl nav apstiprināta.** Šis labojums jāvērtē arī iPhone VD Design, jo nospiešanas animācijas izskats var nedaudz mainīties.
