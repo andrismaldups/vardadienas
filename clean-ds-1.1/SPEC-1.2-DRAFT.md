@@ -135,7 +135,7 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 - **Vizuāli apliecināts:** attēlos redzamie D3 gaišā/tumšā režīma skati un C17 labotais izskats, saskaņā ar iepriekšējo lietotāja apstiprinājumu.
 - **CI apliecināts:** konkrētajā automatizēto testu tvērumā pārbaudītā statika, kontrasts un Chromium/WebKit/mobile-WebKit regresija.
 - **Nav automātiski apliecināts:** katras pogas pilna darbība, visu 46 attēlu precīza sasaite ar C01–C18, visu V02–V05 alfa vērtību mērījumi, push/offline regresija, kā arī K1/Z3/S1/J1-E tēmu individuāla pieņemšana.
-- **Kataloga nākamais solis:** katram no 46 attēliem piešķirt pastāvīgu identifikatoru, skatu, režīmu, komponentu ID un novērtējumu; attēlu indeksu neizdomāt, kamēr nav izveidota pārbaudāma attēlu-failu atbilstība.
+- **Kataloga nākamais solis:** katram no 46 attēliem izmantot Pielikuma C pastāvīgo identifikatoru, skatu, režīmu, komponentu ID un novērtējumu; attēlu indeksu neizdomāt, kamēr nav izveidota pārbaudāma attēlu-failu atbilstība.
 
 ## 12. Galīgā pieņemšana
 2026-11-08 saņemtie D3 gaišā/tumšā režīma iPhone ekrānattēli, tostarp **“Mani dati” / “Par aplikāciju” / C17** stāvoklis pirms un pēc labojuma, veido vizuālā audita pierādījumu kopumu. Tie glabājas sarunas pielikumos; **nav iegulti GitHub dokumentā** un nav jāuzdod par visu C01–C18 pilnu katalogu.
@@ -189,7 +189,7 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 | B1 — komponentu ID | C01–C18 kartējums pret `components.css` | Šīs redakcijas 5. sadaļa; C15 skaidri atzīmēts kā nedefinēts atsevišķi | Dokumentācijas kartējums precizēts |
 | B2 — automatizētā regresija | Statika, integrācija, kontrasts, Chromium, WebKit, mobile-WebKit | GitHub Actions #70/#72/#73 | Iepriekšējais pārbaudes tvērums sekmīgs |
 | B3 — D3 iPhone izskats | Gaišais/tumšais, C17 pēc labojuma | Lietotāja iPhone ekrānattēli un apstiprinājums | Apstiprināts iepriekš saskaņotajā tvērumā |
-| B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | A01–A20, B01–B05: 25 pagaidu ieraksti | **Daļējs; 21 vēl nav individuāli indeksēts** |
+| B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | A01–A20, B01–B05: 25 pagaidu ieraksti | **Tvērums: 46 trīs sūtījumos; individuālā sasaistīšana vēl nav pabeigta** |
 | B5 — virsmu alfa | V02–V05 izmērītas gala renderējumā | Nav mērījumu protokola | Atvērts pierādījumu jautājums |
 | B6 — pārējās tēmas | K1, Z3, S1, J1-E individuāla iPhone pieņemšana | Nav šīs iterācijas individuāla protokola | Atvērts |
 | B7 — datu drošība | Offline, push un dzēšanas darbību regresija | Vizuālā pārbaude to neapliecina | Atvērts; **nedrīkst testēt ar reālu datu dzēšanu bez atsevišķas saskaņošanas** |
@@ -198,63 +198,27 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 **Saskaņošanas lēmums:** 1.2 dokumentu drīkst nodot **satura pārskatīšanai**, bet ne pasludināt par pilnībā pierādītu visu 46 attēlu, visu tēmu vai offline/push pieņemšanu. Atvērtie punkti nav automātiski aplikācijas defekti.
 
 
-## Pielikums C — faktisko pievienoto attēlu failu inventarizācija
+## Pielikums C — 46 lietotāja iesūtīto ekrānattēlu tvērums
 
-**Avots:** šīs sarunas pielikumu lokālās kopijas, pārskatītas 2026-11-08. Lietotājs norādīja **46** ekrānattēlus; pašreiz pieejamajā failu kopā ir **50 iPhone attēlu faili un 6 darbvirsmas ekrānattēli**. Daļa attēlu rāda līdzīgus vai atkārtotus stāvokļus. Tāpēc failu skaits nav automātiski unikālo ekrānattēlu skaits. Šeit inventarizēti visi pieejamie mobilie faili; to nosaukuma sākums ir lokāla atsauce, nevis GitHub URL.
+**Vienīgais apstiprinātais vizuālā audita attēlu kopums:** lietotāja trīs secīgi sūtījumi šajā sarunā:
+- **Sūtījums I:** 20 attēli, secības ID `I01–I20`.
+- **Sūtījums II:** 20 attēli, secības ID `II01–II20`.
+- **Sūtījums III:** 6 attēli, secības ID `III01–III06`.
+- **Kopā: 46 attēli.** Citus attēlus neiekļaut, nemeklēt un nepieskaitīt.
 
-| ID | Faila nosaukuma sākums | Režīms | Redzamais stāvoklis |
-|---|---|---|---|
-| M01 | `1089C81B` | gaišs | Apsveikums — emoji panelis |
-| M02 | `118B3920` | tumšs | Kalendārs un meklēšana |
-| M03 | `13EF6365` | tumšs | Vārda meklēšana un tastatūra |
-| M04 | `227536E0` | gaišs | Iestatījumi — atgādinājumi |
-| M05 | `22C4F02A` | tumšs | Apsveikuma rediģēšana |
-| M06 | `2AC58A69` | gaišs | Vārda un datuma meklēšana |
-| M07 | `31C14CD3` | gaišs | Apsveikuma izvēles |
-| M08 | `3338EFB2` | gaišs | Dzimšanas dienu saraksts |
-| M09 | `33649048` | tumšs | Iestatījumi — dizaina stili |
-| M10 | `36D02AF1` | tumšs | iOS kopīgošanas lapa |
-| M11 | `3C8D3FAE` | tumšs | Mani vārdi — ieteikumi |
-| M12 | `418498D2` | gaišs | Iestatījumi — dizaina stili |
-| M13 | `47B9FA0F` | tumšs | Dzimšanas dienu saraksts |
-| M14 | `4A176FAA` | tumšs | Dzimšanas dienu ievade |
-| M15 | `4AE274D8` | tumšs | Iestatījumi — atgādinājumi |
-| M16 | `4ECAB5B1` | gaišs | Iestatījumi — par aplikāciju |
-| M17 | `55033BC6` | gaišs | Sākumskats |
-| M18 | `55034CE0` | tumšs | Dzimšanas dienu datuma ievade |
-| M19 | `575EE392` | tumšs | Sākumskats un kalendārs |
-| M20 | `576B34D2` | tumšs | Apsveikuma izvēles |
-| M21 | `5E64E616` | gaišs | Manu vārdu saraksts |
-| M22 | `5F336AAD` | gaišs | Iestatījumi — par aplikāciju |
-| M23 | `6063F9AF` | tumšs | Vārda informācija |
-| M24 | `646D3414` | tumšs | Mani vārdi — ievade |
-| M25 | `65AE5205` | tumšs | Mani vārdi — pievienošana |
-| M26 | `670E5BB5` | gaišs | Gatavais apsveikums |
-| M27 | `70D067BB` | gaišs | Sākumskats |
-| M28 | `732BD184` | tumšs | Iestatījumi — režīms |
-| M29 | `74A20C30` | tumšs | Manu vārdu saraksts |
-| M30 | `79A3A579` | gaišs | Vārda informācija |
-| M31 | `7F4DD2F0` | tumšs | Meklēšana ar tastatūru |
-| M32 | `8013C5DF` | gaišs | Iestatījumi — par aplikāciju |
-| M33 | `80C70226` | tumšs | Dzimšanas dienu datuma ievade |
-| M34 | `9401D4C4` | gaišs | Iestatījumi — atgādinājumi |
-| M35 | `9A12E461` | gaišs | Mēnešu ieteikumi |
-| M36 | `9A546B53` | tumšs | Hamburgera izvēlne |
-| M37 | `9F423541` | tumšs | Gatavais apsveikums |
-| M38 | `9F7117B5` | gaišs | Kalendārs — atlasīta diena |
-| M39 | `A29C0020` | gaišs | Kalendārs — atlasīta diena |
-| M40 | `A54190B3` | tumšs | Mani vārdi — ievade |
-| M41 | `B3FB7034` | tumšs | Apsveikums — emoji panelis |
-| M42 | `BF2410DD` | tumšs | Vārda un datuma meklēšana |
-| M43 | `CECA3841` | tumšs | Dzimšanas dienu datuma ievade |
-| M44 | `D1D86415` | tumšs | iOS kopīgošanas lapa |
-| M45 | `D53A88ED` | tumšs | Kalendāra dienas atlase |
-| M46 | `D6837E6A` | gaišs | Gatavais apsveikums |
-| M47 | `D8E6138E` | tumšs | Iestatījumi — par aplikāciju |
-| M48 | `F26BAA83` | tumšs | Iestatījumi — par aplikāciju |
-| M49 | `F3C84706` | tumšs | Iestatījumi — par aplikāciju |
-| M50 | `FAB6FBA3` | tumšs | Iestatījumi — atgādinājumi |
+**Korekcija:** iepriekšējā šī pielikuma redakcijā tika izveidots 50 lokālu mobilā attēla failu un sešu darbvirsmas failu saraksts. Tas **nebija droši sasaistīts** ar trim lietotāja noteiktajiem sūtījumiem, tādēļ ir atsaukts un izņemts. Failu kopijas, tehniskie ekrānattēli, dublikāti vai citu sarunas posmu materiāli **nav** šā audita pierādījumi.
 
-**Darbvirsmas tehniskie attēli D01–D06:** `Screenshot 2026-11-08 at 09.07.50.png`, `09.08.01.png`, `09.08.12.png`, `09.10.34.png`, `09.10.46.png`, `09.11.52.png`. Tie jāvērtē kā GitHub/darbvirsmas pārbaudes, nevis iPhone dizaina apstiprinājumi.
+### C.1. Kataloga identifikācijas noteikums
+Katram attēlam saglabāt identifikatoru pēc **sūtījuma un vietas sūtījumā**, nevis pēc lokāla faila nosaukuma, alfabētiskās kārtības vai līdzības ar citu kadru. Ja precīza attēla un secības pozīcijas atbilstība nav droši pārbaudāma, tās skata, režīma un C-komponenta laukus atstāt **“jāprecizē”**, nevis aizpildīt ar minējumu.
 
-**Izsekojamības ierobežojums:** iepriekšējie A01–A20/B01–B05 ir sūtīšanas secības apraksti; M01–M50 ir failu nosaukumu alfabētiska inventarizācija. **Nedrīkst mehāniski pielīdzināt A/B un M numurus.** Lai galīgi saskaņotu lietotāja minētos 46 attēlus, vēl jāpārbauda oriģinālo ziņojumu secība un atkārtotie kadri.
+| Sūtījums | Attēlu skaits | Pastāvīgo ID diapazons | Individuālās sasaistes statuss |
+|---|---:|---|---|
+| I | 20 | `I01–I20` | Jāsaskaņo ar oriģinālā sūtījuma secību |
+| II | 20 | `II01–II20` | Jāsaskaņo ar oriģinālā sūtījuma secību |
+| III | 6 | `III01–III06` | Jāsaskaņo ar oriģinālā sūtījuma secību |
+| **Kopā** | **46** | | **Tvērums apstiprināts; individuālā sasaistīšana turpinās** |
+
+### C.2. Attiecības ar Pielikumu A
+Pielikuma A pagaidu apzīmējumi `A01–A20` un `B01–B05` ir **darba apraksti**, nevis apliecināta pirmā/otrā/trešā sūtījuma numerācija. Tos nedrīkst izmantot kā 46 attēlu galīgo indeksu, kamēr katra attēla atbilstība nav verificēta. Lietotāja apstiprinātais tvērums ir noteicošais.
+
+**Vizuālā audita robeža:** attēli pamato tikai redzamos dizaina stāvokļus; tie paši par sevi neapstiprina offline darbību, push piegādi vai datu dzēšanas funkcionalitāti.
