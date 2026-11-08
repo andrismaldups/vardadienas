@@ -41,42 +41,46 @@ Integrācija aktīva tikai ar `html[data-design="ds11"] body.ds-app`. Neiejaukti
 
 Alfa attiecas uz virsmu, nevis tekstu, ikonām vai saturu. V01 realizācijas kartējums ir `#mainView>.card:first-child`, `#mainView>.grid>.card`, `#mainView>.grid>.side>.card` ar `--ds-home-panel-bg`. Pārējo V02–V05 skaitlisko alfa vērtību **pilnīga individuāla renderējuma pārbaude nav dokumentēta**; etalons paliek saistošs, bet nav pasludināms par izmērītu. D3 dekoratīvie SVG slāņi saglabājas atsevišķi no komponentu virsmām.
 
-## 5. Komponentu katalogs C01–C18
-| ID | Loma | Galvenā prasība |
-|---|---|---|
-| C01 | Virsmas/panelis | Vienots `--ds-surface` un `--ds-surface-border` |
-| C02 | Informācijas teksts | `--ds-text`, `--ds-muted`, virsrakstiem `--ds-heading` |
-| C03 | Primārā poga | Primārās krāsas un stāvokļi |
-| C04 | Sekundārā poga | Neitrāla virsma un apmale |
-| C05 | Ikonu poga | Vienota ikonu semantika, destruktīvām ikonām atsevišķs stāvoklis |
-| C06 | Izvēles poga | Skaidrs selected/unselected stāvoklis |
-| C07 | Teksta ievade | Kopīga fokusa ģeometrija un kursora krāsa |
-| C08 | Pārslēgs/izvēles ievade | Pārslēgšanas krāsa no tēmas tokeniem |
-| C09 | Informācijas rinda | Nav jāuzskata par navigācijas pogu “Uz sākumu” |
-| C10 | Informācijas/satura rinda | Vienoti teksta, apmales un virsmas tokeni |
-| C11 | Navigācijas kontrole | Bez nogriezta teksta un horizontālas pārplūdes |
-| C12 | Uznirstoša izvēlne | `--ds-popup-*`, nepazaudēt atlasi |
-| C13 | Dialogs | Fokusēšanas secība un apstiprinājums |
-| C14 | Etiķete/izcēlums | `--ds-highlight-*`, ne fiksētas krāsas |
-| C15 | Meklēšana | Ievades, ieteikumu un fokusa lomas |
-| C16 | Kalendāra diena | Šodienai 46×46 px, 1 px `--ds-calendar-today-border`; selected prioritāte |
-| C17 | Datu dzēšanas darbība | Neitrāla poga ar atsevišķu apstiprinājumu |
-| C18 | Izvēršamais elements | 8 px atstarpe starp vienībām; apmales un ikonas nenogriezt |
+## 5. Komponentu katalogs C01–C18 — saskaņots ar faktisko `components.css`
+Šajā tabulā ID tiek piesaistīti **tieši `clean-ds-1.1/components.css` komentāriem un selektoriem**. Tas labo iepriekšējās darba redakcijas C09–C15 sajaukumu. Galerijas komponentu ID nav automātiski pielīdzināmi iepriekšējās 1.0 specifikācijas ID, kamēr nav salīdzināta sākotnējā matrica.
 
-**Piezīme:** šī ir funkcionāla katalogizācija 1.2 redakcijai. Detalizētie faktiskie CSS selektori un testu tvērums ir jālasa kopā ar `components.css`, `gallery.html` un iepriekš saskaņoto 1.0 komponentu katalogu; bez pilnās 1.0 atbilstības tabulas šīs rindas nedrīkst izmantot kā pierādījumu, ka katrs ID precīzi sakrīt ar sākotnējo numerāciju.
-
-## 6. Reālo skatu piesaistes matrica
-| Skats | Reālie selektori | Komponentu lomas |
+| ID | Faktiskā loma / CSS klase | Pieņemšanas kritērijs |
 |---|---|---|
-| Sākums | `#mainView`, `.card`, `.names`, `.name-link` | Virsmas, vārdu saites, navigācija |
-| Kalendārs | `#calendar .day.today`, `#calendar .day.sel` | C16 |
-| Meklētāji | `#nameInput`, `#dateInput`, `#nameResult`, `#dateSuggestions` | C07/C15, sekundārās darbības |
-| Mani vārdi | `.favorites-sort`, `.remove-favorite`, `#favoriteAddInput` | C05/C06/C07 |
-| Dzimšanas dienas | `.birthday-sort`, `.birthday-edit-btn`, `.birthday-delete-btn`, `#birthdayAddForm` | C05/C06/C07 |
-| Apsveikums | `.greeting-options`, `.greeting-emoji-panel`, `.greeting-back-bar` | C06, uznirstošs panelis |
-| Iestatījumi | `.settings-section`, `.reminder-time-menu`, `#deleteMyDataButton` | C06/C17, informācijas virsmas |
-| Par aplikāciju | `.about-card .about-row-button`, `.about-accordion-list` | C18 |
-| Hamburgera izvēlne | `#sideMenu`, `.menu-btn` | Izvēlnes virsma un C05 |
+| C01 | Panelis `.ds-card` | Virsmas, apmales, noapaļojums un ēna no tēmas tokeniem |
+| C02 | Iekšējā virsma `.ds-inset` | `--ds-surface-soft` un kopīgā apmale |
+| C03 | Primārā poga `.ds-button--primary` | Semantiskie default/hover/pressed stāvokļi |
+| C04 | Sekundārā poga `.ds-button` | Sekundārā krāsa, nevis destruktīvs aizpildījums |
+| C05 | Ikonu poga `.ds-icon-button` | 44 px skārienlaukums; atsevišķs danger stāvoklis |
+| C06 | Izvēles poga `.ds-choice` | `aria-pressed`/`aria-selected` stāvokļi |
+| C07 | Ievades lauks `.ds-input`, `.ds-textarea` | Fokuss, kursors, kļūda, disabled/readonly |
+| C08 | Izvēlne `.ds-select` | Ievades tokeni, fokuss, kļūda |
+| C09 | Fiksētā navigācija `.ds-nav` | Apakšējā drošā zona, centrējums |
+| C10 | Saraksta rinda `.ds-list-row` | Satura atstarpes un atdalošā līnija |
+| C11 | Statusa paziņojums `.ds-status` | Success/error/info semantika |
+| C12 | Teksta saite `.ds-link` | Saites krāsa un hover stāvoklis |
+| C13 | Uznirstošs panelis `.ds-popup` | Pārklājuma slānis, izmērs un ritināšana |
+| C14 | Pārslēgs `.ds-switch` | Atlasītā stāvokļa akcenta krāsa |
+| C15 | Rezervēts / nav deklarēts kā atsevišķs komponents | `components.css` izmanto C07/C08/C15 kopīgu komentāru, bet **atsevišķa `.ds-*` C15 klase nav definēta**; nepiedēvēt tam patstāvīgu implementāciju |
+| C16 | Kalendāra diena `.ds-day` | Today 46 px augstums, today/selected apmales prioritāte |
+| C17 | Destruktīvas darbības poga `.ds-button--danger`; reālajā integrācijā dzēšanas poga apzināti attēlota sekundārā stilā | Nodala darbības risku no vizuālās lomas; obligāts apstiprinājums |
+| C18 | Izvēršamā rinda `.ds-accordion` | 48 px summary augstums, apmales, satura atvēršana |
+
+**Papildu elementi ārpus 1:1 numerācijas:** `.ds-heading`, `.ds-muted`, `.ds-emoji-grid`, `.ds-modal` un `.ds-modal-backdrop`. Tie ir implementēti, bet nav korekti tiem piešķirt patvaļīgus C numurus. Komponentu kartējuma avots: `components.css`; reālo skatu integrācijai papildus izmanto `app-integration.css`.
+
+## 6. Reālo skatu piesaistes matrica — faktiskās lomas
+| Skats | Reālie selektori | Piesaistes tips / komponenti |
+|---|---|---|
+| Sākums | `#mainView`, `.card`, `.names`, `.name-link` | Integrācijas virsmas un saites; C01/C02 tikai pēc faktiskā CSS kartējuma |
+| Kalendārs | `#calendar .day.today`, `#calendar .day.sel` | Reālā kalendāra stāvokļi; C16 ir galerijas ekvivalents |
+| Meklētāji | `#nameInput`, `#dateInput`, `#nameResult`, `#dateSuggestions` | C07 ievade; ieteikumu uznirstošais panelis funkcionāli radniecīgs C13 |
+| Mani vārdi | `.favorites-sort`, `.remove-favorite`, `#favoriteAddInput` | C05 ikonu darbība, C06 izvēle, C07 ievade |
+| Dzimšanas dienas | `.birthday-sort`, `.birthday-edit-btn`, `.birthday-delete-btn`, `#birthdayAddForm` | C05/C06/C07 funkcionālās lomas |
+| Apsveikums | `.greeting-options`, `.greeting-emoji-panel`, `.greeting-back-bar` | C06 izvēle; C13 uznirstošs panelis; C09 navigācijas ekvivalents |
+| Iestatījumi | `.settings-section`, `.reminder-time-menu`, `#deleteMyDataButton` | C14 pārslēgs; C13 laika izvēlne; C17 dzēšanas darbība |
+| Par aplikāciju | `.about-card .about-row-button`, `.about-accordion-list` | C18 izvēršamās rindas |
+| Hamburgera izvēlne | `#sideMenu`, `.menu-btn` | C13 uznirstoša izvēlne, C05 ikonas poga pēc lomas |
+
+**Interpretācija:** galerijas `.ds-*` klase un reālā skata selektors nav viens un tas pats. Matrica rāda **funkcionālo atbilstību**, nevis apliecina, ka reālajā DOM ir attiecīgā `.ds-*` klase. Visas integrācijas sasaistes jāvalidē ar `app-integration.css` un pārlūka computed styles.
 
 ## 7. Tēmas
 K1 (klasiskais), Z3 (lavanda), D3 (Rīta rasa/Nakts mežs), S1 (zelta akcenti), J1-E (ūdens motīvs) ir saglabājamie etaloni. **Šīs 1.2 iterācijas pilnā CI un lietotāja iPhone vizuālā pieņemšana attiecas uz izolēto DS 1.1 integrāciju un D3 gaišo/tumšo režīmu; pārējo tēmu vizuāla pieņemšana ar šo dokumentu netiek apgalvota.** Tēmas maiņa maina tokenus un dekorāciju, ne komponenta pamatuzvedību.
@@ -112,11 +116,11 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 | Pierādījumu grupa | Redzamie stāvokļi un ekrāni | Specifikācijas nozīme |
 |---|---|---|
 | D3 tēma | Gaišais “Rīta rasa” un tumšais “Nakts mežs” | Salīdzināt virsmas, tekstu, dekorācijas un kontrastu abos režīmos |
-| Sākums un kalendārs | Dienu navigācija, šodiena, atlasītā diena, kalendāra režģis | C11/C16 atlases un navigācijas semantika |
-| Meklētāji | Vārda/datuma ievade, ieteikumi, rezultāti, fokusēta tastatūra | C07/C15; iOS tastatūra nedrīkst neatgriezeniski aizsegt darbību |
+| Sākums un kalendārs | Dienu navigācija, šodiena, atlasītā diena, kalendāra režģis | C09/C16 atlases un navigācijas semantika |
+| Meklētāji | Vārda/datuma ievade, ieteikumi, rezultāti, fokusēta tastatūra | C07/C13; iOS tastatūra nedrīkst neatgriezeniski aizsegt darbību |
 | Mani vārdi / dzimšanas dienas | Saraksts, kārtošana, pievienošanas un ievades stāvokļi | C05/C06/C07; saraksta darbību pieejamība |
-| Apsveikumi | Izveide, rediģēšana, emoji panelis, sistēmas kopīgošanas lapa | C07/C12; saglabāt teksta un darbību pieejamību |
-| Iestatījumi | Atgādinājumi, atvērta laika izvēlne, izskata radio izvēle, datu dzēšana | C06/C12/C17; izvēles redzamība un pārklājumu hierarhija |
+| Apsveikumi | Izveide, rediģēšana, emoji panelis, sistēmas kopīgošanas lapa | C07/C13; saglabāt teksta un darbību pieejamību |
+| Iestatījumi | Atgādinājumi, atvērta laika izvēlne, izskata radio izvēle, datu dzēšana | C06/C13/C17; izvēles redzamība un pārklājumu hierarhija |
 | Par aplikāciju | Datu avoti, privātums, lietošanas noteikumi | C18; pilni pogu gali un vienādas atstarpes |
 
 ### 11.1. Precizētie vizuālie un uzvedības noteikumi
@@ -143,30 +147,30 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 
 | ID | Režīms / skats | Redzamais stāvoklis | Komponenti / pārbaudes fokuss |
 |---|---|---|---|
-| A01 | D3 gaišais / Iestatījumi | Izskata tēmu radio izvēles un gaišais režīms | C06/C08; atlasītā stāvokļa redzamība |
+| A01 | D3 gaišais / Iestatījumi | Izskata tēmu radio izvēles un gaišais režīms | C06/C14; atlasītā stāvokļa redzamība |
 | A02 | D3 gaišais / Iestatījumi | Mani dati, Par aplikāciju, trīs izvēršamās rindas | C17/C18; neitrāla dzēšanas poga, pilnas apmales |
 | A03 | D3 tumšais / Sākums | Vārdadienas, rītdiena, informācijas kartītes, navigācija | C01/C02/C03/C11 |
 | A04 | D3 tumšais / Kalendārs | Novembra kalendārs, atšķirīgas šodienas un atlases dienas | C16; today/selected atšķiršana |
 | A05 | D3 tumšais / Kalendārs | Atlasītā diena sakrīt ar izceltu dienu | C16; prioritātes pārbaude |
-| A06 | D3 tumšais / Meklēt vārdu | Vārda rezultāts, iOS tastatūra un AutoFill | C07/C15; fokusēts ievades lauks |
-| A07 | D3 tumšais / Meklēt datumu | Datuma daļēja ievade un mēnešu ieteikumi | C07/C12/C15 |
-| A08 | D3 tumšais / Hamburgera izvēlne | Atvērta navigācijas izvēlne | C05/C11/C12 |
+| A06 | D3 tumšais / Meklēt vārdu | Vārda rezultāts, iOS tastatūra un AutoFill | C07/C13; fokusēts ievades lauks |
+| A07 | D3 tumšais / Meklēt datumu | Datuma daļēja ievade un mēnešu ieteikumi | C07/C13 |
+| A08 | D3 tumšais / Hamburgera izvēlne | Atvērta navigācijas izvēlne | C05/C09/C13 |
 | A09 | D3 tumšais / Mani vārdi | Atvērta pievienošana un kārtošana | C03/C06/C07 |
 | A10 | D3 tumšais / Mani vārdi | Saraksts bez ievades formas | C05/C06; rindas un dzēšanas ikonas |
-| A11 | D3 tumšais / Mani vārdi | Meklēšanas ieteikumi, iOS tastatūra | C07/C15; ieteikumu sasniedzamība |
-| A12 | D3 tumšais / Mani vārdi | Izvēlēts pievienojamais vārds, ievade un tastatūra | C03/C07/C15 |
+| A11 | D3 tumšais / Mani vārdi | Meklēšanas ieteikumi, iOS tastatūra | C07/C13; ieteikumu sasniedzamība |
+| A12 | D3 tumšais / Mani vārdi | Izvēlēts pievienojamais vārds, ievade un tastatūra | C03/C07/C13 |
 | A13 | D3 tumšais / Dzimšanas dienas | Saraksts un kārtošana | C05/C06; rediģēšana/dzēšana |
 | A14 | D3 tumšais / Dzimšanas dienas | Atvērta personas pievienošana un teksta tastatūra | C03/C07; ievades fokuss |
 | A15 | D3 tumšais / Dzimšanas dienas | Datuma mēneša lauks ar ciparu tastatūru | C07; skārientastatūras tips |
 | A16 | D3 tumšais / Vārda informācija | Vārds, datums, divas primārās darbības | C02/C03 |
 | A17 | D3 tumšais / Apsveikums | Personas attiecību un stila izvēle | C03/C06 |
-| A18 | D3 tumšais / Apsveikums | Gatavais teksts un darbību joslas | C04/C07/C11 |
+| A18 | D3 tumšais / Apsveikums | Gatavais teksts un darbību joslas | C04/C07/C09 |
 | A19 | D3 tumšais / Apsveikums | Rediģējams teksts un tastatūra | C07; fokusa apmale |
-| A20 | D3 tumšais / Apsveikums | Atvērts emoji panelis | C12; paneļa izvietojums |
+| A20 | D3 tumšais / Apsveikums | Atvērts emoji panelis | C13; paneļa izvietojums |
 | B01 | D3 tumšais / Apsveikums | Atvērta iOS kopīgošanas lapa | Sistēmas kopīgošanas integrācijas robeža |
-| B02 | D3 tumšais / Iestatījumi | Atgādinājumi, laika izvēles un paziņojumu drošības teksts | C06/C08/C12 |
-| B03 | D3 tumšais / Iestatījumi | Atvērta laika izvēlne ar izceltu 06:00 | C12; atlases izcēlums, pārklājuma secība |
-| B04 | D3 tumšais / Iestatījumi | Izskata tēmu un krāsu režīma izvēles | C06/C08 |
+| B02 | D3 tumšais / Iestatījumi | Atgādinājumi, laika izvēles un paziņojumu drošības teksts | C06/C14/C12 |
+| B03 | D3 tumšais / Iestatījumi | Atvērta laika izvēlne ar izceltu 06:00 | C13; atlases izcēlums, pārklājuma secība |
+| B04 | D3 tumšais / Iestatījumi | Izskata tēmu un krāsu režīma izvēles | C06/C14 |
 | B05 | D3 tumšais / Iestatījumi | Mani dati, Par aplikāciju, trīs izvēršamās rindas | C17/C18; neitrāla poga, atstarpes |
 
 ### A.1. Interpretācijas ierobežojumi un turpmākā indeksēšana
@@ -176,3 +180,20 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 - Paziņojumu teksts “DESIGN TEST nav pieejami” atspoguļo apzinātu izolētās vides drošības režīmu, nevis pierādījumu par produkcijas push darbības kļūmi.
 - A05 un B03 parāda atlasītu stāvokli, bet neapliecina visu robežgadījumu darbību.
 - 46 attēlu pilnu uzskaiti un visus attēlu failus nedrīkst pasludināt par pabeigtiem, kamēr nav pārbaudīta pārējo 21 attēla individuālā atbilstība.
+
+
+## Pielikums B — pieņemšanas un izsekojamības vārtejas
+
+| Vārteja | Pārbaudāmais kritērijs | Pašreizējais pierādījums | Statuss |
+|---|---|---|---|
+| B1 — komponentu ID | C01–C18 kartējums pret `components.css` | Šīs redakcijas 5. sadaļa; C15 skaidri atzīmēts kā nedefinēts atsevišķi | Dokumentācijas kartējums precizēts |
+| B2 — automatizētā regresija | Statika, integrācija, kontrasts, Chromium, WebKit, mobile-WebKit | GitHub Actions #70/#72/#73 | Iepriekšējais pārbaudes tvērums sekmīgs |
+| B3 — D3 iPhone izskats | Gaišais/tumšais, C17 pēc labojuma | Lietotāja iPhone ekrānattēli un apstiprinājums | Apstiprināts iepriekš saskaņotajā tvērumā |
+| B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | A01–A20, B01–B05: 25 pagaidu ieraksti | **Daļējs; 21 vēl nav individuāli indeksēts** |
+| B5 — virsmu alfa | V02–V05 izmērītas gala renderējumā | Nav mērījumu protokola | Atvērts pierādījumu jautājums |
+| B6 — pārējās tēmas | K1, Z3, S1, J1-E individuāla iPhone pieņemšana | Nav šīs iterācijas individuāla protokola | Atvērts |
+| B7 — datu drošība | Offline, push un dzēšanas darbību regresija | Vizuālā pārbaude to neapliecina | Atvērts; **nedrīkst testēt ar reālu datu dzēšanu bez atsevišķas saskaņošanas** |
+| B8 — 1.0 numerācijas savietojamība | 1.0 komponentu tabula salīdzināta ar faktisko 1.2 implementāciju | Nav pilnas 1.0 ID tabulas šajā dokumentā | Atvērts |
+
+**Saskaņošanas lēmums:** 1.2 dokumentu drīkst nodot **satura pārskatīšanai**, bet ne pasludināt par pilnībā pierādītu visu 46 attēlu, visu tēmu vai offline/push pieņemšanu. Atvērtie punkti nav automātiski aplikācijas defekti.
+
