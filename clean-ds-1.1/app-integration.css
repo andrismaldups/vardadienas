@@ -1,29 +1,29 @@
 /* VD Design: first opt-in integration layer for DS 1.1.
-   IMPORTANT: inactive until <html data-design="ds11"> and body.ds-app.
+   IMPORTANT: inactive until <html data-design="ds11">; shared layout styles below still use body.ds-app.
    Never load on production/TEST. No app logic or push code is changed.
    DS 1.1 semantic tokens are defined in reference-theme.css. */
-html[data-design="ds11"] body.ds-app{
+html[data-design="ds11"] body{
   margin:0;
   color:var(--ds-text);
   background:var(--ds-page-bg);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-html[data-design="ds11"] body.ds-app .wrap{
+html[data-design="ds11"] body .wrap{
   width:100%;
   max-width:1040px;
   margin-inline:auto;
 }
-html[data-design="ds11"] body.ds-app :is(.card,.settings-card){
+html[data-design="ds11"] body :is(.card,.settings-card){
   background:var(--ds-surface);
   color:var(--ds-text);
   border:1px solid var(--ds-surface-border);
   box-shadow:0 8px 24px var(--ds-shadow);
   border-radius:22px;
 }
-html[data-design="ds11"] body.ds-app :is(h1,h2,h3,h4,.app-title){
+html[data-design="ds11"] body :is(h1,h2,h3,h4,.app-title){
   color:var(--ds-heading);
 }
-html[data-design="ds11"] body.ds-app .muted{color:var(--ds-muted)}
+html[data-design="ds11"] body .muted{color:var(--ds-muted)}
 /* This bridge is deliberately narrow: native input widgets, menus, dialogs,
    notification controls and navigation remain untouched until their behavior
    and selectors are verified against the real application. */
