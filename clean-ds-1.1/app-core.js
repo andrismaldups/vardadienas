@@ -1,0 +1,1948 @@
+
+  const GREETING_SINCERE={
+    openings:[
+      {text:"[Vārds], šodien ir Tava diena!",tags:["diena"]},
+      {text:"[Vārds], šodien visi labie vārdi ir Tev!",tags:["labi_vārdi"]},
+      {text:"[Vārds], sirsnīgi sveicu vārdadienā!",tags:["sveiciens"]},
+      {text:"Sirsnīgi sveicieni vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Daudz siltu sveicienu Tavā vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Skaistus vārdadienas sveicienus Tev, [Vārds]!",tags:["sveiciens","skaists"]},
+      {text:"No sirds sveicu Tevi vārdadienā, [Vārds]!",tags:["sveiciens"]},
+      {text:"Lai Tev skaista vārdadiena, [Vārds]!",tags:["skaists","lai"]}
+    ],
+    greetings:[
+      {text:"Lai šī diena ir piepildīta ar prieku, smaidiem un jaukiem mirkļiem.",tags:["prieks","smaids","lai"]},
+      {text:"Lai Tava vārdadiena ir gaiša un sirsnīgu cilvēku piepildīta.",tags:["cilvēki","lai"]},
+      {text:"Lai šodien Tevi sasniedz daudz labu vārdu un siltu domu.",tags:["labi_vārdi","lai"]},
+      {text:"Lai šī īpašā diena atnes daudz prieka un patīkamu pārsteigumu.",tags:["prieks","pārsteigumi","lai"]},
+      {text:"Lai vārdadiena Tev dāvā skaistus mirkļus un patiesu prieku.",tags:["skaists","prieks","lai"]},
+      {text:"Lai šodien apkārt ir smaidi, labi vārdi un patīkama sabiedrība.",tags:["smaids","labi_vārdi","lai"]},
+      {text:"Lai šī diena ir mazliet īpašāka par citām un sagādā daudz prieka.",tags:["prieks","lai"]},
+      {text:"Lai vārdadienas sveicieni sasilda un iepriecina visas dienas garumā.",tags:["sveiciens","lai"]},
+      {text:"Lai šodien netrūkst smaidu un jauku pārsteigumu.",tags:["smaids","pārsteigumi","netrūkst","lai"]},
+      {text:"Lai Tava vārdadiena ir piepildīta ar siltumu un labām emocijām.",tags:["lai"]}
+    ],
+    wishes:[
+      {text:"Lai ikdienā netrūkst veselības, enerģijas un skaistu mirkļu.",tags:["veselība","skaists","netrūkst","lai"]},
+      {text:"Lai piepildās iecerētais un vienmēr atrodas kāds jauns iemesls smaidīt.",tags:["smaids","lai"]},
+      {text:"Lai blakus vienmēr ir cilvēki, kuri Tevi novērtē un iepriecina.",tags:["cilvēki","lai"]},
+      {text:"Lai katra jauna diena atnes ko labu un vērtīgu.",tags:["diena","lai"]},
+      {text:"Lai izdodas iecerētais un dzīve sagādā patīkamus pārsteigumus.",tags:["pārsteigumi","lai"]},
+      {text:"Lai Tev daudz laimīgu brīžu un cilvēku, ar kuriem tajos dalīties.",tags:["cilvēki","lai"]},
+      {text:"Lai pietiek spēka lieliem mērķiem un laika tam, kas Tev patiesi svarīgs.",tags:["lai"]},
+      {text:"Lai ikdienā vairāk gaišu domu, siltu tikšanos un patiesu smaidu.",tags:["smaids","lai"]},
+      {text:"Lai dzīvē netrūkst veselības, mīlestības un jauku notikumu.",tags:["veselība","netrūkst","lai"]},
+      {text:"Lai katrā dienā izdodas atrast kaut ko, par ko priecāties.",tags:["prieks","diena","lai"]},
+      {text:"Lai sapņi pamazām kļūst par skaistiem notikumiem.",tags:["skaists","lai"]},
+      {text:"Lai Tevi pavada veiksme, veselība un labi cilvēki.",tags:["veselība","cilvēki","lai"]}
+    ],
+    closings:[
+      {text:"Brīnišķīgu vārdadienu!",tags:[]},
+      {text:"Skaistu un priecīgu vārdadienu!",tags:["skaists","prieks"]},
+      {text:"Sirsnīgi sveicieni Tavā svētku dienā!",tags:["sveiciens","diena"]},
+      {text:"No sirds — skaistu vārdadienu!",tags:["skaists"]},
+      {text:"Jauku un saulainu svētku dienu!",tags:["diena"]},
+      {text:"Daudz prieka Tavā vārdadienā!",tags:["prieks"]},
+      {text:"Sirsnīgi sveicieni un jauku dienu!",tags:["sveiciens","diena"]},
+      {text:"Daudz smaidu Tavā svētku dienā!",tags:["smaids","diena"]},
+      {text:"Skaistus svētkus!",tags:["skaists"]},
+      {text:"Vislabākie vēlējumi vārdadienā!",tags:[]}
+    ]
+  };
+
+  document.querySelectorAll('.greeting-options').forEach(group=>{
+    group.addEventListener('click',e=>{
+      const btn=e.target.closest('button');
+      if(!btn)return;
+      group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      greetingValidation.hidden=true;
+    });
+  });
+  function randomGreetingPart(parts,usedTags){
+    const compatible=parts.filter(part=>part.tags.every(tag=>tag==="lai"||!usedTags.has(tag)));
+    const pool=compatible.length?compatible:parts;
+    const part=pool[Math.floor(Math.random()*pool.length)];
+    part.tags.filter(tag=>tag!=="lai").forEach(tag=>usedTags.add(tag));
+    return part;
+  }
+
+  function isKnownName(name){
+    const q=name.toLocaleLowerCase('lv-LV');
+    return Object.values(DATA).some(groups=>groups.some(names=>names.some(n=>n.toLocaleLowerCase('lv-LV')===q)));
+  }
+
+  function greetingVocative(name){
+    if(!isKnownName(name))return name;
+    if(/us$/i.test(name))return name;
+    if(/is$/i.test(name))return name.slice(0,-2)+"i";
+    if(/s$/i.test(name))return name.slice(0,-1);
+    return name;
+  }
+
+  function generateSincereGreeting(name){
+    const usedTags=new Set();
+    const vocativeName=greetingVocative(name);
+    const parts=[
+      randomGreetingPart(GREETING_SINCERE.openings,usedTags),
+      randomGreetingPart(GREETING_SINCERE.greetings,usedTags),
+      randomGreetingPart(GREETING_SINCERE.wishes,usedTags),
+      randomGreetingPart(GREETING_SINCERE.closings,usedTags)
+    ];
+    return parts.map(part=>part.text.replace("[Vārds]",vocativeName)).join(" ");
+  }
+
+  const GREETING_SHORT=[
+    "Daudz laimes vārdadienā, [Vārds]! Lai šī diena ir prieka un skaistu mirkļu pilna!",
+    "Sirsnīgi sveicieni vārdadienā, [Vārds]! Lai smaidi un veiksme Tevi pavada!",
+    "Sveicu vārdadienā, [Vārds]! Lai viss iecerētais izdodas!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien netrūkst patīkamu pārsteigumu!",
+    "Mīļi sveicieni vārdadienā, [Vārds]! Lai Tev skaista un saulaina diena!",
+    "Daudz laimes, [Vārds]! Lai katra diena atnes ko labu!",
+    "Sveiciens Tavā vārdadienā, [Vārds]! Lai prieks ir tepat blakus!",
+    "Lai brīnišķīga vārdadiena, [Vārds]! Veselību, laimi un daudz smaidu!",
+    "No sirds sveicu vārdadienā, [Vārds]! Lai piepildās kāda skaista vēlēšanās!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodiena paliek jaukā atmiņā!",
+    "Daudz prieka un mīļu sveicienu vārdadienā, [Vārds]!",
+    "Lai Tavā vārdadienā netrūkst smaidu, [Vārds]! Sirsnīgi sveicieni!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai diena izdodas!",
+    "Sveicu vārdadienā, [Vārds]! Lai daudz prieka!",
+    "Priecīgu vārdadienu, [Vārds]! Lai smaids nepazūd!",
+    "Mīļi sveicieni, [Vārds]! Lai viss skaistais piepildās!",
+    "Daudz laimes, [Vārds]! Lai laime ir līdzās!",
+    "Sirsnīgs sveiciens vārdadienā, [Vārds]! Lai skaisti svētki!",
+    "Sveicu, [Vārds]! Lai šodiena ir īpaša!",
+    "Priecīgu vārdadienu, [Vārds]! Lai daudz gaišu mirkļu!",
+    "Daudz laimes, [Vārds]! Lai sirdī vienmēr prieks!",
+    "Sveiciens vārdadienā, [Vārds]! Lai veiksme pavada!",
+    "Mīļi sveicu, [Vārds]! Lai saulaina diena!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai sapņi piepildās!",
+    "Priecīgu vārdadienu, [Vārds]! Lai silti un sirsnīgi!",
+    "Sveicu svētkos, [Vārds]! Lai katrs mirklis priecē!",
+    "Daudz laimes, [Vārds]! Lai skaistu notikumu pilna diena!",
+    "Sirsnīgi sveicieni, [Vārds]! Lai viss izdodas!",
+    "Priecīgu vārdadienu, [Vārds]! Lai miers un prieks!",
+    "Sveicu vārdadienā, [Vārds]! Lai netrūkst smaidu!",
+    "Daudz laimes, [Vārds]! Lai diena pārsteidz ar labo!",
+    "Mīļš sveiciens, [Vārds]! Lai Tev brīnišķīga vārdadiena!",
+    "Priecīgu vārdadienu, [Vārds]! Lai sirdī pavasaris!",
+    "Sveicu, [Vārds]! Lai šodien daudz patīkamu mirkļu!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai mīļi cilvēki blakus!",
+    "Sirsnīgs sveiciens, [Vārds]! Lai prieks ik uz soļa!",
+    "Priecīgu vārdadienu, [Vārds]! Lai diena gaiša un jauka!",
+    "Daudz laimes, [Vārds]! Lai ikdienā vairāk svētku!",
+    "Sveicu vārdadienā, [Vārds]! Lai siltums sirdī!",
+    "Mīļi sveicieni, [Vārds]! Lai dzīve dāvā prieku!",
+    "Priecīgu vārdadienu, [Vārds]! Lai veicas visās iecerēs!",
+    "Daudz laimes, [Vārds]! Lai skaistas domas un darbi!",
+    "Sveiciens vārdadienā, [Vārds]! Lai laimīgi mirkļi!",
+    "Priecīgu vārdadienu, [Vārds]! Lai katra diena nes prieku!",
+    "Daudz laimes, [Vārds]! Lai smaidu pilni svētki!",
+    "Sirsnīgi sveicu vārdadienā, [Vārds]! Lai daudz laba!",
+    "Sveicu, [Vārds]! Lai laime atrod Tevi ik dienu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai apkārt sirsnība!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai brīnišķīgi pārsteigumi!",
+    "Mīļš sveiciens vārdadienā, [Vārds]! Lai priecīga diena!"
+];
+  // Each fixed-style library is shuffled into a no-repeat deck.
+  const greetingDecks=Object.create(null);
+  function nextGreetingFromDeck(style,templates,name){
+    let deck=greetingDecks[style];
+    if(!deck||deck.remaining.length===0){
+      const remaining=templates.map((_,index)=>index);
+      for(let i=remaining.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [remaining[i],remaining[j]]=[remaining[j],remaining[i]];
+      }
+      if(deck&&remaining.length>1&&remaining[remaining.length-1]===deck.lastIndex){
+        const swapIndex=Math.floor(Math.random()*(remaining.length-1));
+        [remaining[remaining.length-1],remaining[swapIndex]]=[remaining[swapIndex],remaining[remaining.length-1]];
+      }
+      deck={remaining,lastIndex:deck?deck.lastIndex:null};
+      greetingDecks[style]=deck;
+    }
+    const index=deck.remaining.pop();
+    deck.lastIndex=index;
+    return templates[index].replace("[Vārds]",greetingVocative(name));
+  }
+
+  function generateShortGreeting(name){
+    return nextGreetingFromDeck("Īss",GREETING_SHORT,name);
+  }
+
+  const GREETING_FUN=[
+    "Daudz laimes vārdadienā, [Vārds]! Lai kūka ir lielāka par rūpēm un svētku noskaņa turas ilgāk par brīvdienām!",
+    "Sveiciens vārdadienā, [Vārds]! Šodien visi darbi drīkst pagaidīt — izņemot kūkas ēšanu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai smaidu ir tik daudz, ka vaigiem jāprasa atvaļinājums!",
+    "Daudz laimes, [Vārds]! Lai šodien pārsteigumi ir tikai patīkami, bet kalorijas pašas sevi neskaita!",
+    "Sveicu vārdadienā, [Vārds]! Lai diena tik jauka, ka pat modinātājs nolemj netraucēt!",
+    "Lai jautra vārdadiena, [Vārds]! Novēlu pilnu šķīvi gardumu un tukšu sarakstu ar pienākumiem!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai šodien veiksme skrien Tev pakaļ, nevis Tu tai!",
+    "Priecīgu vārdadienu, [Vārds]! Lai smiekli skan skaļāk par telefona paziņojumiem!",
+    "Sveiciens svētkos, [Vārds]! Lai kafija garšīga, kūka garda un neviens nejautā, kad būsi atpakaļ pie darbiem!",
+    "Daudz laimes, [Vārds]! Lai šodien vienīgā nopietnā izvēle ir — vēl vienu kūkas gabaliņu vai uzreiz divus!",
+    "Lai lieliska vārdadiena, [Vārds]! Lai visi plāni izdodas, bet pārsteigumi ir vēl labāki par plāniem!",
+    "Sveicu vārdadienā, [Vārds]! Lai šodien smaids nepazūd pat tad, ja kūkas pēdējais gabaliņš jau apēsts!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien pietiek laika gan svinēšanai, gan nekā nedarīšanai!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai diena tik izdevusies, ka gribas tai nospiest pogu „Atkārtot”!",
+    "Sveiciens vārdadienā, [Vārds]! Lai dāvanas patīk, kūka garšo un svētku viesi palīdz novākt galdu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai dzīvē vairāk konfeti un mazāk steidzamu e-pastu!",
+    "Sveicu vārdadienā, [Vārds]! Lai vienīgā šodienas steiga ir paspēt pēc otrā kūkas gabaliņa!",
+    "Daudz laimes, [Vārds]! Lai telefons zvana tikai ar apsveikumiem, nevis darba jautājumiem!",
+    "Priecīgu vārdadienu, [Vārds]! Lai svētku galds bagātīgs un trauki pēc tam nomazgājas paši!",
+    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi luksofori rāda zaļo un visi cilvēki smaida!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai labais garastāvoklis pielīp ātrāk par konfeti pie džempera!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien katrs pārsteigums ir patīkamāks par negaidītu brīvdienu!",
+    "Sveicu, [Vārds]! Lai šodien vienīgais sarežģītais uzdevums ir izvēlēties gardāko kūku!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai veiksme ir tik uzstājīga, ka no tās nevar atkratīties!",
+    "Priecīgu vārdadienu, [Vārds]! Lai svētku noskaņa turas arī tad, kad baloni jau nolaidušies!",
+    "Sveiciens, [Vārds]! Lai šodien smaids ir platāks par darāmo darbu sarakstu!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai katrs apsveikums nāk ar labu garastāvokli un vismaz vienu smieklu!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien pārsteigumi birst kā popkorns kino vakarā!",
+    "Sveicu vārdadienā, [Vārds]! Lai svētku dienā pat lietus prot dejot līdzi!",
+    "Daudz laimes, [Vārds]! Lai šodien nekas neizlādējas — ne telefons, ne pacietība, ne prieks!",
+    "Priecīgu vārdadienu, [Vārds]! Lai ikdienas rūpes šodien paņem brīvdienu bez atgriešanās biļetes!",
+    "Sveiciens vārdadienā, [Vārds]! Lai kūkas gabaliņš vienmēr ir lielāks, nekā sākumā izskatījās!",
+    "Daudz laimes, [Vārds]! Lai šodien viss iet kā pa sviestu — arī tad, ja uz galda ir tikai kūka!",
+    "Priecīgu vārdadienu, [Vārds]! Lai labās ziņas nāk rindā, bet sliktās apmaldās pa ceļam!",
+    "Sveicu, [Vārds]! Lai šodienas dienas kārtībā ir tikai trīs punkti: priecāties, svinēt un atkārtot!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai Tavs smaids šodien ir galvenā svētku dekorācija!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien pat pulkstenis nesteidzas un svētki ievelkas!",
+    "Sveiciens, [Vārds]! Lai dāvanu saiņošana citiem, bet izsaiņošana tikai Tev!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai diena salda kā deserts un viegla kā balons!",
+    "Priecīgu vārdadienu, [Vārds]! Lai šodien neviens nesaka „vēl tikai viens darbiņš”!",
+    "Sveicu vārdadienā, [Vārds]! Lai komplimenti šodien skan biežāk nekā telefona zvans!",
+    "Daudz laimes, [Vārds]! Lai šodien prieks lec augstāk par šampanieša korķi!",
+    "Priecīgu vārdadienu, [Vārds]! Lai diena ir tik laba, ka pat pirmdiena gribētu būt tās vietā!",
+    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi ceļi ved pie draugiem un gardas kūkas!",
+    "Daudz laimes, [Vārds]! Lai dzīve piedāvā vairāk jauku pārsteigumu nekā reklāmu internetā!",
+    "Priecīgu vārdadienu, [Vārds]! Lai svētku galds pilns un kalendārā vieta tikai patīkamiem plāniem!",
+    "Sveicu, [Vārds]! Lai šodien katrs spogulis atgādina, cik labi Tev piestāv smaids!",
+    "Daudz laimes vārdadienā, [Vārds]! Lai pat visnopietnākie cilvēki šodien atrod iemeslu pasmaidīt!",
+    "Priecīgu vārdadienu, [Vārds]! Lai diena pilna tik labu mirkļu, ka grūti izvēlēties mīļāko!",
+    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi jautājumi sākas ar „Kādu kūku vēlies?”!"
+];
+  function generateFunGreeting(name){
+    return nextGreetingFromDeck("Jautrs",GREETING_FUN,name);
+  }
+
+  const GREETING_FORMAL=[
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
+    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus."
+];
+  function generateFormalGreeting(name){
+    return nextGreetingFromDeck("Formāls",GREETING_FORMAL,name);
+  }
+
+  const birthdayAddForm=document.getElementById('birthdayAddForm');
+  const birthdayAddOpen=document.getElementById('birthdayAddOpen');
+  const birthdayFormError=document.getElementById('birthdayFormError');
+  const birthdaysList=document.getElementById('birthdaysList');
+  let birthdaySortMode=localStorage.getItem('birthdaySortMode')==='alpha'?'alpha':'date';
+  const birthdaySortAlpha=document.getElementById('birthdaySortAlpha');
+  const birthdaySortDate=document.getElementById('birthdaySortDate');
+  function setBirthdaySortMode(mode){
+    birthdaySortMode=mode;
+    birthdaySortAlpha.classList.toggle('active',mode==='alpha');
+    birthdaySortDate.classList.toggle('active',mode==='date');
+    birthdaySortAlpha.setAttribute('aria-pressed',String(mode==='alpha'));
+    birthdaySortDate.setAttribute('aria-pressed',String(mode==='date'));
+    try{localStorage.setItem('birthdaySortMode',mode);}catch(error){}
+    renderBirthdays();
+  }
+  birthdaySortAlpha.addEventListener('click',()=>setBirthdaySortMode('alpha'));
+  birthdaySortDate.addEventListener('click',()=>setBirthdaySortMode('date'));
+  birthdaySortAlpha.classList.toggle('active',birthdaySortMode==='alpha');
+  birthdaySortDate.classList.toggle('active',birthdaySortMode==='date');
+  birthdaySortAlpha.setAttribute('aria-pressed',String(birthdaySortMode==='alpha'));
+  birthdaySortDate.setAttribute('aria-pressed',String(birthdaySortMode==='date'));
+  let editingBirthdayIndex=null;
+  const birthdaySaveButton=document.getElementById('birthdaySaveButton');
+  let birthdays=[];
+  try{
+    const stored=JSON.parse(localStorage.getItem('birthdays')||'[]');
+    if(Array.isArray(stored))birthdays=stored.filter(p=>p&&typeof p.name==='string'&&Number.isInteger(p.day)&&Number.isInteger(p.month));
+  }catch(error){console.warn('Neizdevās nolasīt dzimšanas dienas',error);}
+  // TEST: dzimšanas dienu sinhronizācija ar D1; lokālie dati ir primārie.
+  const BIRTHDAY_QUEUE_KEY='testBirthdaySyncQueueV1';
+  const BIRTHDAY_INITIALIZED_KEY='testBirthdaySyncInitializedV1';
+  let birthdaySyncPromise=null;
+  function birthdayId(){
+    const bytes=new Uint8Array(18);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function readBirthdayQueue(){
+    try{
+      const items=JSON.parse(localStorage.getItem(BIRTHDAY_QUEUE_KEY)||'[]');
+      return Array.isArray(items)?items.filter(x=>x&&['POST','DELETE'].includes(x.method)&&typeof x.id==='string'):[];
+    }catch(_error){return [];}
+  }
+  function queueBirthday(method,person){
+    if(deletionSyncBlocked())return;
+    const id=person.id;
+    const items=readBirthdayQueue().filter(x=>x.id!==id);
+    items.push({method,id,...(method==='POST'?{person:{id,name:person.name,day:person.day,month:person.month,year:person.year??null}}:{})});
+    localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(items));
+    void flushBirthdayQueue();
+  }
+  async function flushBirthdayQueue(){
+    if(deletionSyncBlocked())return;
+    if(birthdaySyncPromise)return birthdaySyncPromise;
+    if(navigator.onLine===false)return;
+    birthdaySyncPromise=(async()=>{
+      const installation=await getOrCreateTestInstallation();
+      while(!deletionSyncBlocked()){
+        const queue=readBirthdayQueue();
+        if(!queue.length)break;
+        const item=queue[0];
+        const response=await fetch(FAVORITES_TEST_API+'/api/birthdays',{
+          method:item.method,
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+installation.token,'X-Installation-Id':installation.installationId},
+          body:JSON.stringify(item.method==='POST'?item.person:{id:item.id})
+        });
+        if(!response.ok)throw new Error('Dzimšanas dienu sinhronizācija: HTTP '+response.status);
+        const latest=readBirthdayQueue();
+        // Dzēšam tikai precīzi to darbību, kuru nosūtījām.
+        const index=latest.findIndex(x=>JSON.stringify(x)===JSON.stringify(item));
+        if(index>=0){latest.splice(index,1);localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(latest));}
+      }
+    })().catch(error=>console.warn('TEST dzimšanas dienas paliek lokāli; sinhronizācija atlikta:',error))
+      .finally(()=>{birthdaySyncPromise=null;});
+    return birthdaySyncPromise;
+  }
+  // Pirmreizējā migrācija: piešķiram ID, neko nezaudējot no esošā saraksta.
+  try{
+    const needsIds=birthdays.some(p=>!p.id);
+    if(needsIds){
+      birthdays=birthdays.map(p=>p.id?p:{...p,id:birthdayId()});
+      localStorage.setItem('birthdays',JSON.stringify(birthdays));
+    }
+    if(localStorage.getItem(BIRTHDAY_INITIALIZED_KEY)!=='true'){
+      const queue=readBirthdayQueue();
+      const ids=new Set(queue.map(x=>x.id));
+      for(const person of birthdays){
+        if(!ids.has(person.id))queue.push({method:'POST',id:person.id,person:{id:person.id,name:person.name,day:person.day,month:person.month,year:person.year??null}});
+      }
+      localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(queue));
+      localStorage.setItem(BIRTHDAY_INITIALIZED_KEY,'true');
+    }
+  }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
+  let deletionInProgress=false;
+  const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
+  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
+  // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
+  // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
+  function retryPendingBirthdays(){
+    if(deletionSyncBlocked())return;
+    if(readBirthdayQueue().length && navigator.onLine!==false){
+      void flushBirthdayQueue();
+    }
+  }
+  window.addEventListener('online',retryPendingBirthdays);
+  window.addEventListener('focus',retryPendingBirthdays);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')retryPendingBirthdays();
+  });
+  // Atvērtā aplikācijā mēģinām vēlreiz ik pēc 30 sekundēm;
+  // tukšai rindai un bezsaistē pieprasījumi netiek sūtīti.
+  setInterval(retryPendingBirthdays,30000);
+  retryPendingBirthdays();
+  function renderBirthdayHome(){
+    const target=document.getElementById('birthdayTodayNames');
+    const names=birthdays.filter(person=>person.day===selected.getDate()&&person.month===selected.getMonth()+1).map(person=>person.name);
+    target.replaceChildren();
+    target.hidden=names.length===0;
+    if(names.length)target.textContent=names.join(', ');
+  }
+  function renderBirthdays(){
+    birthdaysList.replaceChildren();
+    if(!birthdays.length){
+      const empty=document.createElement('p');
+      empty.textContent='Neviens dzimšanas dienas ieraksts vēl nav pievienots.';
+      birthdaysList.appendChild(empty);
+      return;
+    }
+    const ordered=birthdays.map((person,index)=>({person,index}));
+    ordered.sort((a,b)=>birthdaySortMode==='alpha'
+      ?a.person.name.localeCompare(b.person.name,'lv')||a.person.month-b.person.month||a.person.day-b.person.day
+      :a.person.month-b.person.month||a.person.day-b.person.day||a.person.name.localeCompare(b.person.name,'lv'));
+    ordered.forEach(({person,index})=>{
+      const row=document.createElement('div');
+      row.className='birthday-saved-row';
+      const info=document.createElement('div');
+      info.className='birthday-saved-row-info';
+      const name=document.createElement('strong');
+      name.textContent=person.name;
+      const date=document.createElement('div');
+      date.textContent=String(person.day).padStart(2,'0')+'.'+String(person.month).padStart(2,'0')+'.'+(person.year?person.year+'.':'');
+      info.append(name,date);
+      const edit=document.createElement('button');
+      edit.type='button';
+      edit.className='birthday-edit-btn';
+      edit.textContent='✎';
+      edit.setAttribute('aria-label','Rediģēt: '+person.name);
+      edit.addEventListener('click',()=>openBirthdayEdit(index));
+      const remove=document.createElement('button');
+      remove.type='button';
+      remove.className='birthday-delete-btn';
+      remove.textContent='×';
+      remove.setAttribute('aria-label','Dzēst: '+person.name);
+      remove.addEventListener('click',()=>deleteBirthday(index));
+      const actions=document.createElement('div');
+      actions.className='birthday-row-actions';
+      actions.append(edit,remove);
+      row.append(info,actions);
+      birthdaysList.appendChild(row);
+    });
+  }
+  function deleteBirthday(index){
+    const person=birthdays[index];
+    if(!person)return;
+    if(!window.confirm('Vai tiešām vēlies dzēst dzimšanas dienas ierakstu „'+person.name+'”?'))return;
+    const updated=birthdays.filter((_,i)=>i!==index);
+    try{
+      localStorage.setItem('birthdays',JSON.stringify(updated));
+    }catch(error){
+      window.alert('Neizdevās dzēst ierakstu no ierīces krātuves.');
+      return;
+    }
+    birthdays=updated;
+    try{queueBirthday('DELETE',person);}catch(error){console.warn('Dzimšanas dienas dzēšanas sinhronizācija atlikta:',error);}
+    renderBirthdayHome();
+    if(editingBirthdayIndex!==null){
+      if(editingBirthdayIndex===index)closeBirthdayForm();
+      else if(editingBirthdayIndex>index)editingBirthdayIndex--;
+    }
+    renderBirthdays();
+  }
+  function openBirthdayEdit(index){
+    const person=birthdays[index];
+    if(!person)return;
+    editingBirthdayIndex=index;
+    document.getElementById('birthdayFullName').value=person.name;
+    document.getElementById('birthdayDay').value=person.day;
+    document.getElementById('birthdayMonth').value=person.month;
+    document.getElementById('birthdayYear').value=person.year??'';
+    birthdaySaveButton.textContent='Saglabāt izmaiņas';
+    birthdayFormError.hidden=true;
+    birthdayAddOpen.hidden=true;
+    birthdayAddForm.hidden=false;
+    birthdayAddForm.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function closeBirthdayForm(){
+    editingBirthdayIndex=null;
+    birthdaySaveButton.textContent='Saglabāt';
+    birthdayAddForm.hidden=true;
+    birthdayAddOpen.hidden=false;
+    birthdayFormError.hidden=true;
+    birthdayAddForm.reset();
+  }
+  birthdayAddOpen.addEventListener('click',()=>{
+    editingBirthdayIndex=null;
+    birthdaySaveButton.textContent='Saglabāt';
+    birthdayAddForm.reset();
+    birthdayFormError.hidden=true;
+    birthdayAddOpen.hidden=true;
+    birthdayAddForm.hidden=false;
+    document.getElementById('birthdayFullName').focus();
+  });
+  document.getElementById('birthdayAddCancel').addEventListener('click',closeBirthdayForm);
+  birthdayAddForm.addEventListener('submit',event=>{
+    event.preventDefault();
+    const name=document.getElementById('birthdayFullName').value.trim().replace(/\s+/g,' ');
+    const day=Number(document.getElementById('birthdayDay').value);
+    const month=Number(document.getElementById('birthdayMonth').value);
+    const yearValue=document.getElementById('birthdayYear').value.trim();
+    const year=yearValue?Number(yearValue):null;
+    const maxDay=new Date(Date.UTC(year===null?2000:year,month,0)).getUTCDate();
+    if(!name||!Number.isInteger(day)||!Number.isInteger(month)||month<1||month>12||day<1||day>maxDay||(year!==null&&(!Number.isInteger(year)||year<1||year>9999))){
+      birthdayFormError.textContent='Lūdzu ievadi derīgu vārdu un dzimšanas datumu.';
+      birthdayFormError.hidden=false;
+      return;
+    }
+    const updated=[...birthdays];
+    if(editingBirthdayIndex===null){
+      updated.push({id:birthdayId(),name,day,month,year});
+    }else{
+      updated[editingBirthdayIndex]={...updated[editingBirthdayIndex],name,day,month,year};
+    }
+    try{
+      localStorage.setItem('birthdays',JSON.stringify(updated));
+    }catch(error){
+      birthdayFormError.textContent='Neizdevās saglabāt datus ierīcē. Pārbaudi pārlūka krātuvi.';
+      birthdayFormError.hidden=false;
+      return;
+    }
+    birthdays=updated;
+    try{queueBirthday('POST',updated[editingBirthdayIndex===null?updated.length-1:editingBirthdayIndex]);}catch(error){console.warn('Dzimšanas dienas saglabāšanas sinhronizācija atlikta:',error);}
+    renderBirthdays();
+    renderBirthdayHome();
+    closeBirthdayForm();
+  });
+  renderBirthdays();
+
+  document.getElementById('birthdaysOpen').addEventListener('click',()=>{
+    mainView.hidden=true;
+    birthdaysView.hidden=false;
+    window.scrollTo(0,0);
+  });
+  document.getElementById('birthdaysBack').addEventListener('click',()=>{
+    birthdaysView.hidden=true;
+    mainView.hidden=false;
+    window.scrollTo(0,0);
+  });
+
+  greetingCreate.addEventListener('click',()=>{
+    const name=greetingName.value.trim();
+    const relationship=document.querySelector('[data-choice-group="relationship"] .active');
+    const style=document.querySelector('[data-choice-group="style"] .active');
+    const missing=[];
+    if(!name)missing.push('jubilāra vārdu');
+    if(!relationship)missing.push('attiecības');
+    if(!style)missing.push('stilu');
+    if(missing.length){
+      greetingValidation.textContent='Lūdzu norādiet '+missing.join(', ')+'.';
+      greetingValidation.hidden=false;
+      return;
+    }
+    greetingValidation.hidden=true;
+    if(style.textContent.trim()==="Sirsnīgs"){
+      greetingResultText.value=generateSincereGreeting(name);
+    }else if(style.textContent.trim()==="Īss"){
+      greetingResultText.value=generateShortGreeting(name);
+    }else if(style.textContent.trim()==="Jautrs"){
+      greetingResultText.value=generateFunGreeting(name);
+    }else if(style.textContent.trim()==="Formāls"){
+      greetingResultText.value=generateFormalGreeting(name);
+    }else{
+      greetingResultText.value="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
+    }
+    greetingView.hidden=true;
+    greetingResultView.hidden=false;
+    resizeGreetingResult();
+  });
+  function resizeGreetingResult(){
+    greetingResultText.style.height="auto";
+    greetingResultText.style.height=greetingResultText.scrollHeight+"px";
+  }
+
+  const greetingEmojiList=["💐","🌹","🌷","🌸","🌺","🌻","🌼","🪻","🍀","🌿","🦋","🌈","☀️","⭐","✨","🎉","🎊","🎁","🎈","🎀","👑","💎","🕯️","💌","😊","🥰","😍","😘","🤗","😉","😄","😁","😇","🤩","😎","🙏","😀","😃","😆","😋","😜","😝","🤪","😺","😻","👏","🙌","👍","❤️","💕","💖","💝","💘","💞","💓","💗","🩷","🧡","💛","💚","💙","💜","🤍","🫶","🎂","🍰","🧁","🥧","🍩","🍪","🍫","🍬","🍭","🍨","🍦","🍮","🍓","🍒","🍇","🍍","🍉","☕","🍵","🥂","🍾","🍷","🍹","🍸","🍺","🍻","💃","🕺","🤝","💪","🐱","🐶"];
+  const greetingEmojiToggle=document.getElementById('greetingEmojiToggle');
+  const greetingEmojiPanel=document.getElementById('greetingEmojiPanel');
+  const greetingEmojiGrid=document.getElementById('greetingEmojiGrid');
+  let greetingEmojiStart=null,greetingEmojiEnd=null;
+  greetingResultText.addEventListener('select',()=>{
+    greetingEmojiStart=greetingResultText.selectionStart;
+    greetingEmojiEnd=greetingResultText.selectionEnd;
+  });
+  function positionGreetingEmojiPanel(){
+    if(greetingEmojiPanel.hidden)return;
+    const viewport=window.visualViewport;
+    const viewportTop=viewport?viewport.offsetTop:0;
+    const viewportHeight=viewport?viewport.height:window.innerHeight;
+    const margin=12;
+    const textRect=greetingResultText.getBoundingClientRect();
+    // Always place the picker BELOW the greeting text, never over it.
+    const top=Math.max(viewportTop+margin,Math.min(textRect.bottom+8,viewportTop+viewportHeight-110));
+    const viewportBottom=viewportTop+viewportHeight;
+    const available=viewportBottom-top-margin;
+    greetingEmojiPanel.style.top=top+'px';
+    greetingEmojiPanel.style.maxHeight=Math.max(90,Math.min(520,available))+'px';
+    greetingEmojiPanel.style.right=Math.max(margin,window.innerWidth-textRect.right)+'px';
+  }
+  function setGreetingEmojiOpen(open){
+    greetingEmojiPanel.hidden=!open;
+    greetingEmojiToggle.setAttribute('aria-expanded',String(open));
+    if(open){
+      // Close the iPhone keyboard before positioning the emoji picker.
+      greetingResultText.blur();
+      positionGreetingEmojiPanel();
+      // iOS may resize the visual viewport after the keyboard closes.
+      setTimeout(positionGreetingEmojiPanel,300);
+    }
+  }
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',positionGreetingEmojiPanel);
+  }
+  greetingEmojiList.forEach(symbol=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.textContent=symbol;
+    button.setAttribute('aria-label','Ievietot '+symbol);
+    button.addEventListener('click',()=>{
+      const value=greetingResultText.value;
+      const start=greetingEmojiStart??value.length;
+      const end=greetingEmojiEnd??start;
+      greetingResultText.value=value.slice(0,start)+symbol+value.slice(end);
+      const cursor=start+symbol.length;
+      greetingEmojiStart=cursor;greetingEmojiEnd=cursor;
+      greetingResultText.readOnly=false;
+      resizeGreetingResult();
+      greetingResultText.setSelectionRange(cursor,cursor);
+    });
+    greetingEmojiGrid.appendChild(button);
+  });
+  greetingEmojiToggle.addEventListener('click',()=>{
+    if(greetingEmojiPanel.hidden){
+      greetingEmojiStart=greetingResultText.selectionStart;
+      greetingEmojiEnd=greetingResultText.selectionEnd;
+    }
+    setGreetingEmojiOpen(greetingEmojiPanel.hidden);
+  });
+  document.getElementById('greetingEmojiClose').addEventListener('click',()=>setGreetingEmojiOpen(false));
+  document.addEventListener('click',event=>{
+    if(!greetingEmojiPanel.hidden&&!greetingEmojiPanel.contains(event.target)&&!greetingEmojiToggle.contains(event.target))setGreetingEmojiOpen(false);
+  });
+  greetingEdit.addEventListener('click',()=>{
+    greetingResultText.removeAttribute('readonly');
+    resizeGreetingResult();
+    greetingResultText.focus();
+    greetingResultText.setSelectionRange(greetingResultText.value.length,greetingResultText.value.length);
+  });
+  greetingResultText.addEventListener('keydown',e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      greetingResultText.blur();
+      greetingResultText.readOnly=true;
+    }
+  });
+
+  greetingRegenerate.addEventListener('click',()=>{
+    const name=greetingName.value.trim();
+    const style=document.querySelector('[data-choice-group="style"] .active');
+    if(!name||!style)return;
+    const selectedStyle=style.textContent.trim();
+    if(!["Sirsnīgs","Īss","Jautrs","Formāls"].includes(selectedStyle))return;
+    const previous=greetingResultText.value;
+    let next=previous;
+    for(let attempt=0;attempt<20&&next===previous;attempt++){
+      next=selectedStyle==="Īss"?generateShortGreeting(name):selectedStyle==="Jautrs"?generateFunGreeting(name):selectedStyle==="Formāls"?generateFormalGreeting(name):generateSincereGreeting(name);
+    }
+    greetingResultText.value=next;
+    resizeGreetingResult();
+  });
+
+  const greetingCopy=document.getElementById('greetingCopy');
+  const greetingShare=document.getElementById('greetingShare');
+  const greetingCopyOriginalLabel=greetingCopy.textContent;
+  let greetingCopyFeedbackTimeout;
+  async function copyGreetingText(){
+    const value=greetingResultText.value;
+    if(!value.trim())return false;
+    if(navigator.clipboard&&window.isSecureContext){
+      try{await navigator.clipboard.writeText(value);return true;}catch(error){}
+    }
+    const oldReadOnly=greetingResultText.readOnly;
+    const start=greetingResultText.selectionStart,end=greetingResultText.selectionEnd;
+    greetingResultText.readOnly=false;
+    greetingResultText.focus();
+    greetingResultText.select();
+    let copied=false;
+    try{copied=document.execCommand('copy');}catch(error){}
+    greetingResultText.setSelectionRange(start,end);
+    greetingResultText.readOnly=oldReadOnly;
+    return copied;
+  }
+  greetingCopy.addEventListener('click',async()=>{
+    const success=await copyGreetingText();
+    greetingCopy.textContent=success?'Nokopēts ✓':'Neizdevās kopēt';
+    clearTimeout(greetingCopyFeedbackTimeout);
+    greetingCopyFeedbackTimeout=setTimeout(()=>{greetingCopy.textContent=greetingCopyOriginalLabel;},2200);
+  });
+  greetingShare.addEventListener('click',async()=>{
+    const value=greetingResultText.value;
+    if(!value.trim())return;
+    if(navigator.share){
+      try{await navigator.share({text:value});return;}
+      catch(error){if(error.name==='AbortError')return;}
+    }
+    const success=await copyGreetingText();
+    alert(success?'Kopīgošana nav pieejama. Apsveikuma teksts ir nokopēts — vari to ielīmēt ziņojumā.':'Kopīgošana šajā pārlūkā nav pieejama. Izmanto pogu Kopēt.');
+  });
+
+  greetingResultText.addEventListener('input',resizeGreetingResult);
+
+  greetingName.addEventListener('input',()=>{greetingValidation.hidden=true});
+  greetingName.addEventListener('keydown',e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      greetingName.blur();
+    }
+  });
+  // TEST vide: sagatave savienojumam ar Cloudflare D1.
+  // Netiek izsaukta automātiski; esošie localStorage favorīti paliek neskarti.
+  const FAVORITES_TEST_API='https://vardadienas-push-test.andris-maldups.workers.dev';
+  // TEST instalācijas piekļuves dati ir unikāli katrai pārlūka izcelsmei.
+  // Netiek izmantoti produkcijas vidē un netiek sūtīti uz GitHub.
+  // Datu dzēšanas aizsardzība: šobrīd funkcija TEST vidē ir atspējota.
+  // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
+  if(localStorage.getItem(DELETION_PENDING_KEY)){
+    document.getElementById('deleteMyDataButton').disabled=true;
+    document.getElementById('deleteMyDataStatus').textContent='Iepriekšējā dzēšanas pieprasījuma rezultāts nav apstiprināts. Servera sinhronizācija apturēta, lokālie dati saglabāti.';
+  }
+  let pushActivationInProgress=false;
+  let reminderSyncInProgress=0;
+  const DELETE_LOCAL_KEYS=[
+    'favorites','birthdays','birthdaySortMode',
+    'testBirthdaySyncQueueV1','testBirthdaySyncInitializedV1',
+    'vardadienas_test_installation_v1','testPushSubscriptionId',
+    'remindersEnabled','reminderTime','reminderEvening','reminderMorning',
+    'reminderEveningTime','reminderMorningTime','reminderTarget','reminderBirthdays'
+  ];
+  // Worker 11: dzēšanas statusa nolasīšana pēc neskaidras atbildes.
+  async function readDeletionReceipt(saved){
+    const response=await fetch(FAVORITES_TEST_API+'/api/installation-deletion-status',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+    });
+    if(!response.ok)throw new Error('Statusa pārbaude: HTTP '+response.status);
+    const result=await response.json();
+    if(result.deleted===true&&result.success===true)return 'deleted';
+    if(result.deleted===false&&result.active===true)return 'active';
+    throw new Error('Neatpazīta statusa atbilde');
+  }
+  async function deleteInstallationDataAfterConfirmation(){
+    if(deletionSyncBlocked())return;
+    const status=document.getElementById('deleteMyDataStatus');
+    const button=document.getElementById('deleteMyDataButton');
+    if(!confirm('Neatgriezeniski dzēst visus šīs instalācijas vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan serverī, gan ierīcē?'))return;
+    if(pushActivationInProgress){status.textContent='Pagaidi, līdz beidzas Push aktivizēšana, un mēģini vēlreiz.';return;}
+    deletionInProgress=true;
+    button.disabled=true;
+    status.textContent='Notiek datu dzēšana…';
+    try{
+      // Nedrīkst izveidot jaunu instalāciju tikai tādēļ, lai to dzēstu.
+      // Sagaidām arī fonā jau uzsāktu instalācijas reģistrāciju.
+      if(testInstallationPromise)await testInstallationPromise;
+      const saved=JSON.parse(localStorage.getItem('vardadienas_test_installation_v1')||'null');
+      if(saved && (!saved.installationId || !saved.token)){
+        throw new Error('Instalācijas piekļuves dati ir nepilnīgi; automātiska dzēšana apturēta');
+      }
+      if(saved?.installationId&&saved?.token){
+        // Pirms servera DELETE sagaidām iesāktos rakstīšanas pieprasījumus.
+        if(birthdaySyncPromise)await birthdaySyncPromise;
+        while(reminderSyncInProgress>0)await new Promise(resolve=>setTimeout(resolve,100));
+        // Atzīmi saglabājam TIKAI tieši pirms DELETE. Ja sagatavošana neizdodas,
+        // servera dati vēl nav dzēsti un sinhronizācija nav jābloķē pēc pārlādes.
+        localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
+        let confirmed=false;
+        try{
+          const response=await fetch(FAVORITES_TEST_API+'/api/installation-data',{
+            method:'DELETE',
+            headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+          });
+          if(!response.ok)throw new Error('Dzēšanas HTTP '+response.status);
+          const result=await response.json();
+          confirmed=result.success===true;
+        }catch(error){
+          console.warn('Dzēšanas atbilde nav apstiprināta:',error);
+        }
+        if(!confirmed){
+          // Statusu drīkst uzskatīt par dzēstu tikai ar autentificētu Worker 11 kvīti.
+          const state=await readDeletionReceipt(saved);
+          if(state==='deleted')confirmed=true;
+          else throw new Error('Serveris ziņo, ka instalācija vēl ir aktīva; dzēšana nav apstiprināta');
+        }
+        if(!confirmed)throw new Error('Servera dzēšana nav apstiprināta');
+      }
+      // Push atcelšana notiek tikai pēc servera apstiprinājuma.
+      let pushUnsubscribeFailed=false;
+      if('serviceWorker' in navigator){
+        try{
+          const registration=await navigator.serviceWorker.ready;
+          const subscription=await registration.pushManager?.getSubscription();
+          if(subscription && !(await subscription.unsubscribe()))pushUnsubscribeFailed=true;
+        }catch(error){pushUnsubscribeFailed=true;console.warn('Push atcelšana ierīcē neizdevās:',error);}
+      }
+      for(const key of DELETE_LOCAL_KEYS)localStorage.removeItem(key);
+      localStorage.removeItem(DELETION_PENDING_KEY);
+      status.textContent=pushUnsubscribeFailed?'Servera un lokālie dati dzēsti, bet ierīces Push abonementa atcelšanu nevarēja apstiprināt.':'Dati dzēsti. Aplikācija tiks pārlādēta.';
+      window.location.reload();
+    }catch(error){
+      status.textContent='Dzēšanas rezultātu nevar apstiprināt: '+(error.message||String(error))+'. Lokālie dati saglabāti; servera stāvoklis var būt mainījies. Pirms atkārtota mēģinājuma pārbaudi savienojumu.';
+      button.disabled=Boolean(localStorage.getItem(DELETION_PENDING_KEY));
+    }finally{
+      deletionInProgress=false;
+    }
+  }
+  document.getElementById('deleteMyDataButton').addEventListener('click',deleteInstallationDataAfterConfirmation);
+  const TEST_INSTALLATION_STORAGE_KEY='vardadienas_test_installation_v1';
+  let testInstallationPromise=null;
+  async function getOrCreateTestInstallation(){
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
+    if(testInstallationPromise) return testInstallationPromise;
+    testInstallationPromise=(async()=>{
+      try{
+        const saved=JSON.parse(localStorage.getItem(TEST_INSTALLATION_STORAGE_KEY)||'null');
+        if(saved && typeof saved.installationId==='string' && saved.installationId &&
+           typeof saved.token==='string' && saved.token) return saved;
+      }catch(_error){ /* Nederīgus lokālos datus aizstājam ar jaunu instalāciju. */ }
+      const response=await fetch(FAVORITES_TEST_API+'/api/installations',{method:'POST'});
+      if(!response.ok) throw new Error('TEST instalācijas reģistrācija neizdevās: '+response.status);
+      const installation=await response.json();
+      if(!installation || typeof installation.installationId!=='string' ||
+         !installation.installationId || typeof installation.token!=='string' ||
+         !installation.token) throw new Error('Nepareiza TEST instalācijas servera atbilde');
+      if(deletionInProgress)throw new Error('Instalācijas izveide pārtraukta datu dzēšanas dēļ');
+      localStorage.setItem(TEST_INSTALLATION_STORAGE_KEY,JSON.stringify({
+        installationId:installation.installationId,
+        token:installation.token
+      }));
+      return installation;
+    })();
+    try{return await testInstallationPromise;}
+    catch(error){testInstallationPromise=null;throw error;}
+  }
+
+  async function requestTestFavorites(method, installationId, installationToken, payload){
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
+    const headers={
+      'Authorization':'Bearer '+installationToken,
+      'X-Installation-Id':installationId
+    };
+    if(payload!==undefined) headers['Content-Type']='application/json';
+    const response=await fetch(FAVORITES_TEST_API+'/api/favorite-names',{
+      method,
+      headers,
+      ...(payload!==undefined?{body:JSON.stringify(payload)}:{})
+    });
+    const result=await response.json();
+    if(!response.ok) throw new Error(result.error||'TEST servera kļūda');
+    return result;
+  }
+  // TEST datubāzes palīgfunkcijas; nav pieslēgtas lietotāja pogām.
+  async function loadTestFavorites(installationId, installationToken){
+    const data=await requestTestFavorites('GET',installationId,installationToken);
+    return Array.isArray(data.names)?data.names:[];
+  }
+  async function saveTestFavorite(installationId, installationToken, name){
+    const nameDay=getFavoriteDate(name);
+    if(!nameDay) throw new Error('Vārda datums nav atrasts');
+    return requestTestFavorites('POST',installationId,installationToken,{
+      name,
+      name_day:nameDay.replace(/\.$/,'')
+    });
+  }
+  async function deleteTestFavorite(installationId, installationToken, name){
+    return requestTestFavorites('DELETE',installationId,installationToken,{name});
+  }
+  // Reģistrējam TEST instalāciju fonā, netraucējot lokālajiem favorītiem.
+  // Neveiksmes gadījumā aplikācija turpina darboties ar localStorage.
+  if(!deletionSyncBlocked())getOrCreateTestInstallation().catch(error=>{
+    console.warn('TEST instalācijas reģistrācija nav pieejama:',error);
+  });
+  let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
+  const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
+  const savedReminderTime=localStorage.getItem('reminderTime');
+  const savedReminderEvening=localStorage.getItem('reminderEvening');
+  const savedReminderMorning=localStorage.getItem('reminderMorning');
+  const savedReminderEveningTime=localStorage.getItem('reminderEveningTime');
+  const savedReminderMorningTime=localStorage.getItem('reminderMorningTime');
+  const savedReminderTarget=localStorage.getItem('reminderTarget')||'favorites';
+  const savedReminderBirthdays=localStorage.getItem('reminderBirthdays')==='true';
+  const LATVIA_DAYS={
+  "01.01.":"Jaungada diena",
+  "20.01.":"1991. gada barikāžu aizstāvju atceres diena",
+  "26.01.":"Latvijas Republikas starptautiskās (de jure) atzīšanas diena",
+  "27.02.":"Starptautisko nevalstisko organizāciju diena",
+  "02.03.":"Nacionālo partizānu bruņotās pretošanās atceres diena",
+  "08.03.":"Starptautiskā sieviešu diena",
+  "17.03.":"Nacionālās pretošanās kustības piemiņas diena",
+  "25.03.":"Komunistiskā genocīda upuru piemiņas diena",
+  "27.04.":"Latgales kongresa diena",
+  "01.05.":"Darba svētki, Latvijas Republikas Satversmes sapulces sasaukšanas diena",
+  "04.05.":"Latvijas Republikas Neatkarības atjaunošanas diena",
+  "08.05.":"Nacisma sagrāves diena un Otrā pasaules kara upuru piemiņas diena",
+  "09.05.":"Eiropas diena",
+  "15.05.":"Starptautiskā ģimenes diena",
+  "17.05.":"Ugunsdzēsēju un glābēju diena",
+  "01.06.":"Starptautiskā bērnu aizsardzības diena",
+  "14.06.":"Komunistiskā genocīda upuru piemiņas diena",
+  "17.06.":"Latvijas Republikas okupācijas diena",
+  "22.06.":"Varoņu piemiņas diena (Cēsu kaujas atceres diena)",
+  "23.06.":"Līgo diena",
+  "24.06.":"Jāņu diena (vasaras saulgrieži)",
+  "04.07.":"Ebreju tautas genocīda upuru piemiņas diena",
+  "11.08.":"Latvijas brīvības cīnītāju piemiņas diena",
+  "21.08.":"Konstitucionālā likuma “Par Latvijas Republikas valstisko statusu” pieņemšanas diena",
+  "23.08.":"Staļinisma un nacisma upuru atceres diena",
+  "01.09.":"Zinību diena",
+  "22.09.":"Baltu vienības diena",
+  "01.10.":"Starptautiskā senioru diena",
+  "05.10.":"Skolotāju diena",
+  "15.10.":"Valsts valodas diena",
+  "07.11.":"Robežsargu diena",
+  "11.11.":"Lāčplēša diena",
+  "18.11.":"Latvijas Republikas Proklamēšanas diena",
+  "21.11.":"2013. gada 21. novembra traģēdijas atceres diena",
+  "05.12.":"Policijas darbinieku diena",
+  "24.12.":"Ziemassvētki (ziemas saulgrieži)",
+  "25.12.":"Ziemassvētki (ziemas saulgrieži)",
+  "26.12.":"Ziemassvētki (ziemas saulgrieži)",
+  "31.12.":"Vecgada diena"
+};
+  const INTERESTING_DAYS={
+  "01.01.":["Pasaules miera diena"],
+  "02.01.":["Zinātniskās fantastikas diena"],
+  "03.01.":["Miega diena"],
+  "04.01.":["Pasaules Braila diena"],
+  "05.01.":["Putukrējuma diena"],
+  "06.01.":["Zvaigznes diena"],
+  "07.01.":["Tempuras diena"],
+  "09.01.":["Starptautiskā horeogrāfu diena"],
+  "10.01.":["Telpaugu novērtēšanas diena"],
+  "11.01.":["Starptautiskā “paldies” diena"],
+  "12.01.":["Marcipāna diena"],
+  "13.01.":["Sapņu piepildīšanas diena"],
+  "14.01.":["Starptautiskā gaisa pūķu diena", "Pasaules loģikas diena"],
+  "15.01.":["Svaigi spiestas sulas diena"],
+  "16.01.":["Aso ēdienu diena"],
+  "17.01.":["Trošu tramvaja diena", "Jaungada apņemšanos atmešanas diena"],
+  "21.01.":["Starptautiskā treniņbikšu diena"],
+  "22.01.":["Vectēvu diena"],
+  "23.01.":["Rokraksta diena"],
+  "24.01.":["Starptautiskā izglītības diena", "Pasaules Āfrikas un afrikāņu izcelsmes kultūras diena", "Zemesriekstu sviesta diena"],
+  "25.01.":["Īru kafijas diena", "Starptautiskā sieviešu diena multilaterālismā"],
+  "26.01.":["Starptautiskā tīras enerģijas diena"],
+  "27.01.":["Starptautiskā Holokausta upuru piemiņas diena"],
+  "28.01.":["Starptautiskā LEGO diena", "Datu aizsardzības diena", "Starptautiskā mierīgas līdzāspastāvēšanas diena"],
+  "29.01.":["Mīklu diena"],
+  "30.01.":["Kruasānu diena"],
+  "31.01.":["Starptautiskā “ačgārnā” diena"],
+  "01.02.":["“Nomaini paroli” diena"],
+  "02.02.":["Sveču diena", "Pasaules mitrāju diena"],
+  "03.02.":["Zeltaino retrīveru diena"],
+  "04.02.":["Pildīto sēņu diena", "Pasaules vēža diena", "Starptautiskā cilvēku brālības diena"],
+  "05.02.":["Šokolādes fondī diena", "Pasaules Nutella diena"],
+  "06.02.":["Starptautiskā nulles tolerances diena pret sieviešu dzimumorgānu kropļošanu"],
+  "09.02.":["Picas diena"],
+  "10.02.":["Lietussargu diena", "Pasaules pākšaugu diena", "Starptautiskā Arābijas leoparda diena"],
+  "11.02.":["Starptautiskā sieviešu un meiteņu diena zinātnē"],
+  "12.02.":["Darvina diena", "Starptautiskā vardarbīga ekstrēmisma novēršanas diena"],
+  "13.02.":["Pasaules radio diena"],
+  "14.02.":["Valentīna diena"],
+  "15.02.":["Pasaules nīlzirgu diena"],
+  "16.02.":["Inovāciju diena"],
+  "17.02.":["Kafijas ar pienu diena", "Globālā tūrisma noturības diena"],
+  "18.02.":["Plutona diena"],
+  "19.02.":["Skropstu diena"],
+  "20.02.":["Grāmatplaukta tīrīšanas diena", "Pasaules sociālā taisnīguma diena"],
+  "21.02.":["Starptautiskā dzimtās valodas diena"],
+  "22.02.":["Suņu pastaigu diena"],
+  "23.02.":["Kērlinga diena"],
+  "24.02.":["“Twin Peaks” diena"],
+  "25.02.":["Gliemeņu zupas diena", "Šokolādē glazētu riekstu diena"],
+  "26.02.":["Pasaku stāstīšanas diena"],
+  "27.02.":["Retro diena"],
+  "01.03.":["Vispasaules kaķu diena", "Nulles diskriminācijas diena", "Pasaules jūraszāļu diena"],
+  "02.03.":["Veco lietu diena", "Pasaules pusaudžu mentālās labsajūtas diena"],
+  "03.03.":["Pasaules savvaļas sugu diena"],
+  "04.03.":["Valša dejas diena", "Pasaules inženierzinātņu diena ilgtspējīgai attīstībai"],
+  "05.03.":["Siera nūjiņu diena", "Starptautiskā atbruņošanās un neizplatīšanas izpratnes diena"],
+  "06.03.":["Saldētās pārtikas diena", "Oreo cepumu diena"],
+  "08.03.":["Starptautiskā sieviešu diena"],
+  "09.03.":["Gaļas bumbiņu diena"],
+  "10.03.":["Starptautiskā dūdu diena", "Starptautiskā sieviešu tiesnešu diena"],
+  "11.03.":["Pasaules santehnikas diena"],
+  "12.03.":["Puķu stādīšanas diena"],
+  "13.03.":["Donalda Daka diena"],
+  "14.03.":["Pī (π) diena", "Starptautiskā matemātikas diena"],
+  "15.03.":["Starptautiskā diena cīņai pret islamofobiju"],
+  "16.03.":["Braukšanas instruktoru diena"],
+  "17.03.":["Ģertrūdes diena"],
+  "18.03.":["Neveiklo mirkļu diena"],
+  "19.03.":["Starptautiskā “Lasi man priekšā” diena", "Starptautiskā digitālās mācīšanās diena"],
+  "20.03.":["Starptautiskā laimes diena", "Starptautiskā frankofonijas diena"],
+  "21.03.":["Pasaules dzejas diena", "Starptautiskā mežu diena", "Pasaules ledāju diena", "Starptautiskā rasu diskriminācijas izskaušanas diena", "Starptautiskā Novrūza diena", "Pasaules Dauna sindroma diena"],
+  "22.03.":["Pasaules ūdens diena"],
+  "23.03.":["Pasaules meteoroloģijas diena"],
+  "24.03.":["Dzīvokļa biedru diena", "Pasaules tuberkulozes diena"],
+  "25.03.":["Māras diena", "Starptautiskā verdzības upuru un transatlantiskās vergu tirdzniecības piemiņas diena"],
+  "26.03.":["Spinātu diena"],
+  "27.03.":["Starptautiskā teātra diena"],
+  "28.03.":["Ēdiena uz iesmiņa diena"],
+  "30.03.":["Starptautiskā nulles atkritumu diena"],
+  "31.03.":["Apelsīnu un citronu diena"],
+  "01.04.":["Joku diena"],
+  "02.04.":["Starptautiskā bērnu grāmatu diena", "Pasaules autisma izpratnes diena"],
+  "03.04.":["Filmu mūzikas diena"],
+  "04.04.":["Starptautiskā mīnu izpratnes un atmīnēšanas palīdzības diena"],
+  "05.04.":["Starptautiskā sirdsapziņas diena"],
+  "06.04.":["Starptautiskā sporta diena attīstībai un mieram"],
+  "07.04.":["Pasaules veselības diena"],
+  "08.04.":["Starptautiskā romu diena"],
+  "10.04.":["Globālā attālinātā darba diena"],
+  "11.04.":["Siera fondī diena"],
+  "12.04.":["Starptautiskā cilvēka lidojuma kosmosā diena"],
+  "13.04.":["“Scrabble” diena"],
+  "14.04.":["Delfīnu diena", "Pasaules Čagasa slimības diena"],
+  "15.04.":["Pasaules mākslas diena"],
+  "16.04.":["Orhideju diena"],
+  "17.04.":["Starptautiskā sikspārņu diena"],
+  "18.04.":["Pasaules radioamatieru diena"],
+  "19.04.":["Ķiploku diena"],
+  "20.04.":["Ķīniešu valodas diena"],
+  "21.04.":["Pasaules radošuma un inovāciju diena"],
+  "22.04.":["Starptautiskā Zemes mātes diena"],
+  "23.04.":["Ūsiņa diena", "Pasaules grāmatu un autortiesību diena", "Angļu valodas diena", "Spāņu valodas diena"],
+  "24.04.":["Lecamauklas diena", "Starptautiskā multilaterālisma un diplomātijas mieram diena"],
+  "25.04.":["Pasaules pingvīnu diena", "Pasaules malārijas diena"],
+  "26.04.":["Pasaules intelektuālā īpašuma diena", "Starptautiskā Černobiļas katastrofas piemiņas diena"],
+  "27.04.":["Gumijas lācīšu diena"],
+  "28.04.":["Supervaroņu diena", "Pasaules darba drošības un veselības aizsardzības diena"],
+  "29.04.":["Starptautiskā dejas diena"],
+  "30.04.":["Starptautiskā džeza diena"],
+  "01.05.":["Maija diena"],
+  "02.05.":["Pasaules tunzivju diena"],
+  "03.05.":["Pārdabisko notikumu diena", "Pasaules preses brīvības diena"],
+  "04.05.":["Starptautiskā ugunsdzēsēju diena"],
+  "05.05.":["Pasaules portugāļu valodas diena", "Pasaules roku higiēnas diena"],
+  "06.05.":["Starptautiskā diena bez diētām"],
+  "07.05.":["Tūrisma diena"],
+  "08.05.":["Diena bez zeķēm", "Pasaules Sarkanā Krusta un Sarkanā Pusmēness diena"],
+  "09.05.":["Pidžamu ballīšu diena"],
+  "11.05.":["“Ēd, ko vēlies” diena", "“Krēslas zonas” diena"],
+  "12.05.":["Starptautiskā medicīnas māsu diena", "Starptautiskā augu veselības diena"],
+  "13.05.":["Starptautiskā humosa diena"],
+  "14.05.":["Starptautiskā čivavu diena"],
+  "15.05.":["Starptautiskā ģimeņu diena"],
+  "16.05.":["Starptautiskā gaismas diena", "Starptautiskā mierīgas kopādzīvošanas diena"],
+  "17.05.":["Pasaules elektrosakaru un informācijas sabiedrības diena"],
+  "18.05.":["Starptautiskā muzeju diena"],
+  "19.05.":["Maija saules diena", "Pasaules godīgas spēles diena"],
+  "20.05.":["Pasaules bišu diena"],
+  "21.05.":["Starptautiskā tējas diena", "Pasaules kultūras daudzveidības diena dialogam un attīstībai"],
+  "22.05.":["Šerloka Holmsa diena", "Starptautiskā bioloģiskās daudzveidības diena"],
+  "23.05.":["Pasaules bruņurupuču diena"],
+  "24.05.":["Brāļu diena", "Starptautiskā markhoru diena"],
+  "25.05.":["Pasaules futbola diena"],
+  "26.05.":["Pasaules rudo matu diena"],
+  "27.05.":["Vīnogu diena"],
+  "28.05.":["Hamburgeru diena"],
+  "29.05.":["Everesta diena", "Starptautiskā ANO miera uzturētāju diena"],
+  "30.05.":["Starptautiskā kartupeļu diena"],
+  "31.05.":["Pasaules diena bez tabakas"],
+  "01.06.":["Dinozauru diena", "Pasaules vecāku diena"],
+  "02.06.":["“Mīli savu zobārstu” diena"],
+  "03.06.":["Pasaules velosipēdu diena"],
+  "05.06.":["Pasaules vides diena"],
+  "06.06.":["Jo-jo diena", "Krievu valodas diena"],
+  "07.06.":["Šokolādes saldējuma diena", "Pasaules pārtikas nekaitīguma diena"],
+  "08.06.":["Pasaules okeānu diena"],
+  "09.06.":["Ēdiena sagatavošanas diena"],
+  "10.06.":["Ledus tējas diena", "Starptautiskā civilizāciju dialoga diena"],
+  "11.06.":["Starptautiskā rotaļu diena"],
+  "12.06.":["Sarkano rožu diena", "Pasaules diena pret bērnu darbu"],
+  "13.06.":["Dārza ravēšanas diena", "Starptautiskā albīnisma izpratnes diena"],
+  "14.06.":["Pasaules asinsdonoru diena"],
+  "15.06.":["Dabas fotogrāfijas diena", "Pasaules diena izpratnes veicināšanai par vardarbību pret senioriem"],
+  "16.06.":["Blūma diena"],
+  "17.06.":["Pasaules atkritumu izvedēju diena", "Pasaules diena cīņai pret pārtuksnešošanos un sausumu"],
+  "18.06.":["Starptautiskā suši diena", "Starptautiskā diena naida runas apkarošanai"],
+  "19.06.":["Gārfīlda diena"],
+  "20.06.":["Starptautiskā tenisa diena", "Pasaules bēgļu diena"],
+  "21.06.":["Starptautiskā jogas diena", "Starptautiskā saulgriežu svinēšanas diena"],
+  "22.06.":["Šokolādes eklēru diena"],
+  "23.06.":["Putras diena", "ANO Publiskā dienesta diena"],
+  "24.06.":["Starptautiskā feju diena", "Starptautiskā sieviešu diplomātijā diena"],
+  "25.06.":["Starptautiskā jūrnieku diena"],
+  "26.06.":["Starptautiskā diena pret narkotiku lietošanu un nelegālu apriti"],
+  "27.06.":["Bingo diena", "Mikrouzņēmumu, mazo un vidējo uzņēmumu diena"],
+  "29.06.":["Starptautiskā dubļu diena", "Starptautiskā tropu diena"],
+  "30.06.":["Starptautiskā asteroīdu diena", "Starptautiskā parlamentārisma diena"],
+  "01.07.":["Starptautiskā joku diena", "Starptautiskā regeja diena"],
+  "02.07.":["Pasaules sporta žurnālistu diena", "Pasaules NLO diena"],
+  "03.07.":["“Izsaki komplimentu savam atspulgam” diena"],
+  "04.07.":["“Alise Brīnumzemē” diena"],
+  "06.07.":["Pasaules lauku attīstības diena"],
+  "07.07.":["Pasaules kisvahili valodas diena", "Rokenrola diena"],
+  "09.07.":["Modes diena"],
+  "10.07.":["Kaķēnu diena"],
+  "11.07.":["Pasaules iedzīvotāju diena", "Pasaules zirgu diena"],
+  "12.07.":["Papīra maisiņu diena", "Starptautiskā cerības diena"],
+  "13.07.":["Starptautiskā akmeņu diena"],
+  "14.07.":["Makaronu ar sieru diena"],
+  "15.07.":["Pasaules jauniešu prasmju diena"],
+  "16.07.":["Jūrascūciņu diena"],
+  "17.07.":["Pasaules emocijzīmju diena"],
+  "18.07.":["Skābo konfekšu diena", "Nelsona Mandelas starptautiskā diena"],
+  "19.07.":["Starptautiskā karaoke diena"],
+  "20.07.":["Pasaules šaha diena", "Starptautiskā Mēness diena"],
+  "21.07.":["Našķu diena"],
+  "22.07.":["Šūpuļtīklu diena"],
+  "23.07.":["Zemesriekstu sviesta un šokolādes diena"],
+  "24.07.":["“Pastāsti vecu joku” diena"],
+  "25.07.":["Starptautiskā sarkano apavu diena", "Pasaules slīkšanas novēršanas diena"],
+  "26.07.":["Suņu fotogrāfiju diena", "Starptautiskā mangrovju ekosistēmas saglabāšanas diena"],
+  "27.07.":["Krēma brulē diena"],
+  "28.07.":["Pasaules dabas aizsardzības diena", "Pasaules hepatīta diena"],
+  "29.07.":["Starptautiskā tīģeru diena"],
+  "30.07.":["Starptautiskā draudzības diena"],
+  "31.07.":["Avokado diena"],
+  "01.08.":["Kalnā kāpšanas diena"],
+  "02.08.":["Krāsojamo grāmatu diena"],
+  "03.08.":["Arbūza diena"],
+  "05.08.":["Kuskusa diena"],
+  "06.08.":["Starptautiskā niršanas diena", "Starptautiskā diena izpratnei par jaunattīstības valstīm bez pieejas jūrai"],
+  "08.08.":["“Guli zem zvaigznēm” nakts"],
+  "09.08.":["Starptautiskā pasaules pamatiedzīvotāju diena"],
+  "10.08.":["Slinkošanas diena"],
+  "11.08.":["Pasaules tērauda bungu diena"],
+  "12.08.":["Starptautiskā jaunatnes diena"],
+  "13.08.":["Starptautiskā kreiļu diena"],
+  "14.08.":["Pasaules ķirzaku diena"],
+  "15.08.":["Relaksācijas diena"],
+  "17.08.":["Lietoto preču diena"],
+  "18.08.":["Sliktas dzejas diena"],
+  "19.08.":["Pasaules humānās palīdzības diena"],
+  "20.08.":["Pasaules odu diena"],
+  "21.08.":["Starptautiskā terorisma upuru piemiņas un godināšanas diena"],
+  "22.08.":["Pasaules augu piena diena", "Starptautiskā reliģijas vai pārliecības dēļ vardarbībā cietušo piemiņas diena"],
+  "23.08.":["Lēto lidojumu diena", "Starptautiskā vergu tirdzniecības un tās atcelšanas piemiņas diena"],
+  "24.08.":["Vafeļu diena"],
+  "25.08.":["Banānu piena kokteiļa diena"],
+  "26.08.":["Tualetes papīra diena"],
+  "27.08.":["Pasaules “Akmens, šķēres, papīrītis” diena", "Pasaules ezeru diena"],
+  "28.08.":["Radio reklāmu diena"],
+  "29.08.":["“Vairāk garšaugu, mazāk sāls” diena", "Starptautiskā diena pret kodolizmēģinājumiem"],
+  "30.08.":["Apcepto zefīru diena", "Starptautiskā piespiedu pazušanas upuru diena"],
+  "31.08.":["Ēšanas ārā diena", "Starptautiskā Āfrikas izcelsmes cilvēku diena"],
+  "01.09.":["Pasaules vēstuļu rakstīšanas diena"],
+  "02.09.":["Pasaules kokosriekstu diena"],
+  "03.09.":["Boulinga līgu diena"],
+  "04.09.":["“Apēd otru desertu” diena"],
+  "05.09.":["Starptautiskā labdarības diena"],
+  "07.09.":["“Nopērc grāmatu” diena", "Starptautiskā tīra gaisa diena zilām debesīm"],
+  "08.09.":["Starptautiskā lasītprasmes diena"],
+  "09.09.":["Starptautiskā sudoku diena"],
+  "10.09.":["Pasaules pašnāvību novēršanas diena"],
+  "12.09.":["Datorspēļu diena"],
+  "15.09.":["Starptautiskā punktu diena"],
+  "16.09.":["Pasaules bārddziņu diena", "Starptautiskā ozona slāņa saglabāšanas diena", "Meksikas neatkarības diena"],
+  "17.09.":["Starptautiskā kantrīmūzikas diena"],
+  "18.09.":["E-grāmatu lasīšanas diena", "Starptautiskā vienlīdzīga atalgojuma diena"],
+  "19.09.":["Pirātu diena"],
+  "20.09.":["Pasaules tīrīšanas diena"],
+  "21.09.":["Chai tējas diena", "Starptautiskā miera diena"],
+  "22.09.":["Diena bez auto"],
+  "23.09.":["Starptautiskā zīmju valodu diena"],
+  "24.09.":["Bolivudas diena"],
+  "25.09.":["Pasaules farmaceitu diena"],
+  "27.09.":["Pasaules tūrisma diena"],
+  "28.09.":["Starptautiskā vispārējās piekļuves informācijai diena"],
+  "29.09.":["Miķeļdiena", "Starptautiskā pārtikas zudumu un izšķērdēšanas izpratnes diena"],
+  "30.09.":["Starptautiskā tulkošanas diena"],
+  "01.10.":["Starptautiskā mūzikas diena", "Starptautiskā kafijas diena", "Starptautiskā senioru diena"],
+  "02.10.":["Pasaules lauksaimniecības dzīvnieku diena", "Starptautiskā nevardarbības diena"],
+  "03.10.":["Diena bez cukura"],
+  "04.10.":["Kanēļmaizīšu diena", "Pasaules dzīvnieku diena"],
+  "05.10.":["Džeimsa Bonda diena", "Pasaules skolotāju diena"],
+  "06.10.":["Starptautiskā ģeodaudzveidības diena"],
+  "07.10.":["Vannas diena", "Pasaules kokvilnas diena"],
+  "08.10.":["Spēļu lācīšu diena"],
+  "09.10.":["Pasaules pasta diena"],
+  "10.10.":["“Apskauj bundzinieku” diena", "Pasaules garīgās veselības diena", "Pasaules putras diena"],
+  "11.10.":["Desu picas diena", "Starptautiskā meiteņu diena"],
+  "12.10.":["Spānijas nacionālā diena"],
+  "13.10.":["Starptautiskā skeptiķu diena", "Starptautiskā katastrofu riska mazināšanas diena"],
+  "14.10.":["Pasaules standartu diena"],
+  "15.10.":["Pasaules roku mazgāšanas diena", "Starptautiskā lauku sieviešu diena"],
+  "16.10.":["Pasaules pārtikas diena"],
+  "17.10.":["Izklājlapu diena", "Starptautiskā nabadzības izskaušanas diena", "Starptautiskā nemateriālā kultūras mantojuma diena"],
+  "18.10.":["Kartupeļu biezeņa diena"],
+  "19.10.":["Jauno draugu diena"],
+  "20.10.":["Bikšturu diena", "Starptautiskā sliņķu diena"],
+  "21.10.":["Ābolu diena"],
+  "22.10.":["Atsauksmju rakstīšanas diena", "Caps Lock diena"],
+  "23.10.":["Starptautiskā sniega leopardu diena"],
+  "24.10.":["Pasaules ķenguru diena", "Apvienoto Nāciju diena"],
+  "25.10.":["Pasaules operas diena", "Pasaules pastas diena"],
+  "26.10.":["“Gaudo uz mēnesi” diena"],
+  "27.10.":["Melno kaķu diena", "Pasaules audiovizuālā mantojuma diena"],
+  "28.10.":["Starptautiskā animācijas diena"],
+  "29.10.":["Auzu pārslu biezputras diena", "Starptautiskā aprūpes un atbalsta diena", "Pasaules programmēšanas diena"],
+  "30.10.":["Kontrolsarakstu diena"],
+  "31.10.":["Burvju mākslas diena", "Helovīns", "Pasaules pilsētu diena"],
+  "01.11.":["Visu svēto diena"],
+  "02.11.":["Pildīto olu diena", "Starptautiskā diena nesodāmības izbeigšanai par noziegumiem pret žurnālistiem"],
+  "03.11.":["Sviestmaižu diena"],
+  "04.11.":["Veselā saprāta diena"],
+  "05.11.":["Pasaules cunami izpratnes diena"],
+  "06.11.":["Basketbola diena", "Starptautiskā diena pret vides ekspluatāciju karā un bruņotos konfliktos"],
+  "07.11.":["“Apskauj plīša lācīti” diena"],
+  "09.11.":["Mēles mežģu diena"],
+  "10.11.":["Vaniļas kēksiņu diena", "Pasaules zinātnes diena mieram un attīstībai"],
+  "11.11.":["Pasaules origami diena"],
+  "12.11.":["Mājas žurku un peļu diena"],
+  "13.11.":["Pasaules laipnības diena"],
+  "14.11.":["Skābēto gurķīšu diena", "Pasaules diabēta diena"],
+  "15.11.":["“Iztīri ledusskapi” diena"],
+  "16.11.":["Starptautiskā tolerances diena"],
+  "17.11.":["Starptautiskā studentu diena"],
+  "18.11.":["Princešu diena", "Pasaules diena bērnu seksuālas izmantošanas, vardarbības un ekspluatācijas novēršanai un dziedināšanai"],
+  "19.11.":["Starptautiskā vīriešu diena", "Pasaules tualetes diena"],
+  "20.11.":["Pasaules bērnu diena"],
+  "21.11.":["Dzērveņu diena", "Pasaules televīzijas diena"],
+  "22.11.":["Izbraucienu diena"],
+  "23.11.":["Espresso diena"],
+  "24.11.":["Unikālo talantu diena"],
+  "25.11.":["Starptautiskā diena vardarbības pret sievietēm izskaušanai"],
+  "26.11.":["Pasaules ilgtspējīga transporta diena"],
+  "27.11.":["Bruņurupuču adopcijas diena"],
+  "29.11.":["Starptautiskā solidaritātes diena ar palestīniešu tautu"],
+  "30.11.":["Elektronisko apsveikumu diena", "Visu ķīmiskā kara upuru piemiņas diena"],
+  "01.12.":["Sarkano ābolu diena", "Pasaules AIDS diena"],
+  "02.12.":["Bezšķirnes suņu diena", "Starptautiskā verdzības atcelšanas diena"],
+  "03.12.":["Apskāvienu diena", "Starptautiskā personu ar invaliditāti diena"],
+  "04.12.":["Zeķu diena"],
+  "05.12.":["Starptautiskā brīvprātīgo diena", "Pasaules augsnes diena"],
+  "06.12.":["Mikroviļņu krāsns diena", "Gaspačo diena"],
+  "07.12.":["Starptautiskā civilās aviācijas diena"],
+  "09.12.":["Ziemassvētku kartīšu diena", "Starptautiskā pretkorupcijas diena"],
+  "10.12.":["Starptautiskā dzīvnieku tiesību diena", "Cilvēktiesību diena"],
+  "11.12.":["Starptautiskā kalnu diena"],
+  "12.12.":["Starptautiskā neitralitātes diena", "Starptautiskā vispārējās veselības aprūpes diena"],
+  "13.12.":["Kakao diena"],
+  "15.12.":["Citronu kēksiņu diena"],
+  "16.12.":["Muļķīgo rotaļlietu diena"],
+  "17.12.":["Kļavu sīrupa diena"],
+  "18.12.":["Pasaules arābu valodas diena", "Starptautiskā migrantu diena"],
+  "20.12.":["Starptautiskā cilvēku solidaritātes diena"],
+  "21.12.":["Pasaules meditācijas diena", "Pasaules basketbola diena", "Krustvārdu mīklu diena"],
+  "22.12.":["Cepumu maiņas diena"],
+  "24.12.":["Ziemassvētku vakars"],
+  "25.12.":["Pirmie Ziemassvētki"],
+  "26.12.":["Otrie Ziemassvētki"],
+  "27.12.":["Augļu kēksa diena", "Starptautiskā epidēmiju gatavības diena"],
+  "28.12.":["“Piezvani draugam” diena"],
+  "29.12.":["Starptautiskā čella diena"],
+  "30.12.":["Bekona diena"],
+  "31.12.":["Silvestra diena"]
+};
+  const DATA={"01.01.":[["Laimnesis","Solvita","Solvija"],["Afra","Afrodīte","Agunda","Agurs","Januārija","Laimstars","Soleda","Solita","Solveta"]],"01.02.":[["Brigita","Indra","Indars","Indris"],["Inda","Birgita","Briāna","Bridžeta","Bridžita","Brikena","Brita","Britānija"]],"01.03.":[["Ivars","Ilgvars"],["Elda","Eldars","Eldijs","Elektra","Elerts","Igvars","Ilgvalds","Ilgvards","Ilgvaris","Ilgvārs","Ivāra","Ivārs"]],"01.04.":[["Dagnis","Dagne"],["Dagna","Dagnijs","Dagnita","Gizela","Glaima","Glauda","Gledisa","Glenda","Glendija","Glens","Glita","Gvenda","Innocentijs"]],"01.05.":[["Ziedonis"],["Izanda","Izaura","Jalmars","Jūtvaldis","Kuzma","Ziednese","Ziedons","Ziedvalda"]],"01.06.":[["Biruta","Mairita","Bernedīne"],["Bernadina","Bernadīne","Birute","Leolita","Liāra","Liards","Mairīta","Mairīte","Mairuta","Nikodems","Nikodēms","Nikodims"]],"01.07.":[["Imants","Rimants","Ingars","Intars"],["Ingārs","Ingera","Ingēra","Ingerts","Intārs","Nataniels","Natans","Nātans","Nazarijs","Rimands","Rimanta"]],"01.08.":[["Albīns","Albīna"],["Alba","Albina","Albine","Albīne","Albinsa","Rameka","Ramērs","Ramils","Ramina","Ramīna","Ramiro"]],"01.09.":[["Ilmārs","Iluta","Austrums"],["Hilmars","Hilmārs","Ilmāra","Ilmars","Salda"]],"01.10.":[["Zanda","Lāsma","Zandis"],["Lāse","Lasma","Lāsmiņa"]],"01.11.":[["Ikars"],["Ihtiandrs","Ikola","Ildefons","Ildra","Iraklijs","Tautmīlis","Tautvaldis","Tautvaris","Ungars"]],"01.12.":[["Arnolds","Emanuels"],["Arnotijs","Arnulfs","Emanuela","Emanuēla","Emanuils","Emmanuels","Imanuels","Immanuels","Manuela","Manuēla","Noldis"]],"02.01.":[["Indulis","Ivo","Iva","Ivis"],["Induls","Īva","Ivaise","Īve","Ivija","Īvija","Ivika","Īvis","Ivisa","Ivs"]],"02.02.":[["Spīdola","Sonora"],["Braens","Braiens","Braijens","Brains","Randa","Randija","Randolfs"]],"02.03.":[["Lavīze","Luīze","Laila"],["Emeralds","Emerihs","Emeriks","Imre","Laija","Lailita","Lovisa","Luisa","Luise","Luiza","Luīza","Luize"]],"02.04.":[["Irmgarde"],["Gracija","Grācija","Gracijans","Grants","Grānts","Grasilda","Grata","Grats","Gražina","Grizelda","Irmgarda","Irmtrauta","Irmtraute"]],"02.05.":[["Zigmunds","Sigmunds","Zigismunds"],["Jaroslava","Jaroslavs","Jeroslavs","Jurate","Jurāte","Jūrāte","Jūris","Sigismunds","Sigizmunds","Sigunds","Zigis","Zigizmunds","Zigmans","Zigmants","Zigmonds","Zigmonts","Zigmunda","Zigmunts"]],"02.06.":[["Lība","Emma"],["Eimija","Ema","Emija","Emilda","Emima","Emīna","Emme","Emmija","Liberata","Liberijs","Liona","Lioneta","Lionija"]],"02.07.":[["Lauma","Ilvars","Halina"],["Galina","Gaļina","Halīna","Ilvārs","Ilvers","Laumīte","Nāra","Necija","Neda"]],"02.08.":[["Normunds","Stefans","Eliass"],["Eliana","Elians","Eliašs","Elija","Ēlija","Elijass","Elijašs","Elijs","Eliots","Elis","Eljašs","Holgers","Iljana","Iļana","Iļja","Iļjana","Noa","Norlands","Norma","Normands","Normans","Normanta","Normants","Normens","Normuds","Normunda","Stefāns","Stepans","Stepons","Stīvens"]],"02.09.":[["Elīza","Lizete","Zete"],["Elisa","Elīsa","Elise","Eliss","Elīss","Eliza","Elize","Elizete","Elīze","Lisete","Lizabete","Lizbete","Līzbete","Lizelote","Lizeta","Sančo","Savina","Savīna","Savita","Zeta","Zetiņa"]],"02.10.":[["Ilma","Skaidris"],["Hilma","Ilme","Ilmija","Ilna","Terijs","Tesa","Tilla","Tillija","Tils"]],"02.11.":[["Vivita","Dzīle","Viva"],["Dzilvars","Venda","Vendeta","Vendija","Vendijs","Vivanta","Vivanto","Viveja","Viveta","Vivija","Vivina"]],"02.12.":[["Meta","Sniedze"],["Mēta","Mets","Snežana","Snežanna","Sniedzīte","Sniga","Sņežana","Sņežanna","Voicehs","Voiceks","Voicihs","Voiciks","Voičiks","Voitiks"]],"03.01.":[["Miervaldis","Miervalda","Ringolds"],["Ambrozijs","Ammonārija","Ammunārija","Mežvaldis","Mieriņš","Miermīlis","Miernesis","Miervalds","Ringla","Ringo","Rinolds"]],"03.02.":[["Aīda","Ida","Vida"],["Aida","Aidans","Aidars","Aidis","Alaida","Cezarija","Cezars","Cēzars","Īda","Ideja","Idilija","Idra"]],"03.03.":[["Tālis","Tālavs","Marts"],["Mārts","Riglinda","Rigmora","Rigo"]],"03.04.":[["Daira","Dairis","Daiva","Daivis"],["Dairita","Grineta","Grinete","Grita"]],"03.05.":[["Gints","Uvis"],["Gintis","Ģints","Jella","Jermolajs","Juvents","Juvita"]],"03.06.":[["Inta","Ineta","Intra"],["Inete","Inneta","Inota","Lipija","Lira","Līrija"]],"03.07.":[["Benita","Everita","Verita","Emerita"],["Emets","Benigna","Benilda","Benito","Emarita","Emerenciana","Emerencija","Emerencijana","Emerenta","Emerentiana","Emerentina","Emerentīne","Emertijana","Emīra","Emirita","Enerita","Gorijs","Gurijs"]],"03.08.":[["Augusts"],["Anufrijs","Augustins","Augustīns","Ogists","Oktavians","Oktavija","Oktāvija","Onufrija","Onufrijs","Onupris"]],"03.09.":[["Berta","Bella"],["Aribella","Beilija","Belēna","Belinda","Berts","Sangrita","Sangvids","Sanlija","Sedriks","Senefra","Serafima","Serafims","Serafina","Seranta"]],"03.10.":[["Elza","Ilizana"],["Ilizane","Tira","Tits","Tobijs"]],"03.11.":[["Ērika","Dagnija"],["Era","Ēra","Erena","Erēna","Erika","Hovards","Huberts","Hūberts","Valeska","Valve"]],"03.12.":[["Evija","Raita","Jogita","Ako"],["Akims","Džovita","Ēvija","Evijs","Evika","Evisa","Ēvisa","Jakims","Joahims","Joakims","Jovars","Jovita","Jugita","Jukums","Volfgangs","Volfreds","Volfrids","Volfrīds","Volfs"]],"04.01.":[["Spodra","Ilva","Ilvita"],["Amina","Amīna","Amirans","Amirs","Blāzma","Ilveta","Ilvis","Spodrīte"]],"04.02.":[["Daila","Veronika","Dominiks","Dominika"],["Daile","Dome","Domenika","Domeniks","Domija","Domnika","Domuse","Varenika","Varonika","Veranika","Veronija"]],"04.03.":[["Alise","Auce","Enija"],["Alicija","Alīcija","Alisa","Alīsa","Alīse","Alisija","Alīsija","Alisters","Alsis","Einija","Elīsija","Ena","Enārs","Enda","Endija","Endijs","Endo","Ene","Enia","Enīda","Enijs","Enika","Enina","Enita","Ennata","Ennija","Enno","Ensija","Enta","Envija","Enzo"]],"04.04.":[["Valda","Herta","Ārvalda","Ārvalds","Ārvaldis"],["Arvalda","Arvaldis","Arvalds","Arvaldina"]],"04.05.":[["Vizbulīte","Viola","Vijolīte"],["Kaido","Violanda","Violanta","Violenta","Vizbule","Vizbulis"]],"04.06.":[["Elfrīda","Sintija","Sindija"],["Cera","Cerība","Ceronis","Cerons","Elfrīde","Elfrīds","Sinda","Sindijs","Sindra","Sinita","Sinta","Sinti","Sintijs","Taive","Taivo","Toivo","Zinda","Zindra","Zinija"]],"04.07.":[["Ulvis","Uldis","Sandis","Sandijs"],["Nērika","Neringa","Nida","Nigra","Sando","Sandus","Sanduss","Sendijs","Uldriķis","Ulfs","Ulvars","Ulvija","Ulvita"]],"04.08.":[["Romāns","Romualds","Romualda"],["Roma","Romalda","Romalds","Romanda","Romands","Romanija","Romānija","Romans","Romants","Romass","Romeks","Romena","Romēna","Romēns","Romeo","Rometa","Romija","Romis","Roms","Romulds","Romvalda","Romvalds"]],"04.09.":[["Dzintra","Dzintara","Dzintars"],["Ambera","Ambere","Dimants","Dzintāra","Dzintārija","Dzintārs","Dzintris","Gintars","Gintārs","Gintauts","Ģintars","Zintars","Zintra"]],"04.10.":[["Modra","Francis","Dmitrijs"],["Dimārs","Dimitrijs","Ditmārs","Ferencs","Francs","Franeks","Franks","Fransuāza","Franuse","Fraņcs","Frenks","Frensisa","Prans","Tora","Toralfs","Torija","Torolfs","Tors","Torvalds","Tūrs","Tūve"]],"04.11.":[["Atis","Otomārs","Oto"],["Ata","Otis","Otomars","Vega","Vegita"]],"04.12.":[["Baiba","Barbara","Barba"],["Varvara","Vsevolods","Vudis","Vudro"]],"05.01.":[["Sīmanis","Zintis"],["Amrita","Amunds","Anarita","Saimona","Saimons","Seimaņs","Semions","Semjons","Simeons","Simions","Simons","Zintauts","Zinturs"]],"05.02.":[["Agate","Selga","Silga","Sinilga"],["Agafija","Agata","Agāte","Agatons","Seldzis","Selesta","Seleste","Silja"]],"05.03.":[["Austra","Aurora","Aurika"],["Aura","Austrīte","Aušra","Enoks"]],"05.04.":[["Vija","Vidaga","Aivija"],["Aivijs","Vidaija","Vide","Videga","Vīdega","Vijars","Vijārs"]],"05.05.":[["Ģirts","Ģederts"],["Kaliksts","Kalins","Keisija","Keits","Omars","Omārs","Otars","Otārs","Rahmats","Raksana","Rašids"]],"05.06.":[["Igors","Margots","Ingvars"],["Argija","Argils","Argita","Argo","Argods","Argons","Argots","Argunda","Arguts","Bonifacija","Bonifācija","Bonifacijs","Bonifācijs","Bonifatijs","Bonifātijs","Bonifats","Inguards","Ingvards","Ingvilda","Ingvilds","Igars","Jegors","Margonis","Margons","Margota","Margote","Marguss","Marguta","Marguts"]],"05.07.":[["Andžs","Andžejs","Edīte","Esmeralda"],["Anžijs","Edita","Edīta","Edite","Endžija","Esmeralde"]],"05.08.":[["Osvalds","Arvils"],["Arvīns","Osvaldis","Rasmuss","Rauza","Ravena","Ravita","Salma","Salme"]],"05.09.":[["Klaudija","Persijs","Vaida"],["Klavdija","Pērs","Vaidelotis","Vaidis"]],"05.10.":[["Amālija","Amēlija"],["Amelija","Amelita","Rostams","Rustams","Rusudana","Saida","Saids","Samija","Samira","Samīra","Samīrs","Semija","Sevda","Tagils","Tahirs","Tahmina","Timurs","Ulams","Vagifs","Vahtangs","Zemfira","Zemira","Zemīra"]],"05.11.":[["Šarlote","Lote"],["Late","Lato","Lota","Šadija","Šarlīze","Šarlota","Veidols","Veikla","Veiksma","Veimārs"]],"05.12.":[["Sabīne","Sarma","Klaudijs"],["Sabina","Sabīna","Sabine","Sabrina","Sabrīna","Sabrīne","Sarme","Zabīne","Zanga","Zanza"]],"06.01.":[["Spulga","Arnita"],["Arams","Aranta","Arfa","Arnīda","Arnija","Arnika"]],"06.02.":[["Dace","Dārta","Dora","Daris"],["Dacija","Dacis","Dacīte","Dadzis","Darels","Darens","Darians","Darija","Darijs","Darina","Darīna","Dario","Dariuss","Dariušs","Darja","Darjus","Dastins","Dārija","Dārijs","Dārte","Dorateja","Dore","Dorota","Doroteja","Dorotija","Dorta","Dorte"]],"06.03.":[["Vents","Centis","Gotfrīds"],["Censonis","Censons","Centa","Centolla","Centonis","Godfrīds","Godvars","Gotards","Gothards","Gotlība","Ventis"]],"06.04.":[["Zinta","Vīlips","Filips","Dzinta","Dzintis"],["Dzīne","Filipina","Fīlips"]],"06.05.":[["Gaidis","Didzis"],["Dereks","Didrihs","Didriķis","Didžus","Dīters","Gaidonis","Gaidvars"]],"06.06.":[["Ingrīda","Ardis"],["Ardijs","Ards","Ingra","Ingre","Ingreta","Ingrida","Ingrita","Kandida","Kendija","Kendisa","Loida"]],"06.07.":[["Anrijs","Arkādijs"],["Agripina","Agripīna","Anrī","Anris","Anriss","Anrita","Arkādija","Ēsa","Haldons","Haldors","Heldurs","Niāra","Niceta"]],"06.08.":[["Askolds","Aisma"],["Aista","Asma","Reds","Reičela","Reičele","Remberts","Skots"]],"06.09.":[["Maigonis","Magnuss","Mariuss"],["Magnolija","Magnus","Maigons","Marjus","Maro"]],"06.10.":[["Monika","Zilgma","Zilga"],["Mona","Monija","Monna","Treisija","Treviss","Zilgars","Zilgme"]],"06.11.":[["Linards","Leons","Leo","Leonards","Leonarda"],["Lenards","Lenārs","Lenarts","Leona","Leonāra","Leonardo","Leonarija","Leonārija","Leonars","Leonārs","Leone","Leonella","Leonhards","Leonija","Leonila","Leonilla","Linarda","Linārs","Linarts","Linerts","Lonards","Lonarts","Ļevs"]],"06.12.":[["Nikolajs","Niklāvs","Niks","Nikola"],["Meikols","Meikuls","Meikuļs","Nika","Nikandrs","Nikija","Nikijs","Niklass","Niklauss","Niklāss","Niklavs","Niko","Nikolass","Nikole","Nikoleta","Nikolīna","Nikolla","Ņika"]],"07.01.":[["Rota","Zigmārs","Juliāns","Digmārs"],["Džulians","Julians","Jūlians","Jūliāns","Sigmars","Sigmārs","Zigmāra","Zigmāris","Zigmars"]],"07.02.":[["Nelda","Rihards","Ričards","Rišards"],["Ričmonds","Dikijs","Diks","Nilda","Ričijs","Ričs","Riho","Rikarda","Rikardo","Rikijs","Riks","Rišārs"]],"07.03.":[["Ella","Elmīra"],["Ellada","Ellija","Elmira","Eļa","Eļmira","Eridana","Eridāna","Erīda","Erims","Erina","Erīna","Erita","Helmīra"]],"07.04.":[["Zina","Zinaīda","Helmuts"],["Elmo","Elmonds","Elmuts","Helmute","Helmūts","Zena","Zenaida","Zīna","Zinaida","Zinaidis","Zinaids","Zinīda"]],"07.05.":[["Henriete","Henrijs","Jete","Enriko"],["Anriete","Domicela","Domicele","Domicelija","Domicella","Donicela","Ennrike","Enrija","Enrijs","Enrika","Enriketa","Enriks","Genrieta","Henrieta","Henrija","Henrita","Jeta"]],"07.06.":[["Gaida","Arnis","Arno"],["Arne","Arnela","Arnijs","Arons","Ārons","Gaidīte","Loveta","Luana","Luāna","Luāra","Lueta","Lugra","Lukrecija","Lukrēcija"]],"07.07.":[["Alda","Maruta"],["Aldija","Aldīna","Māruta","Marute","Nija","Nijole","Niola"]],"07.08.":[["Alfrēds","Madars","Fredis"],["Alfra","Alfreds","Alfrida","Alfrīda","Alfrids","Alfrīds","Alimpiada","Alva","Alvaro","Alvars","Fredijs","Freds","Olimpiada","Olimpija","Rema","Remigijs","Remijs","Remirs","Remo","Rems"]],"07.09.":[["Regīna","Ermīns"],["Erma","Ermina","Ermīna","Ermine","Ermīne","Ermionija","Ermonija","Luna","Regija","Regina","Regīns","Regita","Rego","Reģina","Reģīna","Sēlija","Selēna","Selina","Selīna","Selīne","Selinga","Selita","Senora","Serena","Serīna","Serlana","Sinora"]],"07.10.":[["Daumants","Druvvaldis"],["Augmants","Daumands","Druvaldis","Druvalds","Druvinalds","Druvvalds","Druvars","Tullija","Turaida","Turaids","Tusnelda"]],"07.11.":[["Helma","Lotārs","Pērle"],["Helmī","Helmija","Helmīna","Helmīne","Lotars","Vena","Vēna","Venancijs","Venantijs","Veno"]],"07.12.":[["Antonija","Anta","Dzirkstīte"],["Antainna","Antija","Antonela","Antonida","Antonīda","Antuaneta","Antuanete","Tone","Tonija","Tonita","Toņa","Zbigņevs","Zdeneks"]],"08.01.":[["Gatis","Ivanda"],["Ants","Aristarhs","Aristida","Aristīda","Aristids","Aristīds","Aristons","Aristrīds","Arjana","Arlands","Arleta","Arlēna","Arlijs","Arlita","Gatiņš","Īvande","Ivanna","Ivase","Ivena"]],"08.02.":[["Aldona","Česlavs"],["Aldone","Aldonija","Čelsija","Čereta","Česlava","Čezeta","Dabris","Dafne","Dafnis","Danko"]],"08.03.":[["Dagmāra","Marga","Margita"],["Dagita","Dagmara","Dagmars","Dagmārs","Dagrita","Magrita","Margo"]],"08.04.":[["Edgars","Danute","Dana","Dans"],["Adgars","Dajana","Dane","Daneks","Daneta","Danica","Danida","Danija","Danijs","Danika","Danīna","Danis","Danita","Danna","Danuta","Daņuta","Denija","Denijs","Edgards","Edgārs"]],"08.05.":[["Staņislavs","Staņislava","Stefānija"],["Kasandra","Stanislava","Stanislavs","Stase","Stasija","Stasis","Stasja","Stass","Stefa","Stefaneja","Stefanida","Stefanīda","Stefanija","Stefi","Steisija","Stepanida","Stepanīda","Stepanija","Stepānija"]],"08.06.":[["Frīdis","Frīda","Mundra"],["Frida","Fridberts","Fridis","Munda","Mundis","Mundris","Mundrīte","Salamons","Salimona","Salimonija","Salimons","Salome","Salomeja","Salomija","Salomons","Solomeja","Solomija","Solomonija","Solomons","Solumeja","Šalome","Zalamans","Zālamans","Zalamons"]],"08.07.":[["Antra","Adele","Ada"],["Adaļa","Adela","Adelaida","Adelaīda","Adelaide","Adelgunde","Adelheida","Adelheide","Adelija","Adēlija","Adelions","Adeljans","Adeļa","Adeļjons","Adija","Adis","Antris","Fevronija","Nimmija","Nimue","Nira","Nīra","Nita"]],"08.08.":[["Mudīte","Vladislavs","Vladislava"],["Midīte","Mudijs","Mudiņš","Mudis","Renda","Rendija","Rendijs","Renē","Renno","Reno","Rens","Reons","Vlada","Vladeks"]],"08.09.":[["Ilga"],["Ilgards","Ilgars","Ilgārs","Ilgarts","Ilgnese","Sianda","Siandra","Sianta","Siāra"]],"08.10.":[["Aina","Anete"],["Ainita","Aino","Ane","Aneka","Anela","Anēle","Anelija","Anēlija","Aneļa","Anēļa","Anese","Aneta","Anneta","Annete","Udo"]],"08.11.":[["Aleksandra","Agra","Aleksa"],["Agreda","Agrida","Agrīda","Agrija","Agrīna","Agrite","Agrīte","Aleksandrija","Aleksandrina","Aleksandrīna","Aleksandrīne"]],"08.12.":[["Gunārs","Vladimirs","Gunis"],["Gināra","Ginārs","Gunāra","Gunards","Gunars","Gunarts","Gunijs","Gunnars","Guno","Vladilena","Vladilens","Vladimira","Vladis","Vladlena","Vladlēna","Vladlens","Vlads"]],"09.01.":[["Kaspars","Aksels","Alta"],["Aksela","Akselis","Veiko","Vello","Velonija"]],"09.02.":[["Simona","Apolonija"],["Apolinarija","Apolinārija","Apolinarijs","Apolinārijs","Apolinars","Apolinārs","Apolons","Debora","Dedze","Deizija","Denora","Deriāna","Destane","Dezija","Dēzija","Raisa","Raisma","Raja","Simone","Simoneta"]],"09.03.":[["Ēvalds"],["Evalds","Ievalds","Ivalds","Filemona","Filgita","Filimona","Filimonija","Filiomena","Filomeja","Filomena","Filumena","Fiļimona","Pilimona","Vilemons"]],"09.04.":[["Valērija","Žubīte","Alla"],["Allija","Alondra","Aļa","Matrjona","Matrona","Valeriana","Valerianna","Valerija","Valerijana","Valerina","Valerjana"]],"09.05.":[["Klāvs","Einārs","Ervīns"],["Eina","Einards","Einars","Einarts","Einis","Eino","Ervids","Ervijs","Ervils","Ervīna","Ervins","Ervis","Ervita","Glafira","Glafīra","Kevins","Klaidis","Klaids","Klāss","Timiāna","Timo","Timofejs","Timotejs","Tims"]],"09.06.":[["Ligita","Gita"],["Gitana","Gitāna","Gitija","Gits","Ļeda","Ļudgarda"]],"09.07.":[["Zaiga","Asne","Asna"],["Kirils","Kirills","Nominanda","Nona","Nonna","Zaigonis"]],"09.08.":[["Madara","Genoveva","Genovefa"],["Anfija","Anfisa","Genovaite","Genoveja","Genovera","Genuvefa","Geņa","Gunavefa","Ģenovefa","Madare","Sava"]],"09.09.":[["Bruno","Telma"],["Bronhilda","Brunhilda","Brunhilde","Brunis","Brunita","Brunons","Brūss","Sidija","Sidnejs","Sidnija","Sidnijs","Sidonija","Sidžija","Teldijs","Telesfors","Zidija","Zidonija"]],"09.10.":[["Elga","Helga","Elgars"],["Elgasts","Elgita","Elgons","Helge","Helgi","Helgrīda"]],"09.11.":[["Teodors"],["Fedors","Fedots","Feodora","Feodors","Feodosija","Fjodors","Tea","Teo","Teobalds","Teodora","Teofila","Teofīla","Teofile","Teofilija","Teofīlija","Teofils","Teona","Teovils"]],"09.12.":[["Tabita","Sarmīte"],["Sārtīte","Tabite","Zenobija","Zenona","Zenons"]],"10.01.":[["Tatjana","Dorisa"],["Doreta","Dorina","Dorita","Tanisa","Tanita","Taņa"]],"10.02.":[["Paulīne","Paula","Jasmīna"],["Diāra","Dida","Dijs","Dūda","Dūja","Džasmina","Džasmīna","Džasmīne","Jasmina","Jasmīne","Paļina","Paulamarija","Pauleta","Paulina","Paulīna","Pauline","Pavlina","Pavlīna","Pavlīne","Polianna","Polina","Polīna","Poļina","Sholastika","Sholostika","Skolastika","Skolestika","Skolostika","Žasmīne"]],"10.03.":[["Silvija","Laimrota","Liliāna"],["Laimrita","Lilana","Lili","Liliana","Lilianna","Lilians","Liliāns","Lilijana","Lilinda","Lilioza","Liljana","Lilli","Lilu","Tarass","Zilvija"]],"10.04.":[["Anita","Anitra","Zīle","Annika"],["Anaita","Aniceta","Anicets","Anija","Anika","Anis","Annike","Zīlīte"]],"10.05.":[["Maija","Paija"],["Keila","Keitlīna","Kelija","Kelina","Kellija","Kenets","Kestutis","Ketlina","Ketlīna","Ķestutis","Ķēstutis","Meja"]],"10.06.":[["Malva","Anatols","Anatolijs"],["Anata","Anatolija","Mafalda","Mazalda"]],"10.07.":[["Lija","Olīvija","Olivers","Odrija"],["Olijs","Oliva","Olīva","Olivija","Olvija","Olvita","Samsons"]],"10.08.":[["Brencis","Audris","Inuta","Audra"],["Auda","Audars","Aude","Brenda","Brendons","Breta","Brets","Brina","Brinda","Labrencis","Lars","Larss","Laurentijs","Lavrentijs"]],"10.09.":[["Jausma","Albertīne"],["Albertina","Albertīna","Albertine","Sigma","Sijanda","Zigma"]],"10.10.":[["Arvīds","Arvis","Druvis"],["Arvedo","Arveds","Arvēds","Arvida","Arvīda","Arvīde","Arvids","Arvita","Arvo","Druvārs"]],"10.11.":[["Mārtiņš","Mārcis","Markuss","Marks"],["Marcela","Marcelina","Marcella","Marciana","Marcianna","Marcijana","Marcijanna","Marcis","Marčela","Marčija","Marko","Markss","Markus","Martens","Martins","Martiņš","Mortens"]],"10.12.":[["Guna","Judīte"],["Džudīte","Gunefa","Nevils","Zēra"]],"11.01.":[["Smaida","Franciska","Francisks"],["Aruns","Arūns","Francišeks","Franciška","Frančeska","Frančiska","Františeks","Smaidiņa","Smaidīte","Smaidonis","Smaidra","Smailis"]],"11.02.":[["Laima","Laimdota"],["Fortunata","Gerasims","Laimiņa","Laimīte","Laimute"]],"11.03.":[["Konstantīns","Agita"],["Abita","Agika","Agisa","Aģis","Esams","Esēnija","Esija","Jesēnija","Konstantins"]],"11.04.":[["Hermanis","Vilmārs"],["Ermanis","Ērmanis","Ermans","Ernando","Germans","Hermans","Hermunds","Vilmars"]],"11.05.":[["Milda","Karmena","Manfreds"],["Karmene","Kilikeja","Kima","Kimberlija","Kims","Manfrēds","Mildreda"]],"11.06.":[["Ingus","Mairis","Vidvuds"],["Engus","Inguss","Mairolds","Mairs","Makrina","Mamerts","Videvuds","Videvuts","Vidis","Vido","Vidulis","Vidvars","Veidvedis","Vidvuts"]],"11.07.":[["Leonora","Svens"],["Lennijs","Lenvija","Leonorija","Svenis","Taila","Taimira","Taunis"]],"11.08.":[["Olga","Zita","Liega","Zigita"],["Alesja","Aļesja","Olesija","Olesja","Olgita","Olmars","Olrita","Oļesija","Oļesja","Oļesje"]],"11.09.":[["Signe","Signija"],["Siglinda","Siglinde","Signa","Signeja","Signejana","Signese","Signeta","Signijs","Signis","Signita","Zigna","Zigne"]],"11.10.":[["Monta","Tince","Silva"],["Haritons","Hartvigs","Monda","Montija","Montis","Monts","Silmonta","Silvana","Silvars","Silvers","Silveta","Silvita","Siļva","Zilva"]],"11.11.":[["Ojārs","Rainers","Nellija"],["Lāčplēsis","Nele","Nelija","Nelima","Nelita","Nella","Neļa","Neonila","Neonilla","Rainars","Reimars","Reimārs"]],"11.12.":[["Voldemārs","Valdemārs","Valdis"],["Valdeko","Valdeks","Valdemars","Valdimārts","Valdimirs","Valdmiers","Valdona","Valdone","Valdonis","Valdons","Valds","Vaļds","Vivaldis","Voldemars","Voldis","Voldmārs","Volmārs","Vulmārs"]],"12.01.":[["Reinis","Reina","Reinholds","Renāts"],["Anisija","Aņisija","Aņisja","Redženalds","Redžinalds","Reginalds","Regnalds","Regnolds","Reinhards","Reino","Reinolds","Reinvalds","Renalda","Renalds","Renato","Renats","Renolds","Rinats"]],"12.02.":[["Karlīna","Līna"],["Džigunda","Džilda","Džoija","Džoisa","Džoja","Karalina","Karalīna","Karla","Kārla","Karlina","Karlīne","Karlita","Karola","Karolina","Karolīna","Karolīne","Karulina","Kerija","Kerijs","Kerola","Kerolaina","Kerolaine","Lina","Līne","Lineta","Linija","Linita","Lins","Linus","Linuss"]],"12.03.":[["Aija","Aiva","Aivis"],["Aivika","Aivils","Aivo","Ajita","Ešlija","Eta","Etele","Etelvīne","Etere","Eteri","Etīna","Etjēns","Etnija"]],"12.04.":[["Jūlijs","Ainis"],["Julijans","Julijāns","Jūlijans","Julijs","Juliuss","Jūliuss","Juļjans","Juļjāns"]],"12.05.":[["Valija","Ināra","Ina","Inārs"],["Anāra","Anars","Anārs","Īna","Inaida","Inara","Inārija","Inārijs","Inars","Inarta","Inarts","Inatra","Inija","Inna","Innara","Ino","Valijs","Vallija"]],"12.06.":[["Nora","Lenora","Ija"],["Īģe","Manda","Norgita","Norika","Noriņa","Noris","Norīte","Norītis","Norvalda","Nurja"]],"12.07.":[["Indriķis","Ints","Namejs"],["Indreks","Indriks","Intis","Nameisis","Omula","Oniks","Oniksa"]],"12.08.":[["Vizma","Klāra"],["Klara","Klēra","Reta","Rets","Revita","Revs","Vizulis"]],"12.09.":[["Erna","Evita","Eva"],["Ernita","Ēva","Eve","Evelinda","Evelita","Evi","Evī","Ēvī","Evianna","Evīna","Silards","Sinatra"]],"12.10.":[["Valfrīds","Kira"],["Cirēnija","Valfreds","Valfrēds","Valfrīda","Valfrids"]],"12.11.":[["Kaija","Kornēlija"],["Kaira","Kajs","Kajsa","Kornelija","Kornelijs","Kornēlijs","Kortnija","Veta","Vianda","Viāna","Vianita","Vianta","Vidards","Vidars","Vidarts","Vidavs","Zinovija","Zinovijs"]],"12.12.":[["Otīlija","Iveta"],["Atala","Atāls","Igeta","Igila","Igita","Iverta","Iverts","Ivete","Odeta","Odita","Ofēlija","Otālija","Otilija","Zezostrs"]],"13.01.":[["Harijs","Ārijs","Āris","Aira"],["Airika","Airiks","Airis","Āra","Arends","Ārends","Ārens","Aress","Ariela","Ariels","Arigo","Arijs","Ariko","Ariks","Āriks","Aris","Ariss","Harija","Harina","Haris","Harita","Haritina"]],"13.02.":[["Malda","Melita"],["Džordana","Džordans","Džordijs","Jordans","Maldiņa","Maldis","Maldonis","Melitina"]],"13.03.":[["Ernests","Balvis"],["Baldūrs","Erasts","Ernijs","Ernis","Ernsts","Eulalija","Eulālija","Euzebijs","Nesters","Nestors","Nikifors","Ņikifors"]],"13.04.":[["Egils","Egīls","Nauris"],["Aigils","Naula","Neila","Neils","Noela","Noels","Nolāns"]],"13.05.":[["Irēna","Irīna","Ira","Iraīda"],["Airina","Airīna","Arina","Arīna","Arins","Arīns","Arions","Eirana","Īra","Iraida","Iraidis","Iranda","Irena","Irene","Irēne","Irenejs","Irenijs","Irēnijs","Irija","Īrija","Irina","Irinejs","Ironijs"]],"13.06.":[["Zigfrīds","Ainārs","Uva"],["Aināra","Ainards","Ainars","Ūva","Uve","Ūve","Zigfrids"]],"13.07.":[["Margrieta","Margarita"],["Magrieta","Malgožata","Margareta","Margarēta","Margarieta","Margieta","Margreta","Margrēta","Margrita","Marģieta","Mārģieta","Pegija"]],"13.08.":[["Elvīra","Velga","Rēzija"],["Elvira","Elvīrs","Hipolits","Ilvīra","Ipolits","Rezēda","Rezenda","Rezija"]],"13.09.":[["Iza","Izabella"],["Genadijs","Genādijs","Gennadijs","Gennādijs","Isabela","Izabela","Īzaks","Singa","Singita","Singrita","Singūna","Singurs"]],"13.10.":[["Irma","Mirga"],["Irmants","Irme","Irmina","Irmīna","Irmīne","Irmiņa","Mira","Mirabella","Miralda","Miranda","Miroslava","Miroslavs"]],"13.11.":[["Eižens","Jevgeņijs","Jevgeņija"],["Augenija","Eiženijs","Eugene","Eugenijs","Eugēnijs","Eugeņs","Euģenijs","Euģēnijs","Evgenijs","Evgēnijs","Evģenijs","Evģēnijs","Jevgenija","Jevgēnija","Jevgenijs","Jevgēnijs","Jevgēņija","Jevgēņijs","Jevģenija","Jevģēnija","Jevģenijs","Jevģēnijs","Jevženija","Jevžēnija"]],"13.12.":[["Lūcija","Veldze"],["Luceja","Lucianna","Lucians","Luciāns","Lucija","Lucijana","Lucijans","Lucijāns","Lusiāna","Lusija","Lūsija","Ļusja","Veldza"]],"14.01.":[["Roberts","Roberta","Raitis","Raits"],["Robērs","Robertīne","Roberto","Robija","Robijs","Robina","Robins"]],"14.02.":[["Valentīns"],["Eberhards","Edla","Edmans","Edmārs","Edna","Eginhards","Egmārs","Egnārs","Valeks","Valentijs","Valentins","Valents","Valtīns"]],"14.03.":[["Matilde","Ulrika"],["Eventijs","Everika","Evrika","Matilda","Tilda","Ulrihs","Ulriks"]],"14.04.":[["Strauja","Gudrīte"],["Engelberts","Engelīna","Gudmunds","Gudruna","Sagita","Siguta","Sigute","Zigeta","Zigija"]],"14.05.":[["Krišjānis","Elfa","Aivita","Elvita"],["Elfija","Kristjans","Kristjānis","Krišjāns"]],"14.06.":[["Tija","Saiva","Sentis","Santis","Saivis"],["Saiga","Saigits","Saija","Saila","Sailensa","Sailita","Saira","Sairis","Sairita","Sairuss","Santijs","Santo","Santoss"]],"14.07.":[["Oskars","Ritvars","Anvars"],["Orlando","Ornella","Ornets","Oskarina","Oskarīna"]],"14.08.":[["Zelma","Zemgus","Virma"],["Rianda","Riandra","Rids","Rieta","Selma","Zelmars","Zemlita","Zemvaldis","Zemvalds"]],"14.09.":[["Sanita","Santa","Sanda","Sanija","Sandija"],["Marfa","Sana","Sandita","Saneta","Sanijs","Sanna","Sannija","Santana","Santija","Senda","Sendija","Sendlija","Senija"]],"14.10.":[["Vilhelmīne","Minna"],["Mīce","Mina","Minadora","Mindora","Vilhelma","Vilhelmina","Vilhelmīna","Vilhelmine"]],"14.11.":[["Fricis","Vikentijs","Vincents"],["Frederika","Frederiks","Fredriks","Friderika","Frideriks","Fridriha","Fridrihs","Frīdrihs","Spricis","Vicenta","Vicents","Vikars","Vincens","Vincenta","Vincentijs","Vincentina","Vincentīna","Vincentīne","Vinsents"]],"14.12.":[["Auseklis","Gaisma"],["Gaismīte","Gaismone","Gaismonis","Gaismons","Illuminata"]],"15.01.":[["Fēlikss","Felicita"],["Asola","Aspazija","Aspāzija","Asunta","Atēna","Feliciana","Feliciāna","Felicianna","Felicians","Felicija","Felīcija","Felicijana","Felicijans","Felicjana","Felikarmena","Felikss","Felīsija","Filicija"]],"15.02.":[["Alvils","Olafs","Aloizs","Olavs"],["Alodija","Aloida","Aloīda","Aloiza","Aloizija","Aloizijs","Aloīzijs","Aloizis","Aloīzs","Alvids","Olands","Olārs","Olavi","Olevs"]],"15.03.":[["Amilda","Amalda","Imalda"],["Fabians","Fabiāns","Fabijans","Fabijāns","Ima","Imelda","Imula","Inelda"]],"15.04.":[["Aelita","Gastons"],["Haida","Haide","Haideja","Hamilkārs","Heidija","Heilija"]],"15.05.":[["Sofija","Taiga","Airita","Arita"],["Airīte","Airlenda","Airtons","Gļebs","Safija","Sofja","Sonāte","Sonija","Sonita","Soņa","Volga","Zofija","Zosja"]],"15.06.":[["Baņuta","Žermēna","Vilija","Vits"],["Maranda","Maranta","Marats","Marenda","Moda","Modesta","Modests","Modis","Ratmirs","Vila","Vilenta","Vilita","Vilja","Viljanta","Villija","Vitis","Vito","Vitus","Žermena"]],"15.07.":[["Egons","Egmonts","Egija","Henriks","Heinrihs"],["Ega","Egijs","Egmonds","Egmonta","Ego","Genrihs","Heincs","Heindrihs","Heinis","Heino","Heinriks","Hektors","Hendrihs","Hendriks","Henrihs","Henrika"]],"15.08.":[["Zenta","Dzelde","Zelda"],["Dzeja","Dzestra","Rima","Rimars","Rimma","Rimvalda","Rinvalda","Zelga","Zenita"]],"15.09.":[["Sandra","Gunvaldis","Gunvaris","Sondra"],["Gunivaldis","Gunivalds","Gunvalds","Gunvars","Sandriāna","Sandrīte","Santra","Sendra","Sondars","Sondris","Zandra"]],"15.10.":[["Eda","Hedviga","Helvijs"],["Ede","Edīna","Edviga","Heda","Hedija","Hedijs","Hedvigs","Helvi","Helvigs","Helvija","Helvis","Helvita"]],"15.11.":[["Leopolds","Undīne","Unda"],["Leopoldina","Undalgs","Undija","Undina","Undīna","Undis","Undita"]],"15.12.":[["Johanna","Hanna","Jana"],["Hanelita","Hanija","Hannelora","Hannelore","Hannija","Jāna","Janeka","Janija","Janika","Janna","Joana","Joanna","Johana","Jonita","Juanna","Junna","Žuanete"]],"16.01.":[["Lidija","Lida"],["Avija","Avita","Aviva","Āvo","Gordejs","Līda","Lideja","Lidita"]],"16.02.":[["Jūlija","Džuljeta"],["Džuliana","Džulianna","Džulija","Džūlija","Jūla","Jule","Jūle","Juliana","Juliāna","Jūliana","Jūliāna","Julianija","Julianna","Jūlianna","Julija","Julijana","Jūlijana","Julijanna","Julita","Juļjana"]],"16.03.":[["Guntis","Guntars","Guntris"],["Falks","Gaija","Guntārs","Gunts","Gutars"]],"16.04.":[["Mintauts","Alfs","Bernadeta"],["Alfa","Alfejs","Alfija","Alfijs","Bernada","Bernade","Bernāde","Bernadete","Bernadita","Bernadite","Bernadīte","Mindaugs","Mingaile"]],"16.05.":[["Edvīns","Edijs"],["Edija","Ediks","Edis","Edvija","Edvijs","Edvīna","Edvīne","Edvins","Kleofa","Kleopatra","Kleotilda","Klodija","Klods","Klotilde"]],"16.06.":[["Justīne","Juta"],["Džastina","Džastīne","Džastins","Justa","Justina","Justīna","Justine","Justīnija","Marsela","Marseljēza","Marsella","Marsels","Ustinija","Ustiņja"]],"16.07.":[["Hermīne","Estere","Liepa"],["Aleftina","Aleftīna","Aleftīne","Aleta","Alevtina","Alevtīna","Alevtine","Alevtīne","Esfira","Estera","Ēstere","Estra","Estris","Herma","Hermina","Hermīna","Hermine","Hervita","Ostins","Rainelda","Rainelde"]],"16.08.":[["Astra","Astrīda"],["Asterija","Astērija","Astērijs","Astrida","Astride","Astrīde","Astrids","Astrīds","Astrīte","Rinta","Rio","Riona","Rivo"]],"16.09.":[["Asja","Asnate","Dāgs"],["Anfims","Asija","Asnāte","Dags","Domna","Sirdsvalda","Sirdsvaldis","Sirdvalda"]],"16.10.":[["Daiga","Dinija","Dinārs"],["Daido","Daidze","Daiens","Daigars","Daigone","Daigonis","Daija","Dilans","Dinara","Dināra","Dinards","Dinars","Dineta","Dinijs","Dinnija"]],"16.11.":[["Banga","Glorija"],["Ganda","Jefimija","Jefims","Landa","Landijs","Vētra"]],"16.12.":[["Alvīne"],["Alvina","Alvīna","Alvine","Alvīnija","Alvins","Alvīns","Zira","Zola","Zolija"]],"17.01.":[["Tenis","Dravis"],["Denisa","Denise","Deniss","Denīza","Denīze","Deņiss","Dionisijs","Dioniss","Dionizijs","Radions","Rodions","Trofims"]],"17.02.":[["Donats","Konstance"],["Danats","Donalds","Donata","Donāta","Donāte","Donāts","Donna","Donots","Donvina","Konstancija","Konstantija","Konstantina","Konstantīna","Konstantīne","Vaino","Veino"]],"17.03.":[["Ģertrūde","Gerda","Gerhards"],["Ferdinands","Ferijs","Fernands","Gerarda","Gerards","Gerds","Gertija","Gertruda","Gertrūda","Gertrude","Gertrūde","Gerts","Ģertruda","Ģertrūda","Ģertrude","Trauta","Trautiņa","Trūde","Trūta","Trūte","Žerārs"]],"17.04.":[["Rūdolfs","Viviāna","Rūdis"],["Hardija","Hardijs","Hārdijs","Hardis","Harlijs","Harvijs","Hārvijs","Kardijs","Rudi","Rudiards","Rudolfs","Viviana","Viviena","Vivjena"]],"17.05.":[["Herberts","Dailis","Umberts"],["Dailonis","Dailons","Deila","Deils","Deja","Erberts","Erhards","Koleta","Uma"]],"17.06.":[["Artūrs","Artis"],["Arčijs","Ārčijs","Arčils","Arsenijs","Arsēnijs","Arsens","Arsēns","Arsentijs","Artijs","Artiks","Arts","Arturs","Artuss","Mečeslavs","Mečislava","Mečislavs","Palmira","Palmīra","Paloma","Pamela"]],"17.07.":[["Aleksis","Aleksejs","Alekss"],["Aleks","Alika","Aliks","Aļika","Aļiks","Pijs","Pius"]],"17.08.":[["Vineta","Oļegs"],["Rjuriks","Roalds","Roans","Ruriks","Veneta","Venita","Venjamina","Veņa","Vinete","Vinets","Vinita"]],"17.09.":[["Vera","Vaira","Vairis","Vaiva"],["Aila","Ailands","Ailenda","Aili","Ailija","Ailita","Ajla","Sīrija","Sīringa","Sirje","Sirke","Sivija","Vaila","Vaileta","Vairita","Vairīte","Vaironis","Vairons","Vaivars","Vēra","Verena","Verēna","Verija","Virēna"]],"17.10.":[["Gaits","Karīna","Gaitis"],["Gaita","Karena","Kārena","Karens","Karija","Kārija","Karina","Kārina","Karine","Karinē","Karīne","Karita","Kerena"]],"17.11.":[["Hugo","Uga","Uģis"],["Higo","Igo","Ugne","Ugo"]],"17.12.":[["Hilda","Teiksma"],["Borghilde","Borģīne","Dziesma","Hildegarde","Hildura","Hilga","Hilja","Ilda","Ildars"]],"18.01.":[["Antons","Antis","Antonijs"],["Acons","Antans","Antars","Antonio","Antuans","Antuāns","Entonijs","Ontons","Tonijs"]],"18.02.":[["Kora","Kintija"],["Cina","Cintija","Ciprians","Ciprijans","Konkordija","Korina","Kuprijans"]],"18.03.":[["Ilona","Adelīna"],["Adelaina","Adelaine","Adelfina","Adelina","Adeļina","Fetna","Ilana","Ilāna","Ilanda","Ilanta","Ileana","Iliana","Ilija","Ilita","Ilonda","Ilone","Ilonija","Ilons"]],"18.04.":[["Laura","Jadviga"],["Jadvīga","Jadze","Jedviga","Laure","Laurentīna","Laureta","Laurita"]],"18.05.":[["Inese","Inesis","Ēriks"],["Erihs","Ērihs","Eriks","Ero","Ēro","Ignese","Inesa","Inesīte","Konsuela","Konsuella","Kreigs"]],"18.06.":[["Alberts","Madis"],["Adalberta","Adalberts","Alberta","Edelberts","Edilberts","Merseda","Mersēda","Mersedesa","Mervils"]],"18.07.":[["Rozālija","Roze"],["Rosa","Rosita","Rosvita","Roza","Rozaleja","Rozalija","Rozalinda","Rozemarija","Rozita","Rozīte","Rozmarija","Rozvita"]],"18.08.":[["Liene","Helēna","Elena","Ellena","Liena"],["Aļona","Elana","Elāna","Elands","Elans","Elāns","Elēna","Elens","Ellana","Helena","Helene","Helēne","Hellēna","Jeļena","Lena","Lēna","Lenija","Lenijs","Lenita","Lienīte","Ļena"]],"18.09.":[["Liesma","Elita","Alita"],["Elite","Eralds","Mefodijs","Metodijs","Skara","Skarleta","Skārleta","Skaudris"]],"18.10.":[["Rolands","Rolanda","Ronalds","Erlends","Lūkass"],["Erlanda","Erlands","Erlenda","Erlens","Luka","Lukass","Railands","Railija","Railijs","Rolande","Rolando","Rolans","Rolāns","Rolanta","Rona","Ronalda","Ronaldo","Ronans","Ronda","Ronijs","Ronja","Ronta","Ronvalds"]],"18.11.":[["Aleksandrs","Doloresa","Brīve"],["Aleksanders","Aleksandris","Alesandrs","Brīva","Brīvīte","Dolita","Dollija","Laisve","Latvis","Latvīte","Zandars","Zanders"]],"18.12.":[["Kristaps","Kristofers","Krists","Klinta","Kristers"],["Klints","Kriss","Kristafors","Kristans","Kristars","Kristens","Kristo","Kristofors","Kristofs","Kšištofs"]],"19.01.":[["Andulis","Alnis"],["Alna","Alnars","Alnors","Džeida","Džellija","Džozelīna"]],"19.02.":[["Zane","Zuzanna"],["Efeja","Eifrozīne","Jefrosinija","Jefrosīnija","Sjuzanna","Sjuzena","Susanna","Suzana","Suzanna","Zana","Zanita","Zanna","Zuzana","Zuze","Zuzona"]],"19.03.":[["Jāzeps","Juzefa"],["Džozefs","Jāzepa","Jazepata","Jazeps","Jazupata","Jezufata","Jezupata","Jezupate","Jezups","Jēzups","Jozefa","Jozefata","Jozefina","Jozefīna","Jozefine","Jozefīne","Jozefs","Jozs","Juzefata","Juzefate","Juzefina","Juzefīna","Juzefine","Juzefs","Juzepa","Juzepata","Juzepate","Juzufata","Osips","Žozefina","Žozefs"]],"19.04.":[["Vēsma","Fanija"],["Fani","Fannija","Fēbe","Feja","Felonija","Fenija","Feona","Feonija","Fionija","Flēra","Hēlija","Helijs","Heliodors","Helita","Helju","Hella","Hellija","Helta","Vēsmiņa"]],"19.05.":[["Lita","Sibilla","Teika"],["Ksaverija","Ksavērija","Ksaverijs","Ksavērijs","Ksavers"]],"19.06.":[["Viktors","Nils","Mīla"],["Mila","Milana","Milāna","Milānija","Milans","Milāns","Mīle","Milena","Milēna","Milēnija","Milona","Milvards","Milvars","Milvija","Napoleons","Nila","Nilija","Nīls","Nilss","Niluta","Vikijs","Viktorijs","Vitors"]],"19.07.":[["Jautrīte","Kamila","Digna","Sāra"],["Digne","Dignija","Jautra","Jautris","Kamēlija","Kamena","Kamilija","Kamīlija","Kamilla","Kamils","Kamita","Pireta","Sallija","Sallijs","Sarika","Sarita","Seila","Sella","Sellija","Zallija","Zara","Zāra","Zarina"]],"19.08.":[["Melānija","Imanta"],["Imanda","Imandra","Malānija","Māle","Malgonija","Malinda","Malle","Meisija","Melanija","Melija","Melika","Melina","Melinda","Melisandra","Melizanda","Melizande","Melodija","Rodžers","Roēna","Rogate"]],"19.09.":[["Verners","Muntis"],["Munise","Sorenta","Spārīte","Spartaks","Spēkonis","Vernis","Vernons","Veronis"]],"19.10.":[["Elīna","Drosma","Drosmis"],["Drosme","Drosmiņš","Drošvaldis","Drošvaris","Elika","Elina","Elīne","Elīns"]],"19.11.":[["Elizabete","Liza","Līze","Betija"],["Alžbeta","Beta","Betsija","Beverīna","Eba","Elizabeta","Elīzabeta","Elīzabete","Elizaveta","Elizavete","Elizbete","Elzabeta","Elžbeta","Jelizabeta","Jelizaveta","Jelizavete","Jeļizabeta","Jeļizaveta","Jeļizavete","Lisa","Lisija","Līza","Lize","Līziņa"]],"19.12.":[["Lelde","Sarmis"],["Alena","Alēna","Alereins","Lelda","Tots"]],"20.01.":[["Oļģerts","Orests","Aļģirds","Aļģis"],["Algarts","Algers","Algirds","Alģirds","Alģirts","Aļģerts","Aļģimants","Aļģirts","Odisejs","Olgerts","Oļģerds","Orfejs","Orīda"]],"20.02.":[["Vitauts","Smuidra","Smuidris"],["Egberts","Egdijs","Egerts","Egida","Egidijs","Hulda","Smuidrīte","Vijtauts","Vītauts"]],"20.03.":[["Made","Irbe"],["Fraskita","Freija","Freja","Frementijs","Fritjofs","Madaļa","Madrija"]],"20.04.":[["Mirta","Ziedīte","Meija"],["Bitīte","Flora","Floransa","Florence","Florentija","Florentina","Florentīna","Florentine","Florentīne","Floriana","Florians","Floriāns","Florija","Florijana","Florijans","Florijs","Hendija","Henija","Henisa","Henita","Hennija","Henno","Hiacinta","Hionija","Jacinta","Orhideja","Orions"]],"20.05.":[["Venta","Salvis","Selva"],["Fadejs","Lada","Ladislavs","Laira","Lala","Salvija","Salvijs","Salvo","Selvijs","Selvins","Selvis","Solvis","Tadeušs"]],"20.06.":[["Rasma","Rasa","Maira"],["Maila","Maima","Maina","Mairina","Mimoza","Molija","Mollija","Morēna","Morgane","Rasita","Rasmīte","Rasulīte"]],"20.07.":[["Ritma","Ramona"],["Platons","Plūdonis","Rada","Radimins","Ramons","Ramuna","Ramune","Ramute","Ritmars","Ritmārs","Rusanda","Ruzanna","Ruze"]],"20.08.":[["Bernhards","Boriss","Rojs"],["Bernads","Bernarda","Bernarde","Bernardina","Bernardīna","Bernards","Bernārs","Bernats","Borislavs","Rokijs","Roko","Roksana","Roksolana","Samuela","Samuels","Samuēls","Samvels","Zahars","Zamuels","Zāmuels","Zāmuēls"]],"20.09.":[["Guntra","Ginters","Marianna"],["Mariana","Marians","Mariela","Marijana","Marijanna","Marijans","Maritana","Marjana","Marjanna","Marjans","Staldzis"]],"20.10.":[["Leonīds","Leonīda"],["Leonida","Leonide","Leonids","Leonita","Pelageja"]],"20.11.":[["Anda","Andīna","Vigo"],["Andija","Andina","Andīne","Nanda","Viga","Vīga","Vīgants","Vigars","Vigda","Vigelijs","Vigeta","Vigija","Vigilija","Vigilijs","Vigita","Vīgo","Viģīlija"]],"20.12.":[["Arta","Minjona"],["Artemida","Artemijs","Artemīda","Artēmijs","Artija","Artjoms","Vitnija"]],"21.01.":[["Agnese","Agnija","Agne"],["Agna","Agnars","Agnārs","Agnesa","Agnesija","Agneška","Agņeška","Urdze","Urdziņa"]],"21.02.":[["Eleonora","Ariadne"],["Ariadna","Arialds","Arilds","Eleanora","Elenora","Elianora","Elionora","Elona","Illi","Illo","Ilo"]],"21.03.":[["Una","Unigunde","Dzelme","Benedikts","Benedikta"],["Abigaila","Abigeila","Dementijs","Demija","Geila","Gelārijs","Kunegunda","Kunigunda","Kuno","Ūma","Ūna","Unigunda","Unija","Unika","Ūnika","Unita","Uno","Venedikts"]],"21.04.":[["Marģers","Anastasija"],["Afanasija","Afanasijs","Anastāsija","Anastasijs","Anastāsijs","Anastazija","Anastāzija","Anastazijs","Anastāzijs","Atanazijs","Hera","Hēra","Herenija","Herita","Marģeris","Marģis","Nastasija","Nastja"]],"21.05.":[["Ernestīne","Ingmārs","Akvelīna"],["Akilina","Akulina","Akuļina","Akvelina","Akvilina","Akvilīna","Avelina","Avelīna","Erneste","Ernestina","Ernestīna","Ernestine","Ingemāra","Ingemars","Ingemārs","Ingmāra","Ingmars","Ingomars","Inmārs"]],"21.06.":[["Emīls","Egita","Monvīds"],["Ahto","Egīna","Egīns","Egits","Emilians","Emilijans","Emīlijs","Emilis","Emīlis","Emiljans","Emils","Jemeļjans","Monrita","Monvida","Monvids"]],"21.07.":[["Meldra","Meldris","Melisa"],["Potencija","Pudencija","Pudentija"]],"21.08.":[["Janīna","Linda"],["Janina","Jaņina","Jaņīna","Linde","Lindija","Lindons","Linna","Linsija","Romāra","Romina","Romunds","Romuss","Romuta"]],"21.09.":[["Modris","Matīss","Mariss"],["Marijs","Mārijs","Mario","Mariona","Marisa","Mateass","Matejs","Mateo","Mateuss","Mateušs","Matiass","Matija","Matis","Matvejs","Maurīcijs","Metjū","Modriņš"]],"21.10.":[["Urzula","Severīns"],["Severīna","Severins","Severjans","Taida","Taīda","Taisa","Taisija","Taīsija","Ursula","Uršula","Uršule","Uršuļa"]],"21.11.":[["Zeltīte","Andis"],["Andars","Andejs","Andijs","Ando","Vigors","Vigorts","Vigra","Vigurds","Vilfrida","Vilfrīds","Vilibalds","Viliberts","Zelta","Zeltiņa","Zlata"]],"21.12.":[["Toms","Tomass","Saulcerīte"],["Saulceris","Saulgaida","Saulgaitis","Tomašs","Tomāšs","Tomijs","Tumašs"]],"22.01.":[["Austris"],["Bendžamins","Beneventa","Benija","Benijs","Benjamina","Benjamins","Benjamiņš","Benjāmiņš","Benno","Beno","Benoventa","Bens"]],"22.02.":[["Ārija","Rigonda","Adrians","Adriāna","Adrija"],["Adreans","Adriana","Adrianna","Adriāns","Adris","Areta","Aretijs","Arets","Ariana","Ariāna","Arianda","Ariandra","Arianna","Arians","Arida","Arīda","Arija","Arika","Ārika","Arimanda","Arimands","Ārīte","Demids","Rigonds"]],"22.03.":[["Tamāra","Dziedra","Gabriels","Gabriela"],["Ciedra","Damars","Damārs","Damians","Damijs","Damirs","Gabija","Gabriēla","Gabriele","Gabriella","Gabriēls","Gavrils","Gedra","Giedra","Ģiedra","Tamara","Tamārs"]],"22.04.":[["Armands","Armanda"],["Armando","Armants","Arma","Armass","Hete","Hetija","Hevena","Hevijs","Vadims"]],"22.05.":[["Emīlija. Visu neparasto un kalendāros neierakstīto vārdu diena"],["Emīlija.","Visu","neparasto","un","kalendāros","neierakstīto","vārdu","diena","Ahmads","Ahmeds","Airats","Ali","Alija","Džamila","Emileja","Emiliana","Emilija","Emilijana","Emīlja","Emiljana","Farhads","Farida","Farids","Fatima","Fatina","Fatma","Gaidars","Gulnara","Guļnara","Horens","Indira","Indīra","Ismails","Kālebs","Karima","Karims","Mehribana","Murads","Muslims","Osmars"]],"22.06.":[["Ludmila","Laimdots","Laimiņš"],["Bogdana","Bogdans","Bogumila","Laimdotis","Ludmilla","Lūlija"]],"22.07.":[["Marija","Marika","Marina"],["Mareja","Mariama","Marī","Mariamija","Marīna","Marja","Marjama","Mārika","Miriama","Mirjama","Mirjāma","Mirjana"]],"22.08.":[["Rudīte","Everts"],["Evans","Evarists","Evars","Evarts","Rode","Rodijs","Ruda"]],"22.09.":[["Māris","Mārica","Maigurs"],["Maris","Morics","Moriss","Steinārs","Stenlijs"]],"22.10.":[["Īrisa","Irīda","Airisa"],["Airida","Arisa","Iraisa","Iresa","Irida","Irisa"]],"22.11.":[["Aldis","Alfons","Aldris"],["Aldijs","Aldra","Alfins","Alfonija","Alfonss","Vilonija","Vilora"]],"22.12.":[["Saulvedis","Saule"],["Saulīte","Saulstarīte","Saulstars","Saulvija"]],"23.01.":[["Grieta","Strauta","Rebeka","Grēta"],["Bazils","Bažena","Bekija","Božena","Greisa","Greisija","Greta","Grietiņa","Reveka","Straumīte","Vasilijs","Vasīlijs","Vasilika","Vasilisa","Vasils","Virta"]],"23.02.":[["Haralds","Almants"],["Almands","Almonds","Aralda","Aralds","Haralda","Harolds","Herolds","Heronija"]],"23.03.":[["Mirdza","Žanete","Žanna"],["Džana","Džaneta","Džanete","Džanita","Džeina","Džena","Dženeta","Dženete","Dženifera","Dženita","Džesija","Džesika","Džina","Džīna","Džineta","Džinita","Džoanna","Janeta","Janete","Janita","Janta","Jesija","Žana","Žaneta","Žanija","Žanneta"]],"23.04.":[["Jurģis","Juris","Georgs","Jurgita"],["Džordžs","Georgijs","Irži","Ježijs","Jirgens","Jorgens","Jurands","Juranta","Jureks","Jureta","Jurijs","Jurika","Juriks","Jurita","Jurs","Žoržs"]],"23.05.":[["Leontīne","Leokādija","Lonija","Ligija"],["Leokadija","Leontija","Leontijs","Leontina","Leontīna","Leontine","Leontins","Leontīns","Levantīna","Līgija","Ligindra","Lone","Lonita","Lonnija","Lontīne","Ļoņa"]],"23.06.":[["Līga"],["Līgonis","Līgotnis"]],"23.07.":[["Magda","Magone","Mērija","Magdalēna","Madlēna"],["Madelaina","Madeleina","Madlena","Magdalena","Magdaliene","Magdalina","Magita","Meralda","Meri","Merīda","Merija","Merilina","Merita","Radislavs","Radmila","Radomirs"]],"23.08.":[["Vitālijs","Ralfs","Valgudis"],["Ralda","Raldis","Rolfs","Rolijs","Rolita","Valgundis","Vitalija","Vitālija","Vitalijs","Vitalina","Vitalis","Vitālis","Vitalisa","Vitaliss","Vitāls","Vitars"]],"23.09.":[["Vanda","Veneranda","Venija","Vanesa"],["Snorre","Vandze","Vaneranda","Vanese","Venefrīda","Venera","Venēra","Venerande","Veners","Venīna","Veniranda"]],"23.10.":[["Daina","Dainis","Dainida"],["Daimona","Daimonds","Daimons","Dainars","Dainārs","Dainarts","Dainita","Dainīte","Dainors","Deimonds","Deimons","Jevlampija"]],"23.11.":[["Zigrīda","Zigfrīda","Zigrīds"],["Sigrīda","Sigrija","Sigruna","Sigrūna","Sigurnija","Ziga","Zigda","Zigfrida","Zigra","Zigrida","Zigrids","Zigrita","Zigvija"]],"23.12.":[["Viktorija","Balva"],["Vika","Vikija","Viktora","Viktorina"]],"24.01.":[["Krišs","Ksenija","Eglons","Egle"],["Aksenija","Eglis","Krišus","Ksendija","Ksēnija"]],"24.02.":[["Diāna","Dina","Dins"],["Deina","Deinis","Deins","Dēna","Dens","Devins","Diana","Diandra","Dianna","Dīna","Dinis","Dino","Dīns","Diona","Dīva","Divja","Dīvs"]],"24.03.":[["Kazimirs","Izidors"],["Džeralda","Džeraldīne","Džeralds","Džerijs","Garlībs","Geraldina","Geralds","Izida","Izīda","Kazemirs","Kazimerina","Kazimiers","Kazimira","Kazimirina","Kazis","Kazmerina","Kazmers","Kazmirina","Sidars","Sidors","Zidra"]],"24.04.":[["Visvaldis","Nameda","Ritvaldis","Ritums"],["Honorads","Honorata","Honoreta","Horsts","Hortenzija","Ortenzija","Ortija","Ritvalds","Visvalda","Visvalds","Visvaris","Visvars"]],"24.05.":[["Ilvija","Marlēna","Ziedone"],["Kurbads","Kurbats","Marlena","Marlens","Ziedonija"]],"24.06.":[["Jānis"],["Joņs","(LTG:","Juoņs)"]],"24.07.":[["Kristīne","Kristīna","Krista","Kristiāna","Kristiāns"],["Hristiāna","Kersti","Kerstina","Kriste","Kristela","Kristena","Kristiana","Kristiāne","Kristianna","Kristians","Kristija","Kristijana","Kristijans","Kristijāns","Kristilla","Kristina","Kristine","Ķersta","Ķērsta"]],"24.08.":[["Bērtulis","Boļeslavs"],["Bartolomejs","Bārtuļs","Bertolds","Bertrams","Bierants","Boļeslava","Rorijs","Rosma","Rostislavs","Varfolomejs","Varlams"]],"24.09.":[["Agris","Agrita"],["Agrits","Agrons","Steidzīte","Steiga"]],"24.10.":[["Renāte","Modrīte","Mudrīte"],["Mudra","Mudris","Rana","Ranāte","Raneta","Ranita","Ranta","Rena","Rēna","Renata","Renāta","Renate","Reneta","Renija","Renijs","Renita","Renta","Rineta","Rinete"]],"24.11.":[["Velta","Velda"],["Velards","Veldra","Velita","Velte","Veltija","Vīna","Vinārs","Viners","Vīne"]],"24.12.":[["Ādams","Ieva"],["Ieviņa","Odums"]],"25.01.":[["Zigurds","Sigurds","Sigvards"],["Berenika","Berils","Berita","Beruta","Boneta","Bonija","Bonijs","Sigorts","Sigurts","Sigvars","Sigvarts","Zigo","Zigonis","Zigurts","Zigvards"]],"25.02.":[["Alma","Annemarija"],["Almāra","Almars","Almārs","Almīra","Andārta","Ankatrīna","Anlīza","Anlīze","Anlizeta","Anmāra","Anmarija","Annaklāra","Annamarija","Annmarija","Gunmāra"]],"25.03.":[["Māra","Mārīte","Marita","Mare","Ģedimins"],["Geda","Gēda","Gedimins","Gregors","Grigorijs","Grigors","Ģēda","Mara","Māre","Mareta","Māreta","Mārieta","Marijeta","Mārita","Marite","Marīte","Marjeta","Mora","(LTG:","Muora)"]],"25.04.":[["Līksma","Bārbala"],["Barbala","Barbola","Borbala","(LTG:","Buorbala)","Borbola","(LTG:","Buorbola)","Borbula","(LTG:","Buorbula)"]],"25.05.":[["Anšlavs","Junora"],["Andzelms","Anselms","Anzelma","Anzelms","Juna","Jūnija","Jūnijs","Junita","Junona","Junta","Krīvs"]],"25.06.":[["Milija","Maiga"],["Maida","Maigone","Mia","Mija","Milica","Milita","Mille","Millija"]],"25.07.":[["Jēkabs","Žaklīna"],["Džeims","Džeimss","Džeks","Džema","Džemma","Džems","Džemss","Džims","Jaceks","Jakobīna","Jakobs","Jākobs","Jakovs","Jakubs","Jākubs","Kaupo","Žaklina","Žaklīne","Žaks"]],"25.08.":[["Ludvigs","Ludis","Ivonna","Patrīcija","Patriks"],["Ivona","Ivonda","Ivonija","Ludolfs","Lūdolfs","Ludovika","Ludoviks","Ludviga","Ludvika","Ludviks","Ludviķis","Ludvisa","Ludvise","Ludvisija","Luijs","Luiss","Ļudvise","Patricija","Patricijs","Patrisija"]],"25.09.":[["Rodrigo","Rauls"],["Raulis","Sulamite","Sulamīte","Svanhilda"]],"25.10.":[["Beāte","Beatrise"],["Beata","Beāta","Beate","Beatrisa","Biatrise","Gilarijs","Hilards","Hilarija","Hilarijs","Hilārijs","Hilars","Hilārs"]],"25.11.":[["Katrīna","Kate","Kadrija","Trīne","Katrīne"],["Jekaterina","Jekaterīna","Kadija","Katalīna","Katarina","Katarīna","Katažina","Katerina","Katerīna","Katija","Katiņa","Katra","Katre","Katri","Katrina","Katrine","Katriona","Kecija","Keita","Keitija","Keitlina","Keta","Kēta","Kete","Kēte","Ketija","Ketri","Ketrija","Ketrina","Ketrīna","Trīna"]],"25.12.":[["Stella","Larisa"],["Estella","Zvaigznīte"]],"26.01.":[["Ansis","Agnis","Agneta"],["Agnete","Agneze","Agnēze","Agnita","Hanss","Hanzija","Karps","Polikarps"]],"26.02.":[["Evelīna","Aurēlija","Mētra"],["Aurelija","Aurelijs","Aurēlijs","Aurels","Elvina","Elvīna","Elvīne","Elvings","Elvins","Elvīns","Evalīna","Evandželīna","Evelina","Eveline","Evelīne","Zoja"]],"26.03.":[["Eiženija","Ženija"],["Dženija","Eižēnija","Eugenija","Eugēnija","Euģenija","Euģēnija","Evgenija","Evgēnija","Evģenija","Evģēnija","Gelija","Gēlija","Gelinta","Žene","Ženijs"]],"26.04.":[["Alīna","Sandris","Rūsiņš"],["Aliāna","Alina","Aline","Alīne","Alinte","Aļina","Imars","Imārs","Imarts","Sandars","Sanders","Sandrino","Sandro","Sandrs","Sandors","Šandors"]],"26.05.":[["Edvards","Edvarts","Eduards","Varis"],["Eduarda","Eduārds","Eduars","Edvarda","Edvārts","Eidis","Ezers","Ezra","Tailers","Tedijs","Tedis","Teilors","Varaidotis","Varaidots","Varimands","Varimants","Varita","Varīte","Varonis"]],"26.06.":[["Ausma","Inguna","Ingūna","Inguns","Ausmis"],["Ingunda","Ingūns","Ingura","Ingūra","Ingurds","Ingurs","Inguta","Muza","Mūza","Naidžels"]],"26.07.":[["Anna","Ance","Annija"],["Ana","Anabella","Ancis","Annabella","Anne","Annele","Annelija","Anniņa","Aņa","Aņeļa","Aņuta","Ona","Oneta"]],"26.08.":[["Natālija","Tālija","Broņislavs","Broņislava"],["Aglaja","Bronija","Bronis","Bronislava","Bronislavs","Broņa","Nata","Nataleja","Natalī","Natalija","Natalja","Nataļja","Nate","Natela","Natella","Neta","Talija","Talita","Tihons"]],"26.09.":[["Gundars","Kurts","Knuts"],["Gundaris","Gundolfs","Gundra","Nikita","Ņikita","Šeila","Šeilija","Šeina","Šelbija","Šelda","Šellija","Šerona"]],"26.10.":[["Amanda","Kaiva","Amanta"],["Amandis","Amands","Amantija","Amaranda","Amaranta","Amarilla","Amenta","Araminta","Azanda","Azella","Kaivis"]],"26.11.":[["Konrāds","Sebastians"],["Kondrats","Kondrāts","Konors","Konrads","Konrands","Konrāts","Manefa","Sebastjans","Vingra"]],"26.12.":[["Dainuvīte","Gija","Megija"],["Dainavīte","Gijs","Mega","Megana"]],"27.01.":[["Ilze","Ildze","Izolde"],["Ilza","Ilzīte","Izolda","Ilāra","Ilards","Ilarija","Ilārija","Ilarijs","Ilārijs","Ilars","Ilārs","Illa","Illarija","Iļža","Tristans"]],"27.02.":[["Līvija","Līva","Andra"],["Andre","Andrea","Andrelita","Andreta","Andriana","Andriāna","Andrija","Andrijana","Andrika","Andrita","Andromeda","Liva","Livars","Liveta","Livija","Līvis","Livita","Līvs"]],"27.03.":[["Gustavs","Gusts","Tālrīts","Saulis"],["Genefa","Generoza","Genija","Genita","Gentra","Gerita","Gesta","Sauļus","Tālrids","Tālrita","Tālrits"]],"27.04.":[["Tāle","Raimonda","Raina","Klementīne"],["Ingolfs","Inolds","Klemans","Klemens","Klemenss","Klementijs","Klementina","Klementīna","Klementine","Klementīns","Klements","Klimans","Klimentijs","Klimentina","Klimentīna","Raima","Raimija","Raimona","Rimona","Rimonda","Tāla"]],"27.05.":[["Dzidra","Gunita","Loreta","Dzidris"],["Aglikerija","Dzidrīte","Glikerija","Guneta","Gunitra","Laurēna","Liora","Lora","Lorands","Loransa","Loreina","Lorena","Lorēna","Lorens","Lorensa","Lorenss","Lorenta","Lorete","Lorija","Lorijs","Lorika","Lorina","Lorīna","Lorita"]],"27.06.":[["Malvīne","Malvis"],["Jelisejs","Jeļisejs","Malvina","Malvīna","Malvine","Naila","Naina","Naira","Nansija","Naomi","Nensija"]],"27.07.":[["Marta","Dita","Dite"],["Mārta","Martijana","Martina","Martīna","Radu","Radvilis","Radvils","Raēle"]],"27.08.":[["Žanis","Jorens","Alens"],["Alana","Alans","Alēns","Allans","Allens","Alons","Džo","Džonatans","Džonijs","Džonis","Džons","Huans","Ivans","Janeks","Janis","Janošs","Jans","Jāns","Janušs","Joans","Johans","Johanness","Jonass","Jonatans","Jonatāns","Jonijs","Jons","Jorēns","Juhans","Žanno","Žano","Žans","Žuans"]],"27.09.":[["Ādolfs","Ilgonis"],["Ado","Adolfina","Ādolfina","Adolfīne","Ādolfīne","Adonija","Adonis","Adoniss","Delfija","Delfina","Delfīna","Delfīne","Ilgons","Širleja","Širlija"]],"27.10.":[["Lilita","Irita","Ita"],["Itars","Itārs","Itija","Itvars","Lillita","Praskovja","Proskovja"]],"27.11.":[["Lauris","Norberts"],["Laurijs","Nords","Vinifreda","Vinifreds","Vinija","Vinnija","Vinolds","Vinona"]],"27.12.":[["Elmārs","Inita","Helmārs"],["Elmāra","Elmars","Helmars","Initra"]],"28.01.":[["Kārlis","Spodris"],["Bianka","Čarita","Čārlijs","Čārlzs","Karels","Karlo","Karls","Karolis","Karols"]],"28.02.":[["Skaidrīte","Justs","Skaidra"],["Eigits","Elārs","Elčins","Justins","Justīns","Skaidre","Skaila","Skaiste"]],"28.03.":[["Gunta","Ginta","Gunda"],["Gianeja","Gina","Gineta","Ginita","Gintija","Gonda","Gundija","Gundis","Guntiņa","Ģinta","Igunda"]],"28.04.":[["Gundega","Terēze"],["Inrigo","Teresa","Terēsa","Terese","Terēse","Teresija","Terēsija","Tereza","Terēza","Tereze","Terezeja","Terezija","Terēzija","Termija"]],"28.05.":[["Vilis","Vilhelms"],["Langina","Lengina","Leongina","Leongīna","Leongīne","Leongins","Leongīns","Logina","Longina","Longīna","Longins","Longīns","Vilārs","Vilberts","Vilens","Vilhelmins","Vilhelmīns","Vilijs","Viljams","Ville","Villems","Villijs","Viļa","Viļums","Viļus"]],"28.06.":[["Viesturs","Kitija","Viestards","Vestards"],["Klitija","Narcise","Narciss","Narciza","Nargisa","Nargiza","Viestars","Viestarts","Viesturis","Vieturs"]],"28.07.":[["Cecīlija","Cilda"],["Cecilija","Celerina","Celina","Celīna","Cicilija","Cildis","Cildonis","Cilija","Cilina","Cilmija","Cilnija","Rafaela","Rafaels","Rafaēls","Rafails","Rafiks"]],"28.08.":[["Auguste","Guste"],["Augusta","Augustina","Augustīna","Augustīne","Gusta","Rovena","Rovēna","Rovens","Ruāna"]],"28.09.":[["Sergejs","Svetlana","Lana"],["Lāna","Sergo","Seržs","Sveta","Svetoslavs","Svjatoslavs","Vaclava","Vaclavs","Večella","Večeslavs","Večislavs","Venceslavs","Vencislava","Vencislavs","Venčeslavs","Vinca","Vinceslavs","Vincis","Vincs","Vjačeslavs"]],"28.10.":[["Ņina","Ninona","Antoņina","Oksana"],["Aksana","Antonina","Antonīna","Nina","Nīna","Ninele","Ninella","Nineta","Niseta","Niveta","Ņīna","Oksāna"]],"28.11.":[["Rita","Vita","Olita"],["Olija","Olina","Olis","Ollija","Ritija","Vinta","Vintars","Vintārs","Vintra","Vints","Vitija"]],"28.12.":[["Inga","Ivita","Irvita","Ingeborga"],["Inge","Ingerūda","Ingeta","Ingita","Ingo","Irvalds","Irvings","Irvins","Irvīns"]],"29.01.":[["Aivars","Valērijs","Bille"],["Aivalds","Aivārs","Billijs","Bils","Valerians","Valeriāns","Valerijans","Valerijāns","Valerijs","Valerjans","Valerjāns","Velerjans"]],"29.02.":[["–"],[]],"29.03.":[["Aldonis","Agija"],["Agejs","Agijs","Aldons","Gilberts"]],"29.04.":[["Vilnis","Raimonds","Laine"],["Irta","Iruta","Irute","Laina","Laineta","Lainis","Leina","Leino","Raimis","Raimo","Raimons","Raimunds","Reimo","Reimonds","Rimonds","Rimons"]],"29.05.":[["Maksis","Maksims","Raivis","Raivo"],["Lakija","Lara","Largija","Larija","Larijs","Larina","Larions","Laris","Maksimilians","Maksimiliāns","Maksimiljans","Makss","Raiva","Raivita"]],"29.06.":[["Pēteris","Pāvils","Pauls","Paulis"],["Narajana","Nareks","Narija","Nārija","Narimans","Narimants","Narine","Narinē","Pavels","Pāvels","Pavils","Pāvuls","Peta","Pēters","Petra","Petro","Petrs","Piters","Pīters","Pits","Pjotrs","Pola","Pols","Povils","Povuls","(LTG:","Puovuls)"]],"29.07.":[["Edmunds","Edžus","Vidmants"],["Asmunds","Ausmunds","Edmonda","Edmonds","Edmons","Edmonts","Edmunts","Raens","Raida","Raiders","Raido","Raiena","Raiens","Raigards","Raigo","Raija","Rajens","Vidmands","Vidmunds"]],"29.08.":[["Armīns","Vismants","Aiga"],["Aigija","Aigijs","Aigis","Aigita","Aigo","Aigula","Armanis","Armans","Armāns","Armens","Armida","Armīda","Armīds","Armilda","Armins","Armis","Rubens","Rūbens","Rūbija","Rubīna","Rufina","Visija","Viskants","Visma","Vismands"]],"29.09.":[["Miķelis","Mikus","Miks","Mihails","Jumis"],["Maikls","Maiks","Migels","Mihaela","Mihaels","Mihailina","Mihalina","Mihalīna","Mihaļina","Mikaela","Mikaels","Mikalina","Mikēle","Mikija","Mikijs","Mikuss","Miķēlis","Mišela","Mišels"]],"29.10.":[["Laimonis","Elvijs","Elva","Elvis","Laimis"],["Elvars","Elvi","Elviga","Elvigs","Elvija","Elvisa","Elviss","Elvo","Laimonds","Laimons","Laimonts","Laimutis","Laimzieds"]],"29.11.":[["Ignats","Virgīnija"],["Aimo","Ignatijs","Ignātijs","Ignāts","Vergenija","Virdžīnija","Virga","Virgenija","Virgilijs","Virgina","Virgīna","Virgine","Virgīne","Virginija","Virginijs","Virģinija","Virģīnija"]],"29.12.":[["Solveiga","Ilgona"],["Invalds","Invars","Inveiga","Solanža","Solvega","Solvēga"]],"30.01.":[["Tīna","Valentīna","Pārsla"],["Biminita","Binija","Binnija","Bivšaka","Pārsliņa","Stīna","Stīne","Tiāre","Tina","Tīne","Valentija","Valentina","Valentine","Valentīne","Vaļa"]],"30.03.":[["Nanija","Ilgmārs"],["Igmārs","Ignars","Ilgmars","Nana","Nanete","Nannija","Nena"]],"30.04.":[["Lilija","Liāna"],["Altairs","Dālija","Daļa","Elta","Eltons","Isma","Itallo","Italo","Itālo","Lia","Liana","Lianda","Lianta","Līlija","Lilja","Lillija"]],"30.05.":[["Vitolds","Lolita","Letīcija"],["Jevdokija","Lalita","Lea","Leāna","Leāra","Leida","Leila","Leticija","Levijs","Levita","Logita","Lola","Lolija","Lollija","Vitolda","Vitols","Vītols"]],"30.06.":[["Tālivaldis","Mareks"],["Letija","Mareka","Mereks","Savelijs","Savēlijs","Tālivalda","Tālivalds","Tālvaldis"]],"30.07.":[["Valters","Renārs","Regnārs"],["Ragnars","Ragnārs","Ragnēda","Rāgners","Ragnija","Regnars","Reinards","Reinars","Reinārs","Reiners","Renards","Renars","Renarts","Rinards","Rinārs","Rintars","Valteris","Valtra","Valtraude","Valtrauta","Valtraute"]],"30.08.":[["Alvis","Jolanta","Samanta"],["Alvija","Alvijs","Alvika","Alvita","Alvits","Jalanta","Jolanda","Jolands","Jolants","Jolita","Ruslana","Ruslands","Ruslans","Ruslāns"]],"30.09.":[["Elma","Menarda","Elna"],["Elmija","Elmīna","Elmīne","Elnara","Elnāra","Elneta","Elnurs","Geronima","Geronims","Geronīms","Heronima","Heronims","Heronīms","Hieronīms","Jeronims","Jeronīms","Ļubova","Medards","Medarts","Medeja","Meinards","Meinhards","Mena","Mendija","Meredita"]],"30.10.":[["Nadīna","Ulla","Adīna"],["Adina","Adīne","Eila","Nadežda","Nadija","Nadina","Nadīne","Ulda","Uldive","Uldze","Ulita","Uljana","Uljans","Ullija","Uļjana","Uļjans"]],"30.11.":[["Andrievs","Andrejs","Andris"],["Anders","Anderss","Andrāšs","Andreass","Andrejans","Andrējs","Andress","Andrians","Andriāns","Andrijans","Andrijs","Andrivs","Androns","Andrs","Andruss","Endrijs","Endrū"]],"30.12.":[["Dāvids","Dāvis","Dāniels","Daniela","Daniels"],["Daniēla","Dāniela","Daniella","Daniēls","Daniils","Danils","Daņiils","Daņila","Daņils","Dato","Davids","Dāvīds","Dāvs","Deivids","Deivija","Deivijs","Deivis","Deivs","Deniels","Dēvids","Dēvija","Dēvijs"]],"31.01.":[["Tekla","Violeta"],["Bonaventura","Bonaventūra","Bonaventūrs","Bonoventura","Tekle","Tikla","Tīksma","Viorika"]],"31.03.":[["Gvido","Atvars"],["Atstars","Gido","Gidons","Gvida","Gvidālija","Gvidis","Gvidons","Gvineta"]],"31.05.":[["Alīda","Jūsma"],["Alida","Alide","Alīde","Alidija","Alīdija","Alis","Amīda","Elīda","Faina","Jūsmiņš","Lendija","Petronela","Petronele","Petronelija","Petronella","Petronellija","Petroneļa","Petrunela","Petrunele","Petrunelija","Petruneļa"]],"31.07.":[["Rūta","Ruta","Angelika","Sigita"],["Andžela","Andželika","Andželīna","Andželita","Andžella","Andželo","Anga","Angarijs","Angela","Angelija","Angēlika","Angelina","Angelīna","Angelita","Angeļa","Anģelina","Anģelīna","Anhelita","Anžela","Anželika","Anželina","Anželita","Anžella","Rute","Rūte","Rūtiņa","Sigeta","Sigija","Sigits"]],"31.08.":[["Vilma","Aigars"],["Aigvars","Saksija","Valida","Valīda","Valisa","Valita","Vallida","Valma"]],"31.10.":[["Valts","Rinalds","Rinalda"],["Rainis","Rainita","Rainolds","Rina","Rīna","Rinaldo","Rinalts","Vaits","Valta","Valtis"]],"31.12.":[["Silvestrs","Silvis","Kalvis"],["Kalve","Silvesters","Silvestra","Silvestris"]]};
+const months=['janvāris','februāris','marts','aprīlis','maijs','jūnijs','jūlijs','augusts','septembris','oktobris','novembris','decembris'];
+const monthsLoc=['janvārī','februārī','martā','aprīlī','maijā','jūnijā','jūlijā','augustā','septembrī','oktobrī','novembrī','decembrī'];
+const monthNom=['Janvāris','Februāris','Marts','Aprīlis','Maijs','Jūnijs','Jūlijs','Augusts','Septembris','Oktobris','Novembris','Decembris'];
+let selected=new Date(), view=new Date(selected.getFullYear(),selected.getMonth(),1);
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.';
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// TEST sinhronizācija ir papildu darbība: lokālie favorīti paliek pieejami arī bez interneta.
+// Offline-first: ierīces saraksts ir primārais; serverim sūtām tikai izmaiņas.
+const TEST_FAVORITES_QUEUE_KEY='vardadienas_test_favorites_queue_v1';
+let testFavoritesSyncPromise=null;
+function readTestFavoritesQueue(){
+  try{
+    const value=JSON.parse(localStorage.getItem(TEST_FAVORITES_QUEUE_KEY)||'[]');
+    return Array.isArray(value)?value.filter(x=>x && ['POST','DELETE'].includes(x.method) && typeof x.name==='string'):[];
+  }catch(_error){return [];}
+}
+function enqueueTestFavorite(method,name){
+  // Ja viens vārds vairākkārt mainīts bezsaistē, svarīgs ir pēdējais stāvoklis.
+  const queue=readTestFavoritesQueue().filter(item=>item.name!==name);
+  queue.push({method,name});
+  localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(queue));
+  void flushTestFavoritesQueue();
+}
+async function flushTestFavoritesQueue(){
+  if(testFavoritesSyncPromise) return testFavoritesSyncPromise;
+  if(typeof navigator!=='undefined' && navigator.onLine===false) return;
+  testFavoritesSyncPromise=(async()=>{
+    const installation=await getOrCreateTestInstallation();
+    while(true){
+      const queue=readTestFavoritesQueue();
+      if(!queue.length) break;
+      const item=queue[0];
+      if(item.method==='POST'){
+        await saveTestFavorite(installation.installationId,installation.token,item.name);
+      }else{
+        await deleteTestFavorite(installation.installationId,installation.token,item.name);
+      }
+      // Nenodzēšam jaunu izmaiņu, kas radusies, kamēr pieprasījums izpildījās.
+      const latest=readTestFavoritesQueue();
+      const index=latest.findIndex(x=>x.name===item.name && x.method===item.method);
+      if(index>=0){
+        latest.splice(index,1);
+        localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(latest));
+      }
+    }
+  })().catch(error=>{
+    console.warn('TEST vārdu sinhronizācija atlikta; lokālie dati saglabāti:',error);
+  }).finally(()=>{testFavoritesSyncPromise=null;});
+  return testFavoritesSyncPromise;
+}
+function syncTestFavorite(method,name){
+  enqueueTestFavorite(method,name);
+}
+window.addEventListener('online',()=>{void flushTestFavoritesQueue();});
+void flushTestFavoritesQueue();
+function removeFavorite(name){
+  const existed=favorites.includes(name);
+  favorites=favorites.filter(n=>n!==name);
+  localStorage.setItem('favorites',JSON.stringify(favorites));
+  renderFavorites();
+  if(existed) void syncTestFavorite('DELETE',name);
+}
+function addFavorite(name){
+  if(!favorites.includes(name)){
+    favorites.push(name);
+    localStorage.setItem('favorites',JSON.stringify(favorites));
+    void syncTestFavorite('POST',name);
+  }
+}
+ function getFavoriteDate(name){
+  for(const [d,[t,e]] of Object.entries(DATA)){
+    if([...t,...e].includes(name)) return d;
+  }
+  return '';
+}
+  // Batch selection stays local until the user confirms.
+  let pendingFavoriteNames=[];
+  const favoriteAddPanel=document.getElementById('favoriteAddPanel');
+  const favoriteAddInput=document.getElementById('favoriteAddInput');
+  const favoriteAddMatches=document.getElementById('favoriteAddMatches');
+  const favoriteAddSelected=document.getElementById('favoriteAddSelected');
+  const allFavoriteNames=[...new Set(Object.values(DATA).flatMap(([traditional,extended])=>[...traditional,...extended]))].sort((a,b)=>a.localeCompare(b,'lv'));
+  function renderFavoriteAdd(){
+    const q=favoriteAddInput.value.trim().toLocaleLowerCase('lv-LV');
+    const matches=q?allFavoriteNames.filter(name=>name.toLocaleLowerCase('lv-LV').startsWith(q)&&!favorites.includes(name)&&!pendingFavoriteNames.includes(name)).slice(0,12):[];
+    favoriteAddMatches.replaceChildren();
+    for(const name of matches){
+      const b=document.createElement('button');
+      b.type='button';
+      const label=document.createElement('span');label.textContent=name;
+      const date=document.createElement('span');date.textContent=fmtKey(getFavoriteDate(name));
+      b.append(label,date);
+      b.onclick=()=>{pendingFavoriteNames.push(name);favoriteAddInput.value='';renderFavoriteAdd();favoriteAddInput.focus()};
+      favoriteAddMatches.appendChild(b);
+    }
+    favoriteAddSelected.replaceChildren();
+    for(const name of pendingFavoriteNames){
+      const b=document.createElement('button');b.type='button';b.textContent=name+' ×';
+      b.setAttribute('aria-label','Noņemt '+name);
+      b.onclick=()=>{pendingFavoriteNames=pendingFavoriteNames.filter(x=>x!==name);renderFavoriteAdd()};
+      favoriteAddSelected.appendChild(b);
+    }
+    document.getElementById('favoriteAddSave').disabled=pendingFavoriteNames.length===0;
+    document.getElementById('favoriteAddSave').textContent='Pievienot sarakstam ('+pendingFavoriteNames.length+')';
+  }
+  function closeFavoriteAdd(){favoriteAddPanel.hidden=true;pendingFavoriteNames=[];favoriteAddInput.value='';renderFavoriteAdd()}
+  document.getElementById('favoriteAddOpen').onclick=()=>{favoriteAddPanel.hidden=false;pendingFavoriteNames=[];favoriteAddInput.value='';renderFavoriteAdd();favoriteAddInput.focus()};
+  document.getElementById('favoriteAddCancel').onclick=closeFavoriteAdd;
+  document.getElementById('favoriteAddSave').onclick=()=>{for(const name of pendingFavoriteNames)addFavorite(name);closeFavoriteAdd();renderFavorites()};
+  favoriteAddInput.addEventListener('input',renderFavoriteAdd);
+  function renderFavorites(){
+  let list=[...favorites];
+  if(sortDate.classList.contains('active')){
+    list.sort((a,b)=>{
+      let [da,ma]=getFavoriteDate(a).split('.').map(Number);
+      let [db,mb]=getFavoriteDate(b).split('.').map(Number);
+      return ma-mb||da-db;
+    });
+  }else{
+    list.sort((a,b)=>a.localeCompare(b,'lv'));
+  }
+  favoritesList.innerHTML=list.length
+    ?list.map(name=>
+      '<div class="favorite-row">'+
+        '<span class="favorite-name">'+esc(name)+'</span>'+
+        '<span class="favorite-date">'+fmtKey(getFavoriteDate(name))+'</span>'+
+        '<button class="remove-favorite" onclick="removeFavorite(\''+esc(name)+'\')">×</button>'+
+      '</div>'
+    ).join('')
+    :'Neviens vārds vēl nav pievienots.';
+}
+  function renderTomorrow(){let d=new Date();d.setDate(d.getDate()+1);let x=DATA[key(d)]||[[],[]];tomorrowNames.textContent=x[0].length?x[0].join(', '):'—'}
+  function getEasterDate(year){
+  let a=year%19;
+  let b=Math.floor(year/100);
+  let c=year%100;
+  let d=Math.floor(b/4);
+  let e=b%4;
+  let f=Math.floor((b+8)/25);
+  let g=Math.floor((b-f+1)/3);
+  let h=(19*a+b-d-g+15)%30;
+  let i=Math.floor(c/4);
+  let k=c%4;
+  let l=(32+2*e+2*i-h-k)%7;
+  let m=Math.floor((a+11*h+22*l)/451);
+  let month=Math.floor((h+l-7*m+114)/31);
+  let day=((h+l-7*m+114)%31)+1;
+
+  return new Date(year,month-1,day);
+}
+  function renderLatviaToday(testDate){
+  let d=testDate||new Date();
+  let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
+  let name=LATVIA_DAYS[k];
+    if(!name){
+  let day=d.getDay();
+  let date=d.getDate();
+  let month=d.getMonth()+1;
+
+  if(month===5 && day===0 && date>=8 && date<=14) name="Mātes diena";
+  if(month===6 && day===0 && date>=15 && date<=21) name="Medicīnas darbinieku diena";
+  if(month===7 && day===6 && date>=8 && date<=14) name="Jūras svētku diena";
+  if(month===9 && day===0 && date>=8 && date<=14) name="Tēva diena";
+  if(month===12 && day===0 && date>=1 && date<=7) name="Pret latviešu tautu vērstā totalitārā komunistiskā režīma genocīda upuru piemiņas diena";
+    }
+    if(!name){
+  let easter=getEasterDate(d.getFullYear());
+  let goodFriday=new Date(easter);
+goodFriday.setDate(goodFriday.getDate()-2);
+
+if(
+  d.getMonth()===goodFriday.getMonth() &&
+  d.getDate()===goodFriday.getDate()
+){
+  name="Lielā Piektdiena";
+}
+
+  if(
+    d.getMonth()===easter.getMonth() &&
+    d.getDate()===easter.getDate()
+  ){
+    name="Pirmās Lieldienas";
+  }
+      let easterMonday=new Date(easter);
+easterMonday.setDate(easterMonday.getDate()+1);
+
+if(
+  d.getMonth()===easterMonday.getMonth() &&
+  d.getDate()===easterMonday.getDate()
+){
+  name="Otrā Lieldienu diena";
+}
+  let pentecost=new Date(easter);
+pentecost.setDate(pentecost.getDate()+49);
+
+if(
+  d.getMonth()===pentecost.getMonth() &&
+  d.getDate()===pentecost.getDate()
+){
+  name="Vasarsvētki";
+}
+}
+  if(name){
+    latviaTodayName.textContent=name;
+    latviaTodayBlock.hidden=false;
+  }else{
+    latviaTodayBlock.hidden=true;
+  }
+}
+  function isNthWeekdayOfMonth(d, weekday, n){
+  if(d.getDay()!==weekday) return false;
+  return Math.ceil(d.getDate()/7)===n;
+}
+function isLastWeekdayOfMonth(d, weekday){
+  if(d.getDay()!==weekday) return false;
+  let next=new Date(d);
+  next.setDate(next.getDate()+7);
+  return next.getMonth()!==d.getMonth();
+}
+function getDayOfYear(d){
+  const start=Date.UTC(d.getFullYear(),0,0);
+  const current=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+  return Math.floor((current-start)/86400000);
+}
+function getNthWeekdayDate(year, month, weekday, n){
+  const first=new Date(year,month,1);
+  const offset=(weekday-first.getDay()+7)%7;
+  return new Date(year,month,1+offset+(n-1)*7);
+}
+function isBuyNothingDay(d){
+  const thanksgiving=getNthWeekdayDate(d.getFullYear(),10,4,4);
+  const buyNothing=new Date(thanksgiving);
+  buyNothing.setDate(buyNothing.getDate()+1);
+  return d.getFullYear()===buyNothing.getFullYear() &&
+    d.getMonth()===buyNothing.getMonth() &&
+    d.getDate()===buyNothing.getDate();
+}
+function isFirstAdvent(d){
+  if(d.getDay()!==0) return false;
+  const christmas=new Date(d.getFullYear(),11,25);
+  const fourthAdvent=new Date(christmas);
+  fourthAdvent.setDate(christmas.getDate()-((christmas.getDay()+7)%7));
+  const firstAdvent=new Date(fourthAdvent);
+  firstAdvent.setDate(fourthAdvent.getDate()-21);
+  return d.getMonth()===firstAdvent.getMonth() && d.getDate()===firstAdvent.getDate();
+}
+function isGlobalDayOfUnplugging(d){
+  if(d.getMonth()!==2 || d.getDay()!==5) return false;
+  return d.getDate()<=7;
+}
+function isWorldSleepDay(d){
+  if(d.getMonth()!==2 || d.getDay()!==5) return false;
+  const equinox=new Date(d.getFullYear(),2,20);
+  return d.getDate()===equinox.getDate()-((equinox.getDay()-5+7)%7||7);
+}
+  function renderInteresting(testDate){
+  let d=testDate||new Date();
+  let k=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.';
+  let names=INTERESTING_DAYS[k]||[];
+    const nthRules=[
+  [0,3,2,"“Kāp pa kāpnēm” diena"],
+  [0,0,3,"Pasaules sniega diena"],
+  [0,1,3,"Zilā pirmdiena"],
+  [1,5,1,"Košļājamās gumijas diena"],
+  [1,6,2,"Pasaules kino diena"],
+  [1,5,4,"Diena bez salmiņiem"],
+  [2,6,3,"Blokflautas diena"],
+  [3,6,1,"Starptautiskā spilvenu kauju diena"],
+  [3,3,2,"Starptautiskā rozā diena"],
+  [4,6,2,"Pasaules vēderdeju diena"],
+  [4,6,2,"Pasaules migrējošo putnu diena"],
+  [5,3,1,"Pasaules skriešanas diena"],
+  [6,6,1,"Starptautiskā ķiršu kauliņu spļaušanas diena"],
+  [6,6,1,"Starptautiskā kooperatīvu diena"],
+  [6,2,2,"Govju diena"],
+  [6,5,2,"Frī kartupeļu diena"],
+  [7,1,1,"Pikniku diena"],
+  [7,6,1,"Sinepju diena"],
+  [7,6,3,"Starptautiskā slēpņošanas diena"],
+  [8,0,4,"Pasaules upju diena"],
+  [9,1,1,"Pasaules arhitektūras diena"],
+  [9,1,1,"Pasaules Habitat diena"],
+  [9,4,2,"Pasaules redzes diena"],
+  [9,5,2,"Pasaules olu diena"],
+  [10,4,3,"Pasaules filozofijas diena"],
+  [11,0,2,"Pasaules koru diena"]
+];
+
+for(const [month,weekday,n,name] of nthRules){
+  if(d.getMonth()===month && isNthWeekdayOfMonth(d,weekday,n)){
+    names=[...names,name];
+  }
+}
+
+const lastWeekdayRules=[
+  [0,1,"Burbuļplēves diena"],
+  [2,0,"Kaimiņu diena"],
+  [3,6,"Pasaules tai-či un ciguna diena"],
+  [5,4,"Rokasspiedienu diena"],
+  [5,6,"Pasaules smilšu kāpu diena"],
+  [8,5,"Zinātnieku nakts"]
+];
+
+for(const [month,weekday,name] of lastWeekdayRules){
+  if(d.getMonth()===month && isLastWeekdayOfMonth(d,weekday)){
+    names=[...names,name];
+  }
+}
+
+const dayOfYearRules=[
+  [88,"Pasaules klavieru diena"],
+  [256,"Programmētāju diena"]
+];
+
+for(const [dayNumber,name] of dayOfYearRules){
+  if(getDayOfYear(d)===dayNumber){
+    names=[...names,name];
+  }
+}
+
+if(isBuyNothingDay(d)){
+  names=[...names,"“Nekā nepirkšanas” diena"];
+}
+if(isFirstAdvent(d)){
+  names=[...names,"Pirmā Advente"];
+}
+if(isGlobalDayOfUnplugging(d)){
+  names=[...names,"Globālā atslēgšanās no ierīcēm diena"];
+}
+if(isWorldSleepDay(d)){
+  names=[...names,"Pasaules miega diena"];
+}
+
+const chineseNewYearDates={
+  2025:"29.01.",
+  2026:"17.02.",
+  2027:"06.02.",
+  2028:"26.01.",
+  2029:"13.02.",
+  2030:"03.02.",
+  2031:"23.01."
+};
+if(chineseNewYearDates[d.getFullYear()]===k){
+  names=[...names,"Ķīniešu Jaunais gads"];
+}
+
+const christmasJumperDayDates={
+  2025:"11.12.",
+  2026:"10.12."
+};
+if(christmasJumperDayDates[d.getFullYear()]===k){
+  names=[...names,"Ziemassvētku džemperu diena"];
+}
+
+  if(names.length){
+    interestingNames.innerHTML=names.map(esc).join('<br>');
+    interestingBlock.hidden=false;
+  }else{
+    interestingBlock.hidden=true;
+  }
+}
+  function renderSelected(){let k=key(selected),x=DATA[k]||[[],[]];dateTitle.textContent=(selected.toDateString()===new Date().toDateString()?'Šodien, ':'')+selected.getDate()+'. '+monthsLoc[selected.getMonth()];todayNames.innerHTML=x[0].length?x[0].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', '):'Tradicionālajā sarakstā vārdadienu nav.';extraNames.innerHTML=x[1].length?'<div class="extra-title">PAPLAŠINĀTĀS VĀRDADIENAS</div><div class="extra-list">'+x[1].map(n=>'<button type="button" class="name-link" data-name="'+esc(n)+'">'+esc(n)+'</button>').join(', ')+'</div>':'';renderCalendar();renderInteresting(selected);renderBirthdayHome()}
+let activeDetailName='';
+function openNameDetail(name){
+ activeDetailName=name;
+ nameDetailTitle.textContent=name;
+ nameDetailDate.textContent='Vārdadiena: '+selected.getDate()+'. '+monthsLoc[selected.getMonth()];
+ nameDetailFeedback.hidden=true;
+ nameDetailFavorite.textContent=favorites.includes(name)?'Jau pievienots Maniem vārdiem':'Pievienot Maniem vārdiem';
+ mainView.hidden=true;nameDetailView.hidden=false;window.scrollTo(0,0);
+}
+function onNameLinkClick(event){const b=event.target.closest('button[data-name]');if(b)openNameDetail(b.dataset.name);}
+todayNames.addEventListener('click',onNameLinkClick);
+extraNames.addEventListener('click',onNameLinkClick);
+nameDetailBack.addEventListener('click',()=>{nameDetailView.hidden=true;mainView.hidden=false;});
+nameDetailFavorite.addEventListener('click',()=>{
+ addFavorite(activeDetailName);
+ nameDetailFavorite.textContent='Jau pievienots Maniem vārdiem';
+ nameDetailFeedback.textContent='Vārds saglabāts sadaļā „Mani vārdi”.';nameDetailFeedback.hidden=false;
+});
+nameDetailGreeting.addEventListener('click',()=>{
+ greetingName.value=activeDetailName;greetingValidation.hidden=true;
+ nameDetailView.hidden=true;greetingView.hidden=false;window.scrollTo(0,0);
+});
+
+function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+view.getFullYear();calendar.innerHTML='';
+let first=new Date(view.getFullYear(),view.getMonth(),1), offset=(first.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();for(let i=0;i<offset;i++){let e=document.createElement('div');calendar.appendChild(e)}for(let n=1;n<=days;n++){let d=new Date(view.getFullYear(),view.getMonth(),n),b=document.createElement('button');b.className='day';b.textContent=n;if(d.toDateString()==selected.toDateString())b.classList.add('sel');if(d.toDateString()==new Date().toDateString())b.classList.add('today');b.onclick=()=>{selected=d;
+renderSelected();renderLatviaToday(selected)};calendar.appendChild(b)}}
+
+function findName(){let q=nameInput.value.trim().toLocaleLowerCase('lv-LV');if(!q){nameResult.textContent='Ievadiet vārdu.';return}let hits=[];for(const [d,[t,e]] of Object.entries(DATA)){for(const n of t)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'tradicionālais']);for(const n of e)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'paplašinātais'])}nameResult.innerHTML=hits.length?hits.map(h=>'<strong>'+esc(h[1])+'</strong> — '+fmtKey(h[0])+' <span class="tag'+(h[2][0]=='p'?' extra':'')+'">'+h[2]+'</span>').join('<br>')+'<br><button class="search-add-favorite" onclick="addFavorite(\''+esc(hits[0][1])+'\')">Pievienot Maniem vārdiem</button>':'Vārds “'+esc(nameInput.value.trim())+'” sarakstos nav atrasts.'}
+
+function fmtKey(k){let [d,m]=k.split('.').map(Number);return d+'. '+months[m-1]}
+
+function parseDate(s){
+  s=s.trim().toLocaleLowerCase('lv-LV').replace(/,/g,' ').replace(/\s+/g,' ');
+
+  let m=s.match(/^(\d{1,2})\.?\s+(\p{L}+)$/u);
+
+  if(m){
+    let monthText=m[2];
+
+    let mi=months.findIndex((x,i)=>
+      x===monthText ||
+      monthsLoc[i]===monthText
+    );
+
+    if(mi>=0)return pad(+m[1])+'.'+pad(mi+1)+'.';
+  }
+
+  m=s.match(/^(\d{1,2})[.\/-](\d{1,2})\.?$/);
+
+  if(m)return pad(+m[1])+'.'+pad(+m[2])+'.';
+
+  return null;
+}
+function findDate(){let k=parseDate(dateInput.value);if(!k||!DATA[k]){dateResult.textContent='Datumu neizdevās atpazīt. Piemērs: 20. septembris';return}let [t,e]=DATA[k];dateResult.innerHTML='<strong>'+fmtKey(k)+'</strong><br><span class="tag">Tradicionālie</span> '+(t.length?t.map(esc).join(', '):'—')+(e.length?'<br><span class="tag extra">Paplašinātie</span> '+e.map(esc).join(', '):'')}
+prevDay.onclick=()=>{selected.setDate(selected.getDate()-1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
+renderSelected();renderLatviaToday(selected)};
+nextDay.onclick=()=>{selected.setDate(selected.getDate()+1);view=new Date(selected.getFullYear(),selected.getMonth(),1);
+renderSelected();renderLatviaToday(selected)};
+todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),selected.getMonth(),1);
+renderSelected();renderLatviaToday(selected)};
+prevMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
+nextMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+function closeSideMenu(){sideMenu.hidden=true;menuBackdrop.hidden=true}
+function toggleSideMenu(){const open=sideMenu.hidden;sideMenu.hidden=!open;menuBackdrop.hidden=!open}
+nameBtn.onclick=findName;nameInput.onkeydown=e=>{if(e.key==='Enter')findName()};
+  nameInput.addEventListener('input',()=>{clearName.style.display=nameInput.value?'inline-flex':'none'});
+clearName.onclick=()=>{nameInput.value='';nameResult.textContent='Ievadiet vārdu.';clearName.style.display='none';nameInput.focus()};
+dateInput.addEventListener('input',()=>{
+  clearDate.style.display=dateInput.value?'inline-flex':'none';
+  const m=dateInput.value.trim().toLocaleLowerCase('lv-LV').match(/^(\d{1,2})\.?\s+([a-zāčēģīķļņšūž]+)$/u);
+  dateSuggestions.innerHTML='';
+  if(!m)return;
+
+  const typed=m[2];
+  const matches=months.filter(month=>month.startsWith(typed));
+
+  matches.forEach(month=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.textContent=month;
+    b.onclick=()=>{
+      dateInput.value=m[1]+'. '+month;
+      clearDate.style.display='inline-flex';
+      dateSuggestions.innerHTML='';
+      dateInput.focus();
+    };
+    dateSuggestions.appendChild(b);
+  });
+});
+clearDate.onclick=()=>{dateInput.value='';dateResult.textContent='Ievadiet datumu.';dateSuggestions.innerHTML='';clearDate.style.display='none';dateInput.focus()};
+dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
+const PUSH_SERVER_URL='https://vardadienas-push-test.andris-maldups.workers.dev';
+const activatePushButton=document.getElementById('activatePushButton');
+const pushActivationStatus=document.getElementById('pushActivationStatus');
+function setPushActivationAppearance(active){
+  activatePushButton.textContent=active?'Paziņojumi aktivizēti':'Aktivizēt paziņojumus';
+  activatePushButton.disabled=active;
+  activatePushButton.classList.toggle('push-active-status',active);
+}
+async function refreshPushActivationAppearance(){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted'||!('serviceWorker' in navigator))return setPushActivationAppearance(false);
+    const registration=await navigator.serviceWorker.ready;
+    const subscription=await registration.pushManager.getSubscription();
+    const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
+    const active=Boolean(subscription&&Number.isSafeInteger(subscriptionId)&&subscriptionId>0);
+    setPushActivationAppearance(active);
+    if(active&&!pushActivationStatus.textContent.trim()){
+      pushActivationStatus.textContent='Paziņojumu abonements atrasts šajā ierīcē. Servera iestatījumu saglabāšanas statuss šobrīd nav atkārtoti pārbaudīts.';
+    }
+  }catch(error){
+    console.warn('Neizdevās pārbaudīt Push statusu:',error);
+    setPushActivationAppearance(false);
+  }
+}
+refreshPushActivationAppearance();
+function base64UrlToUint8Array(base64Url){
+  const padding='='.repeat((4-base64Url.length%4)%4);
+  const base64=(base64Url+padding).replace(/-/g,'+').replace(/_/g,'/');
+  const binary=atob(base64);
+  return Uint8Array.from(binary,char=>char.charCodeAt(0));
+}
+// TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
+async function syncTestReminderSettings(){
+  if(deletionSyncBlocked())return;
+  reminderSyncInProgress++;
+  try{
+  const installation=await getOrCreateTestInstallation();
+  const registration=await navigator.serviceWorker.ready;
+  const subscription=await registration.pushManager.getSubscription();
+  if(!subscription)return;
+  const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
+  if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0){
+    console.warn('TEST: subscription_id nav saglabāts; atkārtoti aktivizējiet Push paziņojumus.');
+    return;
+  }
+  const payload={
+    subscription_id:subscriptionId,
+    enabled:document.getElementById('remindersEnabled').checked,
+    evening_enabled:document.getElementById('reminderEvening').checked,
+    evening_time:document.getElementById('reminderEveningTime').value,
+    morning_enabled:document.getElementById('reminderMorning').checked,
+    morning_time:document.getElementById('reminderMorningTime').value,
+    target:document.querySelector('input[name="reminderTarget"]:checked')?.value||'favorites',
+    birthdays_enabled:document.getElementById('reminderBirthdays').checked,
+    timezone:'Europe/Riga'
+  };
+  const response=await fetch(PUSH_SERVER_URL+'/api/reminder-settings',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':'Bearer '+installation.token,
+      'X-Installation-Id':installation.installationId
+    },
+    body:JSON.stringify(payload)
+  });
+  if(!response.ok){
+    const details=await response.json().catch(()=>({}));
+    throw new Error('Atgādinājumu iestatījumu saglabāšana neizdevās (HTTP '+response.status+'): '+(details.error||''));
+  }
+  }finally{reminderSyncInProgress--;}
+}
+function queueTestReminderSync(){
+  if(deletionSyncBlocked())return;
+  if(!('serviceWorker' in navigator))return;
+  syncTestReminderSettings().catch(error=>{
+    console.warn('TEST iestatījumi paliek lokāli; sinhronizācija neizdevās:',error);
+    pushActivationStatus.textContent='Iestatījumi saglabāti telefonā, bet serverī vēl nav sinhronizēti: '+error.message;
+  });
+}
+activatePushButton.addEventListener('click',async()=>{
+  if(deletionSyncBlocked()||pushActivationInProgress)return;
+  pushActivationInProgress=true;
+  activatePushButton.disabled=true;
+  pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
+  try{
+    if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window)){
+      throw new Error('Šī pārlūkprogramma neatbalsta Push paziņojumus. iPhone atver aplikāciju no sākuma ekrāna.');
+    }
+    const permission=await Notification.requestPermission();
+    if(permission!=='granted')throw new Error('Paziņojumu atļauja nav piešķirta.');
+    pushActivationStatus.textContent='1/3: Savienojums ar Push serveri…';
+    const registration=await navigator.serviceWorker.ready;
+    let response;
+    try{
+      response=await fetch(PUSH_SERVER_URL+'/api/vapid-public-key',{cache:'no-store'});
+    }catch(error){
+      throw new Error('1/3: Neizdevās pieslēgties Push serverim ('+(error.message||String(error))+'). Iespējama CORS vai tīkla kļūda.');
+    }
+    if(!response.ok)throw new Error('Neizdevās iegūt servera publisko atslēgu (HTTP '+response.status+').');
+    const data=await response.json();
+    if(!data.publicKey)throw new Error('Serveris neatgrieza publisko atslēgu.');
+    pushActivationStatus.textContent='2/3: iPhone Push abonementa izveide…';
+    let subscription=await registration.pushManager.getSubscription();
+    // Saglabā esošo abonementu, ja tas izmanto pašreizējo VAPID atslēgu.
+    // Ja atslēga ir mainīta, atjauno abonementu tikai vienu reizi.
+    const expectedKey=base64UrlToUint8Array(data.publicKey);
+    if(subscription){
+      const existingKey=subscription.options?.applicationServerKey;
+      const existingBytes=existingKey ? new Uint8Array(existingKey) : null;
+      const keyMatches=existingBytes && existingBytes.length===expectedKey.length &&
+        existingBytes.every((byte,index)=>byte===expectedKey[index]);
+      if(!keyMatches){
+        try{
+          const unsubscribed=await subscription.unsubscribe();
+          if(!unsubscribed)throw new Error('Neizdevās atcelt iepriekšējo abonementu.');
+          subscription=null;
+        }catch(error){
+          throw new Error('2/3: Neizdevās atjaunot iepriekšējo Push abonementu ('+(error.message||String(error))+').');
+        }
+      }
+    }
+    if(!subscription){
+      try{
+        subscription=await registration.pushManager.subscribe({
+          userVisibleOnly:true,
+          applicationServerKey:expectedKey
+        });
+      }catch(error){
+        throw new Error('2/3: iPhone neizdevās izveidot Push abonementu ('+(error.message||String(error))+').');
+      }
+    }
+    pushActivationStatus.textContent='3/3: Abonementa saglabāšana serverī…';
+    const installation=await getOrCreateTestInstallation();
+    async function saveSecureSubscription(currentSubscription){
+      return fetch(PUSH_SERVER_URL+'/api/subscribe-secure',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+installation.token,
+          'X-Installation-Id':installation.installationId
+        },
+        body:JSON.stringify(currentSubscription.toJSON())
+      });
+    }
+    let save;
+    try{
+      save=await saveSecureSubscription(subscription);
+      if(save.status===409){
+        // TEST: vecs abonements bez installation_id nav pārņemams.
+        // Atceļam tikai Push abonementu (nevis aplikācijas datus),
+        // izveidojam jaunu endpoint un mēģinām reģistrēt tikai vienreiz.
+        pushActivationStatus.textContent='3/3: Vecā Push abonementa atjaunošana…';
+        const removed=await subscription.unsubscribe();
+        if(!removed)throw new Error('Neizdevās atcelt veco Push abonementu.');
+        subscription=await registration.pushManager.subscribe({
+          userVisibleOnly:true,
+          applicationServerKey:expectedKey
+        });
+        if(!subscription)throw new Error('Neizdevās izveidot jaunu Push abonementu.');
+        save=await saveSecureSubscription(subscription);
+        if(save.status===409)throw new Error('Jaunais abonements joprojām konfliktē ar veco ierakstu. Nepieciešama servera puses pārbaude.');
+      }
+    }catch(error){
+      throw new Error('3/3: Push abonementa saglabāšana vai atjaunošana neizdevās ('+(error.message||String(error))+').');
+    }
+    if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
+    const result=await save.json();
+    if(!result.success)throw new Error('Serveris neapstiprināja abonementa saglabāšanu.');
+    const subscriptionId=Number(result.subscriptionId);
+    if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0)throw new Error('Serveris neatgrieza derīgu subscriptionId.');
+    localStorage.setItem('testPushSubscriptionId',String(subscriptionId));
+    pushActivationStatus.textContent='Abonements saglabāts. Saglabā atgādinājumu iestatījumus…';
+    await syncTestReminderSettings();
+    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements un atgādinājumu iestatījumi saglabāti serverī.';
+    setPushActivationAppearance(true);
+  }catch(error){
+    console.error('Push aktivizēšanas kļūda',error);
+    pushActivationStatus.textContent='Neizdevās aktivizēt: '+(error.message||String(error));
+    setPushActivationAppearance(false);
+  }finally{
+    pushActivationInProgress=false;
+    if(!activatePushButton.classList.contains('push-active-status'))activatePushButton.disabled=false;
+  }
+});
+remindersEnabled.checked=savedRemindersEnabled;
+remindersEnabled.addEventListener('change',()=>{localStorage.setItem('remindersEnabled',remindersEnabled.checked);queueTestReminderSync();});
+
+if(savedReminderEvening!==null){
+  reminderEvening.checked=savedReminderEvening==="true";
+}else if(savedReminderTime==="evening"){
+  reminderEvening.checked=true;
+}
+if(savedReminderMorning!==null){
+  reminderMorning.checked=savedReminderMorning==="true";
+}else if(savedReminderTime==="day"){
+  reminderMorning.checked=true;
+}
+// Saglabājam agrāko nestandarta laiku, līdz lietotājs pats izvēlas jaunu.
+function restoreReminderTime(select,saved){
+ if(!saved)return;
+ if(!Array.from(select.options).some(option=>option.value===saved)){
+  const legacy=document.createElement('option');legacy.value=saved;
+  legacy.textContent=saved+' (iepriekšējais laiks)';select.appendChild(legacy);
+ }
+ select.value=saved;
+}
+restoreReminderTime(reminderEveningTime,savedReminderEveningTime);
+restoreReminderTime(reminderMorningTime,savedReminderMorningTime);
+
+reminderEvening.addEventListener('change',()=>{localStorage.setItem('reminderEvening',reminderEvening.checked);queueTestReminderSync();});
+reminderMorning.addEventListener('change',()=>{localStorage.setItem('reminderMorning',reminderMorning.checked);queueTestReminderSync();});
+reminderEveningTime.addEventListener('change',()=>{localStorage.setItem('reminderEveningTime',reminderEveningTime.value);queueTestReminderSync();});
+reminderMorningTime.addEventListener('change',()=>{localStorage.setItem('reminderMorningTime',reminderMorningTime.value);queueTestReminderSync();});
+
+reminderBirthdays.checked=savedReminderBirthdays;
+reminderBirthdays.addEventListener('change',()=>{localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked));queueTestReminderSync();});
+document.querySelectorAll('input[name="reminderTarget"]').forEach(radio=>{
+  if(radio.value===savedReminderTarget)radio.checked=true;
+  radio.addEventListener('change',()=>{localStorage.setItem('reminderTarget',radio.value);queueTestReminderSync();});
+});
+renderSelected();
+renderTomorrow();
+renderLatviaToday(selected);
