@@ -24,8 +24,10 @@ for path in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
 
 check('value="ds11"' in app, "DS 1.1 appearance option absent")
 theme_bootstrap = (root / "clean-ds-1.1/theme-bootstrap.js").read_text(encoding="utf-8")
-check("document.body.classList.toggle('ds-app',active)" in theme_bootstrap,
-      "Opt-in DS class toggle absent")
+check("document.body.classList.toggle('ds-app',active)" not in theme_bootstrap,
+      "Theme switch still mutates body component class")
+check("document.documentElement.dataset.design=design" in theme_bootstrap,
+      "Theme switch no longer sets root design state")
 check("document.body.dataset.mode" in theme_bootstrap, "Light/dark mode sync absent")
 for retired in ("lavender", "nature-d3", "water-j1"):
     check(f'name="designStyle" value="{retired}"' not in app, f"Retired theme still offered: {retired}")
