@@ -81,6 +81,14 @@ check(cache_version is not None and int(cache_version.group(1)) >= 4,
 check('addEventListener("push"' not in worker and
       'addEventListener("notificationclick"' not in worker,
       "Design-only service worker must not register push listeners")
+# Architecture guard: business logic must not acquire theme-selection dependencies.
+core_js = (root / "clean-ds-1.1/app-core.js").read_text(encoding="utf-8")
+for forbidden in ("designStyle", "dataset.design", "dataset.theme", "data-design", "data-theme"):
+    check(forbidden not in core_js, f"Functional core unexpectedly depends on visual theme: {forbidden}")
+check('data-design' in app or 'designStyle' in app, "Theme selection UI missing")
+
+check(app.count('data-ui-component="card"') >= 10, "Stable card component identity missing from application HTML")
+
 print(f"DS 1.1 integration: {len(required)} component tokens checked")
 if errors:
     for issue in errors:
@@ -99,10 +107,3 @@ check("/* TEST: Z3 Lavandas tonis" in legacy_css, "Legacy Z3 block temporarily r
 check(".about-card .about-row-button" in legacy_css, "Shared about-row layout was accidentally removed")
 check(".reminder-time-control" in legacy_css, "Shared reminder picker layout was accidentally removed")
 
-# Architecture guard: business logic must not acquire theme-selection dependencies.
-core_js = (root / "clean-ds-1.1/app-core.js").read_text(encoding="utf-8")
-for forbidden in ("designStyle", "dataset.design", "dataset.theme", "data-design", "data-theme"):
-    check(forbidden not in core_js, f"Functional core unexpectedly depends on visual theme: {forbidden}")
-check('data-design' in app or 'designStyle' in app, "Theme selection UI missing")
-
-check(app.count('data-ui-component="card"') >= 10, "Stable card component identity missing from application HTML")
