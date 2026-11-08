@@ -142,45 +142,37 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 
 **1.2 redakcijas statuss:** tehniski pārbaudīta un papildināta ar 46 attēlu kataloga tvērumu; pilnais individuāli indeksētais vizuālais katalogs vēl nav pabeigts, bet **nav automātiski lietotāja apstiprināta**. Pirms publiskās versijas migrācijas atsevišķi jāvienojas par pārējo tēmu pieņemšanu, offline/push regresiju un vizuālā kataloga pilnu tvērumu.
 
-## Pielikums A — redzamo iPhone attēlu detalizēta uzskaite (darba indekss)
-**Metode.** Indekss `A01–A20` attiecas tikai uz 20 attēliem, kas šajā sarunas fragmentā redzami pirmajā attēlu ziņojumā, un `B01–B05` — uz pieciem attēliem nākamajā ziņojumā. Šie **25 pagaidu ieraksti nav pilns 46 attēlu inventārs**. Numuri ir ziņojumu iekšējā secība, nevis failu identifikatori. Lai nepieļautu kļūdainu izsekojamību, neesošajiem 21 attēlu metadatiem netiek izdomātas pozīcijas vai rezultāti.
+## Pielikums A — tematiskais vizuālās pārbaudes katalogs
 
-| ID | Režīms / skats | Redzamais stāvoklis | Komponenti / pārbaudes fokuss |
+**Kataloga mērķis:** piesaistīt redzamos lietotnes stāvokļus pārbaudes kritērijiem, **neizdomājot** attēlu individuālo numerāciju. Vienīgais apstiprinātais attēlu kopums ir 46 kadri trīs sūtījumos (20 + 20 + 6; skat. Pielikumu C). Iepriekšējie pagaidu A01–A20/B01–B05 numuri tika veidoti pēc nepilnīga sarunas fragmenta, tādēļ **atsaukti**; tie nav uzticami attēlu ID.
+
+| Kataloga grupa | Redzamie skati / stāvokļi | Galvenie komponenti | Kas jāvērtē |
 |---|---|---|---|
-| A01 | D3 gaišais / Iestatījumi | Izskata tēmu radio izvēles un gaišais režīms | C06/C14; atlasītā stāvokļa redzamība |
-| A02 | D3 gaišais / Iestatījumi | Mani dati, Par aplikāciju, trīs izvēršamās rindas | C17/C18; neitrāla dzēšanas poga, pilnas apmales |
-| A03 | D3 tumšais / Sākums | Vārdadienas, rītdiena, informācijas kartītes, navigācija | C01/C02/C03/C11 |
-| A04 | D3 tumšais / Kalendārs | Novembra kalendārs, atšķirīgas šodienas un atlases dienas | C16; today/selected atšķiršana |
-| A05 | D3 tumšais / Kalendārs | Atlasītā diena sakrīt ar izceltu dienu | C16; prioritātes pārbaude |
-| A06 | D3 tumšais / Meklēt vārdu | Vārda rezultāts, iOS tastatūra un AutoFill | C07/C13; fokusēts ievades lauks |
-| A07 | D3 tumšais / Meklēt datumu | Datuma daļēja ievade un mēnešu ieteikumi | C07/C13 |
-| A08 | D3 tumšais / Hamburgera izvēlne | Atvērta navigācijas izvēlne | C05/C09/C13 |
-| A09 | D3 tumšais / Mani vārdi | Atvērta pievienošana un kārtošana | C03/C06/C07 |
-| A10 | D3 tumšais / Mani vārdi | Saraksts bez ievades formas | C05/C06; rindas un dzēšanas ikonas |
-| A11 | D3 tumšais / Mani vārdi | Meklēšanas ieteikumi, iOS tastatūra | C07/C13; ieteikumu sasniedzamība |
-| A12 | D3 tumšais / Mani vārdi | Izvēlēts pievienojamais vārds, ievade un tastatūra | C03/C07/C13 |
-| A13 | D3 tumšais / Dzimšanas dienas | Saraksts un kārtošana | C05/C06; rediģēšana/dzēšana |
-| A14 | D3 tumšais / Dzimšanas dienas | Atvērta personas pievienošana un teksta tastatūra | C03/C07; ievades fokuss |
-| A15 | D3 tumšais / Dzimšanas dienas | Datuma mēneša lauks ar ciparu tastatūru | C07; skārientastatūras tips |
-| A16 | D3 tumšais / Vārda informācija | Vārds, datums, divas primārās darbības | C02/C03 |
-| A17 | D3 tumšais / Apsveikums | Personas attiecību un stila izvēle | C03/C06 |
-| A18 | D3 tumšais / Apsveikums | Gatavais teksts un darbību joslas | C04/C07/C09 |
-| A19 | D3 tumšais / Apsveikums | Rediģējams teksts un tastatūra | C07; fokusa apmale |
-| A20 | D3 tumšais / Apsveikums | Atvērts emoji panelis | C13; paneļa izvietojums |
-| B01 | D3 tumšais / Apsveikums | Atvērta iOS kopīgošanas lapa | Sistēmas kopīgošanas integrācijas robeža |
-| B02 | D3 tumšais / Iestatījumi | Atgādinājumi, laika izvēles un paziņojumu drošības teksts | C06/C14/C12 |
-| B03 | D3 tumšais / Iestatījumi | Atvērta laika izvēlne ar izceltu 06:00 | C13; atlases izcēlums, pārklājuma secība |
-| B04 | D3 tumšais / Iestatījumi | Izskata tēmu un krāsu režīma izvēles | C06/C14 |
-| B05 | D3 tumšais / Iestatījumi | Mani dati, Par aplikāciju, trīs izvēršamās rindas | C17/C18; neitrāla poga, atstarpes |
+| T01 | Sākums, dienu pārslēgšana, informācijas paneļi | C01/C02/C03/C09 | Satura salasāmība, navigācija, paneļu atstarpes |
+| T02 | Kalendārs, šodiena, atlasītā diena | C16 | Today/selected prioritāte, dienas atšķiramība |
+| T03 | Vārda un datuma meklētājs, rezultāti, iOS tastatūra | C07/C13 | Fokuss, ieteikumi, vertikāla sasniedzamība |
+| T04 | Hamburgera izvēlne | C05/C13 | Atvēršana, apmales un satura pieejamība |
+| T05 | Mani vārdi, saraksts, pievienošana, dzēšanas ikonas | C03/C05/C06/C07/C10 | Saraksta darbību vizuālā hierarhija |
+| T06 | Dzimšanas dienas, saraksts, personas un datuma ievade | C03/C05/C07/C10 | Ievades stāvokļi, skārienmērķi |
+| T07 | Vārda informācija | C02/C03 | Darbību un informācijas atšķiršana |
+| T08 | Apsveikuma veidošana, gatavais teksts, rediģēšana, emoji | C03/C04/C06/C07/C13 | Teksta pārskatāmība, emoji paneļa novietojums |
+| T09 | iOS kopīgošanas lapa | Sistēmas dialogs, ne C komponents | Lietotnes/sistēmas robeža |
+| T10 | Atgādinājumi un atvērta laika izvēlne | C06/C13/C14 | Izvēlētā vērtība, pārklājuma secība |
+| T11 | Izskats: tēmas un krāsu režīms | C06 | Radio izvēles atlasītais stāvoklis |
+| T12 | Mani dati, Dzēst manus datus | C04/C17 | Neitrāla poga, apstiprināšanas prasība |
+| T13 | Par aplikāciju, trīs izvēršamās rindas | C18 | Pilnas apmales, 8 px atstarpes |
 
-### A.1. Interpretācijas ierobežojumi un turpmākā indeksēšana
-- Šajā tabulā ir **redzamā stāvokļa apraksts**, nevis katra elementa klikšķa vai datu saglabāšanas tests.
-- A01–A20 un B01–B05 nav oficiāli failu nosaukumi. Galīgajā katalogā jāaizstāj ar stabilām atsaucēm uz attēliem, pārbaudot attēlu skaitu un secību.
-- Attēlos redzamais `AutoFill Contact` ir iOS sistēmas josla, nevis aplikācijas izstrādāts komponents.
-- Paziņojumu teksts “DESIGN TEST nav pieejami” atspoguļo apzinātu izolētās vides drošības režīmu, nevis pierādījumu par produkcijas push darbības kļūmi.
-- A05 un B03 parāda atlasītu stāvokli, bet neapliecina visu robežgadījumu darbību.
-- 46 attēlu pilnu uzskaiti un visus attēlu failus nedrīkst pasludināt par pabeigtiem, kamēr nav pārbaudīta pārējo 21 attēla individuālā atbilstība.
+**Sūtījums III (6 kadri) — pārbaudāms pēc šajā sarunā redzamās secības:**
+1. `III01`: Apsveikums ar atvērtu iOS kopīgošanas lapu (T08/T09).
+2. `III02`: Iestatījumi — atgādinājumi, paziņojumu DESIGN TEST drošības teksts (T10).
+3. `III03`: Iestatījumi — atvērta laika izvēlne ar atlasītu `06:00` (T10).
+4. `III04`: Iestatījumi — dizaina tēmu izvēle un režīma sadaļas sākums (T11).
+5. `III05`: Iestatījumi — krāsu režīms un Mani dati (T11/T12).
+6. `III06`: Iestatījumi — Mani dati un Par aplikāciju (T12/T13).
 
+**Sūtījumi I un II:** katrā ir 20 attēli. To individuālās secības un komponentu atbilstības vēl nav pietiekami droši rekonstruētas; `I01–I20` un `II01–II20` saglabātas kā rezervētas pozīcijas, nevis aizpildītas ar minējumiem. Tematiskā tabula neapgalvo, ka katrai grupai ir savs unikāls kadrs.
+
+**Vizuālo pierādījumu robeža:** ekrānattēli neapliecina, ka darbības nostrādā, dati saglabājas, paziņojumi tiek nosūtīti vai lietotne darbojas bezsaistē. iOS kopīgošanas un tastatūras virsmas nav aplikācijas CSS komponenti.
 
 ## Pielikums B — pieņemšanas un izsekojamības vārtejas
 
@@ -189,7 +181,7 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 | B1 — komponentu ID | C01–C18 kartējums pret `components.css` | Šīs redakcijas 5. sadaļa; C15 skaidri atzīmēts kā nedefinēts atsevišķi | Dokumentācijas kartējums precizēts |
 | B2 — automatizētā regresija | Statika, integrācija, kontrasts, Chromium, WebKit, mobile-WebKit | GitHub Actions #70/#72/#73 | Iepriekšējais pārbaudes tvērums sekmīgs |
 | B3 — D3 iPhone izskats | Gaišais/tumšais, C17 pēc labojuma | Lietotāja iPhone ekrānattēli un apstiprinājums | Apstiprināts iepriekš saskaņotajā tvērumā |
-| B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | A01–A20, B01–B05: 25 pagaidu ieraksti | **Tvērums: 46 trīs sūtījumos; individuālā sasaistīšana vēl nav pabeigta** |
+| B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | Pielikums A: tematiskais katalogs; Pielikums C: 46 pozīcijas | **Tvērums: 46 trīs sūtījumos; individuālā sasaistīšana vēl nav pabeigta** |
 | B5 — virsmu alfa | V02–V05 izmērītas gala renderējumā | Nav mērījumu protokola | Atvērts pierādījumu jautājums |
 | B6 — pārējās tēmas | K1, Z3, S1, J1-E individuāla iPhone pieņemšana | Nav šīs iterācijas individuāla protokola | Atvērts |
 | B7 — datu drošība | Offline, push un dzēšanas darbību regresija | Vizuālā pārbaude to neapliecina | Atvērts; **nedrīkst testēt ar reālu datu dzēšanu bez atsevišķas saskaņošanas** |
@@ -219,6 +211,6 @@ Katram attēlam saglabāt identifikatoru pēc **sūtījuma un vietas sūtījumā
 | **Kopā** | **46** | | **Tvērums apstiprināts; individuālā sasaistīšana turpinās** |
 
 ### C.2. Attiecības ar Pielikumu A
-Pielikuma A pagaidu apzīmējumi `A01–A20` un `B01–B05` ir **darba apraksti**, nevis apliecināta pirmā/otrā/trešā sūtījuma numerācija. Tos nedrīkst izmantot kā 46 attēlu galīgo indeksu, kamēr katra attēla atbilstība nav verificēta. Lietotāja apstiprinātais tvērums ir noteicošais.
+Pielikums A ir tematiskais pārbaudes katalogs (T01–T13), nevis individuālu attēlu secības saraksts. Vienīgi Pielikuma C `I`, `II` un `III` apzīmējumi rezervē attēlu vietas lietotāja apstiprinātajos trīs sūtījumos. Iepriekšējie `A`/`B` numuri ir atsaukti.
 
 **Vizuālā audita robeža:** attēli pamato tikai redzamos dizaina stāvokļus; tie paši par sevi neapstiprina offline darbību, push piegādi vai datu dzēšanas funkcionalitāti.
