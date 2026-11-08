@@ -66,3 +66,11 @@ Izlabot pierādīto K02 tokena neatbilstību; K01/K04/K06 pārbaudīt ar CSS kas
 - Pārbaudīta C05/C16 testu esamība. Testi nav izpildīti.
 - Šis ir **statiskas koda analīzes rezultāts**, nevis `validate.py`, `contrast_audit.py` vai Playwright izpildes protokols. GitHub Actions veiksmīgs rezultāts joprojām nav iegūts.
 - Tālāk: GitHub Actions izpildes protokols (statiskie testi, kontrasts, Chromium, WebKit, mobile-WebKit), pēc tam iPhone VD Design. Līdz tam **nepārcelt statusu uz “tehniski apstiprināts”**.
+
+
+## Papildu neatkarīgā statiskā kontrasta pārbaude
+- No GitHub nolasīta aktuālā `reference-theme.css` palete un `components.css`.
+- Neatkarīgi aprēķinātas WCAG kontrasta attiecības visiem 11 pāriem, kurus definē `contrast_audit.py`, **abos režīmos**: **22/22 sasniedz vismaz 4,5:1**.
+- Zemākais no šiem pāriem: gaišajā režīmā disabled-text/disabled-bg **4,89:1**; tumšajā **4,97:1**.
+- Komponentu CSS (bez komentāriem) **nav fiksētu heksadecimālu vai rgb/rgba krāsu vērtību**; semantisko tokenu līgums saglabāts.
+- Šie rezultāti iegūti ar neatkarīgu statisku aprēķinu no GitHub failu satura, **nevis** ar GitHub Actions vai reālu pārlūka renderēšanu. Neattiecas uz caurspīdīgiem slāņiem, fokusa indikatoriem vai saskaņotā D3 dizaina gala kontrastu.
