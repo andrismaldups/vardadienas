@@ -193,3 +193,43 @@ test('both modes: interactive states use declared CSS variables', async ({ page 
     expect(result).toEqual({ selected: true, error: true, readonly: true, modal: true, danger: true });
   }
 });
+
+
+test('destructive icon hover and pressed states preserve semantic colors', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const icon = page.getByRole('button', { name: 'Noņemt' });
+    const colors = await icon.evaluate(el => {
+      const s = getComputedStyle(document.querySelector('#app'));
+      return {
+        hoverText: s.getPropertyValue('--ds-danger-text').trim(),
+        hoverBg: s.getPropertyValue('--ds-danger-bg').trim(),
+        pressedBg: s.getPropertyValue('--ds-danger-pressed').trim()
+      };
+    });
+    const toRgb = hex => {
+      const h = hex.replace('#', '');
+      return 'rgb(' + [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
+    };
+    await icon.hover();
+    await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
+    await expect(icon).toHaveCSS('background-color', toRgb(colors.hoverBg));
+  }
+});
+
+test('calendar today border is independent of focus ring token', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.locator('#mode').selectOption(mode);
+    const result = await page.locator('.ds-day[data-today="true"]').evaluate(el => {
+      const root = getComputedStyle(document.querySelector('#app'));
+      return {
+        border: getComputedStyle(el).borderTopColor,
+        token: root.getPropertyValue('--ds-calendar-today-border').trim()
+      };
+    });
+    expect(result.token).not.toBe('');
+    const h = result.token.slice(1);
+    const rgb = 'rgb(' + [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
+    expect(result.border).toBe(rgb);
+  }
+});
