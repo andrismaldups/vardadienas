@@ -167,3 +167,32 @@ test('DS11 primary action uses semantic tokens in both appearance modes', async 
     await expect(card).toHaveAttribute('data-ui-component', 'card');
   }
 });
+
+test('theme choice persists after reload without mutating application content', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('designStyle')) localStorage.setItem('designStyle', 'classic');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const initial = await page.evaluate(() => ({
+    ids: [...document.querySelectorAll('[id]')].map(node => node.id).sort(),
+    pushIsolation: window.DESIGN_TEST_ISOLATED === true
+  }));
+  for (const design of ['festive-s1', 'ds11', 'classic']) {
+    await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await expect(page.locator('html')).toHaveAttribute('data-design', design);
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-design', design);
+    const persisted = await page.evaluate(() => ({
+      ids: [...document.querySelectorAll('[id]')].map(node => node.id).sort(),
+      pushIsolation: window.DESIGN_TEST_ISOLATED === true,
+      design: localStorage.getItem('designStyle')
+    }));
+    expect(persisted.ids).toEqual(initial.ids);
+    expect(persisted.pushIsolation).toBe(initial.pushIsolation);
+    expect(persisted.design).toBe(design);
+  }
+});
