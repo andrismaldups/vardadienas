@@ -38,7 +38,7 @@ def main():
         fail("Component CSS contains no semantic token references", errors)
     if COLOR_LITERAL.search(re.sub(r"/\*.*?\*/", "", component_css, flags=re.S)):
         fail("Component CSS contains hardcoded color values", errors)
-    if re.search(r"\b(?:body|html|:root)\s*\{", component_css):
+    if re.search(r"(?:^|[},])\s*(?:body|html|:root)\s*\{", re.sub(r"/\*.*?\*/", "", component_css, flags=re.S), flags=re.M):
         fail("Component CSS includes global selectors", errors)
     if re.search(r"\b(?:K1|Z3|D3|S1|J1-E)\b", component_css):
         fail("Component CSS references legacy themes", errors)
