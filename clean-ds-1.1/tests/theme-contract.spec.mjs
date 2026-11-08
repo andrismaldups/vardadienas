@@ -326,5 +326,14 @@ test('DS11 primary action hover and pressed colors use semantic tokens without d
   expect(states.hover).not.toBe('');
   expect(states.pressed).not.toBe('');
   await action.hover();
-  await expect(action).toHaveCSS('background-color', states.hover);
+  const hoverColor = await action.evaluate(el => getComputedStyle(el).backgroundColor);
+  const expectedHover = await page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.backgroundColor = 'var(--ds-primary-hover)';
+    document.body.append(probe);
+    const color = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return color;
+  });
+  expect(hoverColor).toBe(expectedHover);
 });
