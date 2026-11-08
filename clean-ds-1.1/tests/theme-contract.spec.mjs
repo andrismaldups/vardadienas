@@ -123,3 +123,22 @@ test('primary actions retain semantic identity and click handlers on theme switc
     ))).toBe(true);
   }
 });
+
+test('switching designs never adds or removes visual component classes', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('designStyle', 'classic'));
+  await page.goto('/index.html');
+  const baseline = await page.evaluate(() => ({
+    cards: [...document.querySelectorAll('[data-ui-component="card"]')].map(el => el.className),
+    actions: [...document.querySelectorAll('[data-ui-component="primary-action"]')].map(el => el.className)
+  }));
+  for (const design of ['festive-s1', 'ds11', 'classic']) {
+    await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    expect(await page.evaluate(() => ({
+      cards: [...document.querySelectorAll('[data-ui-component="card"]')].map(el => el.className),
+      actions: [...document.querySelectorAll('[data-ui-component="primary-action"]')].map(el => el.className)
+    }))).toEqual(baseline);
+  }
+});

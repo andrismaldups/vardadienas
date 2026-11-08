@@ -12,7 +12,7 @@ for (const mode of ['light', 'dark']) {
     await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
     await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
     await expect(page.locator('body')).toHaveClass(/ds-app/);
-    await expect(page.locator('.card').first()).toHaveClass(/ds-card/);
+    await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
     await expect(page.locator('#calendar')).toBeAttached();
     await expect(page.locator('#dateInput')).toBeAttached();
     await expect(page.locator('#greetingEmojiPanel')).toBeAttached();
@@ -38,7 +38,7 @@ test('full VD Design: classic does not inherit DS 1.1 classes', async ({ page })
   await page.goto('/index.html');
   await expect(page.locator('html')).toHaveAttribute('data-design', 'classic');
   await expect(page.locator('body')).not.toHaveClass(/ds-app/);
-  await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
+  await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
 });
 
 test('full VD Design: DS 1.1 fits iPhone viewport', async ({ page }) => {
@@ -67,7 +67,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
   await page.locator('input[name="designStyle"][value="ds11"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
   await expect(page.locator('body')).toHaveClass(/ds-app/);
-  await expect(page.locator('.card').first()).toHaveClass(/ds-card/);
+  await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
 
   await page.locator('input[name="appearanceMode"][value="dark"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -76,7 +76,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
   await page.locator('input[name="designStyle"][value="classic"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-design', 'classic');
   await expect(page.locator('body')).not.toHaveClass(/ds-app/);
-  await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
+  await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
   await expect(page.locator('#calendar')).toBeAttached();
 });
 
