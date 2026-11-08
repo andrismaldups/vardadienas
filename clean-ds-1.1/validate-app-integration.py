@@ -89,14 +89,6 @@ check('data-design' in app or 'designStyle' in app, "Theme selection UI missing"
 
 check(app.count('data-ui-component="card"') >= 10, "Stable card component identity missing from application HTML")
 
-print(f"DS 1.1 integration: {len(required)} component tokens checked")
-if errors:
-    for issue in errors:
-        print("FAIL:", issue)
-    sys.exit(1)
-print("PASS: static integration invariants")
-print("NOTE: browser/iPhone functionality and Cloudflare deployment are NOT verified")
-
 check('href="design-water-j1.css"' not in app, "Retired Sea theme CSS still loaded")
 check('"./design-water-j1.css"' not in worker, "Retired Sea theme still precached")
 
@@ -107,3 +99,10 @@ check("/* TEST: Z3 Lavandas tonis" in legacy_css, "Legacy Z3 block temporarily r
 check(".about-card .about-row-button" in legacy_css, "Shared about-row layout was accidentally removed")
 check(".reminder-time-control" in legacy_css, "Shared reminder picker layout was accidentally removed")
 
+print(f"DS 1.1 integration: {len(required)} component tokens checked")
+if errors:
+    for issue in errors:
+        print("FAIL:", issue)
+    sys.exit(1)
+print("PASS: static integration invariants")
+print("NOTE: browser/iPhone functionality and Cloudflare deployment are NOT verified")
