@@ -269,3 +269,38 @@ Pielikums A ir tematiskais pārbaudes katalogs (T01–T13), nevis individuālu a
 | III06 | Iestatījumi; Mani dati un Par aplikāciju | tumšais | T12/T13 | C17/C18 | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
 
 **Kontrole:** 20 + 20 + 6 = **46** rindas. Pirmie 40 ieraksti apzināti nav aizpildīti ar spekulatīviem datiem. Trešā sūtījuma sešas pozīcijas atbilst lietotāja pēdējā sešu attēlu ziņojuma secībai.
+
+## Pielikums D — vizuālās pieņemšanas protokols
+
+### D.1. Vienots vērtējums
+Katram pārbaudes punktam izmanto vienu no četrām vērtībām: **Atbilst** (konkrēts attēls vai lietotāja apstiprinājums to pierāda), **Neatbilst** (redzams konkrēts defekts ar atsauci), **Nav pārbaudīts** (trūkst pietiekama pierādījuma), **Neattiecas** (komponents nav attiecīgajā skatā). Automatizēts CI tests drīkst pamatot tikai savu tehnisko tvērumu, nevis iPhone vizuālu pieņemšanu.
+
+### D.2. Kritēriju matrica
+| ID | Pārbaudes kritērijs | Pierādījuma metode | Pašreizējais statuss |
+|---|---|---|---|
+| P01 | Gaišajā un tumšajā D3 režīmā teksts salasāms uz apstiprinātajām virsmām | iPhone ekrānattēli + vizuāla pārbaude | D3 lietotāja pārbaudītajā tvērumā apstiprināts; visu 46 individuāls protokols nav pabeigts |
+| P02 | V01–V05 caurspīdīgums atbilst specifikācijas skaitliskajiem etaloniem | Gala computed-style un alfa mērījumi | Nav pārbaudīts pilnā tvērumā |
+| P03 | C03 primārajām un C04 sekundārajām pogām ir atšķirīga vizuālā hierarhija | iPhone skati + CSS stāvokļu testi | CI pārbaudes veiktas; pilns manuālais protokols nav pabeigts |
+| P04 | C05 ikonu pogām ir 44×44 px skārienlaukums un atbilstošs danger stāvoklis | CSS + pārlūka testi | CI tvērumā pārbaudīts |
+| P05 | C06 atlasītā izvēle nepārprotami atšķiras no neatlasītās | Iestatījumu un apsveikumu skati | Redzami piemēri; visu izvēļu stāvokļi nav pārbaudīti |
+| P06 | C07/C08 ievadē fokusa apmale un kursors ir redzami; iOS tastatūra neaizsedz darbības neatgriezeniski | Fokusētas ievades attēli + reāla skārienu pārbaude | Redzami piemēri; pilna interakcija nav pārbaudīta |
+| P07 | C09 apakšējā navigācija ir centrēta un respektē iPhone safe-area | Skati ar “Uz sākumu” | Vizuāli novērots; pilns ierīču diapazons nav pārbaudīts |
+| P08 | C13 laika izvēlnē ir skaidri izcelta atlasītā vērtība un izvēlne netiek nogriezta | III03 | Redzamais 06:00 stāvoklis identificēts; izvēles saglabāšana nav pārbaudīta |
+| P09 | C16 šodienas un atlasītās dienas stāvokļi ievēro prioritāti | Kalendāra skati + CI | CI tvērumā pārbaudīts; individuāla attēlu sasaistīšana nepabeigta |
+| P10 | C17 “Dzēst manus datus” vizuāli ir neitrāla sekundārā poga abos D3 režīmos | Lietotāja apstiprinājums + CI #72/#73 | **Atbilst — iepriekš apstiprināts** |
+| P11 | C18 trīs izvēršamajām rindām ir pilnas sānu apmales un 8 px atstarpes | “Par aplikāciju” iPhone skati | **Atbilst — iepriekš apstiprināts N22** |
+| P12 | Emoji panelis atrodas aiz teksta ievades lauka un netraucē rediģēšanai | Apsveikumu skati | Redzams stāvoklis; precīza pozicionējuma pilna pārbaude nav dokumentēta |
+| P13 | iOS kopīgošanas lapa atveras, saglabājot gatavā apsveikuma saturu | III01 + funkcionāla pārbaude | Attēls apliecina atvērtu sistēmas lapu; piegādes rezultāts nav pārbaudīts |
+| P14 | DESIGN TEST paziņojumi ir apzināti atspējoti, neietekmējot esošos abonementus | III02 + integrācijas drošības pārbaude | Drošības teksts redzams; servera stāvoklis nav pārbaudīts |
+| P15 | PWA offline, datu saglabāšana un push piegāde darbojas atbilstoši atsevišķai funkcionalitātes specifikācijai | Funkcionāli testi, nevis attēli | Ārpus šā vizuālā audita tvēruma |
+
+### D.3. Neatbilstību reģistrēšanas forma
+Ja rodas jauns defekts, ierakstīt **ID, attēla ID (I/II/III), skatu, režīmu, komponentu C-ID, sagaidāmo izskatu, faktisko izskatu, reproducēšanas darbības, prioritāti un labošanas commit**. Ja nav drošas attēla atsauces, nelietot izdomātu ID. Iepriekš slēgtos N21/N22/N23/N25 un C17 neatvērt no jauna bez konkrēta regresijas pierādījuma.
+
+### D.4. Dokumenta galīgās saskaņošanas nosacījumi
+1. Pabeigta pirmo divu sūtījumu `I01–I20` un `II01–II20` individuālā sasaistīšana ar redzamajiem stāvokļiem.
+2. Pārbaudīta 1.0 un 1.2 komponentu numerācijas savietojamība, īpaši C15.
+3. Izšķirti neapstiprinātie V02–V05 alfa mērījumi un atlikušie vizuālās pārbaudes punkti.
+4. Lietotājs apstiprina 1.2 redakciju kā dizaina sistēmas dokumentu. Tas **nav** automātiska atļauja migrēt produkciju vai veikt push/datu dzēšanas testus.
+
+**Darba secība:** vispirms pierādījumi un dokumenta saskaņošana, pēc tam — tikai atsevišķi saskaņoti koda labojumi un regresijas pārbaudes.
