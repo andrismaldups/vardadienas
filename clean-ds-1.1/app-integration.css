@@ -131,7 +131,7 @@ html[data-design="ds11"] body.ds-app :is(
 ){
  background:var(--ds-icon-bg);border-color:var(--ds-icon-border);color:var(--ds-icon)
 }
-html[data-design="ds11"] body.ds-app :is(.remove-favorite,.birthday-delete-btn){
+html[data-design="ds11"] body :is(.remove-favorite,.birthday-delete-btn){
  color:var(--ds-danger)
 }
 html[data-design="ds11"] body.ds-app :is(
@@ -175,18 +175,18 @@ html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]{
  color:var(--ds-selected-text);
 }
 /* C05: edit icon keeps the semantic icon role, not the C03 color. */
-html[data-design="ds11"] body.ds-app .birthday-edit-btn{
+html[data-design="ds11"] body .birthday-edit-btn{
  color:var(--ds-icon);
 }
 
 /* N17: hamburger trigger is an icon-only control; menu surface is separate. */
-html[data-design="ds11"] body.ds-app .menu-btn{
+html[data-design="ds11"] body .menu-btn{
  background:transparent;border-color:transparent;box-shadow:none;
  color:var(--ds-icon)
 }
 
 /* N18 / C04: cancel is a secondary action in both forms. */
-html[data-design="ds11"] body.ds-app :is(#favoriteAddCancel,#birthdayAddCancel){
+html[data-design="ds11"] body :is(#favoriteAddCancel,#birthdayAddCancel){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border:1px solid var(--ds-secondary-border);
