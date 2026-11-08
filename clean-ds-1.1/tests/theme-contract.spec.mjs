@@ -317,7 +317,7 @@ test('DS11 primary action hover and pressed colors use semantic tokens without d
     localStorage.setItem('appearanceMode', 'light');
   });
   await page.goto('/index.html');
-  const action = page.locator('[data-ui-component="primary-action"]').first();
+  const action = page.locator('[data-ui-component="primary-action"]:visible').first();
   await page.locator('body').evaluate(el => el.classList.remove('ds-app'));
   const states = await action.evaluate(el => {
     const token = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -344,7 +344,7 @@ test('DS11 pressed primary action resolves its token without ds-app class', asyn
     localStorage.setItem('appearanceMode', 'light');
   });
   await page.goto('/index.html');
-  const action = page.locator('[data-ui-component="primary-action"]').first();
+  const action = page.locator('[data-ui-component="primary-action"]:visible').first();
   await page.locator('body').evaluate(el => el.classList.remove('ds-app'));
   const expected = await page.evaluate(() => {
     const probe = document.createElement('span');
