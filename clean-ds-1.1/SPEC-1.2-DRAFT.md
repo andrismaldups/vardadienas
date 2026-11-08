@@ -182,7 +182,7 @@ Lietotājs precizēja, ka sarunā kopā iesniegti **46 iPhone ekrānattēli**. �
 | B2 — automatizētā regresija | Statika, integrācija, kontrasts, Chromium, WebKit, mobile-WebKit | GitHub Actions #70/#72/#73 | Iepriekšējais pārbaudes tvērums sekmīgs |
 | B3 — D3 iPhone izskats | Gaišais/tumšais, C17 pēc labojuma | Lietotāja iPhone ekrānattēli un apstiprinājums | Apstiprināts iepriekš saskaņotajā tvērumā |
 | B4 — vizuālā kataloga pilnīgums | Visiem 46 attēliem stabila atsauce un individuāls ieraksts | Pielikums A: tematiskais katalogs; Pielikums C: 46 pozīcijas | **Tvērums: 46 trīs sūtījumos; individuālā sasaistīšana vēl nav pabeigta** |
-| B5 — virsmu alfa | V02–V05 izmērītas gala renderējumā | Nav mērījumu protokola | Atvērts pierādījumu jautājums |
+| B5 — virsmu alfa | V02–V05 izmērītas gala renderējumā | Pielikums E: deklarēto CSS tokenu statiska salīdzināšana | **Statiskā pārbaude veikta; gala renderējums un etalonu interpretācija vēl jāapstiprina** |
 | B6 — pārējās tēmas | K1, Z3, S1, J1-E individuāla iPhone pieņemšana | Nav šīs iterācijas individuāla protokola | Atvērts |
 | B7 — datu drošība | Offline, push un dzēšanas darbību regresija | Vizuālā pārbaude to neapliecina | Atvērts; **nedrīkst testēt ar reālu datu dzēšanu bez atsevišķas saskaņošanas** |
 | B8 — 1.0 numerācijas savietojamība | 1.0 komponentu tabula salīdzināta ar faktisko 1.2 implementāciju | Nav pilnas 1.0 ID tabulas šajā dokumentā | Atvērts |
@@ -304,3 +304,32 @@ Ja rodas jauns defekts, ierakstīt **ID, attēla ID (I/II/III), skatu, režīmu,
 4. Lietotājs apstiprina 1.2 redakciju kā dizaina sistēmas dokumentu. Tas **nav** automātiska atļauja migrēt produkciju vai veikt push/datu dzēšanas testus.
 
 **Darba secība:** vispirms pierādījumi un dokumenta saskaņošana, pēc tam — tikai atsevišķi saskaņoti koda labojumi un regresijas pārbaudes.
+
+## Pielikums E — D3 virsmu tokenu statiskā alfa pārbaude
+
+**Avots:** `clean-ds-1.1/d3-theme.css` abiem `html[data-design="ds11"][data-theme=...]` režīmiem; `components.css` un `app-integration.css` nosaka, kur tokens tiek lietots. Tālāk redzamās vērtības ir **CSS deklarācijas**, nevis izmērīts pikseļa gala caurspīdīgums pēc vairāku slāņu kompozīcijas.
+
+| Virsmas tokens | Gaišais D3 | Tumšais D3 | Statiskā interpretācija |
+|---|---|---|---|
+| `--ds-home-panel-bg` | `rgba(245,248,233,.17)` → 17% | `rgba(24,53,29,.17)` → 17% | Atbilst V01 etalonam tokena līmenī |
+| `--ds-soft-bg` | `rgba(249,251,239,.68)` → 68% | `rgba(39,65,44,.84)` → 84% | Gaišais atbilst V02; tumšais izmanto blīvāku virsmu |
+| `--ds-surface-soft` | `rgba(249,251,239,.68)` → 68% | `rgba(39,65,44,.84)` → 84% | Gaišais 68%; tumšais 84% |
+| `--ds-surface` | `rgba(245,248,233,.84)` → 84% | `rgba(34,55,38,.87)` → 87% | Gaišais atbilst V03; tumšais par 3 procentpunktiem blīvāks |
+| `--ds-input-bg` | `rgba(249,251,239,.91)` → 91% | `#294531` → 100% | Gaišais atbilst V04; tumšajā deklarēta necaurspīdīga krāsa |
+| `--ds-surface-elevated` | `rgba(245,248,233,.96)` → 96% | `rgba(34,55,38,.96)` → 96% | Par 1 procentpunktu pārsniedz V05 etalona 93–95% augšējo robežu |
+| `--ds-popup-bg` | `rgba(245,248,233,.96)` → 96% | `#223726` → 100% | Paceltajai izvēlnei izmantota īpaši blīva virsma |
+| `--ds-secondary-bg` | `rgba(249,251,239,.82)` → 82% | `rgba(39,65,44,.92)` → 92% | Sekundārās pogas virsma atšķiras no V02; lomu nedrīkst automātiski pielīdzināt V02 |
+| `--ds-unselected-bg` | `rgba(249,251,239,.68)` → 68% | `rgba(39,65,44,.84)` → 84% | Izvēles pogas atbilst attiecīgajai soft virsmai |
+| `--ds-menu-bg` | `rgba(245,248,233,.96)` → 96% | `#223726` → 100% | Izvēlnes virsma nav identiska V05 etalonam |
+
+### E.1. Secinājumi
+1. **V01 ir precīzi 17% abos režīmos** deklarētajā tokenā. Tas vēl nepierāda gala pikseļa 17% caurspīdīgumu, ja virsma tiek kombinēta ar citiem slāņiem.
+2. **V02–V05 nav viens universāls alfa skaitlis visām tēmām un visām virsmām.** Tumšajā D3 režīmā blīvākas virsmas, tostarp 100% ievades un izvēlnes, ir skaidri definētas kodā.
+3. Specifikācijas 4. sadaļas 68% / 84% / 91% / 93–95% ir **sākotnējie etaloni**, nevis apliecinājums, ka katrs tiem pielīdzinātais tokens jau ir realizēts ar precīzu alfa vērtību.
+4. Šīs atšķirības **nav automātiski vizuāli defekti**. Lietotāja iepriekš apstiprināto D3 izskatu nedrīkst mainīt tikai tādēļ, lai skaitļus mehāniski izlīdzinātu.
+5. Pirms 1.2 galīgās apstiprināšanas jāpieņem viens dokumentēts lēmums: vai V02–V05 etaloni ir **obligāti identiski alfa procenti abos režīmos**, vai **gaišā režīma atskaites vērtības ar tumšā režīma apstiprinātiem kontrasta izņēmumiem**. Līdz šim lēmumam atšķirības reģistrēt kā **specifikācijas interpretācijas jautājumu**, nevis koda kļūdu.
+
+### E.2. Gala renderējuma verifikācija
+Pārbaudīt konkrētā elementa `getComputedStyle(element).backgroundColor`, faktiskos pārklājošos `::before`/`::after` dekoratīvos slāņus un DOM elementu ligzdojumu. Ja vairākas puscaurspīdīgas virsmas atrodas cita virs citas, rezultējošā necaurspīdība nav vienāda ar viena tokena alfa. Testa rezultātu reģistrēt atsevišķi gaišajam un tumšajam D3 režīmam, ar selektoru un attiecīgo iPhone skatu.
+
+**Darbības robeža:** šajā posmā nav mainīts neviens CSS tokens, dizaina elements, aplikācijas funkcija vai lietotāja dati.
