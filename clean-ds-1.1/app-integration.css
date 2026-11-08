@@ -29,19 +29,19 @@ html[data-design="ds11"] body .muted{color:var(--ds-muted)}
    and selectors are verified against the real application. */
 
 /* DS 1.1: existing functional application component mappings. */
-html[data-design="ds11"] body.ds-app::before{
+html[data-design="ds11"] body::before{
  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
  background:url("../assets/d3-rita-rasa.svg") center top / 100% 100% no-repeat;
 }
-html[data-design="ds11"] body.ds-app{position:relative;isolation:isolate}
-html[data-design="ds11"] body.ds-app::after{
+html[data-design="ds11"] body{position:relative;isolation:isolate}
+html[data-design="ds11"] body::after{
  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
  background:url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
 }
-html[data-design="ds11"][data-theme="dark"] body.ds-app::after{
+html[data-design="ds11"][data-theme="dark"] body::after{
  background:linear-gradient(rgba(15,32,21,.76),rgba(15,32,21,.81)),url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
 }
-html[data-design="ds11"] body.ds-app .wrap{position:relative;z-index:1}
+html[data-design="ds11"] body .wrap{position:relative;z-index:1}
 html[data-design="ds11"] body :is(.side-menu,.about-content){
  background:var(--ds-surface);color:var(--ds-text);border:1px solid var(--ds-surface-border);
 }
