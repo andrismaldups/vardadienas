@@ -95,6 +95,6 @@ check('"./design-water-j1.css"' not in worker, "Retired Sea theme still precache
 check('html[data-design="lavender"] {' not in (root / "design-system.css").read_text(encoding="utf-8"), "Retired Lavender palette still active")
 
 legacy_css = (root / "clean-ds-1.1/legacy-layout.css").read_text(encoding="utf-8")
-check("/* TEST: Z3 Lavandas tonis" not in legacy_css, "Retired Z3 decorative stylesheet block remains")
+check("/* TEST: Z3 Lavandas tonis" in legacy_css, "Legacy Z3 block temporarily restored for viewport safety")
 check(".about-card .about-row-button" in legacy_css, "Shared about-row layout was accidentally removed")
 check(".reminder-time-control" in legacy_css, "Shared reminder picker layout was accidentally removed")
