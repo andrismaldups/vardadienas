@@ -55,6 +55,7 @@ test('full VD Design: DS 1.1 fits iPhone viewport', async ({ page }) => {
 
 
 test('full VD Design: switch themes and light/dark modes in real settings', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
   await page.addInitScript(() => {
     localStorage.setItem('designStyle', 'classic');
     localStorage.setItem('appearanceMode', 'light');
@@ -64,19 +65,24 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
   await page.locator('#sideMenu').getByRole('button', { name: 'Iestatījumi' }).click();
   await expect(page.locator('#settingsView')).toBeVisible();
 
-  await page.locator('input[name="designStyle"][value="ds11"]').check();
-  await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
-  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
-  await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
-
-  await page.locator('input[name="appearanceMode"][value="dark"]').check();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.locator('body')).toHaveAttribute('data-mode', 'dark');
-
-  await page.locator('input[name="designStyle"][value="classic"]').check();
-  await expect(page.locator('html')).toHaveAttribute('data-design', 'classic');
-  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
-  await expect(page.locator('[data-ui-component="card"]').first()).toBeAttached();
+  const card = page.locator('#settingsView .settings-card').first();
+  const palette = () => card.evaluate(element => getComputedStyle(element).backgroundColor);
+  for (const design of ['classic', 'festive-s1', 'ds11']) {
+    await page.locator(`input[name="designStyle"][value="${design}"]`).check();
+    await expect(page.locator('html')).toHaveAttribute('data-design', design);
+    await expect(page.locator('body')).not.toHaveClass(/ds-app/);
+    const backgrounds = [];
+    for (const mode of ['light', 'dark']) {
+      await page.locator(`input[name="appearanceMode"][value="${mode}"]`).check();
+      await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
+      await expect(page.locator('#settingsView')).toBeVisible();
+      backgrounds.push(await palette());
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+        await page.evaluate(() => window.innerWidth + 1)
+      );
+    }
+    expect(backgrounds[0]).not.toBe(backgrounds[1]);
+  }
   await expect(page.locator('#calendar')).toBeAttached();
 });
 
@@ -136,4 +142,44 @@ test("shared controls survive retirement of Z3 decorations", async ({ page }) =>
   await page.goto("/index.html");
   await expect(page.locator("html")).toHaveAttribute("data-design", /classic|festive-s1|ds11/);
   await expect(page.locator('input[name="designStyle"]')).toHaveCount(3);
+});
+
+test('system appearance tracks the device until an explicit mode is selected', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/index.html');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await page.locator('.menu-btn').click();
+  await page.locator('#sideMenu').getByRole('button', { name: 'Iestatījumi' }).click();
+  await page.locator('input[name="appearanceMode"][value="dark"]').check();
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+});
+
+test('VD Design reloads offline with the saved theme and local data', async ({ page, context }) => {
+  // Playwright can reliably emulate service worker network failure in Chromium.
+  test.skip(test.info().project.name !== 'chromium', 'Offline service worker emulation uses Chromium');
+
+  await page.goto('/index.html');
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+  await page.evaluate(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'dark');
+    localStorage.setItem('favorites', JSON.stringify(['Anna']));
+  });
+
+  await context.setOffline(true);
+  expect(await page.evaluate(async () => (await fetch("/assets/gold-ornaments.svg?v=20261103-upper-glow14")).ok)).toBe(true);
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('#calendar .day').first()).toBeVisible();
+  await page.locator('#nameInput').fill('Anna');
+  await page.locator('#nameBtn').click();
+  await expect(page.locator('#nameInput')).toHaveValue('Anna');
+  expect(await page.evaluate(() => localStorage.getItem('favorites'))).toBe('["Anna"]');
 });

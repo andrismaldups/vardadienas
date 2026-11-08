@@ -1,1 +1,6 @@
-/* C18 / N22: spacing belongs to accordion items, not buttons or hidden content. */html[data-design="ds11"] body.ds-app .about-card .about-accordion-list{display:block}html[data-design="ds11"] body.ds-app .about-card .about-accordion-item{min-width:0;margin:0}html[data-design="ds11"] body.ds-app .about-card .about-accordion-item + .about-accordion-item{margin-top:8px}html[data-design="ds11"] body.ds-app .about-card .about-row-button{margin:0!important}html[data-design="ds11"] body.ds-app .about-card .about-content[hidden]{display:none!important}
+/* C18: spacing belongs to accordion items in every appearance. */
+.about-card .about-accordion-list { display: block; }
+.about-card .about-accordion-item { min-width: 0; margin: 0; }
+.about-card .about-accordion-item + .about-accordion-item { margin-top: 8px; }
+.about-card .about-row-button { margin: 0; }
+.about-card .about-content[hidden] { display: none; }

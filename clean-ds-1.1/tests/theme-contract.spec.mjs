@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 test('K1, S1 and DS11 share the same functional DOM and stored data', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('favorites', JSON.stringify(['Anna']));
-    localStorage.setItem('birthdays', JSON.stringify([]));
+    localStorage.setItem('birthdays', JSON.stringify([{ id: 'test-person', name: 'Anna Tests', day: 20, month: 1 }]));
     localStorage.setItem('appearanceMode', 'light');
     localStorage.setItem('designStyle', 'classic');
   });

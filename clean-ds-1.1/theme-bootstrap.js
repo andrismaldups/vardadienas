@@ -1,28 +1,73 @@
-(function(){
-  const KEY='appearanceMode';
-  const DESIGN_KEY='designStyle';
-  let design='classic';
-  try{const saved=localStorage.getItem(DESIGN_KEY);if(['classic','festive-s1','ds11'].includes(saved))design=saved;}catch(e){}
-  document.documentElement.dataset.design=design;
-  function syncDs11(){if(!document.body)return;const active=document.documentElement.dataset.design==='ds11';/* DS11 component styling follows html[data-design], not a body class. */if(active)document.body.dataset.mode=document.documentElement.dataset.theme||'light';else delete document.body.dataset.mode;/* Component identity stays in HTML; theme switching only changes the theme state. */}
-  const allowed=['light','dark','auto'];
-  let mode='auto';
-  try{const saved=localStorage.getItem(KEY);if(allowed.includes(saved))mode=saved;}catch(e){}
-  const media=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-  function apply(){document.documentElement.dataset.theme=mode==='auto'?(media&&media.matches?'dark':'light'):mode;document.documentElement.style.colorScheme=document.documentElement.dataset.theme;if(document.body&&document.documentElement.dataset.design==='ds11')document.body.dataset.mode=document.documentElement.dataset.theme;}
-  apply();
-  function init(){
-    syncDs11();
-    document.querySelectorAll('input[name="designStyle"]').forEach(input=>{
-      input.checked=input.value===design;
-      input.addEventListener('change',()=>{if(!input.checked)return;design=input.value;document.documentElement.dataset.design=design;syncDs11();try{localStorage.setItem(DESIGN_KEY,design);}catch(e){}});
+// Apply the saved appearance before the body is rendered.
+(function () {
+  const root = document.documentElement;
+  const designs = ['classic', 'festive-s1', 'ds11'];
+  const modes = ['auto', 'light', 'dark'];
+  const media = window.matchMedia?.('(prefers-color-scheme: dark)');
+
+  function readPreference(key, choices) {
+    try {
+      const saved = localStorage.getItem(key);
+      if (choices.includes(saved)) return saved;
+    } catch {
+      // The current session can still use the controls if storage is blocked.
+    }
+    return choices[0];
+  }
+
+  function savePreference(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // The root still reflects the user's current selection.
+    }
+  }
+
+  let mode = readPreference('appearanceMode', modes);
+
+  function applyMode() {
+    const theme = mode === 'auto' ? (media?.matches ? 'dark' : 'light') : mode;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+  }
+
+  root.dataset.design = readPreference('designStyle', designs);
+  applyMode();
+
+  function bindChoices(name, currentValue, apply) {
+    for (const input of document.querySelectorAll(`input[name="${name}"]`)) {
+      input.checked = input.value === currentValue;
+      input.addEventListener('change', () => {
+        if (!input.checked) return;
+        apply(input.value);
+        savePreference(name, input.value);
+      });
+    }
+  }
+
+  function init() {
+    bindChoices('designStyle', root.dataset.design, value => {
+      root.dataset.design = value;
     });
-    document.querySelectorAll('input[name="appearanceMode"]').forEach(input=>{
-      input.checked=input.value===mode;
-      input.addEventListener('change',()=>{if(!input.checked)return;mode=input.value;try{localStorage.setItem(KEY,mode);}catch(e){}apply();});
+    bindChoices('appearanceMode', mode, value => {
+      mode = value;
+      applyMode();
     });
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-  if(media){if(media.addEventListener)media.addEventListener('change',()=>{if(mode==='auto')apply();});else if(media.addListener)media.addListener(()=>{if(mode==='auto')apply();});}
-})();
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+
+  function followSystemMode() {
+    if (mode === 'auto') applyMode();
+  }
+
+  if (media?.addEventListener) {
+    media.addEventListener('change', followSystemMode);
+  } else {
+    media?.addListener(followSystemMode);
+  }
+})();

@@ -24,14 +24,13 @@ for path in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
 
 check('value="ds11"' in app, "DS 1.1 appearance option absent")
 theme_bootstrap = (root / "clean-ds-1.1/theme-bootstrap.js").read_text(encoding="utf-8")
-check("document.body.classList.toggle('ds-app',active)" not in theme_bootstrap,
-      "Theme switch still mutates body component class")
-check("document.documentElement.dataset.design=design" in theme_bootstrap,
-      "Theme switch no longer sets root design state")
-check("document.body.dataset.mode" in theme_bootstrap, "Light/dark mode sync absent")
+check("root.dataset.design =" in theme_bootstrap and "root.dataset.theme =" in theme_bootstrap,
+      "Bootstrap must set both root theme attributes")
+check("document.body" not in theme_bootstrap and "body-theme-init.js" not in app,
+      "Application theme state must be owned by the root")
 for retired in ("lavender", "nature-d3", "water-j1"):
     check(f'name="designStyle" value="{retired}"' not in app, f"Retired theme still offered: {retired}")
-check("['classic','festive-s1','ds11']" in theme_bootstrap, "Retired theme persisted in bootstrap allowlist")
+check("['classic', 'festive-s1', 'ds11']" in theme_bootstrap, "Retired theme persisted in bootstrap allowlist")
 check('value="classic"' in app, "Existing classic option absent")
 guard_path = "clean-ds-1.1/isolation-guard.js"
 guard = (root / guard_path).read_text(encoding="utf-8") if (root / guard_path).is_file() else ""
@@ -40,9 +39,9 @@ check("window.DESIGN_TEST_ISOLATED=true" in guard, "Design test API isolation ab
 check("protectedOrigin=" in guard, "Protected push origin interception absent")
 check(app.find(f'src="{guard_path}"') < app.find('src="clean-ds-1.1/app-core.js"'), "Isolation guard must precede application script")
 check("const GREETING_SINCERE=" in (root / "clean-ds-1.1/app-core.js").read_text(encoding="utf-8"), "Application core content missing")
-check(app.find('src="clean-ds-1.1/theme-bootstrap.js"') < app.find(f'src="{guard_path}"') < app.find('src="clean-ds-1.1/body-theme-init.js"'), "Early theme and isolation load order changed")
+check(app.find('src="clean-ds-1.1/theme-bootstrap.js"') < app.find(f'src="{guard_path}"') < app.find('src="clean-ds-1.1/app-core.js"'), "Early theme and isolation load order changed")
 for script in ("sw-register.js", "reminder-time-picker.js", "push-design-guard.js",
-               "theme-bootstrap.js", "body-theme-init.js", "app-core.js"):
+               "theme-bootstrap.js", "app-core.js"):
     check(f'src="clean-ds-1.1/{script}"' in app, f"Extracted script not loaded: {script}")
 for stylesheet in ("legacy-layout.css", "about-row-gap.css"):
     check(f'href="clean-ds-1.1/{stylesheet}"' in app, f"Extracted stylesheet not loaded: {stylesheet}")
@@ -83,7 +82,7 @@ worker = (root / "service-worker.js").read_text(encoding="utf-8")
 for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
               "clean-ds-1.1/app-integration.css", "clean-ds-1.1/isolation-guard.js", "clean-ds-1.1/sw-register.js",
               "clean-ds-1.1/reminder-time-picker.js", "clean-ds-1.1/push-design-guard.js",
-              "clean-ds-1.1/theme-bootstrap.js", "clean-ds-1.1/body-theme-init.js",
+              "clean-ds-1.1/theme-bootstrap.js",
               "clean-ds-1.1/app-core.js", "clean-ds-1.1/legacy-layout.css",
               "clean-ds-1.1/about-row-gap.css", "assets/d3-rita-rasa.svg",
               "assets/d3-rita-gaisma.svg"):

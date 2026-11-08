@@ -16,7 +16,7 @@
 - Komponentu CSS: `clean-ds-1.1/components.css`.
 - D3 tokeni: `clean-ds-1.1/d3-theme.css`.
 - Reālo skatu opt-in integrācija: `clean-ds-1.1/app-integration.css`.
-- Dizaina ieslēgšana: `html[data-design="ds11"] body.ds-app`.
+- Dizaina ieslēgšana: `html[data-design="ds11"]`.
 - CI: `.github/workflows/clean-ds-1-1.yml`.
 
 ## Cloudflare konfigurācijas drošības pārbaude
@@ -27,6 +27,6 @@
 5. Pēc koda izmaiņām pārbaudīt GitHub Actions un tad to pašu **esošo** VD Design PWA iPhone, neinstalējot ceturto aplikāciju.
 
 ## Pašreizējais pārbaudes statuss
-GitHub kodā ir reālās aplikācijas `ds11` pārslēgšana, izolācijas pazīme `DESIGN_TEST_ISOLATED` un Playwright testi, kuri pārbauda pilno aplikāciju un tēmu pārslēgšanu. GitHub Actions #85 ir sekmīga. Tas **neapliecina**, kāda tieši Cloudflare publicēšanas direktorija pašlaik ir iestatīta vai ka pēdējā izmaiņa jau ir redzama iPhone: šie fakti jāpārbauda pašā esošajā Pages projektā un PWA.
+GitHub kodā ir reālās aplikācijas `ds11` pārslēgšana, izolācijas pazīme `DESIGN_TEST_ISOLATED` un Playwright testi, kuri pārbauda pilno aplikāciju un tēmu pārslēgšanu. GitHub Actions rezultātu pārbauda pēc konkrētā publicējamā commit. Tas **neapliecina**, kāda tieši Cloudflare publicēšanas direktorija pašlaik ir iestatīta vai ka pēdējā izmaiņa jau ir redzama iPhone: šie fakti jāpārbauda pašā esošajā Pages projektā un PWA.
 
 **Iepriekšējā instrukcija veidot jaunu atsevišķu Pages projektu ir atsaukta.**

@@ -20,6 +20,18 @@ html[data-design="classic"] {
   --ds-decor-top:none;
   --ds-decor-bottom:none;
 }
+/* K1 dark values follow the classic dark layout palette. */
+html[data-design="classic"][data-theme="dark"] {
+  --ds-page-bg:#0f1f1a;
+  --ds-surface:#1e2d27;
+  --ds-text:#e8f4ec;
+  --ds-muted:#a7b9b0;
+  --ds-border:#405c4f;
+  --ds-soft-bg:#233b32;
+  --ds-soft-border:#405c4f;
+  --ds-focus:#39a76b;
+  --ds-caret:#a3e9bf;
+}
 /* S1 draft palette, not yet selectable. Gold is decorative; green remains
    the high-contrast action color, consistent with the approved S1 mockup. */
 html[data-design="festive-s1"] {
