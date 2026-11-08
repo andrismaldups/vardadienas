@@ -196,3 +196,31 @@ test('theme choice persists after reload without mutating application content', 
     expect(persisted.design).toBe(design);
   }
 });
+
+test('switching design does not alter calendar dates or typed search values', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'classic');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const input = page.locator('#nameInput');
+  await input.fill('Anna');
+  const before = await page.evaluate(() => ({
+    calendar: document.getElementById('calendar')?.textContent,
+    name: document.getElementById('nameInput')?.value,
+    date: document.getElementById('dateInput')?.value
+  }));
+  expect(before.calendar?.length).toBeGreaterThan(10);
+  for (const design of ['festive-s1', 'ds11', 'classic']) {
+    await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    const after = await page.evaluate(() => ({
+      calendar: document.getElementById('calendar')?.textContent,
+      name: document.getElementById('nameInput')?.value,
+      date: document.getElementById('dateInput')?.value
+    }));
+    expect(after).toEqual(before);
+  }
+});
