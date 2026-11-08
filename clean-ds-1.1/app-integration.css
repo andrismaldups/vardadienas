@@ -154,16 +154,17 @@ html[data-design="ds11"] body.ds-app .about-accordion-list>.about-accordion-item
 html[data-design="ds11"] body.ds-app .about-card .about-row-button{
  min-height:48px;margin:0;
 }
-/* G06 / C17: semantic destructive action with D3-approved subtle danger
-   surface; distinct from C03 and C04, without an aggressive solid fill. */
+/* G06 / C17: deletion is confirmed separately in the application.
+   The trigger itself uses the shared secondary button palette in both modes,
+   matching the approved D3 presentation rather than a red warning surface. */
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button,
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
- background:var(--ds-danger-bg);
- color:var(--ds-danger-text);
- border:1px solid var(--ds-danger-border);
+ background:var(--ds-secondary-bg);
+ color:var(--ds-secondary-text);
+ border:1px solid var(--ds-secondary-border);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:active{
- background:var(--ds-danger-pressed);
+ background:var(--ds-pressed-bg);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disabled{
  opacity:.55;
