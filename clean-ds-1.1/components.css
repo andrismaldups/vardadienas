@@ -65,10 +65,12 @@
 @media(hover:hover){.ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):hover{background:var(--ds-hover-bg);color:var(--ds-secondary-text)}
 .ds-app .ds-button--primary:not(:disabled):hover{background:var(--ds-primary-hover);color:var(--ds-on-primary)}
 .ds-app .ds-button--danger:not(:disabled):hover{background:var(--ds-danger-hover);color:var(--ds-on-danger)}
+.ds-app .ds-icon-button--danger:not(:disabled):hover{background:var(--ds-danger-bg);color:var(--ds-danger-text);border-color:var(--ds-danger-border)}
 .ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):hover{background:var(--ds-selected-hover);color:var(--ds-selected-text)}}
 .ds-app :is(.ds-button,.ds-choice,.ds-icon-button):not(:disabled):active{background:var(--ds-pressed-bg)}
 .ds-app .ds-button--primary:not(:disabled):active{background:var(--ds-primary-pressed)}
 .ds-app .ds-button--danger:not(:disabled):active{background:var(--ds-danger-pressed)}
+.ds-app .ds-icon-button--danger:not(:disabled):active{background:var(--ds-danger-pressed);color:var(--ds-danger-text);border-color:var(--ds-danger-border)}
 .ds-app :is(.ds-choice[aria-pressed=true],.ds-choice[aria-selected=true]):not(:disabled):active{background:var(--ds-selected-pressed)}
 .ds-app .ds-input[aria-invalid=true],.ds-app .ds-textarea[aria-invalid=true],.ds-app .ds-select[aria-invalid=true]{border-color:var(--ds-error);box-shadow:inset 0 0 0 1px var(--ds-error)}
 .ds-app :is(.ds-input,.ds-textarea,.ds-select):read-only{background:var(--ds-readonly-bg);color:var(--ds-readonly-text)}
