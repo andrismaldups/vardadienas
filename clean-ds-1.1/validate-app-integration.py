@@ -53,8 +53,10 @@ check('id="calendar"' in app and 'id="dateInput"' in app,
 check('id="greetingEmojiPanel"' in app, "Emoji picker absent")
 check('id="settingsView"' in app and 'id="favoritesView"' in app,
       "Existing settings or favorites view absent")
-check('html[data-design="ds11"] body.ds-app' in bridge,
+check('html[data-design="ds11"] body' in bridge,
       "Integration CSS is not scoped to opt-in DS mode")
+check('body.ds-app' not in bridge.split('*/', 1)[-1],
+      "DS11 integration selectors still depend on body.ds-app")
 check("data-design=\"nature-d3\"" not in bridge,
       "Integration CSS unexpectedly targets existing D3")
 required = set(re.findall(r"var\((--ds-[a-z0-9-]+)", components))
