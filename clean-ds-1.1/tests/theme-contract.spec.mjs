@@ -310,3 +310,21 @@ test('classic and festive designs do not inherit DS11 semantic component styling
   expect(colors.classic).not.toBe(colors.ds11);
   expect(colors['festive-s1']).not.toBe(colors.ds11);
 });
+
+test('DS11 primary action hover and pressed colors use semantic tokens without ds-app', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const action = page.locator('[data-ui-component="primary-action"]').first();
+  await page.locator('body').evaluate(el => el.classList.remove('ds-app'));
+  const states = await action.evaluate(el => {
+    const token = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return { hover: token('--ds-primary-hover'), pressed: token('--ds-primary-pressed') };
+  });
+  expect(states.hover).not.toBe('');
+  expect(states.pressed).not.toBe('');
+  await action.hover();
+  await expect(action).toHaveCSS('background-color', states.hover);
+});
