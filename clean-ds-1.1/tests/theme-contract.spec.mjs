@@ -259,3 +259,34 @@ test('component gallery keeps its standalone ds-app scope', async ({ page }) => 
   expect(computed.bg).not.toBe('rgba(0, 0, 0, 0)');
   expect(computed.border).toBe('solid');
 });
+
+test('DS11 semantic cards and primary actions remain styled without ds-app class in both modes', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const card = page.locator('[data-ui-component="card"]').first();
+  const action = page.locator('[data-ui-component="primary-action"]').first();
+  for (const mode of ['light', 'dark']) {
+    await page.locator('input[name="appearanceMode"][value="' + mode + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
+    const before = await page.evaluate(() => ({
+      card: getComputedStyle(document.querySelector('[data-ui-component="card"]')).backgroundColor,
+      action: getComputedStyle(document.querySelector('[data-ui-component="primary-action"]')).backgroundColor
+    }));
+    await page.locator('body').evaluate(el => el.classList.remove('ds-app'));
+    const after = await page.evaluate(() => ({
+      card: getComputedStyle(document.querySelector('[data-ui-component="card"]')).backgroundColor,
+      action: getComputedStyle(document.querySelector('[data-ui-component="primary-action"]')).backgroundColor
+    }));
+    expect(after).toEqual(before);
+    expect(after.card).not.toBe('rgba(0, 0, 0, 0)');
+    expect(after.action).not.toBe('rgba(0, 0, 0, 0)');
+    await expect(card).toBeAttached();
+    await expect(action).toBeAttached();
+  }
+});
