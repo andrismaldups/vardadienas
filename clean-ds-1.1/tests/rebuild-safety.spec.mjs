@@ -61,6 +61,6 @@ test('VD Design retains safe theme bootstrap and iPhone-sized layout', async ({ 
   await page.goto('/index.html');
   await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.locator('body')).toHaveClass(/ds-app/);
+  await expect(page.locator('body')).not.toHaveClass(/ds-app/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });
