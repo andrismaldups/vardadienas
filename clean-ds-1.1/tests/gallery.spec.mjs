@@ -217,13 +217,21 @@ test('destructive icon hover and pressed states preserve semantic colors', async
       await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
       await expect(icon).toHaveCSS('background-color', toRgb(colors.hoverBg));
     }
-    const rect = await icon.boundingBox();
-    expect(rect).not.toBeNull();
-    await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
-    await page.mouse.down();
-    await expect(icon).toHaveCSS('background-color', toRgb(colors.pressedBg));
-    await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
-    await page.mouse.up();
+    if (supportsHover) {
+      const rect = await icon.boundingBox();
+      expect(rect).not.toBeNull();
+      await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
+      await page.mouse.down();
+      await expect(icon).toHaveCSS('background-color', toRgb(colors.pressedBg));
+      await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
+      await page.mouse.up();
+    } else {
+      // Touch WebKit does not emulate an active finger with page.mouse.down().
+      // Verify the touch target and its semantic resting color instead.
+      await expect(icon).toHaveCSS('color', toRgb(mode === 'light' ? '#a52f40' : '#ffb1ba'));
+      await expect(icon).toBeEnabled();
+      await icon.tap();
+    }
   }
 });
 
