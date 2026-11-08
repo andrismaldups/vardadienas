@@ -214,3 +214,58 @@ Katram attēlam saglabāt identifikatoru pēc **sūtījuma un vietas sūtījumā
 Pielikums A ir tematiskais pārbaudes katalogs (T01–T13), nevis individuālu attēlu secības saraksts. Vienīgi Pielikuma C `I`, `II` un `III` apzīmējumi rezervē attēlu vietas lietotāja apstiprinātajos trīs sūtījumos. Iepriekšējie `A`/`B` numuri ir atsaukti.
 
 **Vizuālā audita robeža:** attēli pamato tikai redzamos dizaina stāvokļus; tie paši par sevi neapstiprina offline darbību, push piegādi vai datu dzēšanas funkcionalitāti.
+
+### C.3. Individuālais 46 pozīciju reģistrs
+
+> Šis ir **sūtījumu secības reģistrs**, nevis apgalvojums, ka visi 46 attēli jau individuāli analizēti. Pirmo divu sūtījumu laukus aizpildīt tikai pēc tiešas pārbaudes oriģinālajā sūtījumā.
+
+| ID | Skats / stāvoklis | Režīms | T grupa | C komponents / novērojums | Pierādījuma statuss |
+|---|---|---|---|---|---|
+| I01 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I02 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I03 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I04 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I05 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I06 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I07 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I08 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I09 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I10 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I11 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I12 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I13 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I14 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I15 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I16 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I17 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I18 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I19 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| I20 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II01 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II02 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II03 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II04 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II05 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II06 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II07 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II08 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II09 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II10 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II11 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II12 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II13 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II14 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II15 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II16 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II17 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II18 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II19 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| II20 | Jāprecizē | Jāprecizē | Jāprecizē | Jāprecizē | Attēls ietilpst apstiprinātajā sūtījumā; individuāli nav piesaistīts |
+| III01 | Apsveikums; iOS kopīgošanas lapa | tumšais | T08/T09 | C04/C07; iOS sistēmas lapa | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+| III02 | Iestatījumi; atgādinājumi | tumšais | T10 | C06/C14; DESIGN TEST push drošības teksts | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+| III03 | Iestatījumi; atvērta laika izvēlne 06:00 | tumšais | T10 | C13; izvēlētā laika izcēlums | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+| III04 | Iestatījumi; izskata tēmu izvēle | tumšais | T11 | C06; atlasītais stils | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+| III05 | Iestatījumi; krāsu režīms un Mani dati | tumšais | T11/T12 | C06/C17 | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+| III06 | Iestatījumi; Mani dati un Par aplikāciju | tumšais | T12/T13 | C17/C18 | Redzamais stāvoklis identificēts; funkcionalitāte nav testēta |
+
+**Kontrole:** 20 + 20 + 6 = **46** rindas. Pirmie 40 ieraksti apzināti nav aizpildīti ar spekulatīviem datiem. Trešā sūtījuma sešas pozīcijas atbilst lietotāja pēdējā sešu attēlu ziņojuma secībai.
