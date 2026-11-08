@@ -290,3 +290,23 @@ test('DS11 semantic cards and primary actions remain styled without ds-app class
     await expect(action).toBeAttached();
   }
 });
+
+test('classic and festive designs do not inherit DS11 semantic component styling', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'classic');
+    localStorage.setItem('appearanceMode', 'light');
+  });
+  await page.goto('/index.html');
+  const colors = {};
+  for (const design of ['classic', 'festive-s1', 'ds11']) {
+    await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    colors[design] = await page.locator('[data-ui-component="primary-action"]').first().evaluate(el =>
+      getComputedStyle(el).backgroundColor
+    );
+  }
+  expect(colors.classic).not.toBe(colors.ds11);
+  expect(colors['festive-s1']).not.toBe(colors.ds11);
+});
