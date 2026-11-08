@@ -23,9 +23,10 @@ for path in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
     check(f'href="{path}"' in app, f"Missing stylesheet link: {path}")
 
 check('value="ds11"' in app, "DS 1.1 appearance option absent")
-check("document.body.classList.toggle('ds-app',active)" in app,
+theme_bootstrap = (root / "clean-ds-1.1/theme-bootstrap.js").read_text(encoding="utf-8")
+check("document.body.classList.toggle('ds-app',active)" in theme_bootstrap,
       "Opt-in DS class toggle absent")
-check("document.body.dataset.mode" in app, "Light/dark mode sync absent")
+check("document.body.dataset.mode" in theme_bootstrap, "Light/dark mode sync absent")
 check('value="nature-d3"' in app, "Existing D3 option absent")
 check('value="classic"' in app, "Existing classic option absent")
 guard_path = "clean-ds-1.1/isolation-guard.js"
@@ -34,7 +35,9 @@ check(f'src="{guard_path}"' in app, "Design test isolation script not loaded")
 check("window.DESIGN_TEST_ISOLATED=true" in guard, "Design test API isolation absent")
 check("protectedOrigin=" in guard, "Protected push origin interception absent")
 check(app.find(f'src="{guard_path}"') < app.find('const GREETING_SINCERE='), "Isolation guard must precede application script")
-for script in ("sw-register.js", "reminder-time-picker.js", "push-design-guard.js"):
+check(app.find('src="clean-ds-1.1/theme-bootstrap.js"') < app.find(f'src="{guard_path}"') < app.find('src="clean-ds-1.1/body-theme-init.js"'), "Early theme and isolation load order changed")
+for script in ("sw-register.js", "reminder-time-picker.js", "push-design-guard.js",
+               "theme-bootstrap.js", "body-theme-init.js"):
     check(f'src="clean-ds-1.1/{script}"' in app, f"Extracted script not loaded: {script}")
 check(app.find('src="clean-ds-1.1/sw-register.js"') < app.find('src="clean-ds-1.1/reminder-time-picker.js"') < app.find('src="clean-ds-1.1/push-design-guard.js"'), "Extracted scripts changed order")
 push_guard = (root / "clean-ds-1.1/push-design-guard.js").read_text(encoding="utf-8")
@@ -60,7 +63,8 @@ for mode in ("light", "dark"):
 worker = (root / "service-worker.js").read_text(encoding="utf-8")
 for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
               "clean-ds-1.1/app-integration.css", "clean-ds-1.1/isolation-guard.js", "clean-ds-1.1/sw-register.js",
-              "clean-ds-1.1/reminder-time-picker.js", "clean-ds-1.1/push-design-guard.js", "assets/d3-rita-rasa.svg",
+              "clean-ds-1.1/reminder-time-picker.js", "clean-ds-1.1/push-design-guard.js",
+              "clean-ds-1.1/theme-bootstrap.js", "clean-ds-1.1/body-theme-init.js", "assets/d3-rita-rasa.svg",
               "assets/d3-rita-gaisma.svg"):
     check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
     check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
