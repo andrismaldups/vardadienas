@@ -111,10 +111,10 @@ html[data-design="ds11"] body.ds-app #mainView>.grid>.side>.card{
 
 /* G10–G12: palette-bound surfaces and icon actions (light and dark).
    Preserve HTML, events, hit targets and menu geometry. */
-html[data-design="ds11"] body.ds-app #sideMenu.side-menu{
+html[data-design="ds11"] body #sideMenu.side-menu{
  background:var(--ds-menu-bg);color:var(--ds-menu-text);border-color:var(--ds-menu-border)
 }
-html[data-design="ds11"] body.ds-app #sideMenu.side-menu button{
+html[data-design="ds11"] body #sideMenu.side-menu button{
  background:transparent;color:var(--ds-menu-text)
 }
 /* N15/N16: text links for traditional and extended names have no pill.
@@ -208,17 +208,17 @@ html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="t
 
 /* N23 / G09 / C16: selected calendar date borrows C03 color roles,
    while its circular geometry and today's unselected outline remain C16. */
-html[data-design="ds11"] body.ds-app #calendar .day.sel{
+html[data-design="ds11"] body #calendar .day.sel{
  background:var(--ds-primary);
  color:var(--ds-on-primary);
  border-color:var(--ds-primary-border);
 }
-html[data-design="ds11"] body.ds-app #calendar .day.today.sel{
+html[data-design="ds11"] body #calendar .day.today.sel{
  outline:none;
 }
 /* N24 / C03: name-detail actions must share the same semantic primary
    colors as the rest of the application, overriding legacy #08783f. */
-html[data-design="ds11"] body.ds-app #nameDetailView .name-detail-actions button.primary{
+html[data-design="ds11"] body #nameDetailView .name-detail-actions button.primary{
  background:var(--ds-primary);
  color:var(--ds-on-primary);
  border-color:var(--ds-primary-border);
@@ -228,7 +228,7 @@ html[data-design="ds11"] body.ds-app #nameDetailView .name-detail-actions button
 html[data-design="ds11"] body.ds-app :is(
  input:not([type="hidden"]),textarea,select
 ):focus-visible,
-html[data-design="ds11"] body.ds-app #favoriteAddInput:focus{
+html[data-design="ds11"] body #favoriteAddInput:focus{
  outline:2px solid var(--ds-focus-ring);
  outline-offset:2px;
  border-color:var(--ds-focus-ring);
