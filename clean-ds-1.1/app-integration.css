@@ -146,22 +146,24 @@ html[data-design="ds11"] body.ds-app :is(
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
 }
 
-/* G04 / C18: fixed 8px separation, retaining the approved row geometry. */
-html[data-design="ds11"] body.ds-app .about-card .about-row-button + .about-content + .about-row-button{
+/* G04 / C18: spacing belongs to actual accordion item wrappers,
+   not buttons separated by content elements. */
+html[data-design="ds11"] body.ds-app .about-accordion-list>.about-accordion-item+.about-accordion-item{
  margin-top:8px;
 }
 html[data-design="ds11"] body.ds-app .about-card .about-row-button{
- min-height:48px;
+ min-height:48px;margin:0;
 }
-/* G06 / C17: destructive action never inherits C03 primary styling. */
-/* N21: C17 uses the exact component contract, not a parallel red palette. */
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button{
- background:var(--ds-danger);
- color:var(--ds-on-danger);
- border:1px solid var(--ds-danger);
+/* G06 / C17: semantic destructive action with D3-approved subtle danger
+   surface; distinct from C03 and C04, without an aggressive solid fill. */
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button,
+html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
+ background:var(--ds-danger-bg);
+ color:var(--ds-danger-text);
+ border:1px solid var(--ds-danger-border);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:active{
- filter:brightness(.92);
+ background:var(--ds-danger-pressed);
 }
 html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:disabled{
  opacity:.55;
@@ -201,15 +203,6 @@ html[data-design="ds11"] body.ds-app .reminder-time-menu button[aria-selected="t
  color:var(--ds-selected-text);
  box-shadow:inset 0 0 0 1px var(--ds-selected-border);
  font-weight:700;
-}
-
-/* N22: every C18 row after the first gets exactly 8px separation,
-   including when the previous accordion content is hidden. */
-html[data-design="ds11"] body.ds-app .about-card .about-row-button ~ .about-row-button{
- margin-top:8px;
-}
-html[data-design="ds11"] body.ds-app .about-card .about-row-button{
- margin-bottom:0;
 }
 
 /* N23 / G09 / C16: selected calendar date borrows C03 color roles,
@@ -252,22 +245,6 @@ html[data-design="ds11"] body.ds-app :is(
  color:var(--ds-muted);
 }
 
-/* D3 reference alignment / N21: destructive semantics do not imply a red
-   fill. C17 retains its confirmation behavior, and uses C04 visual roles. */
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button,
-html[data-design="ds11"] body.ds-app #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
- background:var(--ds-secondary-bg);
- color:var(--ds-secondary-text);
- border:1px solid var(--ds-secondary-border);
-}
-/* N22: 8px between C18 buttons, regardless of hidden accordion panels.
-   Override legacy adjoining-row border rules without altering open content. */
-html[data-design="ds11"] body.ds-app .about-card .about-row-button ~ .about-row-button{
- margin-top:8px;
-}
-html[data-design="ds11"] body.ds-app .about-card .about-row-button .about-row{
- border-top:0;
-}
 /* N25: all four birthday form inputs share a single semantic focus ring.
    This overrides the legacy #08783f/#6ad49a outline and box-shadow. */
 html[data-design="ds11"] body.ds-app #birthdayAddForm input:focus,
@@ -297,12 +274,4 @@ html[data-design="ds11"] body.ds-app :is(
  border-color:var(--ds-focus-ring);
  box-shadow:none;
  caret-color:var(--ds-caret);
-}
-/* N22 follow-up: explicit bottom gap on each C18 button except the
-   last, instead of margin-top on a sibling across hidden panels. */
-html[data-design="ds11"] body.ds-app .about-card .about-row-button{
- margin-top:0;
-}
-html[data-design="ds11"] body.ds-app .about-card .about-row-button:not(:last-of-type){
- margin-bottom:8px;
 }
