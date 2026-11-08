@@ -79,3 +79,39 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
   await expect(page.locator('.card').first()).not.toHaveClass(/ds-card/);
   await expect(page.locator('#calendar')).toBeAttached();
 });
+
+
+for (const mode of ['light', 'dark']) {
+  test(`full VD Design: delete-my-data trigger uses neutral C17 palette in ${mode}`, async ({ page }) => {
+    await page.addInitScript(selectedMode => {
+      localStorage.setItem('designStyle', 'ds11');
+      localStorage.setItem('appearanceMode', selectedMode);
+    }, mode);
+    await page.goto('/index.html');
+    const button = page.locator('#deleteMyDataButton');
+    await expect(button).toBeAttached();
+    const styles = await button.evaluate(el => {
+      const computed = getComputedStyle(el);
+      const root = getComputedStyle(document.documentElement);
+      const toComputed = token => {
+        const sample = document.createElement('div');
+        sample.style.color = root.getPropertyValue(token).trim();
+        document.body.append(sample);
+        const result = getComputedStyle(sample).color;
+        sample.remove();
+        return result;
+      };
+      return {
+        background: computed.backgroundColor,
+        text: computed.color,
+        border: computed.borderTopColor,
+        expectedBackground: toComputed('--ds-secondary-bg'),
+        expectedText: toComputed('--ds-secondary-text'),
+        expectedBorder: toComputed('--ds-secondary-border'),
+      };
+    });
+    expect(styles.background).toBe(styles.expectedBackground);
+    expect(styles.text).toBe(styles.expectedText);
+    expect(styles.border).toBe(styles.expectedBorder);
+  });
+}
