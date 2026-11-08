@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-// Regression guards for rebuilding index.html. Never trigger destructive actions
+// Regression guards for rebuilding index.html. Probe the exact protected Worker origin. Never trigger destructive actions
 // or register/subscribe for push in these tests.
 test('VD Design isolation guard rejects the old TEST origin', async ({ page }) => {
   await page.goto('/index.html');
@@ -9,7 +9,7 @@ test('VD Design isolation guard rejects the old TEST origin', async ({ page }) =
     let rejected = false;
     let message = '';
     try {
-      await fetch('https://vardadienas-test.pages.dev/__design_rebuild_probe__');
+      await fetch('https://vardadienas-push-test.andris-maldups.workers.dev/__design_rebuild_probe__');
     } catch (error) {
       rejected = true;
       message = String(error?.message ?? error);
