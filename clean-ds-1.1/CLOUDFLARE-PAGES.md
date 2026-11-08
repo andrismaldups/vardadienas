@@ -1,23 +1,32 @@
-# Neatkarīga Cloudflare Pages galerija — DS 1.1
+# VD Design — esošās Cloudflare Pages vides izmantošana
 
-**Drošības robeža:** šī ir tikai statiska C01–C18 komponentu demonstrācija. Tā nav esošā Vārdadienas TEST PWA. Nepievienot Worker, push abonementus, API noslēpumus vai produkcijas domēnu.
+**Spēkā esošais lēmums (2026-11-08):** jaunu Cloudflare Pages projektu, GitHub repozitoriju vai iPhone PWA instalāciju **neveidot**. Jaunās dizaina sistēmas un jauno dizaina variantu izstrāde turpinās **esošajā VD Design** vidē.
 
-## Cloudflare Pages iestatījumi (Git integrācija)
-1. Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git.
-2. Atlasīt GitHub repozitoriju `andrismaldups/vardadienas`.
-3. Izveidot **jaunu, atsevišķu Pages projektu** (piemēram, `vardadienas-ds11-preview`). Nepārkonfigurēt `vardadienas-test`.
-4. Production branch: `design-system-clean-v1-1`.
-5. Framework preset: `None`; build command: **tukšs**; build output directory: `clean-ds-1.1`; root directory: repozitorija sakne (ja šāds iestatījums ir redzams).
-6. Saglabāt un izvietot. Pārbaudīt projekta `*.pages.dev` adresi un `/gallery.html`.
-7. Ja Cloudflare piedāvā piekļuves ierobežošanu, priekšskatījuma testēšanai to var ieslēgt; `noindex` nav piekļuves kontrole.
+## Trīs aplikāciju robežas
+- **Vardadienas** — produkcija; neaiztikt.
+- **VardadienasT** — iepriekšējā TEST vide; neaiztikt.
+- **VD Design** — vienīgā jaunās dizaina sistēmas izstrādes un vizuālās pārbaudes PWA.
 
-## Pieņemšanas pārbaude
-- Saknes adrese atver galeriju.
-- 18 C01–C18 kartītes redzamas.
-- Gaišais/tumšais režīms pārslēdzas.
-- Emoji panelis, izvēles pogas un apstiprināšanas dialogs darbojas.
-- iPhone Safari nav horizontālas ritināšanas.
-- Galerija neizmanto lietotāja datus, push abonementus un esošās PWA funkcijas.
+## Esošā GitHub struktūra
+- Repozitorijs: `andrismaldups/vardadienas`.
+- Izstrādes zars: `design-system-clean-v1-1`.
+- Reālās VD Design aplikācijas ievade: repozitorija saknes `index.html`.
+- Komponentu demonstrācija: `clean-ds-1.1/gallery.html`.
+- `clean-ds-1.1/index.html` tikai pāradresē uz galeriju un **nav** pilnā VD Design aplikācija.
+- Komponentu CSS: `clean-ds-1.1/components.css`.
+- D3 tokeni: `clean-ds-1.1/d3-theme.css`.
+- Reālo skatu opt-in integrācija: `clean-ds-1.1/app-integration.css`.
+- Dizaina ieslēgšana: `html[data-design="ds11"] body.ds-app`.
+- CI: `.github/workflows/clean-ds-1-1.yml`.
 
-## Svarīgi
-Cloudflare Pages izvietošana **nav** veikta tikai ar šo failu izveidošanu. Publicēšanas rezultātu apstiprina tikai faktiskā Pages adrese un tās atvēršana.
+## Cloudflare konfigurācijas drošības pārbaude
+1. Atvērt **esošā VD Design** Pages projekta iestatījumus, nevis izveidot jaunu projektu.
+2. Pārbaudīt tā sasaisti ar zaru `design-system-clean-v1-1` un publicēšanas direktoriju. Ja publicēšanas direktorija ir `clean-ds-1.1`, tās sakne atver tikai galeriju, nevis pilno aplikāciju.
+3. Pirms jebkādas publicēšanas iestatījumu maiņas salīdzināt faktiski strādājošās VD Design PWA URL, manifest, aktīvu ceļus un Service Worker tvērumu. **Nemainīt konfigurāciju tikai uz dokumentācijas pamata.**
+4. Nekopēt produkcijas vai VardadienasT Worker, push abonementus, API noslēpumus vai lietotāja datus.
+5. Pēc koda izmaiņām pārbaudīt GitHub Actions un tad to pašu **esošo** VD Design PWA iPhone, neinstalējot ceturto aplikāciju.
+
+## Pašreizējais pārbaudes statuss
+GitHub kodā ir reālās aplikācijas `ds11` pārslēgšana, izolācijas pazīme `DESIGN_TEST_ISOLATED` un Playwright testi, kuri pārbauda pilno aplikāciju un tēmu pārslēgšanu. GitHub Actions #85 ir sekmīga. Tas **neapliecina**, kāda tieši Cloudflare publicēšanas direktorija pašlaik ir iestatīta vai ka pēdējā izmaiņa jau ir redzama iPhone: šie fakti jāpārbauda pašā esošajā Pages projektā un PWA.
+
+**Iepriekšējā instrukcija veidot jaunu atsevišķu Pages projektu ir atsaukta.**
