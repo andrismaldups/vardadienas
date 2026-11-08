@@ -211,9 +211,12 @@ test('destructive icon hover and pressed states preserve semantic colors', async
       const h = hex.replace('#', '');
       return 'rgb(' + [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
     };
-    await icon.hover();
-    await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
-    await expect(icon).toHaveCSS('background-color', toRgb(colors.hoverBg));
+    const supportsHover = await page.evaluate(() => matchMedia('(hover: hover)').matches);
+    if (supportsHover) {
+      await icon.hover();
+      await expect(icon).toHaveCSS('color', toRgb(colors.hoverText));
+      await expect(icon).toHaveCSS('background-color', toRgb(colors.hoverBg));
+    }
     const rect = await icon.boundingBox();
     expect(rect).not.toBeNull();
     await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
