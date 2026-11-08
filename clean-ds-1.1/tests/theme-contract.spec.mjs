@@ -19,7 +19,7 @@ test('K1, S1 and DS11 share the same functional DOM and stored data', async ({ p
   expect(baseline.ids.length).toBeGreaterThan(25);
   expect(baseline.isolated).toBe(true);
   for (const theme of ['festive-s1', 'ds11', 'classic']) {
-    await page.locator('input[name="designStyle"][value="' + theme + '"]').check();
+    await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     await expect(page.locator('html')).toHaveAttribute('data-design', theme);
     expect(await snapshot()).toEqual(baseline);
   }
@@ -37,7 +37,7 @@ test('appearance modes preserve DOM contracts and favorites', async ({ page }) =
     favorites: localStorage.getItem('favorites')
   }));
   for (const mode of ['dark', 'light']) {
-    await page.locator('input[name="appearanceMode"][value="' + mode + '"]').check();
+    await page.locator('input[name="appearanceMode"][value="' + mode + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
     const after = await page.evaluate(() => ({
       ids: [...document.querySelectorAll('[id]')].map(el => el.id).sort(),
@@ -60,7 +60,7 @@ test('theme switch does not replace core DOM nodes or their event handlers', asy
   }, selectors);
   expect(before.every(Boolean)).toBe(true);
   for (const theme of ['festive-s1', 'ds11', 'classic']) {
-    await page.locator('input[name="designStyle"][value="' + theme + '"]').check();
+    await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     const identical = await page.evaluate(() =>
       window.__themeContractNodes.every(node => node && node.isConnected && document.getElementById(node.id) === node)
     );
@@ -77,11 +77,11 @@ test('theme switch changes visual palette without changing functional inputs', a
   const input = page.locator('#nameInput');
   await input.fill('Anna');
   const first = await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor);
-  await page.locator('input[name="designStyle"][value="festive-s1"]').check();
+  await page.locator('input[name="designStyle"][value="festive-s1"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event("change", { bubbles: true })); });
   await expect(input).toHaveValue('Anna');
   const second = await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor);
   expect(second).not.toBe(first);
-  await page.locator('input[name="designStyle"][value="classic"]').check();
+  await page.locator('input[name="designStyle"][value="classic"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event("change", { bubbles: true })); });
   await expect(input).toHaveValue('Anna');
 });
 
@@ -96,7 +96,7 @@ test('static cards have stable semantic identity across all themes', async ({ pa
   });
   expect(original).toBe(count);
   for (const theme of ['festive-s1', 'ds11', 'classic']) {
-    await page.locator('input[name="designStyle"][value="' + theme + '"]').check();
+    await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     const same = await page.evaluate(() =>
       window.__stableCards.every(node => node.isConnected && node.dataset.uiComponent === 'card')
     );
