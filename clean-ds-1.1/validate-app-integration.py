@@ -104,3 +104,5 @@ core_js = (root / "clean-ds-1.1/app-core.js").read_text(encoding="utf-8")
 for forbidden in ("designStyle", "dataset.design", "dataset.theme", "data-design", "data-theme"):
     check(forbidden not in core_js, f"Functional core unexpectedly depends on visual theme: {forbidden}")
 check('data-design' in app or 'designStyle' in app, "Theme selection UI missing")
+
+check(app.count('data-ui-component="card"') >= 10, "Stable card component identity missing from application HTML")

@@ -10,7 +10,7 @@
   <body><script src="clean-ds-1.1/body-theme-init.js"></script><div class="wrap">
     <section id="settingsView" hidden>
   <h2>Iestatījumi</h2>
-  <section class="card settings-card">
+  <section class="card settings-card" data-ui-component="card">
     <div class="settings-main-row">
       <h3>Atgādinājumi</h3>
       <label class="switch">
@@ -45,7 +45,7 @@
   </section>
 
 
-  <section class="card appearance-card" aria-labelledby="appearanceHeading">
+  <section class="card appearance-card" data-ui-component="card" aria-labelledby="appearanceHeading">
     <h3 id="appearanceHeading">Izskats</h3>
     <h4>Dizaina stils</h4>
     <label class="appearance-choice"><input type="radio" name="designStyle" value="classic"><span>Klasiskais</span></label>
@@ -57,14 +57,14 @@
     <label class="appearance-choice"><input type="radio" name="appearanceMode" value="auto"><span>Automātiskais<small>Atbilstoši ierīces iestatījumiem</small></span></label>
   </section>
 
-  <section class="card about-card" aria-labelledby="privacyDataHeading">
+  <section class="card about-card" data-ui-component="card" aria-labelledby="privacyDataHeading">
     <h3 id="privacyDataHeading">Mani dati</h3>
     <p>TEST versijā vari neatgriezeniski dzēst šīs instalācijas saglabātos vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan ierīcē, gan serverī.</p>
     <button type="button" id="deleteMyDataButton" class="delete-data-button" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
     <p id="deleteMyDataStatus" role="status">Pirms dzēšanas tiks prasīts apstiprinājums.</p>
   </section>
 
-  <section class="card about-card">
+  <section class="card about-card" data-ui-component="card">
     <h3>Par aplikāciju</h3>
     <div class="about-app">
       <img class="about-app-icon" src="icon-192.png" alt="Vārdadienas ikona">
@@ -112,7 +112,7 @@
 </section>
 <section id="favoritesView" hidden>
   <h2>Mani vārdi</h2>
-  <section class="card favorites-card">
+  <section class="card favorites-card" data-ui-component="card">
   <button type="button" class="primary" id="favoriteAddOpen">+ Pievienot vārdus</button>
   <div id="favoriteAddPanel" class="favorite-add-panel" hidden>
     <input id="favoriteAddInput" type="text" autocomplete="off" placeholder="Ievadi vārdu" aria-label="Meklēt pievienojamo vārdu">
@@ -130,7 +130,7 @@
 </section>
 <section id="birthdaysView" hidden>
   <h2>Dzimšanas dienas</h2>
-  <section class="card">
+  <section class="card" data-ui-component="card">
     <button type="button" class="primary" id="birthdayAddOpen">+ Pievienot personu</button>
     <form id="birthdayAddForm" class="birthday-form" hidden>
       <label>Vārds, uzvārds <input id="birthdayFullName" type="text" maxlength="120" autocomplete="off" required placeholder="Piemēram, Andris Liepiņš"></label>
@@ -151,14 +151,14 @@
   <div class="settings-back-bar"><button type="button" class="back-btn" id="birthdaysBack">⌂ Uz sākumu</button></div>
 </section>
 <section id="nameDetailView" hidden>
-<h2>Vārda informācija</h2><section class="card name-detail-card">
+<h2>Vārda informācija</h2><section class="card name-detail-card" data-ui-component="card">
 <h3 id="nameDetailTitle"></h3><p id="nameDetailDate"></p>
 <div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting">Izveidot apsveikumu</button><button type="button" class="primary" id="nameDetailFavorite">Pievienot Maniem vārdiem</button></div>
 <div id="nameDetailFeedback" class="name-detail-feedback" hidden></div></section>
 <button type="button" class="back-btn" id="nameDetailBack">⌂ Uz sākumu</button></section>
 <section id="greetingView" hidden>
   <h2>Apsveikums</h2>
-  <section class="card greeting-form">
+  <section class="card greeting-form" data-ui-component="card">
     <label class="greeting-label" for="greetingName">Jubilāra vārds</label>
     <input id="greetingName" placeholder="Ievadiet vārdu">
 
@@ -192,7 +192,7 @@
 </section>
 <section id="greetingResultView" hidden>
   <h2>Apsveikums</h2>
-  <section class="card greeting-result">
+  <section class="card greeting-result" data-ui-component="card">
     <strong>Gatavais apsveikums</strong>
     <div class="greeting-text-wrap">
       <textarea id="greetingResultText" class="muted greeting-result-text" readonly>Šeit parādīsies izveidotais apsveikuma teksts.</textarea>
@@ -214,7 +214,7 @@
   </div>
 </section>
 <div id="mainView">
-<section class="card">
+<section class="card" data-ui-component="card">
 <img class="lavender-top-art" src="assets/lavanda_augsa.png" alt="" aria-hidden="true" decoding="async">
 <div class="hero">
     <button class="menu-btn" aria-label="Atvērt izvēlni" onclick="toggleSideMenu()">☰</button><div id="menuBackdrop" class="menu-backdrop" hidden onclick="closeSideMenu()"></div>
@@ -236,11 +236,11 @@
 </div>
   <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><span class="birthday-home-content"><strong class="birthday-home-title"><svg class="birthday-gift-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="5" y="13" width="22" height="16" rx="2.5" fill="#a4d97d" stroke="#235b32" stroke-width="1.6"/><rect x="3.5" y="10" width="25" height="6" rx="2" fill="#8ac65d" stroke="#235b32" stroke-width="1.6"/><path d="M16 10C11 10 7.5 8.5 8.5 5.8c0-3.7 6.3-2.7 7.5 4.2ZM16 10c5 0 8.5-1.5 7.5-4.2C23.5 2.1 17.2 3.1 16 10Z" fill="#c9e8a9" stroke="#235b32" stroke-width="1.7" stroke-linejoin="round"/><path d="M13.5 10v19h5V10" fill="#235b32"/></svg><span>Dzimšanas dienas</span></strong><span id="birthdayTodayNames" class="birthday-today-names" hidden></span></span><span class="birthday-chevron" aria-hidden="true">›</span></button>
   <div class="nav"><button id="prevDay">← Iepriekšējā diena</button><button id="nextDay">Nākamā diena →</button></div></section>
-<div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
-<div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><div class="name-input-wrap"><input id="dateInput" placeholder="Piemēram, 20. septembris"><button id="clearDate" type="button" aria-label="Notīrīt datumu">×</button></div><div id="dateSuggestions" class="date-suggestions"></div>
+<div class="grid"><section class="card" data-ui-component="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
+<div class="side"><section class="card" data-ui-component="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card" data-ui-component="card"><h2>Meklēt datumu</h2><div class="searchrow"><div class="name-input-wrap"><input id="dateInput" placeholder="Piemēram, 20. septembris"><button id="clearDate" type="button" aria-label="Notīrīt datumu">×</button></div><div id="dateSuggestions" class="date-suggestions"></div>
 <button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section>
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
-<section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
+<section class="card foot" data-ui-component="card"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script src="clean-ds-1.1/app-core.js"></script><script src="clean-ds-1.1/sw-register.js"></script>
 <script src="clean-ds-1.1/reminder-time-picker.js"></script><!-- DESIGN TEST: push UI disabled; no TEST subscriptions are created. -->
 <script src="clean-ds-1.1/push-design-guard.js"></script>

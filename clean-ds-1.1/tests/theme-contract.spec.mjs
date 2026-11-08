@@ -84,3 +84,22 @@ test('theme switch changes visual palette without changing functional inputs', a
   await page.locator('input[name="designStyle"][value="classic"]').check();
   await expect(input).toHaveValue('Anna');
 });
+
+test('static cards have stable semantic identity across all themes', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('designStyle', 'classic'));
+  await page.goto('/index.html');
+  const count = await page.locator('[data-ui-component="card"]').count();
+  expect(count).toBeGreaterThanOrEqual(10);
+  const original = await page.evaluate(() => {
+    window.__stableCards = [...document.querySelectorAll('[data-ui-component="card"]')];
+    return window.__stableCards.length;
+  });
+  expect(original).toBe(count);
+  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+    await page.locator('input[name="designStyle"][value="' + theme + '"]').check();
+    const same = await page.evaluate(() =>
+      window.__stableCards.every(node => node.isConnected && node.dataset.uiComponent === 'card')
+    );
+    expect(same).toBe(true);
+  }
+});
