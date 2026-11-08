@@ -103,3 +103,23 @@ test('static cards have stable semantic identity across all themes', async ({ pa
     expect(same).toBe(true);
   }
 });
+
+test('primary actions retain semantic identity and click handlers on theme switch', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('designStyle', 'classic'));
+  await page.goto('/index.html');
+  const actions = page.locator('[data-ui-component="primary-action"]');
+  expect(await actions.count()).toBeGreaterThanOrEqual(8);
+  const ids = await actions.evaluateAll(nodes => nodes.map(node => node.id));
+  expect(ids.every(Boolean)).toBe(true);
+  await page.evaluate(() => { window.__primaryNodes = [...document.querySelectorAll('[data-ui-component="primary-action"]')]; });
+  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+    await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    expect(await page.evaluate(() => window.__primaryNodes.every(node =>
+      node.isConnected && node.dataset.uiComponent === 'primary-action' &&
+      document.getElementById(node.id) === node
+    ))).toBe(true);
+  }
+});

@@ -39,7 +39,7 @@
     </div>
     <div class="settings-section">
       <h4>Paziņojumu aktivizēšana</h4>
-      <button type="button" id="activatePushButton" class="primary">Aktivizēt paziņojumus</button>
+      <button type="button" id="activatePushButton" class="primary" data-ui-component="primary-action">Aktivizēt paziņojumus</button>
       <p id="pushActivationStatus" role="status" aria-live="polite" style="margin:12px 0 0"></p>
     </div>
   </section>
@@ -113,12 +113,12 @@
 <section id="favoritesView" hidden>
   <h2>Mani vārdi</h2>
   <section class="card favorites-card" data-ui-component="card">
-  <button type="button" class="primary" id="favoriteAddOpen">+ Pievienot vārdus</button>
+  <button type="button" class="primary" id="favoriteAddOpen" data-ui-component="primary-action">+ Pievienot vārdus</button>
   <div id="favoriteAddPanel" class="favorite-add-panel" hidden>
     <input id="favoriteAddInput" type="text" autocomplete="off" placeholder="Ievadi vārdu" aria-label="Meklēt pievienojamo vārdu">
     <div id="favoriteAddMatches" class="favorite-add-matches"></div>
     <div id="favoriteAddSelected" class="favorite-add-selected"></div>
-    <div class="favorite-add-actions"><button type="button" class="primary" id="favoriteAddSave">Pievienot sarakstam</button><button type="button" id="favoriteAddCancel">Atcelt</button></div>
+    <div class="favorite-add-actions"><button type="button" class="primary" id="favoriteAddSave" data-ui-component="primary-action">Pievienot sarakstam</button><button type="button" id="favoriteAddCancel">Atcelt</button></div>
   </div>
       <div class="favorites-sort">
   <button id="sortAlpha" class="active" onclick="sortDate.classList.remove('active');sortAlpha.classList.add('active');renderFavorites()">Alfabētiski (A–Z)</button>
@@ -131,7 +131,7 @@
 <section id="birthdaysView" hidden>
   <h2>Dzimšanas dienas</h2>
   <section class="card" data-ui-component="card">
-    <button type="button" class="primary" id="birthdayAddOpen">+ Pievienot personu</button>
+    <button type="button" class="primary" id="birthdayAddOpen" data-ui-component="primary-action">+ Pievienot personu</button>
     <form id="birthdayAddForm" class="birthday-form" hidden>
       <label>Vārds, uzvārds <input id="birthdayFullName" type="text" maxlength="120" autocomplete="off" required placeholder="Piemēram, Andris Liepiņš"></label>
       <div class="birthday-date-fields">
@@ -140,7 +140,7 @@
         <label>Gads (nav obligāts) <input id="birthdayYear" type="number" min="1" max="9999" inputmode="numeric" placeholder="GGGG"></label>
       </div>
       <div id="birthdayFormError" class="birthday-feedback" role="alert" hidden></div>
-      <div class="birthday-form-actions"><button type="submit" class="primary" id="birthdaySaveButton">Saglabāt</button><button type="button" id="birthdayAddCancel">Atcelt</button></div>
+      <div class="birthday-form-actions"><button type="submit" class="primary" id="birthdaySaveButton" data-ui-component="primary-action">Saglabāt</button><button type="button" id="birthdayAddCancel">Atcelt</button></div>
     </form>
     <div class="birthday-sort" role="group" aria-label="Dzimšanas dienu kārtošana">
       <button type="button" id="birthdaySortAlpha" aria-pressed="false">Alfabētiski (A–Z)</button>
@@ -153,7 +153,7 @@
 <section id="nameDetailView" hidden>
 <h2>Vārda informācija</h2><section class="card name-detail-card" data-ui-component="card">
 <h3 id="nameDetailTitle"></h3><p id="nameDetailDate"></p>
-<div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting">Izveidot apsveikumu</button><button type="button" class="primary" id="nameDetailFavorite">Pievienot Maniem vārdiem</button></div>
+<div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting" data-ui-component="primary-action">Izveidot apsveikumu</button><button type="button" class="primary" id="nameDetailFavorite" data-ui-component="primary-action">Pievienot Maniem vārdiem</button></div>
 <div id="nameDetailFeedback" class="name-detail-feedback" hidden></div></section>
 <button type="button" class="back-btn" id="nameDetailBack">⌂ Uz sākumu</button></section>
 <section id="greetingView" hidden>
@@ -183,7 +183,7 @@
       </div>
     </div>
 
-    <button type="button" class="primary greeting-create" id="greetingCreate">Izveidot apsveikumu</button>
+    <button type="button" class="primary greeting-create" id="greetingCreate" data-ui-component="primary-action">Izveidot apsveikumu</button>
     <div id="greetingValidation" class="greeting-validation" hidden></div>
   </section>
   <div class="greeting-back-bar">
@@ -222,7 +222,7 @@
   <button onclick="closeSideMenu();mainView.hidden=true;favoritesView.hidden=false;renderFavorites();window.scrollTo(0,0)">Mani vārdi</button>
   <button onclick="mainView.hidden=true;settingsView.hidden=false;closeSideMenu()">Iestatījumi</button>
 </div>
-    <div><div class="app-title">Vārdadienas</div><h1 id="dateTitle">—</h1><div id="todayNames" class="names">—</div><div id="extraNames"></div></div><button class="primary" id="todayBtn">Šodien</button></div><div id="tomorrowBlock" class="tomorrow">
+    <div><div class="app-title">Vārdadienas</div><h1 id="dateTitle">—</h1><div id="todayNames" class="names">—</div><div id="extraNames"></div></div><button class="primary" id="todayBtn" data-ui-component="primary-action">Šodien</button></div><div id="tomorrowBlock" class="tomorrow">
   <strong>Rīt</strong>
   <div id="tomorrowNames">—</div>
 </div>

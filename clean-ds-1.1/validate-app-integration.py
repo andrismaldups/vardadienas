@@ -99,6 +99,8 @@ check("/* TEST: Z3 Lavandas tonis" in legacy_css, "Legacy Z3 block temporarily r
 check(".about-card .about-row-button" in legacy_css, "Shared about-row layout was accidentally removed")
 check(".reminder-time-control" in legacy_css, "Shared reminder picker layout was accidentally removed")
 
+check(app.count('data-ui-component="primary-action"') >= 8, "Stable primary-action identity missing")
+
 print(f"DS 1.1 integration: {len(required)} component tokens checked")
 if errors:
     for issue in errors:
