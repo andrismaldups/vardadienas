@@ -64,7 +64,7 @@ html[data-theme-system="shared"] body :is(
  background:var(--ds-soft-bg);border-color:var(--ds-border);color:var(--ds-text)
 }
 html[data-theme-system="shared"] body :is(
- .names,.name-link,.menu-btn,.birthday-chevron,.birthday-edit-btn,
+ .names,.name-link,.menu-btn,.birthday-edit-btn,
  .greeting-entry-arrow,.name-detail-card h3
 ){color:var(--ds-name-accent,var(--ds-primary))}
 html[data-theme-system="shared"] body :is(
@@ -76,6 +76,21 @@ html[data-theme-system="shared"] body :is(input[type="checkbox"],input[type="rad
 html[data-theme-system="shared"] body .switch input:checked+.switch-slider{background:var(--ds-primary)}
 html[data-theme-system="shared"] body :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
 html[data-theme-system="shared"] body :is(.settings-back-bar,.greeting-back-bar){background:var(--ds-surface);border-color:var(--ds-surface-border)}
+/* C09: all three single-button footers share the same surface and button roles. */
+html[data-theme-system="shared"] body :is(#settingsView,#favoritesView,#birthdaysView) .settings-back-bar{
+ background:var(--ds-surface-elevated);border-color:var(--ds-surface-border)
+}
+html[data-theme-system="shared"] body :is(#settingsView,#favoritesView,#birthdaysView) .settings-back-bar .back-btn{
+ background:var(--ds-secondary-bg);border:1px solid var(--ds-secondary-border);color:var(--ds-secondary-text)
+}
+
+/* The SVG retains its fallback colors in legacy designs. Shared themes provide the colors. */
+html[data-theme-system="shared"] body .birthday-entry .birthday-chevron{color:var(--ds-icon)}
+html[data-theme-system="shared"] body .birthday-gift-icon rect:first-child{fill:var(--ds-gift-box,var(--ds-selected-bg))}
+html[data-theme-system="shared"] body .birthday-gift-icon rect:nth-child(2){fill:var(--ds-gift-lid,var(--ds-primary))}
+html[data-theme-system="shared"] body .birthday-gift-icon path:nth-child(3){fill:var(--ds-gift-bow,var(--ds-hover-bg))}
+html[data-theme-system="shared"] body .birthday-gift-icon :is(rect,path):not(:last-child){stroke:var(--ds-gift-ink,var(--ds-icon))}
+html[data-theme-system="shared"] body .birthday-gift-icon path:last-child{fill:var(--ds-gift-ink,var(--ds-icon))}
 html[data-theme-system="shared"] body :is(.reminder-time-menu,.greeting-emoji-panel){background:var(--ds-popup-bg);color:var(--ds-popup-text);border-color:var(--ds-popup-border)}
 html[data-theme-system="shared"] body .about-card .about-row-button{
  box-sizing:border-box;max-width:100%;width:100%;display:flex;align-items:center;
@@ -90,7 +105,7 @@ html[data-theme-system="shared"] body #calendar .day.today{
  box-sizing:border-box;width:46px;height:46px;min-width:46px;min-height:46px;
  margin-inline:auto;
 }
-html[data-theme-system="shared"] body #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
+html[data-theme-system="shared"] body #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0;color:var(--ds-text)}
 html[data-theme-system="shared"] body #calendar .day.today.sel{outline:none}
 
 /* Shared design specification: ONLY the three home-view main panel positions

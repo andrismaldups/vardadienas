@@ -79,7 +79,7 @@ for mode in ("light", "dark"):
           f"Missing D3 {mode} token set")
 sea_theme = (root / "clean-ds-1.1/sea-mist-theme.css").read_text(encoding="utf-8")
 sea_tokens = set(re.findall(r"(--ds-[a-z0-9-]+)\s*:", sea_theme))
-bridge_tokens = set(re.findall(r"var\((--ds-[a-z0-9-]+)", bridge))
+bridge_tokens = set(re.findall(r"var\((--ds-[a-z0-9-]+)\s*\)", bridge))
 for missing in sorted((required | bridge_tokens) - sea_tokens):
     errors.append(f"Undefined Jūras migla token: {missing}")
 # Offline contract: all new styles and decorative assets must be precached.

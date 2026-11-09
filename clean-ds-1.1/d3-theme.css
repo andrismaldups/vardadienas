@@ -62,3 +62,8 @@ html[data-design="ds11"][data-theme="dark"]{
  --ds-selected-hover:#45684a;--ds-selected-pressed:#294531;
  --ds-surface-elevated:rgba(34,55,38,.96);--ds-surface-soft:rgba(39,65,44,.84);
 }
+
+/* Preserve the existing DS11 gift artwork in both modes. */
+html[data-design="ds11"] {
+ --ds-gift-box:#a4d97d;--ds-gift-lid:#8ac65d;--ds-gift-bow:#c9e8a9;--ds-gift-ink:#235b32;
+}

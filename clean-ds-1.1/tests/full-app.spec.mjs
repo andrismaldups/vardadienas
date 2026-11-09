@@ -192,3 +192,44 @@ test('VD Design reloads offline with the saved theme and local data', async ({ p
   await expect(page.locator('#nameInput')).toHaveValue('Anna');
   expect(await page.evaluate(() => localStorage.getItem('favorites'))).toBe('["Anna"]');
 });
+
+test('shared themes color navigation, birthday artwork and today from their palette', async ({ page }) => {
+  await page.goto('/index.html');
+  await page.locator('.menu-btn').click();
+  await page.locator('#sideMenu').getByRole('button', { name: 'Iestatījumi' }).click();
+
+  for (const design of ['sea-mist', 'ds11']) {
+    await page.locator(`input[name="designStyle"][value="${design}"]`).check();
+    for (const mode of ['light', 'dark']) {
+      await page.locator(`input[name="appearanceMode"][value="${mode}"]`).check();
+      const mismatches = await page.evaluate(() => {
+        const sample = document.createElement('span');
+        document.body.append(sample);
+        const matches = (element, property, expected) => {
+          sample.style.color = expected;
+          return getComputedStyle(element)[property] === getComputedStyle(sample).color;
+        };
+        const errors = [];
+        for (const bar of document.querySelectorAll('.settings-back-bar')) {
+          const button = bar.querySelector('.back-btn');
+          if (!matches(bar, 'backgroundColor', 'var(--ds-surface-elevated)') ||
+              !matches(button, 'backgroundColor', 'var(--ds-secondary-bg)') ||
+              !matches(button, 'borderTopColor', 'var(--ds-secondary-border)') ||
+              !matches(button, 'color', 'var(--ds-secondary-text)')) errors.push(bar.parentElement.id);
+        }
+        const today = document.querySelector('#calendar .day.today');
+        today.classList.remove('sel');
+        if (!matches(today, 'color', 'var(--ds-text)') ||
+            !matches(today, 'outlineColor', 'var(--ds-calendar-today-border)')) errors.push('today');
+        today.classList.add('sel');
+        if (!matches(today, 'color', 'var(--ds-on-primary)')) errors.push('selected today');
+        const gift = document.querySelector('.birthday-gift-icon rect');
+        if (!matches(gift, 'fill', 'var(--ds-gift-box,var(--ds-selected-bg))')) errors.push('gift');
+        if (!matches(document.querySelector('.birthday-chevron'), 'color', 'var(--ds-icon)')) errors.push('chevron');
+        sample.remove();
+        return errors;
+      });
+      expect(mismatches).toEqual([]);
+    }
+  }
+});
