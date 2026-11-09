@@ -30,7 +30,7 @@ check("document.body" not in theme_bootstrap and "body-theme-init.js" not in app
       "Application theme state must be owned by the root")
 for retired in ("lavender", "nature-d3", "water-j1"):
     check(f'name="designStyle" value="{retired}"' not in app, f"Retired theme still offered: {retired}")
-check("['classic', 'festive-s1', 'ds11']" in theme_bootstrap, "Retired theme persisted in bootstrap allowlist")
+check("['classic', 'festive-s1', 'ds11', 'sea-mist']" in theme_bootstrap, "Retired theme persisted in bootstrap allowlist")
 check('value="classic"' in app, "Existing classic option absent")
 guard_path = "clean-ds-1.1/isolation-guard.js"
 guard = (root / guard_path).read_text(encoding="utf-8") if (root / guard_path).is_file() else ""
@@ -54,20 +54,20 @@ check('id="calendar"' in app and 'id="dateInput"' in app,
 check('id="greetingEmojiPanel"' in app, "Emoji picker absent")
 check('id="settingsView"' in app and 'id="favoritesView"' in app,
       "Existing settings or favorites view absent")
-check('html[data-design="ds11"] body' in bridge,
+check('html[data-theme-system="shared"] body' in bridge,
       "Integration CSS is not scoped to opt-in DS mode")
 check('body.ds-app' not in bridge.split('*/', 1)[-1],
       "DS11 integration selectors still depend on body.ds-app")
 check("data-design=\"nature-d3\"" not in bridge,
       "Integration CSS unexpectedly targets existing D3")
 # Keep the standalone gallery class-based while app components are theme-root scoped.
-check(':is(.ds-app, :where(html[data-design="ds11"] body)) :is(.ds-card,[data-ui-component="card"])' in components,
+check(':is(.ds-app, :where(html[data-theme-system="shared"] body)) :is(.ds-card,[data-ui-component="card"])' in components,
       "Standalone gallery card styling absent")
-check(':is(.ds-app, :where(html[data-design="ds11"] body)) :is(.ds-button,[data-ui-component="primary-action"])' in components,
+check(':is(.ds-app, :where(html[data-theme-system="shared"] body)) :is(.ds-button,[data-ui-component="primary-action"])' in components,
       "Standalone gallery action styling absent")
-check('html[data-design="ds11"] body [data-ui-component="card"]' in components,
+check('html[data-theme-system="shared"] body [data-ui-component="card"]' in components,
       "DS11 semantic cards still require the gallery class")
-check('html[data-design="ds11"] body [data-ui-component="primary-action"]' in components,
+check('html[data-theme-system="shared"] body [data-ui-component="primary-action"]' in components,
       "DS11 semantic actions still require the gallery class")
 
 required = set(re.findall(r"var\((--ds-[a-z0-9-]+)", components))
@@ -77,6 +77,11 @@ for missing in sorted(required - defined):
 for mode in ("light", "dark"):
     check(f'html[data-design="ds11"][data-theme="{mode}"]' in theme,
           f"Missing D3 {mode} token set")
+sea_theme = (root / "clean-ds-1.1/sea-mist-theme.css").read_text(encoding="utf-8")
+sea_tokens = set(re.findall(r"(--ds-[a-z0-9-]+)\s*:", sea_theme))
+bridge_tokens = set(re.findall(r"var\((--ds-[a-z0-9-]+)", bridge))
+for missing in sorted((required | bridge_tokens) - sea_tokens):
+    errors.append(f"Undefined Jūras migla token: {missing}")
 # Offline contract: all new styles and decorative assets must be precached.
 worker = (root / "service-worker.js").read_text(encoding="utf-8")
 for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
@@ -85,7 +90,8 @@ for asset in ("clean-ds-1.1/components.css", "clean-ds-1.1/d3-theme.css",
               "clean-ds-1.1/theme-bootstrap.js",
               "clean-ds-1.1/app-core.js", "clean-ds-1.1/legacy-layout.css",
               "clean-ds-1.1/about-row-gap.css", "assets/d3-rita-rasa.svg",
-              "assets/d3-rita-gaisma.svg"):
+              "assets/d3-rita-gaisma.svg", "assets/sea-mist-currents.svg",
+              "clean-ds-1.1/sea-mist-theme.css"):
     check((root / asset).is_file(), f"Offline asset missing on disk: {asset}")
     check(f'"./{asset}"' in worker, f"Offline asset absent from service worker: {asset}")
 cache_version = re.search(r"const\s+CACHE_NAME\s*=\s*['\"]vardadienas-design-test-v(\d+)['\"]", worker)

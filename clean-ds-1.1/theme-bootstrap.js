@@ -1,7 +1,8 @@
 // Apply the saved appearance before the body is rendered.
 (function () {
   const root = document.documentElement;
-  const designs = ['classic', 'festive-s1', 'ds11'];
+  const designs = ['classic', 'festive-s1', 'ds11', 'sea-mist'];
+  const sharedDesigns = ['ds11', 'sea-mist'];
   const modes = ['auto', 'light', 'dark'];
   const media = window.matchMedia?.('(prefers-color-scheme: dark)');
 
@@ -31,7 +32,12 @@
     root.style.colorScheme = theme;
   }
 
-  root.dataset.design = readPreference('designStyle', designs);
+  function applyDesign(design) {
+    root.dataset.design = design;
+    root.dataset.themeSystem = sharedDesigns.includes(design) ? 'shared' : 'legacy';
+  }
+
+  applyDesign(readPreference('designStyle', designs));
   applyMode();
 
   function bindChoices(name, currentValue, apply) {
@@ -46,9 +52,7 @@
   }
 
   function init() {
-    bindChoices('designStyle', root.dataset.design, value => {
-      root.dataset.design = value;
-    });
+    bindChoices('designStyle', root.dataset.design, applyDesign);
     bindChoices('appearanceMode', mode, value => {
       mode = value;
       applyMode();

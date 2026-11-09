@@ -67,7 +67,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
 
   const card = page.locator('#settingsView .settings-card').first();
   const palette = () => card.evaluate(element => getComputedStyle(element).backgroundColor);
-  for (const design of ['classic', 'festive-s1', 'ds11']) {
+  for (const design of ['classic', 'festive-s1', 'ds11', 'sea-mist']) {
     await page.locator(`input[name="designStyle"][value="${design}"]`).check();
     await expect(page.locator('html')).toHaveAttribute('data-design', design);
     await expect(page.locator('body')).not.toHaveClass(/ds-app/);
@@ -77,6 +77,14 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
       await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
       await expect(page.locator('#settingsView')).toBeVisible();
       backgrounds.push(await palette());
+      if (design === 'sea-mist') {
+        await expect(page.locator('html')).toHaveAttribute('data-theme-system', 'shared');
+        const backgrounds = await page.locator('#mainView > .card:first-child, #mainView > .grid > .card, #mainView > .grid > .side > .card').evaluateAll(cards =>
+          cards.map(card => getComputedStyle(card).backgroundColor)
+        );
+        expect(backgrounds.length).toBeGreaterThanOrEqual(3);
+        for (const background of backgrounds) expect(background).toMatch(/, 0\.17\)$/);
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
         await page.evaluate(() => window.innerWidth + 1)
       );
@@ -140,8 +148,8 @@ test("retired Sea theme stylesheet is not loaded", async ({ page }) => {
 
 test("shared controls survive retirement of Z3 decorations", async ({ page }) => {
   await page.goto("/index.html");
-  await expect(page.locator("html")).toHaveAttribute("data-design", /classic|festive-s1|ds11/);
-  await expect(page.locator('input[name="designStyle"]')).toHaveCount(3);
+  await expect(page.locator("html")).toHaveAttribute("data-design", /classic|festive-s1|ds11|sea-mist/);
+  await expect(page.locator('input[name="designStyle"]')).toHaveCount(4);
 });
 
 test('system appearance tracks the device until an explicit mode is selected', async ({ page }) => {
@@ -167,15 +175,16 @@ test('VD Design reloads offline with the saved theme and local data', async ({ p
   await page.goto('/index.html');
   await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
   await page.evaluate(() => {
-    localStorage.setItem('designStyle', 'ds11');
+    localStorage.setItem('designStyle', 'sea-mist');
     localStorage.setItem('appearanceMode', 'dark');
     localStorage.setItem('favorites', JSON.stringify(['Anna']));
   });
 
   await context.setOffline(true);
   expect(await page.evaluate(async () => (await fetch("/assets/gold-ornaments.svg?v=20261103-upper-glow14")).ok)).toBe(true);
+  expect(await page.evaluate(async () => (await fetch("/assets/sea-mist-currents.svg")).ok)).toBe(true);
   await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-design', 'ds11');
+  await expect(page.locator('html')).toHaveAttribute('data-design', 'sea-mist');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('#calendar .day').first()).toBeVisible();
   await page.locator('#nameInput').fill('Anna');

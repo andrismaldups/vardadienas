@@ -30,7 +30,7 @@ html[data-design="ds11"][data-theme="dark"]{
 
 /* Complete C01–C18 semantic contract; D3 approved greens preserved. */
 html[data-design="ds11"][data-theme="light"]{
- --ds-backdrop:rgba(17,37,18,.48);--ds-bg-gradient:none;--ds-decor-image:none;
+ --ds-backdrop:rgba(17,37,18,.48);--ds-name-accent:var(--ds-primary);--ds-bg-gradient:none;--ds-app-backdrop:url("../assets/d3-rita-gaisma.svg");--ds-decor-image:url("../assets/d3-rita-rasa.svg");
  --ds-decor-opacity:1;--ds-decor-position:center;--ds-decor-size:cover;
  --ds-danger:#a52f40;--ds-danger-hover:#8d2635;--ds-danger-pressed:#741f2b;
  --ds-on-danger:#fff;--ds-error:#a52f40;--ds-success:#286b39;--ds-info:#315f63;
@@ -47,7 +47,7 @@ html[data-design="ds11"][data-theme="light"]{
 }
 
 html[data-design="ds11"][data-theme="dark"]{
- --ds-backdrop:rgba(0,0,0,.68);--ds-bg-gradient:none;--ds-decor-image:none;
+ --ds-backdrop:rgba(0,0,0,.68);--ds-app-backdrop:linear-gradient(rgba(15,32,21,.76),rgba(15,32,21,.81)),url("../assets/d3-rita-gaisma.svg");--ds-name-accent:var(--ds-primary);--ds-bg-gradient:none;--ds-decor-image:url("../assets/d3-rita-rasa.svg");
  --ds-decor-opacity:1;--ds-decor-position:center;--ds-decor-size:cover;
  --ds-danger:#ffb1ba;--ds-danger-hover:#ffc4cc;--ds-danger-pressed:#ffd5db;
  --ds-on-danger:#4c101b;--ds-error:#ffb1ba;--ds-success:#b3e1a5;--ds-info:#b9dbcf;

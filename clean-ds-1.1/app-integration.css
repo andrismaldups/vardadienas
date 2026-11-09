@@ -1,109 +1,104 @@
-/* VD Design: first opt-in integration layer for DS 1.1.
-   IMPORTANT: active only when <html data-design="ds11">; this integration layer no longer depends on body.ds-app.
-   Never load on production/TEST. No app logic or push code is changed.
-   DS 1.1 semantic tokens are defined in reference-theme.css. */
-html[data-design="ds11"] body{
+/* Shared VD Design component mappings. Active only for the shared theme system. */
+html[data-theme-system="shared"] body{
   margin:0;
   color:var(--ds-text);
   background:var(--ds-page-bg);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-html[data-design="ds11"] body .wrap{
+html[data-theme-system="shared"] body .wrap{
   width:100%;
   max-width:1040px;
   margin-inline:auto;
 }
-html[data-design="ds11"] body :is(.card,.settings-card){
+html[data-theme-system="shared"] body :is(.card,.settings-card){
   background:var(--ds-surface);
   color:var(--ds-text);
   border:1px solid var(--ds-surface-border);
   box-shadow:0 8px 24px var(--ds-shadow);
   border-radius:22px;
 }
-html[data-design="ds11"] body :is(h1,h2,h3,h4,.app-title){
+html[data-theme-system="shared"] body :is(h1,h2,h3,h4,.app-title){
   color:var(--ds-heading);
 }
-html[data-design="ds11"] body .muted{color:var(--ds-muted)}
+html[data-theme-system="shared"] body .muted{color:var(--ds-muted)}
 /* This bridge is deliberately narrow: native input widgets, menus, dialogs,
    notification controls and navigation remain untouched until their behavior
    and selectors are verified against the real application. */
 
 /* DS 1.1: existing functional application component mappings. */
-html[data-design="ds11"] body::before{
+html[data-theme-system="shared"] body::before{
  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
- background:url("../assets/d3-rita-rasa.svg") center top / 100% 100% no-repeat;
+ background:var(--ds-decor-image) center top / 100% 100% no-repeat;opacity:var(--ds-decor-opacity);
 }
-html[data-design="ds11"] body{position:relative;isolation:isolate}
-html[data-design="ds11"] body::after{
+html[data-theme-system="shared"] body{position:relative;isolation:isolate}
+html[data-theme-system="shared"] body::after{
  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
- background:url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
+ background:var(--ds-app-backdrop) center top / cover no-repeat;
 }
-html[data-design="ds11"][data-theme="dark"] body::after{
- background:linear-gradient(rgba(15,32,21,.76),rgba(15,32,21,.81)),url("../assets/d3-rita-gaisma.svg") center top / cover no-repeat;
-}
-html[data-design="ds11"] body .wrap{position:relative;z-index:1}
-html[data-design="ds11"] body :is(.side-menu,.about-content){
+
+html[data-theme-system="shared"] body .wrap{position:relative;z-index:1}
+html[data-theme-system="shared"] body :is(.side-menu,.about-content){
  background:var(--ds-surface);color:var(--ds-text);border:1px solid var(--ds-surface-border);
 }
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  .tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result,
  .favorite-add-panel,.birthday-saved-row,.settings-section,.about-row
 ){background:var(--ds-soft-bg);border-color:var(--ds-soft-border);color:var(--ds-text)}
-html[data-design="ds11"] body :is(button.primary,.primary,.day.sel){
+html[data-theme-system="shared"] body :is(button.primary,.primary,.day.sel){
  background:var(--ds-primary);border-color:var(--ds-primary);color:var(--ds-on-primary)
 }
 /* G01/G02: C06 is a selection, not a C03 primary action. */
-html[data-design="ds11"] body :is(.favorites-sort,.birthday-sort){
+html[data-theme-system="shared"] body :is(.favorites-sort,.birthday-sort){
  background:var(--ds-unselected-bg);border:1px solid var(--ds-unselected-border)
 }
-html[data-design="ds11"] body :is(.favorites-sort button,.birthday-sort button,.greeting-options button){
+html[data-theme-system="shared"] body :is(.favorites-sort button,.birthday-sort button,.greeting-options button){
  background:var(--ds-unselected-bg);color:var(--ds-unselected-text);border-color:var(--ds-unselected-border)
 }
-html[data-design="ds11"] body :is(.favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active){
+html[data-theme-system="shared"] body :is(.favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active){
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
 }
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
  .back-btn,.greeting-options button,.birthday-sort button,.favorites-sort button
 ):not(.active){
  background:var(--ds-soft-bg);border-color:var(--ds-border);color:var(--ds-text)
 }
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  .names,.name-link,.menu-btn,.birthday-chevron,.birthday-edit-btn,
  .greeting-entry-arrow,.name-detail-card h3
-){color:var(--ds-primary)}
-html[data-design="ds11"] body :is(
+){color:var(--ds-name-accent,var(--ds-primary))}
+html[data-theme-system="shared"] body :is(
  input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
  textarea,select
 ){background:var(--ds-input-bg);color:var(--ds-input-text);border-color:var(--ds-input-border);caret-color:var(--ds-caret)}
-html[data-design="ds11"] body :is(input,textarea)::placeholder{color:var(--ds-muted);opacity:1}
-html[data-design="ds11"] body :is(input[type="checkbox"],input[type="radio"]){accent-color:var(--ds-primary)}
-html[data-design="ds11"] body .switch input:checked+.switch-slider{background:var(--ds-primary)}
-html[data-design="ds11"] body :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
-html[data-design="ds11"] body :is(.settings-back-bar,.greeting-back-bar){background:var(--ds-surface);border-color:var(--ds-surface-border)}
-html[data-design="ds11"] body :is(.reminder-time-menu,.greeting-emoji-panel){background:var(--ds-popup-bg);color:var(--ds-popup-text);border-color:var(--ds-popup-border)}
-html[data-design="ds11"] body .about-card .about-row-button{
+html[data-theme-system="shared"] body :is(input,textarea)::placeholder{color:var(--ds-muted);opacity:1}
+html[data-theme-system="shared"] body :is(input[type="checkbox"],input[type="radio"]){accent-color:var(--ds-primary)}
+html[data-theme-system="shared"] body .switch input:checked+.switch-slider{background:var(--ds-primary)}
+html[data-theme-system="shared"] body :is(button,input,textarea,select,a):focus-visible{outline:2px solid var(--ds-focus);outline-offset:2px}
+html[data-theme-system="shared"] body :is(.settings-back-bar,.greeting-back-bar){background:var(--ds-surface);border-color:var(--ds-surface-border)}
+html[data-theme-system="shared"] body :is(.reminder-time-menu,.greeting-emoji-panel){background:var(--ds-popup-bg);color:var(--ds-popup-text);border-color:var(--ds-popup-border)}
+html[data-theme-system="shared"] body .about-card .about-row-button{
  box-sizing:border-box;max-width:100%;width:100%;display:flex;align-items:center;
  gap:12px;min-width:0;padding:10px 14px;overflow:hidden;
  background:var(--ds-soft-bg);color:var(--ds-text);border:1px solid var(--ds-soft-border)
 }
-html[data-design="ds11"] body .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
-html[data-design="ds11"] body .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
+html[data-theme-system="shared"] body .about-row-button>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+html[data-theme-system="shared"] body .about-row-button .about-chevron{flex:0 0 20px;margin-left:auto;text-align:center}
 /* G09: today's outline is a theme role, not the keyboard focus ring. */
 /* G09 dimensions apply to today's date regardless of selection. */
-html[data-design="ds11"] body #calendar .day.today{
+html[data-theme-system="shared"] body #calendar .day.today{
  box-sizing:border-box;width:46px;height:46px;min-width:46px;min-height:46px;
  margin-inline:auto;
 }
-html[data-design="ds11"] body #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
-html[data-design="ds11"] body #calendar .day.today.sel{outline:none}
+html[data-theme-system="shared"] body #calendar .day.today:not(.sel){outline:1px solid var(--ds-calendar-today-border);outline-offset:0}
+html[data-theme-system="shared"] body #calendar .day.today.sel{outline:none}
 
-/* Approved D3 specification: ONLY the three home-view main panel positions
+/* Shared design specification: ONLY the three home-view main panel positions
    use 17% opacity. Inner controls and other views keep their own tokens.
    Specificity deliberately beats legacy .card declarations. */
-html[data-design="ds11"] body #mainView>.card:first-child,
-html[data-design="ds11"] body #mainView>.grid>.card,
-html[data-design="ds11"] body #mainView>.grid>.side>.card{
+html[data-theme-system="shared"] body #mainView>.card:first-child,
+html[data-theme-system="shared"] body #mainView>.grid>.card,
+html[data-theme-system="shared"] body #mainView>.grid>.side>.card{
   background:var(--ds-home-panel-bg);
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
@@ -111,36 +106,36 @@ html[data-design="ds11"] body #mainView>.grid>.side>.card{
 
 /* G10–G12: palette-bound surfaces and icon actions (light and dark).
    Preserve HTML, events, hit targets and menu geometry. */
-html[data-design="ds11"] body #sideMenu.side-menu{
+html[data-theme-system="shared"] body #sideMenu.side-menu{
  background:var(--ds-menu-bg);color:var(--ds-menu-text);border-color:var(--ds-menu-border)
 }
-html[data-design="ds11"] body #sideMenu.side-menu button{
+html[data-theme-system="shared"] body #sideMenu.side-menu button{
  background:transparent;color:var(--ds-menu-text)
 }
 /* N15/N16: text links for traditional and extended names have no pill.
    Keep semantic highlights only for actual tag/badge elements. */
-html[data-design="ds11"] body :is(.names .name-link,.extra-list .name-link){
+html[data-theme-system="shared"] body :is(.names .name-link,.extra-list .name-link){
  background:transparent;color:inherit;box-shadow:none
 }
-html[data-design="ds11"] body :is(.tag,#nameResult .tag){
+html[data-theme-system="shared"] body :is(.tag,#nameResult .tag){
  background:var(--ds-highlight-bg);color:var(--ds-highlight-text)
 }
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  .remove-favorite,.birthday-edit-btn,.birthday-delete-btn,
  .birthday-row-actions button,#clearName,#clearDate
 ){
  background:var(--ds-icon-bg);border-color:var(--ds-icon-border);color:var(--ds-icon)
 }
-html[data-design="ds11"] body :is(.remove-favorite,.birthday-delete-btn){
+html[data-theme-system="shared"] body :is(.remove-favorite,.birthday-delete-btn){
  color:var(--ds-danger)
 }
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  #dateSuggestions button,.date-suggestions button,#nameResult .search-add-favorite
 ){
  background:var(--ds-secondary-bg);color:var(--ds-secondary-text);border-color:var(--ds-secondary-border)
 }
 /* C06 active state must win over the earlier generic inactive button rule. */
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  .favorites-sort button.active,.birthday-sort button.active,.greeting-options button.active
 ){
  background:var(--ds-selected-bg);color:var(--ds-selected-text);border-color:var(--ds-selected-border)
@@ -148,58 +143,58 @@ html[data-design="ds11"] body :is(
 
 /* G04 / C18: spacing belongs to actual accordion item wrappers,
    not buttons separated by content elements. */
-html[data-design="ds11"] body .about-accordion-list>.about-accordion-item+.about-accordion-item{
+html[data-theme-system="shared"] body .about-accordion-list>.about-accordion-item+.about-accordion-item{
  margin-top:8px;
 }
-html[data-design="ds11"] body .about-card .about-row-button{
+html[data-theme-system="shared"] body .about-card .about-row-button{
  min-height:48px;margin:0;
 }
 /* G06 / C17: deletion is confirmed separately in the application.
    The trigger itself uses the shared secondary button palette in both modes,
    matching the approved D3 presentation rather than a red warning surface. */
-html[data-design="ds11"] body #deleteMyDataButton.delete-data-button,
-html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
+html[data-theme-system="shared"] body #deleteMyDataButton.delete-data-button,
+html[data-theme-system="shared"] body #deleteMyDataButton.delete-data-button:is(:hover,:focus-visible){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border:1px solid var(--ds-secondary-border);
 }
-html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:active{
+html[data-theme-system="shared"] body #deleteMyDataButton.delete-data-button:active{
  background:var(--ds-pressed-bg);
 }
-html[data-design="ds11"] body #deleteMyDataButton.delete-data-button:disabled{
+html[data-theme-system="shared"] body #deleteMyDataButton.delete-data-button:disabled{
  opacity:.55;
 }
 /* G02: selected reminder time is a C06 choice, not a primary action. */
-html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]{
+html[data-theme-system="shared"] body .reminder-time-menu button[aria-selected="true"]{
  background:var(--ds-selected-bg);
  color:var(--ds-selected-text);
 }
 /* C05: edit icon keeps the semantic icon role, not the C03 color. */
-html[data-design="ds11"] body .birthday-edit-btn{
+html[data-theme-system="shared"] body .birthday-edit-btn{
  color:var(--ds-icon);
 }
 
 /* N17: hamburger trigger is an icon-only control; menu surface is separate. */
-html[data-design="ds11"] body .menu-btn{
+html[data-theme-system="shared"] body .menu-btn{
  background:transparent;border-color:transparent;box-shadow:none;
  color:var(--ds-icon)
 }
 
 /* N18 / C04: cancel is a secondary action in both forms. */
-html[data-design="ds11"] body :is(#favoriteAddCancel,#birthdayAddCancel){
+html[data-theme-system="shared"] body :is(#favoriteAddCancel,#birthdayAddCancel){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border:1px solid var(--ds-secondary-border);
 }
-html[data-design="ds11"] body :is(#favoriteAddCancel,#birthdayAddCancel):is(:hover,:focus-visible){
+html[data-theme-system="shared"] body :is(#favoriteAddCancel,#birthdayAddCancel):is(:hover,:focus-visible){
  background:var(--ds-secondary-bg);
  color:var(--ds-secondary-text);
  border-color:var(--ds-secondary-border);
 }
 /* N19/N20 / C06: explicitly selected time must be visually filled
    in both modes; do not inherit the old --picker-selected values. */
-html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"],
-html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]:is(:hover,:focus-visible){
+html[data-theme-system="shared"] body .reminder-time-menu button[aria-selected="true"],
+html[data-theme-system="shared"] body .reminder-time-menu button[aria-selected="true"]:is(:hover,:focus-visible){
  background:var(--ds-selected-bg);
  color:var(--ds-selected-text);
  box-shadow:inset 0 0 0 1px var(--ds-selected-border);
@@ -208,27 +203,27 @@ html[data-design="ds11"] body .reminder-time-menu button[aria-selected="true"]:i
 
 /* N23 / G09 / C16: selected calendar date borrows C03 color roles,
    while its circular geometry and today's unselected outline remain C16. */
-html[data-design="ds11"] body #calendar .day.sel{
+html[data-theme-system="shared"] body #calendar .day.sel{
  background:var(--ds-primary);
  color:var(--ds-on-primary);
  border-color:var(--ds-primary-border);
 }
-html[data-design="ds11"] body #calendar .day.today.sel{
+html[data-theme-system="shared"] body #calendar .day.today.sel{
  outline:none;
 }
 /* N24 / C03: name-detail actions must share the same semantic primary
    colors as the rest of the application, overriding legacy #08783f. */
-html[data-design="ds11"] body #nameDetailView .name-detail-actions button.primary{
+html[data-theme-system="shared"] body #nameDetailView .name-detail-actions button.primary{
  background:var(--ds-primary);
  color:var(--ds-on-primary);
  border-color:var(--ds-primary-border);
 }
 /* N25 / C07/C15: override legacy hard-coded #6ad49a focus outline,
    including mouse/touch focus on the favorite-name input. */
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  input:not([type="hidden"]),textarea,select
 ):focus-visible,
-html[data-design="ds11"] body #favoriteAddInput:focus{
+html[data-theme-system="shared"] body #favoriteAddInput:focus{
  outline:2px solid var(--ds-focus-ring);
  outline-offset:2px;
  border-color:var(--ds-focus-ring);
@@ -236,7 +231,7 @@ html[data-design="ds11"] body #favoriteAddInput:focus{
 
 /* N26: supporting copy must use the approved semantic muted text token.
    The old #718096 and dark-mode #a7b9b0 are not D3 palette values. */
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  .extra-title,.foot,.week div,#dateTitle,
  .appearance-choice small,.about-app>div:last-child>div,
  .about-row span:last-child,
@@ -248,8 +243,8 @@ html[data-design="ds11"] body :is(
 
 /* N25: all four birthday form inputs share a single semantic focus ring.
    This overrides the legacy #08783f/#6ad49a outline and box-shadow. */
-html[data-design="ds11"] body #birthdayAddForm input:focus,
-html[data-design="ds11"] body #birthdayAddForm input:focus-visible{
+html[data-theme-system="shared"] body #birthdayAddForm input:focus,
+html[data-theme-system="shared"] body #birthdayAddForm input:focus-visible{
  outline:2px solid var(--ds-focus-ring);
  outline-offset:2px;
  border-color:var(--ds-focus-ring);
@@ -260,12 +255,12 @@ html[data-design="ds11"] body #birthdayAddForm input:focus-visible{
 /* N25 follow-up: one shared focus geometry for all application inputs.
    Legacy ID-specific focus rules and shadows must not win by specificity.
    Keep the same double-line appearance as the birthday form. */
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  #nameInput,#dateInput,#favoriteAddInput,
  #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
  input:not([type="hidden"]),textarea,select
 ):focus,
-html[data-design="ds11"] body :is(
+html[data-theme-system="shared"] body :is(
  #nameInput,#dateInput,#favoriteAddInput,
  #birthdayFullName,#birthdayDay,#birthdayMonth,#birthdayYear,
  input:not([type="hidden"]),textarea,select

@@ -18,7 +18,7 @@ test('K1, S1 and DS11 share the same functional DOM and stored data', async ({ p
   const baseline = await snapshot();
   expect(baseline.ids.length).toBeGreaterThan(25);
   expect(baseline.isolated).toBe(true);
-  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+  for (const theme of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     await expect(page.locator('html')).toHaveAttribute('data-design', theme);
     expect(await snapshot()).toEqual(baseline);
@@ -59,7 +59,7 @@ test('theme switch does not replace core DOM nodes or their event handlers', asy
     return window.__themeContractNodes.map(Boolean);
   }, selectors);
   expect(before.every(Boolean)).toBe(true);
-  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+  for (const theme of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     const identical = await page.evaluate(() =>
       window.__themeContractNodes.every(node => node && node.isConnected && document.getElementById(node.id) === node)
@@ -95,7 +95,7 @@ test('static cards have stable semantic identity across all themes', async ({ pa
     return window.__stableCards.length;
   });
   expect(original).toBe(count);
-  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+  for (const theme of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); });
     const same = await page.evaluate(() =>
       window.__stableCards.every(node => node.isConnected && node.dataset.uiComponent === 'card')
@@ -112,7 +112,7 @@ test('primary actions retain semantic identity and click handlers on theme switc
   const ids = await actions.evaluateAll(nodes => nodes.map(node => node.id));
   expect(ids.every(Boolean)).toBe(true);
   await page.evaluate(() => { window.__primaryNodes = [...document.querySelectorAll('[data-ui-component="primary-action"]')]; });
-  for (const theme of ['festive-s1', 'ds11', 'classic']) {
+  for (const theme of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + theme + '"]').evaluate(el => {
       el.checked = true;
       el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -131,7 +131,7 @@ test('switching designs never adds or removes visual component classes', async (
     cards: [...document.querySelectorAll('[data-ui-component="card"]')].map(el => el.className),
     actions: [...document.querySelectorAll('[data-ui-component="primary-action"]')].map(el => el.className)
   }));
-  for (const design of ['festive-s1', 'ds11', 'classic']) {
+  for (const design of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
       el.checked = true;
       el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -178,7 +178,7 @@ test('theme choice persists after reload without mutating application content', 
     ids: [...document.querySelectorAll('[id]')].map(node => node.id).sort(),
     pushIsolation: window.DESIGN_TEST_ISOLATED === true
   }));
-  for (const design of ['festive-s1', 'ds11', 'classic']) {
+  for (const design of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
       el.checked = true;
       el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -211,7 +211,7 @@ test('switching design does not alter calendar dates or typed search values', as
     date: document.getElementById('dateInput')?.value
   }));
   expect(before.calendar?.length).toBeGreaterThan(10);
-  for (const design of ['festive-s1', 'ds11', 'classic']) {
+  for (const design of ['festive-s1', 'ds11', 'sea-mist', 'classic']) {
     await page.locator('input[name="designStyle"][value="' + design + '"]').evaluate(el => {
       el.checked = true;
       el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -324,8 +324,8 @@ test('DS11 semantic pointer states are root-scoped and do not require ds-app', a
       catch { return []; }
     }).join('\\n');
     return {
-      hover: css.includes('html[data-design="ds11"] body [data-ui-component="primary-action"]:not(:disabled):hover'),
-      pressed: css.includes('html[data-design="ds11"] body [data-ui-component="primary-action"]:not(:disabled):active'),
+      hover: css.includes('html[data-theme-system="shared"] body [data-ui-component="primary-action"]:not(:disabled):hover'),
+      pressed: css.includes('html[data-theme-system="shared"] body [data-ui-component="primary-action"]:not(:disabled):active'),
       root: document.documentElement.dataset.design,
       classAbsent: !document.body.classList.contains('ds-app')
     };
