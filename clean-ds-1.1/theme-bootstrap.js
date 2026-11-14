@@ -1,8 +1,8 @@
 // Apply the saved appearance before the body is rendered.
 (function () {
   const root = document.documentElement;
-  const designs = ['classic', 'festive-s1', 'ds11', 'sea-mist'];
-  const sharedDesigns = ['ds11', 'sea-mist'];
+  const designs = ['classic', 'festive-s1', 'ds11', 'sea-mist', 'cherry'];
+  const sharedDesigns = ['ds11', 'sea-mist', 'cherry'];
   const modes = ['auto', 'light', 'dark'];
   const media = window.matchMedia?.('(prefers-color-scheme: dark)');
 

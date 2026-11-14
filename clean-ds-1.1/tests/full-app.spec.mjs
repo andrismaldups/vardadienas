@@ -67,7 +67,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
 
   const card = page.locator('#settingsView .settings-card').first();
   const palette = () => card.evaluate(element => getComputedStyle(element).backgroundColor);
-  for (const design of ['classic', 'festive-s1', 'ds11', 'sea-mist']) {
+  for (const design of ['classic', 'festive-s1', 'ds11', 'sea-mist', 'cherry']) {
     await page.locator(`input[name="designStyle"][value="${design}"]`).check();
     await expect(page.locator('html')).toHaveAttribute('data-design', design);
     await expect(page.locator('body')).not.toHaveClass(/ds-app/);
@@ -77,7 +77,7 @@ test('full VD Design: switch themes and light/dark modes in real settings', asyn
       await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
       await expect(page.locator('#settingsView')).toBeVisible();
       backgrounds.push(await palette());
-      if (design === 'sea-mist') {
+      if (['sea-mist', 'cherry'].includes(design)) {
         await expect(page.locator('html')).toHaveAttribute('data-theme-system', 'shared');
         const backgrounds = await page.locator('#mainView > .card:first-child, #mainView > .grid > .card, #mainView > .grid > .side > .card').evaluateAll(cards =>
           cards.map(card => getComputedStyle(card).backgroundColor)
@@ -198,7 +198,7 @@ test('shared themes color navigation, birthday artwork and today from their pale
   await page.locator('.menu-btn').click();
   await page.locator('#sideMenu').getByRole('button', { name: 'Iestatījumi' }).click();
 
-  for (const design of ['sea-mist', 'ds11']) {
+  for (const design of ['sea-mist', 'ds11', 'cherry']) {
     await page.locator(`input[name="designStyle"][value="${design}"]`).check();
     for (const mode of ['light', 'dark']) {
       await page.locator(`input[name="appearanceMode"][value="${mode}"]`).check();
