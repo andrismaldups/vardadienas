@@ -1,5 +1,5 @@
 /* DESIGN TEST only: independent offline cache; no push listeners. */
-const CACHE_NAME = "vardadienas-design-test-v17";
+const CACHE_NAME = "vardadienas-design-test-v18";
 const CACHE_PREFIX = "vardadienas-design-test-";
 const FILES_TO_CACHE = [
   "./",

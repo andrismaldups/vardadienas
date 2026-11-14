@@ -1,10 +1,16 @@
 /* Saule (F01 + D02). The background and sunlight are separate layers. */
 html[data-design="sun"] {
-  --ds-decor-image: radial-gradient(ellipse 15% 0.35% at 4% 97%, #fff9d1 0%, #ffdf7710 80%, transparent), radial-gradient(circle at 4% 97%, #fffde9 0%, #ffe38880 1%, transparent 5%), radial-gradient(ellipse at 100% 0%, #fff1a748, transparent 65%), conic-gradient(from 180deg at 100% 0%, transparent 0deg, #ffe68140 7deg, transparent 12deg, #fff0af42 22deg, transparent 30deg, #ffe68135 39deg, transparent 46deg, #fff0af40 57deg, transparent 63deg, #ffe68135 75deg, transparent 90deg);
+  --ds-ray-tint: #b9793370;
+  --ds-glint-tint: #c4883990;
+  --ds-decor-image:
+    radial-gradient(ellipse 29% 0.65% at 15% 88%, #fffdf4 0%, var(--ds-glint-tint) 45%, transparent 100%),
+    radial-gradient(ellipse 0.8% 3.1% at 15% 88%, #fffdf4, transparent),
+    radial-gradient(ellipse 9% 4.5% at 15% 88%, #fffdf4 0%, var(--ds-glint-tint) 35%, transparent 100%),
+    conic-gradient(from 180deg at 100% 0%, transparent 1deg, var(--ds-ray-tint) 8deg, transparent 14deg, var(--ds-ray-tint) 21deg, transparent 29deg, var(--ds-ray-tint) 37deg, transparent 46deg, var(--ds-ray-tint) 54deg, transparent 62deg, var(--ds-ray-tint) 71deg, transparent 78deg, var(--ds-ray-tint) 83deg, transparent 90deg);
   --ds-decor-position: center;
   --ds-decor-size: 100% 100%;
   --ds-bg-gradient: none;
-  --ds-decor-opacity: .84;
+  --ds-decor-opacity: 1;
   --ds-app-backdrop: linear-gradient(155deg, #fff2a8, #ffe58c 50%, #ffd16a);
   --ds-page-bg: #ffe58c;
   --ds-home-panel-bg: rgba(255, 247, 207, .17);
@@ -40,7 +46,9 @@ html[data-design="sun"] {
 }
 
 html[data-design="sun"][data-theme="dark"] {
-  --ds-decor-opacity: .73;
+  --ds-ray-tint: #ffd77b95;
+  --ds-glint-tint: #ffcc6690;
+  --ds-decor-opacity: 1;
   --ds-app-backdrop: linear-gradient(155deg, #766022, #504015 50%, #2d2310);
   --ds-page-bg: #504015;
   --ds-home-panel-bg: rgba(78, 61, 25, .17);
