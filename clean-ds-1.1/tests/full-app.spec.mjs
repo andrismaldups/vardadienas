@@ -217,7 +217,11 @@ test('shared themes color navigation, birthday artwork and today from their pale
               !matches(button, 'borderTopColor', 'var(--ds-secondary-border)') ||
               !matches(button, 'color', 'var(--ds-secondary-text)')) errors.push(bar.parentElement.id);
         }
+        // WebKit needs the calendar rendered to resolve its computed colors.
+        const mainView = document.getElementById('mainView');
+        mainView.hidden = false;
         const today = document.querySelector('#calendar .day.today');
+        const wasSelected = today.classList.contains('sel');
         today.classList.remove('sel');
         if (!matches(today, 'color', 'var(--ds-text)') ||
             !matches(today, 'outlineColor', 'var(--ds-calendar-today-border)')) errors.push('today');
@@ -226,6 +230,8 @@ test('shared themes color navigation, birthday artwork and today from their pale
         const gift = document.querySelector('.birthday-gift-icon rect');
         if (!matches(gift, 'fill', 'var(--ds-gift-box,var(--ds-selected-bg))')) errors.push('gift');
         if (!matches(document.querySelector('.birthday-chevron'), 'color', 'var(--ds-icon)')) errors.push('chevron');
+        today.classList.toggle('sel', wasSelected);
+        mainView.hidden = true;
         sample.remove();
         return errors;
       });
