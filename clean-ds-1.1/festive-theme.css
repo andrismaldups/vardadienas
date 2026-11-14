@@ -1,33 +1,36 @@
-/* S1 Zeltainie akcenti: festive gold ribbons and green actions. */
+/* S1 Zeltainie akcenti: original gold palette and ribbons. */
 html[data-design="festive-s1"] {
   --ds-decor-image: url('../assets/gold-ornaments.svg?v=20261103-upper-glow14');
   --ds-decor-opacity: .85;
   --ds-decor-position: center;
   --ds-decor-size: 100% 100%;
   --ds-bg-gradient: none;
-  --ds-app-backdrop: linear-gradient(#fff9e9, #fff6df);
-  --ds-page-bg: #fff6df;
+  --ds-app-backdrop: radial-gradient(ellipse 90% 34% at 48% 2%,rgba(255,255,244,.94) 0%,rgba(255,250,225,.54) 42%,transparent 89%),
+    radial-gradient(ellipse 82% 44% at 91% 57%,rgba(248,216,120,.16) 0%,transparent 83%),
+    radial-gradient(ellipse 90% 38% at 6% 88%,rgba(255,246,216,.26) 0%,transparent 84%),
+    linear-gradient(180deg,#fff6d8 0%,#fff0bf 24%,#ffe7a0 53%,#f8d878 84%,#ffe7a0 100%);
+  --ds-page-bg: #ffe7a0;
   --ds-home-panel-bg: rgba(255, 253, 247, .17);
-  --ds-surface: #fffdf7;
-  --ds-text: #203a2a;
-  --ds-muted: #64583f;
-  --ds-primary: #08783f;
-  --ds-on-primary: #fff;
-  --ds-primary-hover: #066435;
-  --ds-primary-pressed: #054f2b;
-  --ds-border: #c49b55;
-  --ds-soft-bg: #fff8e7;
+  --ds-surface: rgba(255,250,235,.80);
+  --ds-text: #4b280f;
+  --ds-muted: #75512c;
+  --ds-primary: #97540c;
+  --ds-on-primary: #fff9e9;
+  --ds-primary-hover: #824609;
+  --ds-primary-pressed: #713a0b;
+  --ds-border: #dba544;
+  --ds-soft-bg: rgba(255,244,214,.75);
   --ds-input-bg: #fffdf4;
-  --ds-selected-bg: #e5efd8;
+  --ds-selected-bg: #ffe5a8;
   --ds-hover-bg: #f4e8c8;
   --ds-pressed-bg: #ead9ac;
-  --ds-focus: #846020;
+  --ds-focus: #9d5b0b;
   --ds-secondary-bg: #fff8e7;
   --ds-surface-elevated: #fffdf7;
   --ds-shadow: rgba(32, 36, 32, .14);
   --ds-backdrop: rgba(32, 36, 32, .48);
-  --ds-disabled-bg: #e2e6df;
-  --ds-disabled-text: #535b53;
+  --ds-disabled-bg: #eee1c6;
+  --ds-disabled-text: #665239;
   --ds-danger: #942837;
   --ds-danger-hover: #7f2030;
   --ds-danger-pressed: #681827;
@@ -36,27 +39,30 @@ html[data-design="festive-s1"] {
   --ds-danger-text: #7f2030;
   --ds-danger-border: #a9505e;
   --ds-success: #246043;
-  --ds-info: #08783f;
+  --ds-info: #97540c;
 }
 
 html[data-design="festive-s1"][data-theme="dark"] {
-  --ds-app-backdrop: linear-gradient(#30271a, #1d1812);
-  --ds-page-bg: #1d1812;
+  --ds-app-backdrop: radial-gradient(ellipse 88% 35% at 48% 2%,rgba(135,93,39,.33),transparent 88%),
+    radial-gradient(ellipse 90% 46% at 95% 58%,rgba(117,73,26,.22),transparent 85%),
+    radial-gradient(ellipse 85% 32% at 5% 92%,rgba(178,119,38,.16),transparent 84%),
+    linear-gradient(180deg,#2c2117 0%,#21170f 46%,#332316 83%,#241910 100%);
+  --ds-page-bg: #21170f;
   --ds-home-panel-bg: rgba(112, 83, 43, .17);
-  --ds-surface: #382d20;
-  --ds-text: #fff2d6;
-  --ds-muted: #e5d2ad;
-  --ds-primary: #a8d8b5;
-  --ds-on-primary: #15261b;
-  --ds-primary-hover: #b8e3c4;
-  --ds-primary-pressed: #c8ecd2;
-  --ds-border: #aa894e;
-  --ds-soft-bg: #443524;
+  --ds-surface: #34271b;
+  --ds-text: #fff0d3;
+  --ds-muted: #d6b98b;
+  --ds-primary: #b77922;
+  --ds-on-primary: #21170f;
+  --ds-primary-hover: #ce9541;
+  --ds-primary-pressed: #e3b361;
+  --ds-border: #8a6438;
+  --ds-soft-bg: #3d2e1f;
   --ds-input-bg: #392e21;
-  --ds-selected-bg: #365545;
+  --ds-selected-bg: #624725;
   --ds-hover-bg: #4c402b;
   --ds-pressed-bg: #58482d;
-  --ds-focus: #ebcb87;
+  --ds-focus: #f0c474;
   --ds-secondary-bg: #443524;
   --ds-surface-elevated: #382d20;
   --ds-shadow: rgba(0, 0, 0, .28);
@@ -71,7 +77,7 @@ html[data-design="festive-s1"][data-theme="dark"] {
   --ds-danger-text: #ffd9df;
   --ds-danger-border: #cf8291;
   --ds-success: #aee1c7;
-  --ds-info: #a8d8b5;
+  --ds-info: #f2c36b;
 }
 
 /* Map component roles to the mode palette. */
