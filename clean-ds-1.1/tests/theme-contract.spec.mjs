@@ -291,7 +291,7 @@ test('DS11 semantic cards and primary actions remain styled without ds-app class
   }
 });
 
-test('classic and festive designs do not inherit DS11 semantic component styling', async ({ page }) => {
+test('classic and festive designs resolve their own primary palette', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('designStyle', 'classic');
     localStorage.setItem('appearanceMode', 'light');
