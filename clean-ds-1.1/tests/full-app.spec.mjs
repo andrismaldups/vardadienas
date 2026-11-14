@@ -233,3 +233,31 @@ test('shared themes color navigation, birthday artwork and today from their pale
     }
   }
 });
+
+test('birthday date fields and favorite rows fit a narrow mobile screen', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.addInitScript(() => {
+    localStorage.setItem('designStyle', 'sea-mist');
+    localStorage.setItem('favorites', JSON.stringify(['Anna', 'Teodors']));
+  });
+  await page.goto('/index.html');
+  await page.locator('#birthdaysOpen').click();
+  await page.locator('#birthdayAddOpen').click();
+
+  const tops = await page.locator('.birthday-date-fields input').evaluateAll(inputs =>
+    inputs.map(input => input.getBoundingClientRect().top)
+  );
+  expect(tops).toHaveLength(3);
+  expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(1);
+
+  await page.locator('#birthdaysBack').click();
+  await page.locator('.menu-btn').click();
+  await page.locator('#sideMenu').getByRole('button', { name: 'Mani vārdi' }).click();
+  const rows = page.locator('#favoritesList .favorite-row');
+  await expect(rows).toHaveCount(2);
+  await expect(rows.nth(1)).toHaveCSS('border-top-width', '1px');
+  const target = await rows.first().locator('.remove-favorite').boundingBox();
+  expect(target.width).toBeGreaterThanOrEqual(44);
+  expect(target.height).toBeGreaterThanOrEqual(44);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});

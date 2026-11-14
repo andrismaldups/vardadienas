@@ -141,6 +141,10 @@ html[data-theme-system="shared"] body :is(
 ){
  background:var(--ds-icon-bg);border-color:var(--ds-icon-border);color:var(--ds-icon)
 }
+/* C10: separate adjacent favorites using the same border role as list rows. */
+html[data-theme-system="shared"] body .favorite-row + .favorite-row{
+ border-top:1px solid var(--ds-surface-border);
+}
 html[data-theme-system="shared"] body :is(.remove-favorite,.birthday-delete-btn){
  color:var(--ds-danger)
 }
