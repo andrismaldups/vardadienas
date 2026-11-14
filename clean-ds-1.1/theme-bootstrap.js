@@ -2,7 +2,7 @@
 (function () {
   const root = document.documentElement;
   const designs = ['classic', 'festive-s1', 'ds11', 'sea-mist', 'cherry', 'sun'];
-  const sharedDesigns = ['classic', 'ds11', 'sea-mist', 'cherry', 'sun'];
+  const sharedDesigns = ['classic', 'festive-s1', 'ds11', 'sea-mist', 'cherry', 'sun'];
   const modes = ['auto', 'light', 'dark'];
   const media = window.matchMedia?.('(prefers-color-scheme: dark)');
 
