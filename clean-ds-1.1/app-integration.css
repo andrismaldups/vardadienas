@@ -290,3 +290,8 @@ html[data-theme-system="shared"] body :is(
  box-shadow:none;
  caret-color:var(--ds-caret);
 }
+
+/* The featured names use the same palette role as the Today button. */
+html[data-theme-system="shared"] body :is(#todayNames,#nameDetailTitle){
+  color:var(--ds-primary);
+}

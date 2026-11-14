@@ -222,6 +222,10 @@ test('shared themes color navigation, birthday artwork and today from their pale
         const mainView = document.getElementById('mainView');
         mainView.hidden = false;
         const today = document.querySelector('#calendar .day.today');
+        const primaryBackground = getComputedStyle(document.querySelector('#todayBtn')).backgroundColor;
+        for (const id of ['todayNames', 'nameDetailTitle']) {
+          if (getComputedStyle(document.getElementById(id)).color !== primaryBackground) errors.push(id);
+        }
         const wasSelected = today.classList.contains('sel');
         today.classList.remove('sel');
         if (!matches(today, 'color', 'var(--ds-text)') ||
