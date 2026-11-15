@@ -1,11 +1,14 @@
 /* S1 Zeltainie akcenti: brushed gold and polished corners. */
 html[data-design="festive-s1"] {
-  --ds-decor-image: linear-gradient(135deg, #a77936 0%, #f6d584 5%, #fff1bc 7%, #805019 8%, transparent 8.7%), linear-gradient(315deg, #a77936 0%, #f6d584 5%, #fff1bc 7%, #805019 8%, transparent 8.7%), repeating-linear-gradient(157deg, #ffffff10 0 1px, transparent 1px 3px, #78521a19 3px 4px, transparent 4px 6px);
-  --ds-decor-opacity: .85;
+  --ds-decor-image:
+    linear-gradient(135deg, transparent 0 1.1%, #664113 1.3%, #ad7627 2%, #eec576 3%, #fff8ce 4.1%, #fff1a7 4.5%, #ba812e 5.2%, #754714 6.2%, #d9a553 7%, #704416 7.7%, transparent 8.1%),
+    linear-gradient(315deg, transparent 0 1.1%, #664113 1.3%, #ad7627 2%, #eec576 3%, #fff8ce 4.1%, #fff1a7 4.5%, #ba812e 5.2%, #754714 6.2%, #d9a553 7%, #704416 7.7%, transparent 8.1%),
+    repeating-linear-gradient(155deg, #fff4bf42 0 1px, #53300e38 1px 2px, transparent 2px 5px, #fff7de24 5px 6px, transparent 6px 9px);
+  --ds-decor-opacity: .92;
   --ds-decor-position: center;
   --ds-decor-size: 100% 100%;
   --ds-bg-gradient: none;
-  --ds-app-backdrop: radial-gradient(ellipse at top right, #e5ba70, transparent 55%), linear-gradient(150deg, #f7e7cd, #d7ad6c);
+  --ds-app-backdrop: radial-gradient(ellipse at top right, #fff1bc, transparent 48%), radial-gradient(ellipse at bottom left, #b58039, transparent 60%), linear-gradient(150deg, #efd39c, #dbb575);
   --ds-page-bg: #e7c48e;
   --ds-home-panel-bg: rgba(255, 253, 247, .17);
   --ds-surface: rgba(255,250,235,.80);
