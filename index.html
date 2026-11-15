@@ -1,72 +1,17 @@
-<!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vārdadienu kalendārs</title><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18392b;background:#f2f5f8}*{box-sizing:border-box}body{margin:0;padding:24px;-webkit-text-size-adjust:100%}.wrap{max-width:1120px;margin:auto}.card{background:#fff;border-radius:22px;padding:26px;box-shadow:0 8px 30px #17203312;margin-bottom:18px}h1,h2{margin:0 0 12px}h1{font-size:34px;line-height:1.15}#dateTitle{font-size:24px;font-weight:400;text-align:center;color:#718096;margin:0 0 18px}h2{font-size:22px}.muted{color:#718096}.app-title{font-size:32px;font-weight:700;text-align:center;margin-bottom:22px;color:#18392b}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.name-link{border:0;background:transparent;padding:2px 1px;min-height:0;border-radius:3px;color:inherit;font:inherit;line-height:inherit;cursor:pointer}.name-link:hover{text-decoration:underline}.name-link:focus-visible{outline:2px solid #08783f;outline-offset:3px}.name-detail-card{text-align:center}.name-detail-card h3{font-size:30px;color:#08783f;margin:8px 0}.name-detail-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.name-detail-feedback{color:#08783f;margin-top:12px}.names{font-size:24px;font-weight:700;margin:12px 0;line-height:1.35;color:#08783f;text-align:center}
-.tomorrow{display:flex;align-items:center;gap:14px;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}
-  .latvia-today{
-  margin:12px 0 14px;
-  padding:12px 14px;
-  border:1px solid #d7e8dc;
-  border-radius:14px;
-  background:#f6fbf7;
-}
-  .interesting{
-  margin:12px 0 14px;
-  padding:12px 14px;
-  border:1px solid #d7e8dc;
-  border-radius:14px;
-  background:#f6fbf7;
-}
-  .birthday-entry{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;margin:12px 0 14px;padding:12px 14px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7;color:inherit;font:inherit;gap:12px}.birthday-entry strong{font-weight:700}.birthday-home-content{display:grid;gap:5px;min-width:0}.birthday-today-names{font-size:15px;line-height:1.45;overflow-wrap:anywhere}.birthday-today-names[hidden]{display:none}.birthday-entry .birthday-chevron{color:#08783f;font-size:22px}.birthday-entry:focus-visible{outline:2px solid #08783f;outline-offset:2px}
-  .birthday-form{display:grid;gap:12px;margin-top:14px}.birthday-form[hidden]{display:none}.birthday-form label{display:grid;gap:5px;font-weight:600}.birthday-form input{width:100%;box-sizing:border-box}.birthday-date-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}.birthday-date-fields input{min-width:0}.birthday-form-actions{display:flex;gap:10px;flex-wrap:wrap}.birthday-feedback{color:#b42318;font-size:14px}.birthday-sort{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:14px 0 8px;padding:3px;background:#eef2f0;border-radius:14px}.birthday-sort button{border:0;background:transparent;border-radius:11px;color:#52605a;font-size:15px;font-weight:600;padding:12px 7px}.birthday-sort button.active{background:#dff3e5;color:#0f7f43}.birthday-saved-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e4e9e6}.birthday-saved-row-info{min-width:0;overflow-wrap:anywhere}.birthday-edit-btn{flex-shrink:0;border:0;background:transparent;color:#08783f;font-size:20px;padding:10px;min-width:44px;min-height:44px}.birthday-row-actions{display:flex;align-items:center;flex-shrink:0;gap:0}.birthday-delete-btn{border:0;background:transparent;color:#a63838;font-size:23px;padding:10px;min-width:44px;min-height:44px}.birthday-saved-row:last-child{border-bottom:0}
-  .menu-btn{border:0;background:transparent;padding:8px;font-size:24px;line-height:1;color:#123d2c}.side-menu{position:absolute;top:100px;left:0;width:220px;z-index:10;display:flex;flex-direction:column;gap:8px;background:white;padding:16px;border-radius:0 14px 14px 0;box-shadow:0 6px 20px rgba(0,0,0,.15)}.side-menu button{display:block;width:100%;border:0;border-radius:0;background:transparent;text-align:left;padding:12px 10px;font-size:16px;color:#123d2c}.side-menu[hidden]{display:none}.back-btn{border:0;background:transparent;padding:8px 0;color:#0f7f43;font-size:16px;font-weight:600}#favoritesList{white-space:pre-line;padding-left:12px}.remove-favorite{border:0;background:transparent;padding:8px;color:#718096;font-size:18px;line-height:1}.favorite-row{display:grid;grid-template-columns:minmax(0,1fr) 135px 36px;align-items:center;gap:8px}.favorites-sort{display:grid;grid-template-columns:1fr 1fr;margin:12px 0 16px;padding:3px;background:#eef2f0;border-radius:14px}.favorites-sort button{border:0;background:transparent;padding:12px 8px;border-radius:11px;color:#52605a;font-size:15px;font-weight:600}
-.favorites-sort button.active{background:#dff3e5;color:#0f7f43}#mainView[hidden]{display:none}.tag{display:inline-block;font-size:13px;padding:5px 9px;border-radius:999px;background:#edf2f7;margin:3px}.extra{background:#f4f0ff}.extra-title{font-size:13px;color:#718096;margin-top:18px;margin-bottom:4px;padding-top:18px;border-top:1px solid #dce3eb}
-.extra-list{font-size:16px;line-height:1.5}.btn,button{border:1px solid #d7dee8;background:white;border-radius:12px;padding:12px 15px;font-size:16px;cursor:pointer;touch-action:manipulation;min-height:44px}.primary{background:#08783f;color:white}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.calhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.calhead button{width:46px;height:46px;padding:0;display:flex;align-items:center;justify-content:center}.week,.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.week div{text-align:center;color:#718096;padding:8px 2px}.day{min-height:56px;border:0;border-radius:50%;background:transparent;padding:8px 4px}.day.sel{background:#08783f;color:white;border-radius:50%;width:46px;height:46px;min-height:46px;padding:0;justify-self:center}.day.today{outline:1px solid #d7dee8;width:46px;height:46px;min-height:46px;padding:0;justify-self:center}.day.today.sel{outline:none}.side .card{margin-bottom:18px}input{width:100%;min-width:0;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font-size:16px;min-height:46px}input[type="time"]{display:block;width:100%;max-width:100%;border-radius:12px;-webkit-appearance:none;appearance:none}.settings-card{padding:0;overflow:hidden}.settings-main-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px}.settings-main-row h3{margin:0}.settings-section{padding:18px;border-top:1px solid #e4e9e6}.settings-section h4{margin:0 0 14px}.reminder-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;align-items:center;gap:12px;margin-top:12px}.reminder-choice,.target-row{display:flex;align-items:center;gap:10px}.settings-card input[type="checkbox"],.settings-card input[type="radio"]{width:22px;height:22px;min-height:22px;padding:0;flex:0 0 22px;accent-color:#08783f}.settings-card input[type="time"]{width:112px;min-height:42px;padding:8px 10px;color:#08783f;font-weight:600}.target-row{margin-top:12px}.about-card{margin-top:16px;padding:18px}.about-card h3{margin:0 0 14px}.about-app{display:flex;align-items:center;gap:12px;padding-bottom:14px}.about-app-icon{display:block;width:48px;height:48px;flex:0 0 48px;border-radius:12px;object-fit:cover}.settings-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.settings-back-bar .back-btn{margin:0}.about-app strong{display:block;margin-bottom:2px}.about-app>div:last-child>div{color:#5f6f67;font-size:14px;line-height:1.4}.about-version{margin-top:2px}.about-row{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-top:1px solid #e4e9e6;font-size:16px}.about-row span:last-child{color:#718096;font-size:20px}.about-row-button{width:100%;padding:0;background:white;border-left:0;border-right:0;border-bottom:0;border-radius:0;color:inherit;text-align:left;font:inherit;cursor:pointer}.about-content{padding:2px 0 14px;background:white;border-top:1px solid #eef1ef}.about-content p{margin:12px 0 0;line-height:1.5}.about-content p:first-child{margin-top:12px}.switch{position:relative;display:inline-block;width:52px;height:30px;flex:0 0 52px}.switch input{opacity:0;width:0!important;height:0!important;min-height:0!important;position:absolute}.switch-slider{position:absolute;inset:0;background:#cbd3cf;border-radius:999px;transition:.2s}.switch-slider:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:white;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}.switch input:checked+.switch-slider{background:#08783f}.switch input:checked+.switch-slider:before{transform:translateX(22px)}@media(max-width:420px){.reminder-row{grid-template-columns:minmax(0,1fr) 105px}.settings-card input[type="time"]{width:105px}}.searchrow{display:flex;gap:8px} .date-suggestions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-top:8px;
-}
+<!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vārdadienu kalendārs</title><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="clean-ds-1.1/legacy-layout.css">
+<link rel="stylesheet" href="design-system.css">
+<link rel="stylesheet" href="clean-ds-1.1/components.css">
+<link rel="stylesheet" href="clean-ds-1.1/d3-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/sea-mist-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/cherry-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/sun-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/classic-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/festive-theme.css">
+<link rel="stylesheet" href="clean-ds-1.1/app-integration.css">
+<link rel="stylesheet" href="clean-ds-1.1/about-row-gap.css">
 
-.date-suggestions:empty{
-  display:none;
-}
-.date-suggestions button{
-  min-height:auto;
-  padding:6px 10px;
-  font-size:14px;
-  color:#18392b;
-  background:#f2f5f8;
-  border:1px solid #d7dee8;
-  border-radius:10px;
-}.result{margin-top:12px;line-height:1.6;overflow-wrap:anywhere}.greeting-entry{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:inherit}.greeting-entry h2{margin:0 0 4px}.greeting-entry-arrow{font-size:28px;line-height:1;color:#08783f}.greeting-form{padding:18px}.greeting-label{display:block;font-weight:700;margin-bottom:8px}.greeting-group{margin-top:20px}.greeting-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.greeting-options button{background:white;color:#18392b;border:1px solid #d7dee8}.greeting-options button.active{background:#f0f8f2;color:#08783f;border-color:#08783f}.greeting-form textarea{width:100%;min-height:110px;resize:vertical;border:1px solid #d7dee8;border-radius:12px;padding:12px 14px;font:inherit;margin-top:8px}.greeting-create{width:100%;margin-top:20px}.greeting-validation{margin-top:12px;color:#a33;font-size:14px;line-height:1.4}.greeting-result{padding:18px;border:1px solid #d7e8dc;border-radius:14px;background:#f6fbf7}.greeting-result .muted{margin-top:8px;font-size:19px;line-height:1.45}.greeting-result-text{display:block;width:100%;min-height:110px;box-sizing:border-box;border:0;background:transparent;padding:0;color:inherit;font:inherit;line-height:1.45;resize:none;overflow:hidden;white-space:pre-wrap}.greeting-result-text:focus{outline:1px solid #d7e8dc;border-radius:8px;padding:6px}.greeting-text-wrap{position:relative}.greeting-text-wrap .greeting-result-text{padding-bottom:30px}.greeting-emoji-icon{position:absolute;right:8px;bottom:6px;display:flex;align-items:center;justify-content:center;width:30px;height:30px;color:#333;background:transparent;border:0;padding:0;cursor:pointer}.greeting-emoji-panel{position:fixed;right:12px;top:80px;z-index:1000;width:min(320px,calc(100vw - 24px));max-height:min(520px,calc(100dvh - 24px));overflow-y:auto;box-sizing:border-box;background:#fff;border:1px solid #d7e8dc;border-radius:12px;box-shadow:0 6px 24px #0002;padding:10px}.greeting-emoji-panel[hidden]{display:none}.greeting-emoji-heading{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:8px}.greeting-emoji-close{border:0;background:transparent;font-size:22px;padding:0 5px;color:#444}.greeting-emoji-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}.greeting-emoji-grid button{border:0;background:#f5f7f5;border-radius:7px;font-size:25px;min-height:43px;padding:3px 0}.greeting-result-actions{margin-top:12px}.greeting-result-actions>button{width:100%;background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-result-action-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.greeting-result-action-row button{background:#f6fbf7;color:#08783f;border-color:#d7e8dc}.greeting-back-bar{position:sticky;bottom:0;z-index:20;margin:18px -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,248,.96);border-top:1px solid #e4e9e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.greeting-back-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.greeting-back-bar .back-btn{margin:0;width:100%;display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;white-space:nowrap;background:#f6fbf7;color:#08783f;border:1px solid #d7e8dc;border-radius:12px;padding:12px 8px;min-height:44px}.legend{font-size:14px;margin-top:15px}.foot{font-size:13px;color:#718096;line-height:1.5}
-.name-input-wrap{
-  position:relative;
-  flex:1;
-  min-width:0;
-}
-
-.name-input-wrap input{
-  padding-right:46px;
-}
-  #clearName{
-  position:absolute;
-  right:8px;
-  top:52%;
-  transform:translateY(calc(-50% + 3px));
-  min-height:auto;
-  width:38px;
-  height:38px;
-  padding:0;
-  border:none;
-  background:transparent;
-  color:#718096;
-  font-size:26px;
-  line-height:1;
-  border-radius:50%;
-  display:none;
-  align-self:center;
-}@media(max-width:800px){body{padding:10px}.wrap{max-width:600px}.grid{grid-template-columns:1fr}.card{padding:18px;border-radius:18px;margin-bottom:12px}.hero{display:block}.hero .primary{width:100%;margin-top:8px}h1{font-size:29px}.names{font-size:22px}.nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav button{width:100%;padding:10px 8px}.calhead h2{font-size:20px;text-align:center}.week,.cal{gap:4px}.day{min-height:46px;border-radius:50%}.side .card{margin-bottom:12px}}
-@media(max-width:430px){body{padding:8px}.card{padding:16px}.searchrow{display:grid;grid-template-columns:1fr}.searchrow button{width:100%}.week div{font-size:13px}.day{min-height:46px;font-size:15px}h1{font-size:27px}.muted{font-size:14px}}
-</style></head>
+<script src="clean-ds-1.1/theme-bootstrap.js"></script>
+</head>
   <body><div class="wrap">
     <section id="settingsView" hidden>
   <h2>Iestatījumi</h2>
@@ -83,11 +28,11 @@
       <h4>Kad atgādināt</h4>
       <label class="reminder-row">
         <span class="reminder-choice"><input type="checkbox" id="reminderEvening"> Iepriekšējā dienā</span>
-        <input type="time" id="reminderEveningTime" value="18:00">
+        <select id="reminderEveningTime" aria-label="Atgādinājuma laiks"><option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00" selected>18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
       </label>
       <label class="reminder-row">
-        <span class="reminder-choice"><input type="checkbox" id="reminderMorning"> Vārdadienas dienā</span>
-        <input type="time" id="reminderMorningTime" value="07:00">
+        <span class="reminder-choice"><input type="checkbox" id="reminderMorning"> Svētku dienā</span>
+        <select id="reminderMorningTime" aria-label="Atgādinājuma laiks"><option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00" selected>07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
       </label>
     </div>
 
@@ -102,6 +47,29 @@
       <button type="button" id="activatePushButton" class="primary">Aktivizēt paziņojumus</button>
       <p id="pushActivationStatus" role="status" aria-live="polite" style="margin:12px 0 0"></p>
     </div>
+  </section>
+
+
+  <section class="card appearance-card" aria-labelledby="appearanceHeading">
+    <h3 id="appearanceHeading">Izskats</h3>
+    <h4>Dizaina stils</h4>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="classic"><span>Klasika</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="festive-s1"><span>Zelts</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="ds11"><span>Daba</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="sea-mist"><span>Jūra</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="cherry"><span>Ķirši</span></label>
+    <label class="appearance-choice"><input type="radio" name="designStyle" value="sun"><span>Saule</span></label>
+    <h4>Krāsu režīms</h4>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="light"><span>Gaišais</span></label>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="dark"><span>Tumšais</span></label>
+    <label class="appearance-choice"><input type="radio" name="appearanceMode" value="auto"><span>Automātiskais<small>Atbilstoši ierīces iestatījumiem</small></span></label>
+  </section>
+
+  <section class="card about-card" aria-labelledby="privacyDataHeading">
+    <h3 id="privacyDataHeading">Mani dati</h3>
+    <p>Lietotnē vari neatgriezeniski dzēst šīs instalācijas saglabātos vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan ierīcē, gan serverī.</p>
+    <button type="button" id="deleteMyDataButton" class="delete-data-button" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
+    <p id="deleteMyDataStatus" role="status">Pirms dzēšanas tiks prasīts apstiprinājums.</p>
   </section>
 
   <section class="card about-card">
@@ -124,7 +92,7 @@
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Privātums</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Personas dati</strong><br>Aplikācijas lietošanai nav nepieciešams izveidot lietotāja kontu. Aplikācija neprasa lietotāja vārdu, e-pasta adresi, kontaktpersonu sarakstu, atrašanās vietu vai citus personas datus.</p>
-      <p><strong>Mani vārdi un iestatījumi</strong><br>Sadaļā “Mani vārdi” pievienotie vārdi un lietotāja izvēlētie aplikācijas iestatījumi tiek saglabāti lietotāja ierīcē. Tie netiek izmantoti lietotāja identificēšanai.</p>
+      <p><strong>Datu glabāšana</strong><br>Saglabātie vārdi, dzimšanas dienas un atgādinājumu iestatījumi tiek glabāti ierīcē. Lietotnē daļa šo datu tiek sinhronizēta arī ar Cloudflare serveri, izmantojot šīs instalācijas identifikatoru un piekļuves tokenu.</p>
       <p><strong>Atgādinājumi</strong><br>Ja lietotājs ieslēdz vārdadienu atgādinājumus, aplikācija izmanto ierīces paziņojumu funkciju. Paziņojumu atļauju lietotājs var piešķirt vai atsaukt savas ierīces iestatījumos.</p>
       <p><strong>Piekļuve ierīces datiem</strong><br>Aplikācijai nav nepieciešama piekļuve lietotāja kontaktiem, atrašanās vietai, kamerai, mikrofonam vai fotogrāfijām.</p>
       <p><strong>Datu nodošana trešajām personām</strong><br>Aplikācijā saglabātie “Mani vārdi” un lietotāja iestatījumi netiek nodoti reklāmas vai mārketinga pakalpojumu sniedzējiem.</p>
@@ -139,17 +107,26 @@
   </section>
 
   <div class="settings-back-bar">
-    <button class="back-btn" onclick="settingsView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
+    <button class="back-btn" onclick="settingsView.hidden=true;mainView.hidden=false;window.scrollTo(0,0)">⌂ Uz sākumu</button>
   </div>
 </section>
 <section id="favoritesView" hidden>
   <h2>Mani vārdi</h2>
+  <section class="card favorites-card">
+  <button type="button" class="primary" id="favoriteAddOpen">+ Pievienot vārdus</button>
+  <div id="favoriteAddPanel" class="favorite-add-panel" hidden>
+    <input id="favoriteAddInput" type="text" autocomplete="off" placeholder="Ievadi vārdu" aria-label="Meklēt pievienojamo vārdu">
+    <div id="favoriteAddMatches" class="favorite-add-matches"></div>
+    <div id="favoriteAddSelected" class="favorite-add-selected"></div>
+    <div class="favorite-add-actions"><button type="button" class="primary" id="favoriteAddSave">Pievienot sarakstam</button><button type="button" id="favoriteAddCancel">Atcelt</button></div>
+  </div>
       <div class="favorites-sort">
   <button id="sortAlpha" class="active" onclick="sortDate.classList.remove('active');sortAlpha.classList.add('active');renderFavorites()">Alfabētiski (A–Z)</button>
   <button id="sortDate" onclick="sortAlpha.classList.remove('active');sortDate.classList.add('active');renderFavorites()">Pēc datuma</button>
 </div>
   <div id="favoritesList">Neviens vārds vēl nav pievienots.</div>
-  <button class="back-btn" onclick="favoritesView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
+  </section>
+  <div class="settings-back-bar"><button class="back-btn" onclick="favoritesView.hidden=true;mainView.hidden=false;window.scrollTo(0,0)">⌂ Uz sākumu</button></div>
 </section>
 <section id="birthdaysView" hidden>
   <h2>Dzimšanas dienas</h2>
@@ -171,14 +148,14 @@
     </div>
     <div id="birthdaysList" aria-live="polite"><p>Neviens dzimšanas dienas ieraksts vēl nav pievienots.</p></div>
   </section>
-  <button type="button" class="back-btn" id="birthdaysBack">← Atpakaļ</button>
+  <div class="settings-back-bar"><button type="button" class="back-btn" id="birthdaysBack">⌂ Uz sākumu</button></div>
 </section>
 <section id="nameDetailView" hidden>
 <h2>Vārda informācija</h2><section class="card name-detail-card">
 <h3 id="nameDetailTitle"></h3><p id="nameDetailDate"></p>
-<div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting">Izveidot apsveikumu</button><button type="button" id="nameDetailFavorite">Pievienot Maniem vārdiem</button></div>
+<div class="name-detail-actions"><button type="button" class="primary" id="nameDetailGreeting">Izveidot apsveikumu</button><button type="button" class="primary" id="nameDetailFavorite">Pievienot Maniem vārdiem</button></div>
 <div id="nameDetailFeedback" class="name-detail-feedback" hidden></div></section>
-<button type="button" class="back-btn" id="nameDetailBack">← Atpakaļ</button></section>
+<button type="button" class="back-btn" id="nameDetailBack">⌂ Uz sākumu</button></section>
 <section id="greetingView" hidden>
   <h2>Apsveikums</h2>
   <section class="card greeting-form">
@@ -210,7 +187,7 @@
     <div id="greetingValidation" class="greeting-validation" hidden></div>
   </section>
   <div class="greeting-back-bar">
-    <button class="back-btn" onclick="greetingView.hidden=true;mainView.hidden=false">← Atpakaļ</button>
+    <button class="back-btn" onclick="greetingView.hidden=true;nameDetailView.hidden=true;mainView.hidden=false;window.scrollTo(0,0)">⌂ Uz sākumu</button>
   </div>
 </section>
 <section id="greetingResultView" hidden>
@@ -238,11 +215,12 @@
 </section>
 <div id="mainView">
 <section class="card">
+<img class="lavender-top-art" src="assets/lavanda_augsa.png" alt="" aria-hidden="true" decoding="async">
 <div class="hero">
-    <button class="menu-btn" aria-label="Atvērt izvēlni" onclick="sideMenu.hidden=!sideMenu.hidden">☰</button>
+    <button class="menu-btn" aria-label="Atvērt izvēlni" onclick="toggleSideMenu()">☰</button><div id="menuBackdrop" class="menu-backdrop" hidden onclick="closeSideMenu()"></div>
     <div class="side-menu" id="sideMenu" hidden>
-  <button onclick="mainView.hidden=true;favoritesView.hidden=false;renderFavorites()">Mani vārdi</button>
-  <button onclick="mainView.hidden=true;settingsView.hidden=false;sideMenu.hidden=true">Iestatījumi</button>
+  <button onclick="closeSideMenu();mainView.hidden=true;favoritesView.hidden=false;renderFavorites();window.scrollTo(0,0)">Mani vārdi</button>
+  <button onclick="mainView.hidden=true;settingsView.hidden=false;closeSideMenu()">Iestatījumi</button>
 </div>
     <div><div class="app-title">Vārdadienas</div><h1 id="dateTitle">—</h1><div id="todayNames" class="names">—</div><div id="extraNames"></div></div><button class="primary" id="todayBtn">Šodien</button></div><div id="tomorrowBlock" class="tomorrow">
   <strong>Rīt</strong>
@@ -256,10 +234,10 @@
   <strong>Interesanti</strong>
   <div id="interestingNames">—</div>
 </div>
-  <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><span class="birthday-home-content"><strong>🎁 Dzimšanas dienas</strong><span id="birthdayTodayNames" class="birthday-today-names" hidden></span></span><span class="birthday-chevron" aria-hidden="true">›</span></button>
+  <button type="button" id="birthdaysOpen" class="birthday-entry" aria-label="Atvērt dzimšanas dienu sarakstu"><span class="birthday-home-content"><strong class="birthday-home-title"><svg class="birthday-gift-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="5" y="13" width="22" height="16" rx="2.5" fill="#a4d97d" stroke="#235b32" stroke-width="1.6"/><rect x="3.5" y="10" width="25" height="6" rx="2" fill="#8ac65d" stroke="#235b32" stroke-width="1.6"/><path d="M16 10C11 10 7.5 8.5 8.5 5.8c0-3.7 6.3-2.7 7.5 4.2ZM16 10c5 0 8.5-1.5 7.5-4.2C23.5 2.1 17.2 3.1 16 10Z" fill="#c9e8a9" stroke="#235b32" stroke-width="1.7" stroke-linejoin="round"/><path d="M13.5 10v19h5V10" fill="#235b32"/></svg><span>Dzimšanas dienas</span></strong><span id="birthdayTodayNames" class="birthday-today-names" hidden></span></span><span class="birthday-chevron" aria-hidden="true">›</span></button>
   <div class="nav"><button id="prevDay">← Iepriekšējā diena</button><button id="nextDay">Nākamā diena →</button></div></section>
 <div class="grid"><section class="card"><div class="calhead"><button id="prevMonth">←</button><h2 id="monthTitle"></h2><button id="nextMonth">→</button></div><div class="week"><div>P</div><div>O</div><div>T</div><div>C</div><div>P</div><div>S</div><div>Sv</div></div><div class="cal" id="calendar"></div><p class="foot">Nospiediet uz datuma, lai parādītu tā vārdadienas.</p></section>
-<div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><input id="dateInput" placeholder="Piemēram, 20. septembris"><div id="dateSuggestions" class="date-suggestions"></div>
+<div class="side"><section class="card"><h2>Meklēt vārdu</h2><div class="searchrow"><div class="name-input-wrap"><input id="nameInput" placeholder="Piemēram, Aldis"><button id="clearName" type="button" aria-label="Notīrīt vārdu">×</button></div><button id="nameBtn">Meklēt</button></div><div id="nameResult" class="result muted">Ievadiet vārdu.</div></section><section class="card"><h2>Meklēt datumu</h2><div class="searchrow"><div class="name-input-wrap"><input id="dateInput" placeholder="Piemēram, 20. septembris"><button id="clearDate" type="button" aria-label="Notīrīt datumu">×</button></div><div id="dateSuggestions" class="date-suggestions"></div>
 <button id="dateBtn">Meklēt</button></div><div id="dateResult" class="result muted">Ievadiet datumu.</div></section>
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
@@ -576,6 +554,91 @@
     const stored=JSON.parse(localStorage.getItem('birthdays')||'[]');
     if(Array.isArray(stored))birthdays=stored.filter(p=>p&&typeof p.name==='string'&&Number.isInteger(p.day)&&Number.isInteger(p.month));
   }catch(error){console.warn('Neizdevās nolasīt dzimšanas dienas',error);}
+  // TEST: dzimšanas dienu sinhronizācija ar D1; lokālie dati ir primārie.
+  const BIRTHDAY_QUEUE_KEY='testBirthdaySyncQueueV1';
+  const BIRTHDAY_INITIALIZED_KEY='testBirthdaySyncInitializedV1';
+  let birthdaySyncPromise=null;
+  function birthdayId(){
+    const bytes=new Uint8Array(18);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function readBirthdayQueue(){
+    try{
+      const items=JSON.parse(localStorage.getItem(BIRTHDAY_QUEUE_KEY)||'[]');
+      return Array.isArray(items)?items.filter(x=>x&&['POST','DELETE'].includes(x.method)&&typeof x.id==='string'):[];
+    }catch(_error){return [];}
+  }
+  function queueBirthday(method,person){
+    if(deletionSyncBlocked())return;
+    const id=person.id;
+    const items=readBirthdayQueue().filter(x=>x.id!==id);
+    items.push({method,id,...(method==='POST'?{person:{id,name:person.name,day:person.day,month:person.month,year:person.year??null}}:{})});
+    localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(items));
+    void flushBirthdayQueue();
+  }
+  async function flushBirthdayQueue(){
+    if(deletionSyncBlocked())return;
+    if(birthdaySyncPromise)return birthdaySyncPromise;
+    if(navigator.onLine===false)return;
+    birthdaySyncPromise=(async()=>{
+      const installation=await getOrCreateTestInstallation();
+      while(!deletionSyncBlocked()){
+        const queue=readBirthdayQueue();
+        if(!queue.length)break;
+        const item=queue[0];
+        const response=await fetch(INSTALLATION_API+'/api/birthdays',{
+          method:item.method,
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+installation.token,'X-Installation-Id':installation.installationId},
+          body:JSON.stringify(item.method==='POST'?item.person:{id:item.id})
+        });
+        if(!response.ok)throw new Error('Dzimšanas dienu sinhronizācija: HTTP '+response.status);
+        const latest=readBirthdayQueue();
+        // Dzēšam tikai precīzi to darbību, kuru nosūtījām.
+        const index=latest.findIndex(x=>JSON.stringify(x)===JSON.stringify(item));
+        if(index>=0){latest.splice(index,1);localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(latest));}
+      }
+    })().catch(error=>console.warn('TEST dzimšanas dienas paliek lokāli; sinhronizācija atlikta:',error))
+      .finally(()=>{birthdaySyncPromise=null;});
+    return birthdaySyncPromise;
+  }
+  // Pirmreizējā migrācija: piešķiram ID, neko nezaudējot no esošā saraksta.
+  try{
+    const needsIds=birthdays.some(p=>!p.id);
+    if(needsIds){
+      birthdays=birthdays.map(p=>p.id?p:{...p,id:birthdayId()});
+      localStorage.setItem('birthdays',JSON.stringify(birthdays));
+    }
+    if(localStorage.getItem(BIRTHDAY_INITIALIZED_KEY)!=='true'){
+      const queue=readBirthdayQueue();
+      const ids=new Set(queue.map(x=>x.id));
+      for(const person of birthdays){
+        if(!ids.has(person.id))queue.push({method:'POST',id:person.id,person:{id:person.id,name:person.name,day:person.day,month:person.month,year:person.year??null}});
+      }
+      localStorage.setItem(BIRTHDAY_QUEUE_KEY,JSON.stringify(queue));
+      localStorage.setItem(BIRTHDAY_INITIALIZED_KEY,'true');
+    }
+  }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
+  let deletionInProgress=false;
+  const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
+  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
+  // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
+  // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
+  function retryPendingBirthdays(){
+    if(deletionSyncBlocked())return;
+    if(readBirthdayQueue().length && navigator.onLine!==false){
+      void flushBirthdayQueue();
+    }
+  }
+  window.addEventListener('online',retryPendingBirthdays);
+  window.addEventListener('focus',retryPendingBirthdays);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')retryPendingBirthdays();
+  });
+  // Atvērtā aplikācijā mēģinām vēlreiz ik pēc 30 sekundēm;
+  // tukšai rindai un bezsaistē pieprasījumi netiek sūtīti.
+  setInterval(retryPendingBirthdays,30000);
+  retryPendingBirthdays();
   function renderBirthdayHome(){
     const target=document.getElementById('birthdayTodayNames');
     const names=birthdays.filter(person=>person.day===selected.getDate()&&person.month===selected.getMonth()+1).map(person=>person.name);
@@ -636,6 +699,7 @@
       return;
     }
     birthdays=updated;
+    try{queueBirthday('DELETE',person);}catch(error){console.warn('Dzimšanas dienas dzēšanas sinhronizācija atlikta:',error);}
     renderBirthdayHome();
     if(editingBirthdayIndex!==null){
       if(editingBirthdayIndex===index)closeBirthdayForm();
@@ -690,7 +754,7 @@
     }
     const updated=[...birthdays];
     if(editingBirthdayIndex===null){
-      updated.push({name,day,month,year});
+      updated.push({id:birthdayId(),name,day,month,year});
     }else{
       updated[editingBirthdayIndex]={...updated[editingBirthdayIndex],name,day,month,year};
     }
@@ -702,6 +766,7 @@
       return;
     }
     birthdays=updated;
+    try{queueBirthday('POST',updated[editingBirthdayIndex===null?updated.length-1:editingBirthdayIndex]);}catch(error){console.warn('Dzimšanas dienas saglabāšanas sinhronizācija atlikta:',error);}
     renderBirthdays();
     renderBirthdayHome();
     closeBirthdayForm();
@@ -770,7 +835,7 @@
     const margin=12;
     const textRect=greetingResultText.getBoundingClientRect();
     // Always place the picker BELOW the greeting text, never over it.
-    const top=textRect.bottom+8;
+    const top=Math.max(viewportTop+margin,Math.min(textRect.bottom+8,viewportTop+viewportHeight-110));
     const viewportBottom=viewportTop+viewportHeight;
     const available=viewportBottom-top-margin;
     greetingEmojiPanel.style.top=top+'px';
@@ -895,6 +960,168 @@
       e.preventDefault();
       greetingName.blur();
     }
+  });
+  // TEST vide: sagatave savienojumam ar Cloudflare D1.
+  // Netiek izsaukta automātiski; esošie localStorage favorīti paliek neskarti.
+  const INSTALLATION_API='https://vardadienas-push.andris-maldups.workers.dev';
+  // TEST instalācijas piekļuves dati ir unikāli katrai pārlūka izcelsmei.
+  // Netiek izmantoti produkcijas vidē un netiek sūtīti uz GitHub.
+  // Datu dzēšanas aizsardzība: šobrīd funkcija TEST vidē ir atspējota.
+  // Servera DELETE maršruts jāpārbauda pirms pogas aktivizēšanas.
+  if(localStorage.getItem(DELETION_PENDING_KEY)){
+    document.getElementById('deleteMyDataButton').disabled=true;
+    document.getElementById('deleteMyDataStatus').textContent='Iepriekšējā dzēšanas pieprasījuma rezultāts nav apstiprināts. Servera sinhronizācija apturēta, lokālie dati saglabāti.';
+  }
+  let pushActivationInProgress=false;
+  let reminderSyncInProgress=0;
+  const DELETE_LOCAL_KEYS=[
+    'favorites','birthdays','birthdaySortMode',
+    'testBirthdaySyncQueueV1','testBirthdaySyncInitializedV1',
+    'vardadienas_test_installation_v1','testPushSubscriptionId',
+    'remindersEnabled','reminderTime','reminderEvening','reminderMorning',
+    'reminderEveningTime','reminderMorningTime','reminderTarget','reminderBirthdays'
+  ];
+  // Worker 11: dzēšanas statusa nolasīšana pēc neskaidras atbildes.
+  async function readDeletionReceipt(saved){
+    const response=await fetch(INSTALLATION_API+'/api/installation-deletion-status',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+    });
+    if(!response.ok)throw new Error('Statusa pārbaude: HTTP '+response.status);
+    const result=await response.json();
+    if(result.deleted===true&&result.success===true)return 'deleted';
+    if(result.deleted===false&&result.active===true)return 'active';
+    throw new Error('Neatpazīta statusa atbilde');
+  }
+  async function deleteInstallationDataAfterConfirmation(){
+    if(deletionSyncBlocked())return;
+    const status=document.getElementById('deleteMyDataStatus');
+    const button=document.getElementById('deleteMyDataButton');
+    if(!confirm('Neatgriezeniski dzēst visus šīs instalācijas vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan serverī, gan ierīcē?'))return;
+    if(pushActivationInProgress){status.textContent='Pagaidi, līdz beidzas Push aktivizēšana, un mēģini vēlreiz.';return;}
+    deletionInProgress=true;
+    button.disabled=true;
+    status.textContent='Notiek datu dzēšana…';
+    try{
+      // Nedrīkst izveidot jaunu instalāciju tikai tādēļ, lai to dzēstu.
+      // Sagaidām arī fonā jau uzsāktu instalācijas reģistrāciju.
+      if(testInstallationPromise)await testInstallationPromise;
+      const saved=JSON.parse(localStorage.getItem('vardadienas_test_installation_v1')||'null');
+      if(saved && (!saved.installationId || !saved.token)){
+        throw new Error('Instalācijas piekļuves dati ir nepilnīgi; automātiska dzēšana apturēta');
+      }
+      if(saved?.installationId&&saved?.token){
+        // Pirms servera DELETE sagaidām iesāktos rakstīšanas pieprasījumus.
+        if(birthdaySyncPromise)await birthdaySyncPromise;
+        while(reminderSyncInProgress>0)await new Promise(resolve=>setTimeout(resolve,100));
+        // Atzīmi saglabājam TIKAI tieši pirms DELETE. Ja sagatavošana neizdodas,
+        // servera dati vēl nav dzēsti un sinhronizācija nav jābloķē pēc pārlādes.
+        localStorage.setItem(DELETION_PENDING_KEY,JSON.stringify({installationId:saved.installationId,at:Date.now()}));
+        let confirmed=false;
+        try{
+          const response=await fetch(INSTALLATION_API+'/api/installation-data',{
+            method:'DELETE',
+            headers:{'Authorization':'Bearer '+saved.token,'X-Installation-Id':saved.installationId}
+          });
+          if(!response.ok)throw new Error('Dzēšanas HTTP '+response.status);
+          const result=await response.json();
+          confirmed=result.success===true;
+        }catch(error){
+          console.warn('Dzēšanas atbilde nav apstiprināta:',error);
+        }
+        if(!confirmed){
+          // Statusu drīkst uzskatīt par dzēstu tikai ar autentificētu Worker 11 kvīti.
+          const state=await readDeletionReceipt(saved);
+          if(state==='deleted')confirmed=true;
+          else throw new Error('Serveris ziņo, ka instalācija vēl ir aktīva; dzēšana nav apstiprināta');
+        }
+        if(!confirmed)throw new Error('Servera dzēšana nav apstiprināta');
+      }
+      // Push atcelšana notiek tikai pēc servera apstiprinājuma.
+      let pushUnsubscribeFailed=false;
+      if('serviceWorker' in navigator){
+        try{
+          const registration=await navigator.serviceWorker.ready;
+          const subscription=await registration.pushManager?.getSubscription();
+          if(subscription && !(await subscription.unsubscribe()))pushUnsubscribeFailed=true;
+        }catch(error){pushUnsubscribeFailed=true;console.warn('Push atcelšana ierīcē neizdevās:',error);}
+      }
+      for(const key of DELETE_LOCAL_KEYS)localStorage.removeItem(key);
+      localStorage.removeItem(DELETION_PENDING_KEY);
+      status.textContent=pushUnsubscribeFailed?'Servera un lokālie dati dzēsti, bet ierīces Push abonementa atcelšanu nevarēja apstiprināt.':'Dati dzēsti. Aplikācija tiks pārlādēta.';
+      window.location.reload();
+    }catch(error){
+      status.textContent='Dzēšanas rezultātu nevar apstiprināt: '+(error.message||String(error))+'. Lokālie dati saglabāti; servera stāvoklis var būt mainījies. Pirms atkārtota mēģinājuma pārbaudi savienojumu.';
+      button.disabled=Boolean(localStorage.getItem(DELETION_PENDING_KEY));
+    }finally{
+      deletionInProgress=false;
+    }
+  }
+  document.getElementById('deleteMyDataButton').addEventListener('click',deleteInstallationDataAfterConfirmation);
+  const TEST_INSTALLATION_STORAGE_KEY='vardadienas_test_installation_v1';
+  let testInstallationPromise=null;
+  async function getOrCreateTestInstallation(){
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
+    if(testInstallationPromise) return testInstallationPromise;
+    testInstallationPromise=(async()=>{
+      try{
+        const saved=JSON.parse(localStorage.getItem(TEST_INSTALLATION_STORAGE_KEY)||'null');
+        if(saved && typeof saved.installationId==='string' && saved.installationId &&
+           typeof saved.token==='string' && saved.token) return saved;
+      }catch(_error){ /* Nederīgus lokālos datus aizstājam ar jaunu instalāciju. */ }
+      const response=await fetch(INSTALLATION_API+'/api/installations',{method:'POST'});
+      if(!response.ok) throw new Error('TEST instalācijas reģistrācija neizdevās: '+response.status);
+      const installation=await response.json();
+      if(!installation || typeof installation.installationId!=='string' ||
+         !installation.installationId || typeof installation.token!=='string' ||
+         !installation.token) throw new Error('Nepareiza TEST instalācijas servera atbilde');
+      if(deletionInProgress)throw new Error('Instalācijas izveide pārtraukta datu dzēšanas dēļ');
+      localStorage.setItem(TEST_INSTALLATION_STORAGE_KEY,JSON.stringify({
+        installationId:installation.installationId,
+        token:installation.token
+      }));
+      return installation;
+    })();
+    try{return await testInstallationPromise;}
+    catch(error){testInstallationPromise=null;throw error;}
+  }
+
+  async function requestTestFavorites(method, installationId, installationToken, payload){
+    if(deletionSyncBlocked())throw new Error('Dzēšanas rezultāts nav apstiprināts; sinhronizācija apturēta');
+    const headers={
+      'Authorization':'Bearer '+installationToken,
+      'X-Installation-Id':installationId
+    };
+    if(payload!==undefined) headers['Content-Type']='application/json';
+    const response=await fetch(INSTALLATION_API+'/api/favorite-names',{
+      method,
+      headers,
+      ...(payload!==undefined?{body:JSON.stringify(payload)}:{})
+    });
+    const result=await response.json();
+    if(!response.ok) throw new Error(result.error||'TEST servera kļūda');
+    return result;
+  }
+  // TEST datubāzes palīgfunkcijas; nav pieslēgtas lietotāja pogām.
+  async function loadTestFavorites(installationId, installationToken){
+    const data=await requestTestFavorites('GET',installationId,installationToken);
+    return Array.isArray(data.names)?data.names:[];
+  }
+  async function saveTestFavorite(installationId, installationToken, name){
+    const nameDay=getFavoriteDate(name);
+    if(!nameDay) throw new Error('Vārda datums nav atrasts');
+    return requestTestFavorites('POST',installationId,installationToken,{
+      name,
+      name_day:nameDay.replace(/\.$/,'')
+    });
+  }
+  async function deleteTestFavorite(installationId, installationToken, name){
+    return requestTestFavorites('DELETE',installationId,installationToken,{name});
+  }
+  // Reģistrējam TEST instalāciju fonā, netraucējot lokālajiem favorītiem.
+  // Neveiksmes gadījumā aplikācija turpina darboties ar localStorage.
+  if(!deletionSyncBlocked())getOrCreateTestInstallation().catch(error=>{
+    console.warn('TEST instalācijas reģistrācija nav pieejama:',error);
   });
   let favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
   const savedRemindersEnabled=localStorage.getItem('remindersEnabled')==='true';
@@ -1292,15 +1519,67 @@ let selected=new Date(), view=new Date(selected.getFullYear(),selected.getMonth(
 const pad=n=>String(n).padStart(2,'0');
 const key=d=>pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.';
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// TEST sinhronizācija ir papildu darbība: lokālie favorīti paliek pieejami arī bez interneta.
+// Offline-first: ierīces saraksts ir primārais; serverim sūtām tikai izmaiņas.
+const TEST_FAVORITES_QUEUE_KEY='vardadienas_test_favorites_queue_v1';
+let testFavoritesSyncPromise=null;
+function readTestFavoritesQueue(){
+  try{
+    const value=JSON.parse(localStorage.getItem(TEST_FAVORITES_QUEUE_KEY)||'[]');
+    return Array.isArray(value)?value.filter(x=>x && ['POST','DELETE'].includes(x.method) && typeof x.name==='string'):[];
+  }catch(_error){return [];}
+}
+function enqueueTestFavorite(method,name){
+  // Ja viens vārds vairākkārt mainīts bezsaistē, svarīgs ir pēdējais stāvoklis.
+  const queue=readTestFavoritesQueue().filter(item=>item.name!==name);
+  queue.push({method,name});
+  localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(queue));
+  void flushTestFavoritesQueue();
+}
+async function flushTestFavoritesQueue(){
+  if(testFavoritesSyncPromise) return testFavoritesSyncPromise;
+  if(typeof navigator!=='undefined' && navigator.onLine===false) return;
+  testFavoritesSyncPromise=(async()=>{
+    const installation=await getOrCreateTestInstallation();
+    while(true){
+      const queue=readTestFavoritesQueue();
+      if(!queue.length) break;
+      const item=queue[0];
+      if(item.method==='POST'){
+        await saveTestFavorite(installation.installationId,installation.token,item.name);
+      }else{
+        await deleteTestFavorite(installation.installationId,installation.token,item.name);
+      }
+      // Nenodzēšam jaunu izmaiņu, kas radusies, kamēr pieprasījums izpildījās.
+      const latest=readTestFavoritesQueue();
+      const index=latest.findIndex(x=>x.name===item.name && x.method===item.method);
+      if(index>=0){
+        latest.splice(index,1);
+        localStorage.setItem(TEST_FAVORITES_QUEUE_KEY,JSON.stringify(latest));
+      }
+    }
+  })().catch(error=>{
+    console.warn('TEST vārdu sinhronizācija atlikta; lokālie dati saglabāti:',error);
+  }).finally(()=>{testFavoritesSyncPromise=null;});
+  return testFavoritesSyncPromise;
+}
+function syncTestFavorite(method,name){
+  enqueueTestFavorite(method,name);
+}
+window.addEventListener('online',()=>{void flushTestFavoritesQueue();});
+void flushTestFavoritesQueue();
 function removeFavorite(name){
+  const existed=favorites.includes(name);
   favorites=favorites.filter(n=>n!==name);
   localStorage.setItem('favorites',JSON.stringify(favorites));
   renderFavorites();
+  if(existed) void syncTestFavorite('DELETE',name);
 }
-  function addFavorite(name){
+function addFavorite(name){
   if(!favorites.includes(name)){
     favorites.push(name);
     localStorage.setItem('favorites',JSON.stringify(favorites));
+    void syncTestFavorite('POST',name);
   }
 }
  function getFavoriteDate(name){
@@ -1309,6 +1588,41 @@ function removeFavorite(name){
   }
   return '';
 }
+  // Batch selection stays local until the user confirms.
+  let pendingFavoriteNames=[];
+  const favoriteAddPanel=document.getElementById('favoriteAddPanel');
+  const favoriteAddInput=document.getElementById('favoriteAddInput');
+  const favoriteAddMatches=document.getElementById('favoriteAddMatches');
+  const favoriteAddSelected=document.getElementById('favoriteAddSelected');
+  const allFavoriteNames=[...new Set(Object.values(DATA).flatMap(([traditional,extended])=>[...traditional,...extended]))].sort((a,b)=>a.localeCompare(b,'lv'));
+  function renderFavoriteAdd(){
+    const q=favoriteAddInput.value.trim().toLocaleLowerCase('lv-LV');
+    const matches=q?allFavoriteNames.filter(name=>name.toLocaleLowerCase('lv-LV').startsWith(q)&&!favorites.includes(name)&&!pendingFavoriteNames.includes(name)).slice(0,12):[];
+    favoriteAddMatches.replaceChildren();
+    for(const name of matches){
+      const b=document.createElement('button');
+      b.type='button';
+      const label=document.createElement('span');label.textContent=name;
+      const date=document.createElement('span');date.textContent=fmtKey(getFavoriteDate(name));
+      b.append(label,date);
+      b.onclick=()=>{pendingFavoriteNames.push(name);favoriteAddInput.value='';renderFavoriteAdd();favoriteAddInput.focus()};
+      favoriteAddMatches.appendChild(b);
+    }
+    favoriteAddSelected.replaceChildren();
+    for(const name of pendingFavoriteNames){
+      const b=document.createElement('button');b.type='button';b.textContent=name+' ×';
+      b.setAttribute('aria-label','Noņemt '+name);
+      b.onclick=()=>{pendingFavoriteNames=pendingFavoriteNames.filter(x=>x!==name);renderFavoriteAdd()};
+      favoriteAddSelected.appendChild(b);
+    }
+    document.getElementById('favoriteAddSave').disabled=pendingFavoriteNames.length===0;
+    document.getElementById('favoriteAddSave').textContent='Pievienot sarakstam ('+pendingFavoriteNames.length+')';
+  }
+  function closeFavoriteAdd(){favoriteAddPanel.hidden=true;pendingFavoriteNames=[];favoriteAddInput.value='';renderFavoriteAdd()}
+  document.getElementById('favoriteAddOpen').onclick=()=>{favoriteAddPanel.hidden=false;pendingFavoriteNames=[];favoriteAddInput.value='';renderFavoriteAdd();favoriteAddInput.focus()};
+  document.getElementById('favoriteAddCancel').onclick=closeFavoriteAdd;
+  document.getElementById('favoriteAddSave').onclick=()=>{for(const name of pendingFavoriteNames)addFavorite(name);closeFavoriteAdd();renderFavorites()};
+  favoriteAddInput.addEventListener('input',renderFavoriteAdd);
   function renderFavorites(){
   let list=[...favorites];
   if(sortDate.classList.contains('active')){
@@ -1588,7 +1902,7 @@ function renderCalendar(){monthTitle.textContent=monthNom[view.getMonth()]+' '+v
 let first=new Date(view.getFullYear(),view.getMonth(),1), offset=(first.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();for(let i=0;i<offset;i++){let e=document.createElement('div');calendar.appendChild(e)}for(let n=1;n<=days;n++){let d=new Date(view.getFullYear(),view.getMonth(),n),b=document.createElement('button');b.className='day';b.textContent=n;if(d.toDateString()==selected.toDateString())b.classList.add('sel');if(d.toDateString()==new Date().toDateString())b.classList.add('today');b.onclick=()=>{selected=d;
 renderSelected();renderLatviaToday(selected)};calendar.appendChild(b)}}
 
-function findName(){let q=nameInput.value.trim().toLocaleLowerCase('lv-LV');if(!q){nameResult.textContent='Ievadiet vārdu.';return}let hits=[];for(const [d,[t,e]] of Object.entries(DATA)){for(const n of t)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'tradicionālais']);for(const n of e)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'paplašinātais'])}nameResult.innerHTML=hits.length?hits.map(h=>'<strong>'+esc(h[1])+'</strong> — '+fmtKey(h[0])+' <span class="tag'+(h[2][0]=='p'?' extra':'')+'">'+h[2]+'</span>').join('<br>')+'<br><button onclick="addFavorite(\''+esc(hits[0][1])+'\')">Pievienot Maniem vārdiem</button>':'Vārds “'+esc(nameInput.value.trim())+'” sarakstos nav atrasts.'}
+function findName(){let q=nameInput.value.trim().toLocaleLowerCase('lv-LV');if(!q){nameResult.textContent='Ievadiet vārdu.';return}let hits=[];for(const [d,[t,e]] of Object.entries(DATA)){for(const n of t)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'tradicionālais']);for(const n of e)if(n.toLocaleLowerCase('lv-LV')===q)hits.push([d,n,'paplašinātais'])}nameResult.innerHTML=hits.length?hits.map(h=>'<strong>'+esc(h[1])+'</strong> — '+fmtKey(h[0])+' <span class="tag'+(h[2][0]=='p'?' extra':'')+'">'+h[2]+'</span>').join('<br>')+'<br><button class="search-add-favorite" onclick="addFavorite(\''+esc(hits[0][1])+'\')">Pievienot Maniem vārdiem</button>':'Vārds “'+esc(nameInput.value.trim())+'” sarakstos nav atrasts.'}
 
 function fmtKey(k){let [d,m]=k.split('.').map(Number);return d+'. '+months[m-1]}
 
@@ -1623,10 +1937,13 @@ todayBtn.onclick=()=>{selected=new Date();view=new Date(selected.getFullYear(),s
 renderSelected();renderLatviaToday(selected)};
 prevMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
 nextMonth.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+function closeSideMenu(){sideMenu.hidden=true;menuBackdrop.hidden=true}
+function toggleSideMenu(){const open=sideMenu.hidden;sideMenu.hidden=!open;menuBackdrop.hidden=!open}
 nameBtn.onclick=findName;nameInput.onkeydown=e=>{if(e.key==='Enter')findName()};
   nameInput.addEventListener('input',()=>{clearName.style.display=nameInput.value?'inline-flex':'none'});
 clearName.onclick=()=>{nameInput.value='';nameResult.textContent='Ievadiet vārdu.';clearName.style.display='none';nameInput.focus()};
 dateInput.addEventListener('input',()=>{
+  clearDate.style.display=dateInput.value?'inline-flex':'none';
   const m=dateInput.value.trim().toLocaleLowerCase('lv-LV').match(/^(\d{1,2})\.?\s+([a-zāčēģīķļņšūž]+)$/u);
   dateSuggestions.innerHTML='';
   if(!m)return;
@@ -1640,23 +1957,97 @@ dateInput.addEventListener('input',()=>{
     b.textContent=month;
     b.onclick=()=>{
       dateInput.value=m[1]+'. '+month;
+      clearDate.style.display='inline-flex';
       dateSuggestions.innerHTML='';
       dateInput.focus();
     };
     dateSuggestions.appendChild(b);
   });
 });
+clearDate.onclick=()=>{dateInput.value='';dateResult.textContent='Ievadiet datumu.';dateSuggestions.innerHTML='';clearDate.style.display='none';dateInput.focus()};
 dateBtn.onclick=findDate;dateInput.onkeydown=e=>{if(e.key==='Enter')findDate()};
 const PUSH_SERVER_URL='https://vardadienas-push.andris-maldups.workers.dev';
 const activatePushButton=document.getElementById('activatePushButton');
 const pushActivationStatus=document.getElementById('pushActivationStatus');
+function setPushActivationAppearance(active){
+  activatePushButton.textContent=active?'Paziņojumi aktivizēti':'Aktivizēt paziņojumus';
+  activatePushButton.disabled=active;
+  activatePushButton.classList.toggle('push-active-status',active);
+}
+async function refreshPushActivationAppearance(){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted'||!('serviceWorker' in navigator))return setPushActivationAppearance(false);
+    const registration=await navigator.serviceWorker.ready;
+    const subscription=await registration.pushManager.getSubscription();
+    const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
+    const active=Boolean(subscription&&Number.isSafeInteger(subscriptionId)&&subscriptionId>0);
+    setPushActivationAppearance(active);
+    if(active&&!pushActivationStatus.textContent.trim()){
+      pushActivationStatus.textContent='Paziņojumu abonements atrasts šajā ierīcē. Servera iestatījumu saglabāšanas statuss šobrīd nav atkārtoti pārbaudīts.';
+    }
+  }catch(error){
+    console.warn('Neizdevās pārbaudīt Push statusu:',error);
+    setPushActivationAppearance(false);
+  }
+}
+refreshPushActivationAppearance();
 function base64UrlToUint8Array(base64Url){
   const padding='='.repeat((4-base64Url.length%4)%4);
   const base64=(base64Url+padding).replace(/-/g,'+').replace(/_/g,'/');
   const binary=atob(base64);
   return Uint8Array.from(binary,char=>char.charCodeAt(0));
 }
+// TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
+async function syncTestReminderSettings(){
+  if(deletionSyncBlocked())return;
+  reminderSyncInProgress++;
+  try{
+  const installation=await getOrCreateTestInstallation();
+  const registration=await navigator.serviceWorker.ready;
+  const subscription=await registration.pushManager.getSubscription();
+  if(!subscription)return;
+  const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
+  if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0){
+    console.warn('TEST: subscription_id nav saglabāts; atkārtoti aktivizējiet Push paziņojumus.');
+    return;
+  }
+  const payload={
+    subscription_id:subscriptionId,
+    enabled:document.getElementById('remindersEnabled').checked,
+    evening_enabled:document.getElementById('reminderEvening').checked,
+    evening_time:document.getElementById('reminderEveningTime').value,
+    morning_enabled:document.getElementById('reminderMorning').checked,
+    morning_time:document.getElementById('reminderMorningTime').value,
+    target:document.querySelector('input[name="reminderTarget"]:checked')?.value||'favorites',
+    birthdays_enabled:document.getElementById('reminderBirthdays').checked,
+    timezone:'Europe/Riga'
+  };
+  const response=await fetch(PUSH_SERVER_URL+'/api/reminder-settings',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':'Bearer '+installation.token,
+      'X-Installation-Id':installation.installationId
+    },
+    body:JSON.stringify(payload)
+  });
+  if(!response.ok){
+    const details=await response.json().catch(()=>({}));
+    throw new Error('Atgādinājumu iestatījumu saglabāšana neizdevās (HTTP '+response.status+'): '+(details.error||''));
+  }
+  }finally{reminderSyncInProgress--;}
+}
+function queueTestReminderSync(){
+  if(deletionSyncBlocked())return;
+  if(!('serviceWorker' in navigator))return;
+  syncTestReminderSettings().catch(error=>{
+    console.warn('TEST iestatījumi paliek lokāli; sinhronizācija neizdevās:',error);
+    pushActivationStatus.textContent='Iestatījumi saglabāti telefonā, bet serverī vēl nav sinhronizēti: '+error.message;
+  });
+}
 activatePushButton.addEventListener('click',async()=>{
+  if(deletionSyncBlocked()||pushActivationInProgress)return;
+  pushActivationInProgress=true;
   activatePushButton.disabled=true;
   pushActivationStatus.textContent='Notiek paziņojumu aktivizēšana…';
   try{
@@ -1707,29 +2098,60 @@ activatePushButton.addEventListener('click',async()=>{
       }
     }
     pushActivationStatus.textContent='3/3: Abonementa saglabāšana serverī…';
+    const installation=await getOrCreateTestInstallation();
+    async function saveSecureSubscription(currentSubscription){
+      return fetch(PUSH_SERVER_URL+'/api/subscribe-secure',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+installation.token,
+          'X-Installation-Id':installation.installationId
+        },
+        body:JSON.stringify(currentSubscription.toJSON())
+      });
+    }
     let save;
     try{
-      save=await fetch(PUSH_SERVER_URL+'/api/subscribe',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(subscription.toJSON())
-      });
+      save=await saveSecureSubscription(subscription);
+      if(save.status===409){
+        // TEST: vecs abonements bez installation_id nav pārņemams.
+        // Atceļam tikai Push abonementu (nevis aplikācijas datus),
+        // izveidojam jaunu endpoint un mēģinām reģistrēt tikai vienreiz.
+        pushActivationStatus.textContent='3/3: Vecā Push abonementa atjaunošana…';
+        const removed=await subscription.unsubscribe();
+        if(!removed)throw new Error('Neizdevās atcelt veco Push abonementu.');
+        subscription=await registration.pushManager.subscribe({
+          userVisibleOnly:true,
+          applicationServerKey:expectedKey
+        });
+        if(!subscription)throw new Error('Neizdevās izveidot jaunu Push abonementu.');
+        save=await saveSecureSubscription(subscription);
+        if(save.status===409)throw new Error('Jaunais abonements joprojām konfliktē ar veco ierakstu. Nepieciešama servera puses pārbaude.');
+      }
     }catch(error){
-      throw new Error('3/3: Neizdevās nosūtīt abonementu serverim ('+(error.message||String(error))+'). Iespējama CORS vai tīkla kļūda.');
+      throw new Error('3/3: Push abonementa saglabāšana vai atjaunošana neizdevās ('+(error.message||String(error))+').');
     }
     if(!save.ok)throw new Error('Serveris nesaglabāja abonementu (HTTP '+save.status+').');
     const result=await save.json();
     if(!result.success)throw new Error('Serveris neapstiprināja abonementa saglabāšanu.');
-    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements saglabāts serverī.';
+    const subscriptionId=Number(result.subscriptionId);
+    if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0)throw new Error('Serveris neatgrieza derīgu subscriptionId.');
+    localStorage.setItem('testPushSubscriptionId',String(subscriptionId));
+    pushActivationStatus.textContent='Abonements saglabāts. Saglabā atgādinājumu iestatījumus…';
+    await syncTestReminderSettings();
+    pushActivationStatus.textContent='Paziņojumi aktivizēti. Abonements un atgādinājumu iestatījumi saglabāti serverī.';
+    setPushActivationAppearance(true);
   }catch(error){
     console.error('Push aktivizēšanas kļūda',error);
     pushActivationStatus.textContent='Neizdevās aktivizēt: '+(error.message||String(error));
+    setPushActivationAppearance(false);
   }finally{
-    activatePushButton.disabled=false;
+    pushActivationInProgress=false;
+    if(!activatePushButton.classList.contains('push-active-status'))activatePushButton.disabled=false;
   }
 });
 remindersEnabled.checked=savedRemindersEnabled;
-remindersEnabled.addEventListener('change',()=>localStorage.setItem('remindersEnabled',remindersEnabled.checked));
+remindersEnabled.addEventListener('change',()=>{localStorage.setItem('remindersEnabled',remindersEnabled.checked);queueTestReminderSync();});
 
 if(savedReminderEvening!==null){
   reminderEvening.checked=savedReminderEvening==="true";
@@ -1741,19 +2163,28 @@ if(savedReminderMorning!==null){
 }else if(savedReminderTime==="day"){
   reminderMorning.checked=true;
 }
-if(savedReminderEveningTime)reminderEveningTime.value=savedReminderEveningTime;
-if(savedReminderMorningTime)reminderMorningTime.value=savedReminderMorningTime;
+// Saglabājam agrāko nestandarta laiku, līdz lietotājs pats izvēlas jaunu.
+function restoreReminderTime(select,saved){
+ if(!saved)return;
+ if(!Array.from(select.options).some(option=>option.value===saved)){
+  const legacy=document.createElement('option');legacy.value=saved;
+  legacy.textContent=saved+' (iepriekšējais laiks)';select.appendChild(legacy);
+ }
+ select.value=saved;
+}
+restoreReminderTime(reminderEveningTime,savedReminderEveningTime);
+restoreReminderTime(reminderMorningTime,savedReminderMorningTime);
 
-reminderEvening.addEventListener('change',()=>localStorage.setItem('reminderEvening',reminderEvening.checked));
-reminderMorning.addEventListener('change',()=>localStorage.setItem('reminderMorning',reminderMorning.checked));
-reminderEveningTime.addEventListener('change',()=>localStorage.setItem('reminderEveningTime',reminderEveningTime.value));
-reminderMorningTime.addEventListener('change',()=>localStorage.setItem('reminderMorningTime',reminderMorningTime.value));
+reminderEvening.addEventListener('change',()=>{localStorage.setItem('reminderEvening',reminderEvening.checked);queueTestReminderSync();});
+reminderMorning.addEventListener('change',()=>{localStorage.setItem('reminderMorning',reminderMorning.checked);queueTestReminderSync();});
+reminderEveningTime.addEventListener('change',()=>{localStorage.setItem('reminderEveningTime',reminderEveningTime.value);queueTestReminderSync();});
+reminderMorningTime.addEventListener('change',()=>{localStorage.setItem('reminderMorningTime',reminderMorningTime.value);queueTestReminderSync();});
 
 reminderBirthdays.checked=savedReminderBirthdays;
-reminderBirthdays.addEventListener('change',()=>localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked)));
+reminderBirthdays.addEventListener('change',()=>{localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked));queueTestReminderSync();});
 document.querySelectorAll('input[name="reminderTarget"]').forEach(radio=>{
   if(radio.value===savedReminderTarget)radio.checked=true;
-  radio.addEventListener('change',()=>localStorage.setItem('reminderTarget',radio.value));
+  radio.addEventListener('change',()=>{localStorage.setItem('reminderTarget',radio.value);queueTestReminderSync();});
 });
 renderSelected();
 renderTomorrow();
@@ -1764,4 +2195,31 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js");
   });
 }
+</script>
+<script>
+/* TEST: themed half-hour picker; original selects and change handlers remain authoritative. */
+(function(){
+  const controls=[];
+  for(const id of ['reminderEveningTime','reminderMorningTime']){
+    const select=document.getElementById(id);
+    if(!select)continue;
+    const wrapper=document.createElement('span');wrapper.className='reminder-time-control';
+    select.parentNode.insertBefore(wrapper,select);wrapper.appendChild(select);
+    const trigger=document.createElement('button');trigger.type='button';trigger.className='reminder-time-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
+    const menu=document.createElement('div');menu.className='reminder-time-menu';menu.setAttribute('role','listbox');menu.hidden=true;
+    const close=()=>{menu.hidden=true;trigger.setAttribute('aria-expanded','false')};
+    for(const opt of select.options){
+      const item=document.createElement('button');item.type='button';item.textContent=opt.textContent;item.dataset.value=opt.value;item.setAttribute('role','option');
+      item.addEventListener('click',()=>{select.value=opt.value;select.dispatchEvent(new Event('change',{bubbles:true}));close();trigger.focus()});
+      menu.appendChild(item);
+    }
+    const refresh=()=>{trigger.textContent=select.options[select.selectedIndex]?.textContent||select.value;menu.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.value===select.value)))};
+    select.addEventListener('change',refresh);refresh();
+    trigger.addEventListener('click',()=>{const opening=menu.hidden;controls.forEach(c=>c.close());if(opening){menu.hidden=false;trigger.setAttribute('aria-expanded','true');const active=menu.querySelector('[aria-selected="true"]');if(active)active.scrollIntoView({block:'nearest'})}});
+    trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){if(menu.hidden){e.preventDefault();trigger.click()}}});
+    wrapper.addEventListener('keydown',e=>{if(e.key==='Escape'){close();trigger.focus()}});
+    wrapper.append(trigger,menu);controls.push({wrapper,close});
+  }
+  document.addEventListener('pointerdown',e=>{for(const c of controls)if(!c.wrapper.contains(e.target))c.close()});
+})();
 </script></body></html>

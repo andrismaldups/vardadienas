@@ -1,0 +1,127 @@
+/* Saule (F01 + D02). The background and sunlight are separate layers. */
+html[data-design="sun"] {
+  --ds-ray-tint: #b9793370;
+  --ds-glint-tint: #c4883990;
+  --ds-decor-image:
+    radial-gradient(ellipse 29% 0.65% at 15% 88%, #fffdf4 0%, var(--ds-glint-tint) 45%, transparent 100%),
+    radial-gradient(ellipse 0.8% 3.1% at 15% 88%, #fffdf4, transparent),
+    radial-gradient(ellipse 9% 4.5% at 15% 88%, #fffdf4 0%, var(--ds-glint-tint) 35%, transparent 100%),
+    conic-gradient(from 180deg at 100% 0%, transparent 1deg, var(--ds-ray-tint) 8deg, transparent 14deg, var(--ds-ray-tint) 21deg, transparent 29deg, var(--ds-ray-tint) 37deg, transparent 46deg, var(--ds-ray-tint) 54deg, transparent 62deg, var(--ds-ray-tint) 71deg, transparent 78deg, var(--ds-ray-tint) 83deg, transparent 90deg);
+  --ds-decor-position: center;
+  --ds-decor-size: 100% 100%;
+  --ds-bg-gradient: none;
+  --ds-decor-opacity: 1;
+  --ds-app-backdrop: linear-gradient(155deg, #fff2a8, #ffe58c 50%, #ffd16a);
+  --ds-page-bg: #ffe58c;
+  --ds-home-panel-bg: rgba(255, 247, 207, .17);
+  --ds-surface: rgba(255, 247, 207, .84);
+  --ds-text: #30230e;
+  --ds-muted: #5b441b;
+  --ds-primary: #725017;
+  --ds-on-primary: #fff;
+  --ds-primary-hover: #624412;
+  --ds-primary-pressed: #50380f;
+  --ds-border: #8b6630;
+  --ds-soft-bg: rgba(255, 233, 165, .78);
+  --ds-input-bg: rgba(255, 247, 207, .91);
+  --ds-selected-bg: #f5d780;
+  --ds-hover-bg: #ffe8a9;
+  --ds-pressed-bg: #efd079;
+  --ds-focus: #65450f;
+  --ds-secondary-bg: rgba(255, 242, 196, .82);
+  --ds-surface-elevated: #fff3cb;
+  --ds-shadow: rgba(61, 42, 10, .14);
+  --ds-backdrop: rgba(48, 35, 14, .48);
+  --ds-disabled-bg: #eee3bb;
+  --ds-disabled-text: #66542e;
+  --ds-danger: #942837;
+  --ds-danger-hover: #7f2030;
+  --ds-danger-pressed: #681827;
+  --ds-on-danger: #fff;
+  --ds-danger-bg: #f9e6e9;
+  --ds-danger-text: #7f2030;
+  --ds-danger-border: #a9505e;
+  --ds-success: #246043;
+  --ds-info: #725017;
+}
+
+html[data-design="sun"][data-theme="dark"] {
+  --ds-ray-tint: #ffd77b95;
+  --ds-glint-tint: #ffcc6690;
+  --ds-decor-opacity: 1;
+  --ds-app-backdrop: linear-gradient(155deg, #766022, #504015 50%, #2d2310);
+  --ds-page-bg: #504015;
+  --ds-home-panel-bg: rgba(78, 61, 25, .17);
+  --ds-surface: rgba(78, 61, 25, .87);
+  --ds-text: #fff4d3;
+  --ds-muted: #eddda9;
+  --ds-primary: #f2cc68;
+  --ds-on-primary: #30230e;
+  --ds-primary-hover: #f8d782;
+  --ds-primary-pressed: #ffe7a2;
+  --ds-border: #c3a564;
+  --ds-soft-bg: rgba(88, 68, 27, .84);
+  --ds-input-bg: #51401d;
+  --ds-selected-bg: #705720;
+  --ds-hover-bg: #614b1d;
+  --ds-pressed-bg: #725925;
+  --ds-focus: #f8d782;
+  --ds-secondary-bg: rgba(87, 67, 28, .92);
+  --ds-surface-elevated: #473819;
+  --ds-shadow: rgba(0, 0, 0, .28);
+  --ds-backdrop: rgba(0, 0, 0, .68);
+  --ds-disabled-bg: #534526;
+  --ds-disabled-text: #eddda9;
+  --ds-danger: #ffb4be;
+  --ds-danger-hover: #ffc7cf;
+  --ds-danger-pressed: #ffd9df;
+  --ds-on-danger: #4c101b;
+  --ds-danger-bg: #502d3c;
+  --ds-danger-text: #ffd9df;
+  --ds-danger-border: #cf8291;
+  --ds-success: #aee1c7;
+  --ds-info: #f8d782;
+}
+
+/* Map component roles to the mode palette. */
+html[data-design="sun"] {
+  --ds-accent: var(--ds-primary);
+  --ds-heading: var(--ds-text);
+  --ds-name-accent: var(--ds-text);
+  --ds-icon: var(--ds-text);
+  --ds-icon-bg: transparent;
+  --ds-icon-border: transparent;
+  --ds-link: var(--ds-text);
+  --ds-link-hover: var(--ds-focus);
+  --ds-focus-ring: var(--ds-focus);
+  --ds-caret: var(--ds-focus);
+  --ds-placeholder: var(--ds-muted);
+  --ds-surface-border: var(--ds-border);
+  --ds-surface-soft: var(--ds-soft-bg);
+  --ds-soft-border: var(--ds-border);
+  --ds-primary-border: var(--ds-primary);
+  --ds-input-text: var(--ds-text);
+  --ds-input-border: var(--ds-border);
+  --ds-secondary-text: var(--ds-text);
+  --ds-secondary-border: var(--ds-border);
+  --ds-unselected-bg: var(--ds-soft-bg);
+  --ds-unselected-text: var(--ds-text);
+  --ds-unselected-border: var(--ds-border);
+  --ds-selected-text: var(--ds-text);
+  --ds-selected-border: var(--ds-focus);
+  --ds-selected-hover: var(--ds-hover-bg);
+  --ds-selected-pressed: var(--ds-pressed-bg);
+  --ds-calendar-today-border: var(--ds-focus);
+  --ds-readonly-bg: var(--ds-input-bg);
+  --ds-readonly-text: var(--ds-text);
+  --ds-menu-bg: var(--ds-surface-elevated);
+  --ds-menu-text: var(--ds-text);
+  --ds-menu-border: var(--ds-border);
+  --ds-popup-bg: var(--ds-surface-elevated);
+  --ds-popup-text: var(--ds-text);
+  --ds-popup-border: var(--ds-border);
+  --ds-popup-selected-bg: var(--ds-selected-bg);
+  --ds-highlight-bg: var(--ds-soft-bg);
+  --ds-highlight-text: var(--ds-text);
+  --ds-error: var(--ds-danger);
+}
