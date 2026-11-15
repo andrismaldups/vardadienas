@@ -295,3 +295,10 @@ html[data-theme-system="shared"] body :is(
 html[data-theme-system="shared"] body :is(#todayNames,#nameDetailTitle){
   color:var(--ds-primary);
 }
+
+/* The activated notification control uses the shared disabled palette. */
+html[data-theme-system="shared"] body #activatePushButton.push-active-status:disabled {
+  background: var(--ds-disabled-bg) !important;
+  color: var(--ds-disabled-text) !important;
+  border-color: var(--ds-secondary-border) !important;
+}

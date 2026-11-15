@@ -44,7 +44,7 @@
     </div>
     <div class="settings-section">
       <h4>Paziņojumu aktivizēšana</h4>
-      <button type="button" id="activatePushButton" class="primary">Aktivizēt paziņojumus</button>
+      <button type="button" id="activatePushButton" class="primary" data-ui-component="primary-action">Aktivizēt paziņojumus</button>
       <p id="pushActivationStatus" role="status" aria-live="polite" style="margin:12px 0 0"></p>
     </div>
   </section>
@@ -82,6 +82,8 @@
         <div class="about-version">Versija 1.0</div>
       </div>
     </div>
+    <div class="about-accordion-list">
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Datu avoti</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Vārdadienas</strong><br>Vārdadienu dati balstīti uz Valsts valodas centra Kalendārvārdu ekspertu komisijas publicēto Latviešu tradicionālo vārdadienu sarakstu un Paplašināto vārdadienu sarakstu.</p>
@@ -89,6 +91,8 @@
       <p><strong>Interesanti</strong><br>Informācija par starptautiskajām, tematiskajām un citām atzīmējamām dienām apkopota no publiski pieejamiem avotiem, priekšroku dodot oficiālu organizāciju un attiecīgo dienu izveidotāju publicētajai informācijai.</p>
       <p><strong>Piezīme</strong><br>Informācija aplikācijā tiek apkopota un pārbaudīta pēc iespējas rūpīgi, tomēr atsevišķu tematisko dienu nosaukumi vai datumi dažādos avotos var atšķirties.</p>
     </div>
+      </div>
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Privātums</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Personas dati</strong><br>Aplikācijas lietošanai nav nepieciešams izveidot lietotāja kontu. Aplikācija neprasa lietotāja vārdu, e-pasta adresi, kontaktpersonu sarakstu, atrašanās vietu vai citus personas datus.</p>
@@ -97,12 +101,16 @@
       <p><strong>Piekļuve ierīces datiem</strong><br>Aplikācijai nav nepieciešama piekļuve lietotāja kontaktiem, atrašanās vietai, kamerai, mikrofonam vai fotogrāfijām.</p>
       <p><strong>Datu nodošana trešajām personām</strong><br>Aplikācijā saglabātie “Mani vārdi” un lietotāja iestatījumi netiek nodoti reklāmas vai mārketinga pakalpojumu sniedzējiem.</p>
     </div>
+      </div>
+      <div class="about-accordion-item">
     <button type="button" class="about-row about-row-button" aria-expanded="false" onclick="const p=this.nextElementSibling;const open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',open);this.querySelector('.about-chevron').textContent=open?'⌃':'⌄'"><span>Lietošanas noteikumi</span><span class="about-chevron">⌄</span></button>
     <div class="about-content" hidden>
       <p><strong>Aplikācijas mērķis</strong><br>“Vārdadienas” ir informatīva aplikācija, kas palīdz uzzināt Latvijas vārdadienas, svētku, atceres un atzīmējamās dienas, kā arī citu ar konkrētiem datumiem saistītu interesantu informāciju.</p>
       <p><strong>Informācijas precizitāte</strong><br>Aplikācijā publicētā informācija tiek apkopota un pārbaudīta pēc iespējas rūpīgi. Tomēr nevar garantēt, ka visa informācija vienmēr ir pilnīga un bez kļūdām. Ja oficiālajos avotos informācija tiek mainīta, aplikācijas dati var tikt atjaunināti ar laika nobīdi.</p>
       <p><strong>Atgādinājumi</strong><br>Vārdadienu atgādinājumi ir palīgfunkcija. To saņemšana var būt atkarīga no lietotāja ierīces, operētājsistēmas un paziņojumu iestatījumiem, tādēļ aplikācija nevar garantēt katra atgādinājuma saņemšanu noteiktajā laikā.</p>
       <p><strong>Izmaiņas aplikācijā</strong><br>Aplikācijas saturs, funkcijas un šie lietošanas noteikumi var tikt papildināti vai mainīti, attīstot aplikāciju un izlaižot jaunas versijas.</p>
+    </div>
+      </div>
     </div>
   </section>
 
@@ -2167,7 +2175,7 @@ if(savedReminderMorning!==null){
 function restoreReminderTime(select,saved){
  if(!saved)return;
  if(!Array.from(select.options).some(option=>option.value===saved)){
-  const legacy=document.createElement('option');legacy.value=saved;
+  const legacy=document.createElement('option');legacy.value=saved;legacy.dataset.legacyReminderTime='true';
   legacy.textContent=saved+' (iepriekšējais laiks)';select.appendChild(legacy);
  }
  select.value=saved;
@@ -2177,8 +2185,8 @@ restoreReminderTime(reminderMorningTime,savedReminderMorningTime);
 
 reminderEvening.addEventListener('change',()=>{localStorage.setItem('reminderEvening',reminderEvening.checked);queueTestReminderSync();});
 reminderMorning.addEventListener('change',()=>{localStorage.setItem('reminderMorning',reminderMorning.checked);queueTestReminderSync();});
-reminderEveningTime.addEventListener('change',()=>{localStorage.setItem('reminderEveningTime',reminderEveningTime.value);queueTestReminderSync();});
-reminderMorningTime.addEventListener('change',()=>{localStorage.setItem('reminderMorningTime',reminderMorningTime.value);queueTestReminderSync();});
+reminderEveningTime.addEventListener('change',()=>{if (/^([01]\d|2[0-3]):(00|30)$/.test(reminderEveningTime.value)) reminderEveningTime.querySelector('option[data-legacy-reminder-time]')?.remove();localStorage.setItem('reminderEveningTime',reminderEveningTime.value);queueTestReminderSync();});
+reminderMorningTime.addEventListener('change',()=>{if (/^([01]\d|2[0-3]):(00|30)$/.test(reminderMorningTime.value)) reminderMorningTime.querySelector('option[data-legacy-reminder-time]')?.remove();localStorage.setItem('reminderMorningTime',reminderMorningTime.value);queueTestReminderSync();});
 
 reminderBirthdays.checked=savedReminderBirthdays;
 reminderBirthdays.addEventListener('change',()=>{localStorage.setItem('reminderBirthdays',String(reminderBirthdays.checked));queueTestReminderSync();});
