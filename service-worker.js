@@ -1,11 +1,28 @@
-const CACHE_NAME = "vardadienas-v3";
+const CACHE_NAME = "vardadienas-v4";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./clean-ds-1.1/legacy-layout.css",
+  "./design-system.css",
+  "./clean-ds-1.1/components.css",
+  "./clean-ds-1.1/d3-theme.css",
+  "./clean-ds-1.1/sea-mist-theme.css",
+  "./clean-ds-1.1/cherry-theme.css",
+  "./clean-ds-1.1/sun-theme.css",
+  "./clean-ds-1.1/classic-theme.css",
+  "./clean-ds-1.1/festive-theme.css",
+  "./clean-ds-1.1/app-integration.css",
+  "./clean-ds-1.1/about-row-gap.css",
+  "./clean-ds-1.1/theme-bootstrap.js",
+  "./assets/d3-rita-rasa.svg",
+  "./assets/sea-mist-currents.svg",
+  "./assets/cherry-corners.webp",
+  "./assets/d3-rita-gaisma.svg",
+  "./assets/gold-ornaments.svg?v=20261103-upper-glow14"
 ];
 
 self.addEventListener("install", event => {

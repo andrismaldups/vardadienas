@@ -20,25 +20,21 @@ html[data-design="classic"] {
   --ds-decor-top:none;
   --ds-decor-bottom:none;
 }
-html[data-design="lavender"] {
-  --ds-page-bg:#f5f0f8;
-  --ds-surface:#fffafd;
-  --ds-text:#30283b;
-  --ds-muted:#80618e;
-  --ds-primary:#69368a;
-  --ds-on-primary:#ffffff;
-  --ds-accent:#8b50a9;
-  --ds-border:#e7d8ec;
-  --ds-soft-bg:#f8f1fa;
-  --ds-soft-border:#dfcce6;
-  --ds-focus:#8b50a9;
-  --ds-caret:#9e62bb;
-  --ds-decor-top:url("assets/lavanda_augsa.png");
-  --ds-decor-bottom:url("assets/lavanda_apaksa.png");
+/* K1 dark values follow the classic dark layout palette. */
+html[data-design="classic"][data-theme="dark"] {
+  --ds-page-bg:#0f1f1a;
+  --ds-surface:#1e2d27;
+  --ds-text:#e8f4ec;
+  --ds-muted:#a7b9b0;
+  --ds-border:#405c4f;
+  --ds-soft-bg:#233b32;
+  --ds-soft-border:#405c4f;
+  --ds-focus:#39a76b;
+  --ds-caret:#a3e9bf;
 }
 /* S1 draft palette, not yet selectable. Gold is decorative; green remains
    the high-contrast action color, consistent with the approved S1 mockup. */
-html[data-design="festive-s1"] {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) {
   --ds-page-bg:#fff7e5;
   --ds-surface:#fffdf7;
   --ds-text:#203a2a;
@@ -113,8 +109,8 @@ html[data-design] .date-suggestions button{color:var(--ds-text);border-color:var
 
 /* Festive S1: one reusable visual shell for every screen.
    Gold ornament is painted behind content, not over controls. */
-html[data-design="festive-s1"]{background:var(--ds-page-bg)}
-html[data-design="festive-s1"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]){background:var(--ds-page-bg)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) body{
   background:
     radial-gradient(ellipse 105% 120px at 50% 0%,#ffe1a0 0%,transparent 78%),
     radial-gradient(ellipse 105% 120px at 50% 100%,#ffe1a0 0%,transparent 78%),
@@ -122,79 +118,79 @@ html[data-design="festive-s1"] body{
   background-attachment:fixed;
   color:var(--ds-text);
 }
-html[data-design="festive-s1"] .wrap{position:relative;isolation:isolate}
-html[data-design="festive-s1"] .wrap::before,
-html[data-design="festive-s1"] .wrap::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap{position:relative;isolation:isolate}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::after{
   content:"";position:fixed;left:0;right:0;height:80px;z-index:-1;pointer-events:none;
   background:
     radial-gradient(110% 70px at 22% -20px,transparent 73%,#dfac47 75%,#ffe4a5 78%,transparent 81%),
     radial-gradient(105% 75px at 72% -26px,transparent 73%,#f6c65f 75%,#fff2c9 78%,transparent 81%);
   opacity:.85;
 }
-html[data-design="festive-s1"] .wrap::before{top:0}
-html[data-design="festive-s1"] .wrap::after{bottom:0;transform:rotate(180deg)}
-html[data-design="festive-s1"] .card{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::before{top:0}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::after{bottom:0;transform:rotate(180deg)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .card{
   background:var(--ds-surface);
   border:1px solid var(--ds-soft-border);
   box-shadow:0 8px 26px rgba(130,88,24,.09);
 }
-html[data-design="festive-s1"] .app-title,
-html[data-design="festive-s1"] h1,
-html[data-design="festive-s1"] h2,
-html[data-design="festive-s1"] h3{color:var(--ds-text)}
-html[data-design="festive-s1"] .names,
-html[data-design="festive-s1"] .name-detail-card h3{color:var(--ds-primary)}
-html[data-design="festive-s1"] .primary,
-html[data-design="festive-s1"] button.primary,
-html[data-design="festive-s1"] #calendar .day.sel{background:var(--ds-primary);color:#fff;border-color:var(--ds-primary)}
-html[data-design="festive-s1"] .tomorrow,
-html[data-design="festive-s1"] .latvia-today,
-html[data-design="festive-s1"] .interesting,
-html[data-design="festive-s1"] .birthday-entry{background:var(--ds-soft-bg);border-color:var(--ds-border)}
-html[data-design="festive-s1"] #prevDay,
-html[data-design="festive-s1"] #nextDay,
-html[data-design="festive-s1"] #prevMonth,
-html[data-design="festive-s1"] #nextMonth,
-html[data-design="festive-s1"] #nameBtn,
-html[data-design="festive-s1"] #dateBtn,
-html[data-design="festive-s1"] #favoriteAddCancel{background:var(--ds-soft-bg);color:var(--ds-primary);border-color:var(--ds-border)}
-html[data-design="festive-s1"] .settings-back-bar,
-html[data-design="festive-s1"] .greeting-back-bar{background:rgba(255,249,235,.96);border-color:var(--ds-border)}
-html[data-design="festive-s1"] .side-menu,
-html[data-design="festive-s1"] .about-content,
-html[data-design="festive-s1"] .about-row-button{background:var(--ds-surface)}
-html[data-design="festive-s1"] .favorites-sort,
-html[data-design="festive-s1"] .birthday-sort{background:#f7ecd4}
-html[data-design="festive-s1"] .favorites-sort button.active,
-html[data-design="festive-s1"] .birthday-sort button.active{background:#e3f3df;color:var(--ds-primary)}
-html[data-design="festive-s1"] .appearance-choice input{accent-color:var(--ds-primary)}
-html[data-design="festive-s1"] #deleteMyDataButton{background:#f4e7cf;color:var(--ds-primary);border-color:var(--ds-border)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .app-title,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) h1,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) h2,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) h3{color:var(--ds-text)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .names,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .name-detail-card h3{color:var(--ds-primary)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .primary,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) button.primary,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #calendar .day.sel{background:var(--ds-primary);color:#fff;border-color:var(--ds-primary)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .tomorrow,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .latvia-today,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .interesting,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .birthday-entry{background:var(--ds-soft-bg);border-color:var(--ds-border)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #prevDay,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #nextDay,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #prevMonth,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #nextMonth,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #nameBtn,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #dateBtn,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #favoriteAddCancel{background:var(--ds-soft-bg);color:var(--ds-primary);border-color:var(--ds-border)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .settings-back-bar,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .greeting-back-bar{background:rgba(255,249,235,.96);border-color:var(--ds-border)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .side-menu,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .about-content,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .about-row-button{background:var(--ds-surface)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .favorites-sort,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .birthday-sort{background:#f7ecd4}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .favorites-sort button.active,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .birthday-sort button.active{background:#e3f3df;color:var(--ds-primary)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .appearance-choice input{accent-color:var(--ds-primary)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #deleteMyDataButton{background:#f4e7cf;color:var(--ds-primary);border-color:var(--ds-border)}
 /* Dark mode keeps accessible surfaces; decoration stays subdued. */
-html[data-design="festive-s1"][data-theme="dark"] body{background:#231e17;color:#f8ebd2}
-html[data-design="festive-s1"][data-theme="dark"] .card,
-html[data-design="festive-s1"][data-theme="dark"] .side-menu,
-html[data-design="festive-s1"][data-theme="dark"] .about-content,
-html[data-design="festive-s1"][data-theme="dark"] .about-row-button{background:#30291f;color:#f8ebd2;border-color:#705735}
-html[data-design="festive-s1"][data-theme="dark"] .app-title,
-html[data-design="festive-s1"][data-theme="dark"] h1,
-html[data-design="festive-s1"][data-theme="dark"] h2,
-html[data-design="festive-s1"][data-theme="dark"] h3{color:#f8ebd2}
-html[data-design="festive-s1"][data-theme="dark"] .settings-back-bar,
-html[data-design="festive-s1"][data-theme="dark"] .greeting-back-bar{background:rgba(35,30,23,.96)}
-html[data-design="festive-s1"][data-theme="dark"] .wrap::before,
-html[data-design="festive-s1"][data-theme="dark"] .wrap::after{opacity:.22}
-@media(prefers-reduced-motion:reduce){html[data-design="festive-s1"] .wrap::before,html[data-design="festive-s1"] .wrap::after{animation:none}}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body{background:#231e17;color:#f8ebd2}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .card,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .side-menu,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .about-content,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .about-row-button{background:#30291f;color:#f8ebd2;border-color:#705735}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .app-title,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] h1,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] h2,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] h3{color:#f8ebd2}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .settings-back-bar,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .greeting-back-bar{background:rgba(35,30,23,.96)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .wrap::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .wrap::after{opacity:.22}
+@media(prefers-reduced-motion:reduce){html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::before,html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .wrap::after{animation:none}}
 
 
 /* S1 visual experiment: rich amber-gold palette and translucent cards, TEST only. */
-html[data-design="festive-s1"][data-theme="light"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"]{
   --ds-page-bg:#fff1ce;--ds-surface:rgba(255,250,235,.80);
   --ds-text:#4b280f;--ds-muted:#87633b;--ds-primary:#97540c;
   --ds-on-primary:#fff9e9;--ds-accent:#c58a25;--ds-border:#dba544;
   --ds-soft-bg:rgba(255,244,214,.75);--ds-soft-border:#e1b65e;
   --ds-focus:#9d5b0b;--ds-caret:#7c440d;
 }
-html[data-design="festive-s1"][data-theme="light"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body{
  background:
  radial-gradient(ellipse 80% 25% at 12% 9%,rgba(255,220,122,.70),transparent 80%),
  radial-gradient(ellipse 85% 28% at 88% 68%,rgba(244,185,67,.37),transparent 80%),
@@ -202,86 +198,86 @@ html[data-design="festive-s1"][data-theme="light"] body{
  linear-gradient(135deg,#fff6df,#ffe5a8 48%,#fff5dc);
  background-attachment:fixed;
 }
-html[data-design="festive-s1"][data-theme="light"] .wrap::before,
-html[data-design="festive-s1"][data-theme="light"] .wrap::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .wrap::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .wrap::after{
  height:115px;opacity:1;
  background:
  radial-gradient(105% 75px at 22% -17px,transparent 71%,#bd7918 73%,#fff0ae 76%,#dca53c 79%,transparent 82%),
  radial-gradient(110% 88px at 75% -29px,transparent 71%,#c68c2c 73%,#fff2c2 76%,#e5ae4b 79%,transparent 82%);
 }
-html[data-design="festive-s1"][data-theme="light"] .card{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .card{
  background:var(--ds-surface);border:1px solid #dfae53;
  box-shadow:0 7px 25px rgba(122,69,8,.14),inset 0 1px 0 rgba(255,255,255,.85);
  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
 }
-html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.card:first-child{
  background:rgba(255,249,225,.30);border-color:rgba(210,147,34,.55);
 }
-html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child .app-title,
-html[data-design="festive-s1"][data-theme="light"] .app-title,
-html[data-design="festive-s1"][data-theme="light"] h1,
-html[data-design="festive-s1"][data-theme="light"] h2,
-html[data-design="festive-s1"][data-theme="light"] h3{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.card:first-child .app-title,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .app-title,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] h1,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] h2,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] h3{
  color:#542a0e;font-family:Georgia,"Times New Roman",serif;
 }
-html[data-design="festive-s1"][data-theme="light"] .names,
-html[data-design="festive-s1"][data-theme="light"] .name-detail-card h3{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .names,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .name-detail-card h3{
  color:#a7640c;
 }
-html[data-design="festive-s1"][data-theme="light"] .primary,
-html[data-design="festive-s1"][data-theme="light"] button.primary,
-html[data-design="festive-s1"][data-theme="light"] .day.sel,
-html[data-design="festive-s1"][data-theme="light"] #calendar .day.sel{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .primary,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] button.primary,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .day.sel,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #calendar .day.sel{
  color:#fff9eb;border:1px solid #a76a12;
  background:linear-gradient(180deg,#d59b2d 0%,#a75f0d 58%,#824009 100%);
  box-shadow:inset 0 2px 2px #ffe5a4,0 3px 9px #ad782f55;
 }
-html[data-design="festive-s1"][data-theme="light"] .tomorrow,
-html[data-design="festive-s1"][data-theme="light"] .latvia-today,
-html[data-design="festive-s1"][data-theme="light"] .interesting,
-html[data-design="festive-s1"][data-theme="light"] .birthday-entry{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .tomorrow,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .latvia-today,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .interesting,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .birthday-entry{
  background:rgba(255,247,222,.70);border:1px solid #e0ae4e;
  box-shadow:0 2px 7px #b7802826;
 }
-html[data-design="festive-s1"][data-theme="light"] #prevDay,
-html[data-design="festive-s1"][data-theme="light"] #nextDay,
-html[data-design="festive-s1"][data-theme="light"] #prevMonth,
-html[data-design="festive-s1"][data-theme="light"] #nextMonth,
-html[data-design="festive-s1"][data-theme="light"] #nameBtn,
-html[data-design="festive-s1"][data-theme="light"] #dateBtn{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #prevDay,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nextDay,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #prevMonth,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nextMonth,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nameBtn,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #dateBtn{
  background:linear-gradient(180deg,#fff9e8,#ffeac0);color:#713a0b;border-color:#d9a34b;
  box-shadow:0 2px 5px #b7802826;
 }
-html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input,textarea,select){
  background:rgba(255,253,246,.94);border-color:#d9a34b;color:#452812;
  caret-color:#7c440d;
 }
-html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input,textarea,select):focus{
  border-color:#9d5b0b;outline:2px solid #bd8329;outline-offset:1px;
 }
-html[data-design="festive-s1"][data-theme="light"] .week div,
-html[data-design="festive-s1"][data-theme="light"] #dateTitle,
-html[data-design="festive-s1"][data-theme="light"] .muted{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .week div,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #dateTitle,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .muted{
  color:#85623c;
 }
-html[data-design="festive-s1"][data-theme="light"] .favorites-sort button.active,
-html[data-design="festive-s1"][data-theme="light"] .birthday-sort button.active{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .favorites-sort button.active,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .birthday-sort button.active{
  background:#f5d68e;color:#693909;
 }
-html[data-design="festive-s1"][data-theme="light"] .favorites-sort,
-html[data-design="festive-s1"][data-theme="light"] .birthday-sort{background:#f7e7bf}
-html[data-design="festive-s1"][data-theme="light"] .birthday-gift-icon{filter:sepia(1) saturate(2) hue-rotate(350deg)}
-html[data-design="festive-s1"][data-theme="light"] .settings-back-bar,
-html[data-design="festive-s1"][data-theme="light"] .greeting-back-bar{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .favorites-sort,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .birthday-sort{background:#f7e7bf}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .birthday-gift-icon{filter:sepia(1) saturate(2) hue-rotate(350deg)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .settings-back-bar,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .greeting-back-bar{
  background:rgba(255,244,214,.95);border-color:#dba544;
 }
-html[data-design="festive-s1"][data-theme="light"] #deleteMyDataButton{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #deleteMyDataButton{
  background:#f7e6c5;color:#744311;border-color:#dba544;
 }
 
 
 /* TEST S1.1 — Zelta greznība. Scoped to light festive mode; previous S1 retained in Git history. */
-html[data-design="festive-s1"][data-theme="light"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body{
  background-image:
   url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22680%22%20viewBox%3D%220%200%20520%20680%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22petal%22%3E%3Cstop%20stop-color%3D%22%23fff4bd%22%2F%3E%3Cstop%20offset%3D%22.6%22%20stop-color%3D%22%23dca33b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2398500a%22%2F%3E%3C%2FradialGradient%3E%3ClinearGradient%20id%3D%22stem%22%3E%3Cstop%20stop-color%3D%22%23f9dc83%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a36a1c%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22url(%23stem)%22%20stroke-width%3D%223%22%20opacity%3D%22.7%22%3E%3Cpath%20d%3D%22M-30%20480%20Q140%20250%2080%20-50%22%2F%3E%3Cpath%20d%3D%22M520%20640%20Q300%20430%20440%20100%22%2F%3E%3Cpath%20d%3D%22M10%20260%20Q190%20230%20245%2065%22%2F%3E%3Cpath%20d%3D%22M510%20370%20Q340%20335%20265%20505%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22url(%23petal)%22%20opacity%3D%22.55%22%3E%3Cg%20transform%3D%22translate(100%20210)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(420%20450)%20scale(.85)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(265%2095)%20scale(.48)%22%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(60)%22%2F%3E%3Cellipse%20ry%3D%2252%22%20rx%3D%2220%22%20transform%3D%22rotate(120)%22%2F%3E%3Ccircle%20r%3D%2217%22%20fill%3D%22%23fff2a9%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23fff8d6%22%20stroke%3D%22%23c78a2d%22%20stroke-width%3D%221.5%22%20opacity%3D%22.78%22%3E%3Cpath%20d%3D%22M290%20290l7%2020%2020%207-20%207-7%2020-7-20-20-7%2020-7z%22%2F%3E%3Cpath%20d%3D%22M55%20530l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5z%22%2F%3E%3Cpath%20d%3D%22M390%2070l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
   radial-gradient(ellipse 62% 20% at 4% 18%,rgba(220,145,25,.38),transparent 95%),
@@ -294,32 +290,32 @@ html[data-design="festive-s1"][data-theme="light"] body{
  background-repeat:repeat-y,no-repeat,no-repeat,no-repeat,repeat,no-repeat;
  background-attachment:scroll,fixed,fixed,fixed,fixed,fixed;
 }
-html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child,
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.card,
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.card,
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.greeting-entry,
-html[data-design="festive-s1"][data-theme="light"] #greetingView>.card{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.card:first-child,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.card,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.side>.card,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.side>.greeting-entry,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #greetingView>.card{
  background:transparent!important;
  backdrop-filter:none;-webkit-backdrop-filter:none;
  box-shadow:none;
  border-color:rgba(164,98,14,.48);
 }
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side input,
-html[data-design="festive-s1"][data-theme="light"] #greetingView input{background:#fffdf8!important}
-html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child .app-title,
-html[data-design="festive-s1"][data-theme="light"] #mainView h2,
-html[data-design="festive-s1"][data-theme="light"] #greetingView h2{text-shadow:0 1px 0 rgba(255,246,210,.8)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.side input,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #greetingView input{background:#fffdf8!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.card:first-child .app-title,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView h2,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #greetingView h2{text-shadow:0 1px 0 rgba(255,246,210,.8)}
 /* Preserve contrast in the small information cards and interactive fields. */
-html[data-design="festive-s1"][data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){
  background:rgba(255,248,225,.87);
 }
 @media(max-width:430px){
- html[data-design="festive-s1"][data-theme="light"] body{background-size:100vw auto,cover,cover,cover,auto,cover}
+ html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body{background-size:100vw auto,cover,cover,cover,auto,cover}
 }
 
 /* TEST S1.2 — Izsmalcinātais zelts: corner lilies and edge filigree.
    Background-only refinement; no JS, controls, or application data changed. */
-html[data-design="festive-s1"][data-theme="light"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body{
  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22440%22%20height%3D%221020%22%20viewBox%3D%220%200%20440%201020%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22petal%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff6d3%22%2F%3E%3Cstop%20offset%3D%22.48%22%20stop-color%3D%22%23e9ba61%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ad6c21%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M-30%2080%20Q100%2025%20245%2064%20T490%2020%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.2%22%20opacity%3D%22.65%22%2F%3E%3Cpath%20d%3D%22M-30%2088%20Q120%2040%20250%2072%20T490%2028%22%20stroke%3D%22%23fff8d9%22%20stroke-width%3D%223%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M470%20900%20Q270%20960%20120%20932%20T-20%20965%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.55%22%2F%3E%3Cpath%20d%3D%22M470%20911%20Q270%20971%20120%20944%20T-20%20977%22%20stroke%3D%22%23fff9dd%22%20stroke-width%3D%223%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M462%200%20Q330%2074%20408%20200%20Q453%20268%20442%20340%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M-40%20750%20Q105%20820%2024%201040%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%222.5%22%20opacity%3D%22.42%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(439%20100)%20rotate(15)%20scale(0.68)%22%3E%3Cg%20fill%3D%22url(%23petal)%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%221.2%22%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(0)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(60)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(120)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(180)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(240)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(300)%22%2F%3E%3C%2Fg%3E%3Ccircle%20r%3D%2220%22%20fill%3D%22%23fff4c7%22%20stroke%3D%22%23d7a443%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20r%3D%228%22%20fill%3D%22%23f8c965%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(-22%20914)%20rotate(-35)%20scale(0.66)%22%3E%3Cg%20fill%3D%22url(%23petal)%22%20stroke%3D%22%23c88d2f%22%20stroke-width%3D%221.2%22%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(0)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(60)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(120)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(180)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(240)%22%2F%3E%3Cpath%20d%3D%22M0%200%20Q-27%20-34%20-8%20-94%20Q13%20-115%2022%20-86%20Q37%20-41%200%200Z%22%20transform%3D%22rotate(300)%22%2F%3E%3C%2Fg%3E%3Ccircle%20r%3D%2220%22%20fill%3D%22%23fff4c7%22%20stroke%3D%22%23d7a443%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20r%3D%228%22%20fill%3D%22%23f8c965%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23fff8dc%22%20stroke%3D%22%23c98e34%22%20stroke-width%3D%221.7%22%20opacity%3D%22.85%22%3E%3Cpath%20d%3D%22M52%20285%20l5%2014%2014%205-14%205-5%2014-5-14-14-5%2014-5Z%22%2F%3E%3Cpath%20d%3D%22M392%20746%20l4%2011%2011%204-11%204-4%2011-4-11-11-4%2011-4Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),radial-gradient(ellipse 85% 30% at 50% 3%,rgba(255,250,228,.94),transparent 88%),linear-gradient(135deg,#fff7de 0%,#f7d894 48%,#fff0c7 100%);
  background-size:min(100vw,700px) auto,cover,cover;
  background-position:center top,center,center;
@@ -327,34 +323,34 @@ html[data-design="festive-s1"][data-theme="light"] body{
  background-attachment:scroll,fixed,fixed;
 }
 /* Keep ornamental elements at page edges and let reading areas breathe. */
-html[data-design="festive-s1"][data-theme="light"] #mainView>.card:first-child,
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.card,
-html[data-design="festive-s1"][data-theme="light"] #mainView>.grid>.side>.card{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.card:first-child,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.card,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView>.grid>.side>.card{
  background:rgba(255,247,220,.17)!important;
 }
-html[data-design="festive-s1"][data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){background:rgba(255,250,232,.91)}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #mainView :is(.tomorrow,.interesting,.latvia-today,.birthday-entry){background:rgba(255,250,232,.91)}
 
 
 /* TEST S1.3 — gold theme finishing: unify remaining green controls.
    Scoped to festive light theme; no background or application logic changes. */
-html[data-design="festive-s1"][data-theme="light"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"]{
  --gold-focus:#a96612;
  --gold-soft:#f7e4b6;
 }
-html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus,
-html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select):focus-visible,
-html[data-design="festive-s1"][data-theme="light"] #favoriteAddInput:focus,
-html[data-design="festive-s1"][data-theme="light"] #nameInput:focus,
-html[data-design="festive-s1"][data-theme="light"] #dateInput:focus,
-html[data-design="festive-s1"][data-theme="light"] #birthdayAddForm input:focus{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input,textarea,select):focus,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input,textarea,select):focus-visible,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #favoriteAddInput:focus,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nameInput:focus,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #dateInput:focus,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #birthdayAddForm input:focus{
  outline:2px solid var(--gold-focus)!important;
  border-color:var(--gold-focus)!important;
  box-shadow:0 0 0 2px var(--gold-soft)!important;
  caret-color:#875015!important;
 }
-html[data-design="festive-s1"][data-theme="light"] :is(input,textarea,select){caret-color:#875015!important}
-html[data-design="festive-s1"][data-theme="light"] :is(input[type="checkbox"],input[type="radio"]){accent-color:#a96612!important}
-html[data-design="festive-s1"][data-theme="light"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input,textarea,select){caret-color:#875015!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(input[type="checkbox"],input[type="radio"]){accent-color:#a96612!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(
  .favorite-add-matches button,.favorite-add-selected button,
  #favoriteAddCancel,#birthdayAddCancel,#nameResult .search-add-favorite,
  #dateSuggestions button,.search-add-favorite,
@@ -363,28 +359,28 @@ html[data-design="festive-s1"][data-theme="light"] :is(
  .name-detail-actions button,.push-active-status,
  #deleteMyDataButton
 ){color:#88500f!important;border-color:#d9a34b!important}
-html[data-design="festive-s1"][data-theme="light"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(
  .favorite-add-matches button,.favorite-add-selected button,
  #favoriteAddCancel,#birthdayAddCancel,#nameResult .search-add-favorite,
  #dateSuggestions button,.greeting-result-actions>button,
  .greeting-result-action-row button,.greeting-back-bar .back-btn,
  .greeting-options button.active
 ){background:#fff3d5!important}
-html[data-design="festive-s1"][data-theme="light"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(
  .name-link:focus-visible,.favorite-add-matches button:focus-visible,
  #favoriteAddCancel:focus-visible,#birthdayAddCancel:focus-visible,
  #nameResult .search-add-favorite:focus-visible,
  #deleteMyDataButton:focus-visible
 ){outline-color:#a96612!important}
-html[data-design="festive-s1"][data-theme="light"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] :is(
  .settings-card input[type="time"],.settings-card select[id^="reminder"][id$="Time"],
  .name-detail-feedback,.birthday-edit-btn,.birthday-entry .birthday-chevron,
  .greeting-entry-arrow
 ){color:#88500f!important}
-html[data-design="festive-s1"][data-theme="light"] .switch input:checked+.switch-slider{background:#a96612!important}
-html[data-design="festive-s1"][data-theme="light"] .greeting-options button.active{background:#f8dfa8!important}
-html[data-design="festive-s1"][data-theme="light"] .push-active-status,
-html[data-design="festive-s1"][data-theme="light"] .push-active-status:disabled{background:#f7e6c5!important;color:#88500f!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .switch input:checked+.switch-slider{background:#a96612!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .greeting-options button.active{background:#f8dfa8!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .push-active-status,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .push-active-status:disabled{background:#f7e6c5!important;color:#88500f!important}
 
 /* Emoji chooser must not be covered by the sticky navigation.
    Restore navigation automatically when the chooser closes. */
@@ -394,8 +390,8 @@ html[data-design="festive-s1"][data-theme="light"] .push-active-status:disabled{
 }
 
 /* TEST S1.3 readability: white labels on dark gold name-detail action buttons. */
-html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-actions button,
-html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-actions button:disabled{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nameDetailView .name-detail-actions button,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #nameDetailView .name-detail-actions button:disabled{
  color:#fff!important;
  -webkit-text-fill-color:#fff!important;
 }
@@ -405,14 +401,14 @@ html[data-design="festive-s1"][data-theme="light"] #nameDetailView .name-detail-
    Layer 2: body::after paints ONLY the transparent SVG ornaments.
    Both remain fixed; content and controls scroll above them.
    Existing gold UI colors, panel styling and functionality remain unchanged. */
-html[data-design="festive-s1"][data-theme="light"]{background:#ffe7a0;}
-html[data-design="festive-s1"][data-theme="light"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"]{background:#ffe7a0;}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body{
   background:transparent!important;
   position:relative;
   isolation:isolate;
 }
-html[data-design="festive-s1"][data-theme="light"] body::before,
-html[data-design="festive-s1"][data-theme="light"] body::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body::after{
   content:"";
   position:fixed;
   inset:0;
@@ -422,7 +418,7 @@ html[data-design="festive-s1"][data-theme="light"] body::after{
 }
 /* 1. PAMATFONS S1.8 — Maigi zeltainais.
    Only the base colors and gradients change; ornaments remain independent. */
-html[data-design="festive-s1"][data-theme="light"] body::before{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body::before{
   z-index:-2;
   background-color:#ffe7a0;
   background-image:
@@ -435,7 +431,7 @@ html[data-design="festive-s1"][data-theme="light"] body::before{
   background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
 }
 /* 2. DEKORATIVAIS SLANIS: transparent standalone artwork only. */
-html[data-design="festive-s1"][data-theme="light"] body::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] body::after{
   z-index:-1;
   background-image:url("assets/gold-ornaments.svg?v=20261103-upper-glow14");
   /* Fit the single ornament artwork to the fixed viewport: the lower waves
@@ -445,17 +441,17 @@ html[data-design="festive-s1"][data-theme="light"] body::after{
   background-repeat:no-repeat;
 }
 /* 3–4. Panels and controls remain in normal scrollable content. */
-html[data-design="festive-s1"][data-theme="light"] .wrap{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .wrap{
   position:relative;
   z-index:1;
 }
-html[data-design="festive-s1"][data-theme="light"] .wrap::before,
-html[data-design="festive-s1"][data-theme="light"] .wrap::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .wrap::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .wrap::after{
   content:none!important;
 }
 
 /* S1.8: šodienas datuma rāmītis saskaņots ar zeltaino kalendāra paleti. */
-html[data-design="festive-s1"][data-theme="light"] #calendar .day.today:not(.sel){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #calendar .day.today:not(.sel){
   outline:2px solid #d6a14c;
   color:#75451d;
 }
@@ -463,169 +459,169 @@ html[data-design="festive-s1"][data-theme="light"] #calendar .day.today:not(.sel
 
 /* TEST S1.9 — Zeltainais tumšais skats. Only festive-s1 + dark.
    Keep approved S1.8 light theme, layouts and application logic untouched. */
-html[data-design="festive-s1"][data-theme="dark"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"]{
   --ds-page-bg:#21170f;--ds-surface:#34271b;--ds-text:#fff0d3;
   --ds-muted:#d6b98b;--ds-primary:#b77922;--ds-on-primary:#fff9ee;
   --ds-accent:#f2c36b;--ds-border:#8a6438;--ds-soft-bg:#3d2e1f;
   --ds-soft-border:#916a3c;--ds-focus:#f0c474;--ds-caret:#f0c474;
   background:#21170f;
 }
-html[data-design="festive-s1"][data-theme="dark"] body{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body{
   background:transparent!important;color:#fff0d3;position:relative;isolation:isolate;
 }
-html[data-design="festive-s1"][data-theme="dark"] body::before,
-html[data-design="festive-s1"][data-theme="dark"] body::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body::after{
   content:"";position:fixed;inset:0;width:100%;height:100%;pointer-events:none;
 }
-html[data-design="festive-s1"][data-theme="dark"] body::before{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body::before{
   z-index:-2;background:
     radial-gradient(ellipse 88% 35% at 48% 2%,rgba(135,93,39,.33),transparent 88%),
     radial-gradient(ellipse 90% 46% at 95% 58%,rgba(117,73,26,.22),transparent 85%),
     radial-gradient(ellipse 85% 32% at 5% 92%,rgba(178,119,38,.16),transparent 84%),
     linear-gradient(180deg,#2c2117 0%,#21170f 46%,#332316 83%,#241910 100%);
 }
-html[data-design="festive-s1"][data-theme="dark"] body::after{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] body::after{
   z-index:-1;
   background-image:url("assets/gold-ornaments.svg?v=20261103-upper-glow14");
   background-size:100% 100%;background-position:center;background-repeat:no-repeat;
   opacity:.68;filter:brightness(1.28) saturate(1.08);
 }
-html[data-design="festive-s1"][data-theme="dark"] .wrap{position:relative;z-index:1}
-html[data-design="festive-s1"][data-theme="dark"] .wrap::before,
-html[data-design="festive-s1"][data-theme="dark"] .wrap::after{content:none!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .wrap{position:relative;z-index:1}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .wrap::before,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .wrap::after{content:none!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  #mainView>.card:first-child,#mainView>.grid>.card,
  #mainView>.grid>.side>.card,#mainView>.grid>.side>.greeting-entry,
  #greetingView>.card
 ){background:rgba(64,44,26,.24)!important;box-shadow:none;border-color:rgba(217,164,85,.55)}
-html[data-design="festive-s1"][data-theme="dark"] :is(.card,.settings-card,.about-content,.side-menu,.about-row-button){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(.card,.settings-card,.about-content,.side-menu,.about-row-button){
  background:#34271b;color:#fff0d3;border-color:#8a6438;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(.app-title,h1,h2,h3,.menu-btn,.side-menu button){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(.app-title,h1,h2,h3,.menu-btn,.side-menu button){
  color:#ffe6b3!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(.names,.name-detail-card h3){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(.names,.name-detail-card h3){
  color:#ffd07a!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .tomorrow,.interesting,.latvia-today,.birthday-entry,.greeting-result
 ){background:rgba(68,48,29,.94)!important;border-color:#916a3c;color:#fff0d3}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .muted,.foot,.week div,#dateTitle,.extra-title,.about-app>div:last-child>div
 ){color:#d6b98b!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  button,.btn,input,textarea,select,.greeting-options button,
  .favorite-add-matches button,.favorite-add-selected button
 ){background:#3e2d1d;color:#fff0d3;border-color:#967044}
-html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea)::placeholder{color:#c4aa85}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(input,textarea)::placeholder{color:#c4aa85}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .primary,button.primary,.name-detail-actions button
 ){background:linear-gradient(180deg,#d39437,#93500e)!important;color:#fff9ee!important;border-color:#e3b361!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  #prevDay,#nextDay,#prevMonth,#nextMonth,#nameBtn,#dateBtn,
  #favoriteAddCancel,#birthdayAddCancel,.greeting-back-bar .back-btn,
  .greeting-result-actions>button,.greeting-result-action-row button,
  #settingsView .back-btn,#favoritesView>.back-btn,
  #birthdaysView>.back-btn,#nameDetailView>.back-btn
 ){background:#46311f!important;color:#ffe2ac!important;border-color:#b98745!important}
-html[data-design="festive-s1"][data-theme="dark"] #calendar .day:not(.sel){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] #calendar .day:not(.sel){
  background:transparent;color:#fff0d3;border:0;
 }
-html[data-design="festive-s1"][data-theme="dark"] #calendar .day.sel{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] #calendar .day.sel{
  background:linear-gradient(180deg,#d39437,#93500e)!important;
  color:#fff!important;border-color:#dba354!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] #calendar .day.today:not(.sel){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] #calendar .day.today:not(.sel){
  outline:2px solid #dba354!important;color:#ffe0a2!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .birthday-sort,.favorites-sort
 ){background:#302216}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .birthday-sort button.active,.favorites-sort button.active,.greeting-options button.active
 ){background:#74502a!important;color:#fff0d3!important;border-color:#c9954c!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(input,textarea,select){
  caret-color:#f0c474!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select):focus,
-html[data-design="festive-s1"][data-theme="dark"] :is(input,textarea,select):focus-visible{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(input,textarea,select):focus,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(input,textarea,select):focus-visible{
  outline:2px solid #f0c474!important;outline-offset:1px;
  border-color:#f0c474!important;box-shadow:0 0 0 2px rgba(240,196,116,.19)!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(input[type="checkbox"],input[type="radio"]){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(input[type="checkbox"],input[type="radio"]){
  accent-color:#d39b4d!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .switch input:checked+.switch-slider{background:#b77922!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .switch input:checked+.switch-slider{background:#b77922!important}
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
  .birthday-entry .birthday-chevron,.greeting-entry-arrow,.birthday-edit-btn,
  .settings-card select[id^="reminder"][id$="Time"]
 ){color:#f2c36b!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(.settings-back-bar,.greeting-back-bar){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(.settings-back-bar,.greeting-back-bar){
  background:rgba(35,24,15,.96)!important;border-color:#8a6438!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(.push-active-status,.push-active-status:disabled,#deleteMyDataButton){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(.push-active-status,.push-active-status:disabled,#deleteMyDataButton){
  background:#49341f!important;color:#f2c36b!important;border-color:#967044!important;
 }
 
 
 /* TEST S1.10 — approved gold dark palette cleanup.
    Scoped to festive-s1 dark; no markup, logic, or other themes changed. */
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
   .date-suggestions button,.favorite-add-selected button
 ){
   background:#46311f!important;color:#fff0d3!important;border-color:#b98745!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
   #favoritesView>.back-btn,#birthdaysView>.back-btn,
   #favoritesView .back-btn,#birthdaysView .back-btn
 ){
   background:#46311f!important;color:#ffe2ac!important;border:1px solid #b98745!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
   .favorite-add-panel,.birthday-saved-row
 ){border-color:#8a6438!important}
-html[data-design="festive-s1"][data-theme="dark"] .greeting-emoji-panel{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .greeting-emoji-panel{
   background:#34271b!important;color:#fff0d3!important;border-color:#b98745!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .greeting-emoji-grid button{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .greeting-emoji-grid button{
   background:#46311f!important;color:#fff0d3!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] :is(
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(
   .greeting-emoji-close,.greeting-emoji-icon
 ){color:#ffe2ac!important}
-html[data-design="festive-s1"][data-theme="dark"] :is(#clearName,#clearDate){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] :is(#clearName,#clearDate){
   color:#f0c474!important;background:transparent!important;border:0!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .name-detail-feedback{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .name-detail-feedback{
   color:#f0c474!important;
 }
 /* SVG gift icon: override the original inline SVG presentation attributes. */
-html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon rect:first-child{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .birthday-gift-icon rect:first-child{
   fill:#d39b4d!important;stroke:#74502a!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon rect:nth-child(2){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .birthday-gift-icon rect:nth-child(2){
   fill:#edbd69!important;stroke:#74502a!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:nth-child(3){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .birthday-gift-icon path:nth-child(3){
   fill:#ffe2a3!important;stroke:#74502a!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .birthday-gift-icon path:last-child{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .birthday-gift-icon path:last-child{
   fill:#74502a!important;
 }
 
 
 /* TEST S1.11 — Settings: golden-dark time selectors and section dividers. */
-html[data-design="festive-s1"][data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]{
   background:#46311f!important;
   color:#f2c36b!important;
   border:1px solid #b98745!important;
   color-scheme:dark;
 }
-html[data-design="festive-s1"][data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]:focus-visible{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .settings-card select[id^="reminder"][id$="Time"]:focus-visible{
   outline:2px solid #f0c474!important;
   outline-offset:2px;
 }
-html[data-design="festive-s1"][data-theme="dark"] .settings-card .settings-section{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .settings-card .settings-section{
   border-top-color:#8a6438!important;
 }
 
@@ -795,24 +791,24 @@ html[data-design] .greeting-emoji-panel .greeting-emoji-close{
   color:var(--ds-text)!important;background:transparent!important;
 }
 /* Gold S1 has its own brown/gold palette, not the classic green. */
-html[data-design="festive-s1"] .reminder-time-control>.reminder-time-trigger,
-html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .reminder-time-menu button[aria-selected="true"]{
   color:var(--ds-primary)!important;
 }
 
 /* Gold-specific picker overrides: the legacy S1 primary token is green. */
-html[data-design="festive-s1"] .reminder-time-control>.reminder-time-trigger,
-html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .reminder-time-menu button[aria-selected="true"]{
  color:#995b0d!important;
 }
-html[data-design="festive-s1"] .reminder-time-menu button[aria-selected="true"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .reminder-time-menu button[aria-selected="true"]{
  background:#f5e5c5!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .reminder-time-control>.reminder-time-trigger,
-html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .reminder-time-control>.reminder-time-trigger,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
  color:#f6c775!important;
 }
-html[data-design="festive-s1"][data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .reminder-time-menu button[aria-selected="true"]{
  background:#624524!important;
 }
 
@@ -949,20 +945,20 @@ html[data-design="nature-d3"][data-theme="dark"] :is(
 /* TEST UI refinement 2026-11-04: D3/S1 interface consistency.
    Decoration assets and fixed decorative layers are intentionally untouched. */
 html[data-design="nature-d3"] :is(.names .name-link,.extra-list .name-link),
-html[data-design="festive-s1"] :is(.names .name-link,.extra-list .name-link){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) :is(.names .name-link,.extra-list .name-link){
   background:transparent!important;box-shadow:none!important;border-color:transparent!important;
 }
 html[data-design="nature-d3"] :is(.remove-favorite,.birthday-edit-btn,.birthday-delete-btn),
-html[data-design="festive-s1"] :is(.remove-favorite,.birthday-edit-btn,.birthday-delete-btn){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) :is(.remove-favorite,.birthday-edit-btn,.birthday-delete-btn){
   background:transparent!important;box-shadow:none!important;border-color:transparent!important;
 }
 html[data-design="nature-d3"] .side-menu button,
-html[data-design="festive-s1"] .side-menu button{
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .side-menu button{
   background:transparent!important;border:0!important;box-shadow:none!important;
   border-radius:0!important;text-align:left;
 }
 html[data-design="nature-d3"] :is(#clearName,#clearDate),
-html[data-design="festive-s1"] :is(#clearName,#clearDate){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) :is(#clearName,#clearDate){
   background:transparent!important;border:0!important;box-shadow:none!important;
   border-radius:0!important;
 }
@@ -974,7 +970,7 @@ html[data-design="nature-d3"] :is(#favoriteAddCancel,#birthdayAddCancel){
   background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
   border-color:var(--ds-soft-border)!important;
 }
-html[data-design="festive-s1"] :is(#favoriteAddCancel,#birthdayAddCancel){
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) :is(#favoriteAddCancel,#birthdayAddCancel){
   background:var(--ds-soft-bg)!important;color:var(--ds-text)!important;
   border-color:var(--ds-soft-border)!important;
 }
@@ -994,7 +990,7 @@ html[data-design] .greeting-result .greeting-result-text:focus{
    Keep all decoration SVGs unchanged.  Explicit selectors outrank the
    general themed button and textarea rules, including their !important flags. */
 html[data-design="nature-d3"] .side-menu > button,
-html[data-design="festive-s1"] .side-menu > button {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .side-menu > button {
   appearance:none!important;-webkit-appearance:none!important;
   background:none!important;background-color:transparent!important;
   background-image:none!important;border:0!important;border-radius:0!important;
@@ -1003,9 +999,9 @@ html[data-design="festive-s1"] .side-menu > button {
 html[data-design="nature-d3"] #favoritesList button.remove-favorite,
 html[data-design="nature-d3"] #birthdayView button.birthday-edit-btn,
 html[data-design="nature-d3"] #birthdayView button.birthday-delete-btn,
-html[data-design="festive-s1"] #favoritesList button.remove-favorite,
-html[data-design="festive-s1"] #birthdayView button.birthday-edit-btn,
-html[data-design="festive-s1"] #birthdayView button.birthday-delete-btn {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #favoritesList button.remove-favorite,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #birthdayView button.birthday-edit-btn,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #birthdayView button.birthday-delete-btn {
   appearance:none!important;-webkit-appearance:none!important;
   background:none!important;background-color:transparent!important;
   background-image:none!important;border:0!important;
@@ -1014,13 +1010,13 @@ html[data-design="festive-s1"] #birthdayView button.birthday-delete-btn {
 /* Additional selectors for birthday list irrespective of its enclosing view ID. */
 html[data-design="nature-d3"] .birthday-saved-row button.birthday-edit-btn,
 html[data-design="nature-d3"] .birthday-saved-row button.birthday-delete-btn,
-html[data-design="festive-s1"] .birthday-saved-row button.birthday-edit-btn,
-html[data-design="festive-s1"] .birthday-saved-row button.birthday-delete-btn {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .birthday-saved-row button.birthday-edit-btn,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) .birthday-saved-row button.birthday-delete-btn {
   background:transparent!important;background-image:none!important;
   border:0!important;border-radius:0!important;box-shadow:none!important;
 }
 html[data-design="nature-d3"] #greetingResultView .greeting-result textarea#greetingResultText,
-html[data-design="festive-s1"] #greetingResultView .greeting-result textarea#greetingResultText {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #greetingResultView .greeting-result textarea#greetingResultText {
   appearance:none!important;-webkit-appearance:none!important;
   background:transparent!important;background-color:transparent!important;
   background-image:none!important;box-shadow:none!important;
@@ -1028,7 +1024,7 @@ html[data-design="festive-s1"] #greetingResultView .greeting-result textarea#gre
   opacity:1!important;-webkit-text-fill-color:currentColor!important;
 }
 html[data-design="nature-d3"] #greetingResultView .greeting-result .greeting-text-wrap,
-html[data-design="festive-s1"] #greetingResultView .greeting-result .greeting-text-wrap {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"]) #greetingResultView .greeting-result .greeting-text-wrap {
   background:transparent!important;box-shadow:none!important;
 }
 
@@ -1038,8 +1034,8 @@ html[data-design="festive-s1"] #greetingResultView .greeting-result .greeting-te
    higher than earlier component-only resets. Decorations stay untouched. */
 html[data-design="nature-d3"][data-theme="dark"] .side-menu button,
 html[data-design="nature-d3"][data-theme="light"] .side-menu button,
-html[data-design="festive-s1"][data-theme="dark"] .side-menu button,
-html[data-design="festive-s1"][data-theme="light"] .side-menu button {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .side-menu button,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .side-menu button {
   background:transparent!important;background-color:transparent!important;
   background-image:none!important;border:0!important;
   border-radius:0!important;box-shadow:none!important;
@@ -1047,8 +1043,8 @@ html[data-design="festive-s1"][data-theme="light"] .side-menu button {
 }
 html[data-design="nature-d3"][data-theme="dark"] .birthday-saved-row .birthday-row-actions button,
 html[data-design="nature-d3"][data-theme="light"] .birthday-saved-row .birthday-row-actions button,
-html[data-design="festive-s1"][data-theme="dark"] .birthday-saved-row .birthday-row-actions button,
-html[data-design="festive-s1"][data-theme="light"] .birthday-saved-row .birthday-row-actions button {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] .birthday-saved-row .birthday-row-actions button,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] .birthday-saved-row .birthday-row-actions button {
   background:transparent!important;background-color:transparent!important;
   background-image:none!important;border:0!important;
   border-radius:0!important;box-shadow:none!important;
@@ -1056,8 +1052,8 @@ html[data-design="festive-s1"][data-theme="light"] .birthday-saved-row .birthday
 }
 html[data-design="nature-d3"][data-theme="dark"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
 html[data-design="nature-d3"][data-theme="light"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
-html[data-design="festive-s1"][data-theme="dark"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
-html[data-design="festive-s1"][data-theme="light"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon {
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="dark"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon,
+html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="light"] #greetingResultView .greeting-text-wrap button.greeting-emoji-icon {
   background:transparent!important;background-color:transparent!important;
   background-image:none!important;border:0!important;
   border-radius:0!important;box-shadow:none!important;
