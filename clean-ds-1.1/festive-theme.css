@@ -1,12 +1,7 @@
-/* S1 Zeltainie akcenti: brushed gold and polished corners. */
+/* S1 Zeltainie akcenti: polished rings and chain. */
 html[data-design="festive-s1"] {
-  --ds-decor-image:
-    linear-gradient(137deg, #694018 0%, #b77d34 2%, #f5ce72 3.7%, #fff6c4 5.2%, #a36824 6%, #f6d88a 7%, #ffe9a0 7.5%, #6f4517 8.1%, transparent 8.6%),
-    linear-gradient(317deg, #694018 0%, #b77d34 2%, #f5ce72 3.7%, #fff6c4 5.2%, #a36824 6%, #f6d88a 7%, #ffe9a0 7.5%, #6f4517 8.1%, transparent 8.6%),
-    radial-gradient(ellipse 65% 31% at 94% 10%, #fff2b67a, transparent 90%),
-    radial-gradient(ellipse 65% 38% at 5% 92%, #ffcc677d, transparent 95%),
-    repeating-linear-gradient(153deg, #fff7cf62 0 .65px, #5a351f41 .65px 1.25px, transparent 1.25px 3.2px, #fff2bd36 3.2px 3.9px, transparent 3.9px 6.2px);
-  --ds-decor-opacity: .92;
+  --ds-decor-image: url('../assets/zelts-rings-light.webp');
+  --ds-decor-opacity: 1;
   --ds-decor-position: center;
   --ds-decor-size: 100% 100%;
   --ds-bg-gradient: none;
@@ -45,6 +40,7 @@ html[data-design="festive-s1"] {
 }
 
 html[data-design="festive-s1"][data-theme="dark"] {
+  --ds-decor-image: url('../assets/zelts-rings-dark.webp');
   --ds-app-backdrop: radial-gradient(ellipse at top right, #765020, transparent 60%), linear-gradient(150deg, #49321c, #23160e);
   --ds-page-bg: #302016;
   --ds-home-panel-bg: rgba(112, 83, 43, .17);
