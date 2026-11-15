@@ -1,4 +1,4 @@
-const CACHE_NAME = "vardadienas-v8";
+const CACHE_NAME = "vardadienas-v9";
 
 const FILES_TO_CACHE = [
   "./",
@@ -15,7 +15,7 @@ const FILES_TO_CACHE = [
   "./clean-ds-1.1/cherry-theme.css",
   "./clean-ds-1.1/sun-theme.css",
   "./clean-ds-1.1/classic-theme.css",
-  "./clean-ds-1.1/festive-theme.css",
+  "./clean-ds-1.1/festive-theme.css?metal=9",
   "./clean-ds-1.1/app-integration.css",
   "./clean-ds-1.1/about-row-gap.css",
   "./clean-ds-1.1/theme-bootstrap.js",
