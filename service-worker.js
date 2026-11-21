@@ -1,4 +1,4 @@
-const CACHE_NAME = "vardadienas-v10";
+const CACHE_NAME = "vardadienas-v11";
 
 const FILES_TO_CACHE = [
   "./",
