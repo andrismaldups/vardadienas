@@ -1059,3 +1059,10 @@ html[data-design="festive-s1"]:where([data-theme-system="legacy"])[data-theme="l
   border-radius:0!important;box-shadow:none!important;
   -webkit-appearance:none!important;appearance:none!important;
 }
+
+/* Reserve a separate bottom area for the emoji control in every design. */
+#greetingResultView .greeting-text-wrap textarea#greetingResultText,
+#greetingResultView .greeting-text-wrap textarea#greetingResultText:focus {
+  box-sizing:border-box!important;
+  padding-bottom:44px!important;
+}
