@@ -985,6 +985,7 @@
   const DELETE_LOCAL_KEYS=[
     'favorites','birthdays','birthdaySortMode',
     'testBirthdaySyncQueueV1','testBirthdaySyncInitializedV1',
+    'vardadienas_test_favorites_queue_v1',
     'vardadienas_test_installation_v1','testPushSubscriptionId',
     'remindersEnabled','reminderTime','reminderEvening','reminderMorning',
     'reminderEveningTime','reminderMorningTime','reminderTarget','reminderBirthdays'
@@ -1020,6 +1021,7 @@
       }
       if(saved?.installationId&&saved?.token){
         // Pirms servera DELETE sagaidām iesāktos rakstīšanas pieprasījumus.
+        if(testFavoritesSyncPromise)await testFavoritesSyncPromise;
         if(birthdaySyncPromise)await birthdaySyncPromise;
         while(reminderSyncInProgress>0)await new Promise(resolve=>setTimeout(resolve,100));
         // Atzīmi saglabājam TIKAI tieši pirms DELETE. Ja sagatavošana neizdodas,
@@ -1538,6 +1540,7 @@ function readTestFavoritesQueue(){
   }catch(_error){return [];}
 }
 function enqueueTestFavorite(method,name){
+  if(deletionSyncBlocked())return;
   // Ja viens vārds vairākkārt mainīts bezsaistē, svarīgs ir pēdējais stāvoklis.
   const queue=readTestFavoritesQueue().filter(item=>item.name!==name);
   queue.push({method,name});
@@ -1545,11 +1548,12 @@ function enqueueTestFavorite(method,name){
   void flushTestFavoritesQueue();
 }
 async function flushTestFavoritesQueue(){
+  if(deletionSyncBlocked())return;
   if(testFavoritesSyncPromise) return testFavoritesSyncPromise;
   if(typeof navigator!=='undefined' && navigator.onLine===false) return;
   testFavoritesSyncPromise=(async()=>{
     const installation=await getOrCreateTestInstallation();
-    while(true){
+    while(!deletionSyncBlocked()){
       const queue=readTestFavoritesQueue();
       if(!queue.length) break;
       const item=queue[0];
