@@ -250,57 +250,1198 @@
 <button type="button" class="card greeting-entry" onclick="mainView.hidden=true;greetingView.hidden=false"><div><h2>Apsveikums</h2><div class="muted">Izveido personīgu vārdadienas apsveikumu</div></div><span class="greeting-entry-arrow">›</span></button></div></div>
 <section class="card foot"><strong>Datu avots:</strong> Valsts valodas centra Kalendārvārdu ekspertu komisijas saraksti, kurus iesniedzāt šīs V2 izveidei. Dati ir iebūvēti failā; aplikācijai nav nepieciešams interneta savienojums.</section></div></div>
 <script>
-  const GREETING_SINCERE={
-    openings:[
-      {text:"[Vārds], šodien ir Tava diena!",tags:["diena"]},
-      {text:"[Vārds], šodien visi labie vārdi ir Tev!",tags:["labi_vārdi"]},
-      {text:"[Vārds], sirsnīgi sveicu vārdadienā!",tags:["sveiciens"]},
-      {text:"Sirsnīgi sveicieni vārdadienā, [Vārds]!",tags:["sveiciens"]},
-      {text:"Daudz siltu sveicienu Tavā vārdadienā, [Vārds]!",tags:["sveiciens"]},
-      {text:"Skaistus vārdadienas sveicienus Tev, [Vārds]!",tags:["sveiciens","skaists"]},
-      {text:"No sirds sveicu Tevi vārdadienā, [Vārds]!",tags:["sveiciens"]},
-      {text:"Lai Tev skaista vārdadiena, [Vārds]!",tags:["skaists","lai"]}
+  const GREETING_LIBRARIES={
+  "Sirsnīgs": {
+    "A": [
+      {
+        "id": "A1",
+        "text": "[Vārds], šodien ir Tava diena!",
+        "tags": [
+          "diena"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs"
+        ]
+      },
+      {
+        "id": "A2",
+        "text": "[Vārds], šodien visi labie vārdi ir Tev!",
+        "tags": [
+          "labi_vārdi"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs"
+        ]
+      },
+      {
+        "id": "A3",
+        "text": "[Vārds], sirsnīgi sveicu vārdadienā!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "A4",
+        "text": "Sirsnīgi sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "A5",
+        "text": "Daudz siltu sveicienu Tavā vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "A6",
+        "text": "Skaistus vārdadienas sveicienus Tev, [Vārds]!",
+        "tags": [
+          "sveiciens",
+          "skaists"
+        ]
+      },
+      {
+        "id": "A7",
+        "text": "No sirds sveicu Tevi vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "A8",
+        "text": "Lai Tev skaista vārdadiena, [Vārds]!",
+        "tags": [
+          "skaists",
+          "lai"
+        ]
+      }
     ],
-    greetings:[
-      {text:"Lai šī diena ir piepildīta ar prieku, smaidiem un jaukiem mirkļiem.",tags:["prieks","smaids","lai"]},
-      {text:"Lai Tava vārdadiena ir gaiša un sirsnīgu cilvēku piepildīta.",tags:["cilvēki","lai"]},
-      {text:"Lai šodien Tevi sasniedz daudz labu vārdu un siltu domu.",tags:["labi_vārdi","lai"]},
-      {text:"Lai šī īpašā diena atnes daudz prieka un patīkamu pārsteigumu.",tags:["prieks","pārsteigumi","lai"]},
-      {text:"Lai vārdadiena Tev dāvā skaistus mirkļus un patiesu prieku.",tags:["skaists","prieks","lai"]},
-      {text:"Lai šodien apkārt ir smaidi, labi vārdi un patīkama sabiedrība.",tags:["smaids","labi_vārdi","lai"]},
-      {text:"Lai šī diena ir mazliet īpašāka par citām un sagādā daudz prieka.",tags:["prieks","lai"]},
-      {text:"Lai vārdadienas sveicieni sasilda un iepriecina visas dienas garumā.",tags:["sveiciens","lai"]},
-      {text:"Lai šodien netrūkst smaidu un jauku pārsteigumu.",tags:["smaids","pārsteigumi","netrūkst","lai"]},
-      {text:"Lai Tava vārdadiena ir piepildīta ar siltumu un labām emocijām.",tags:["lai"]}
+    "B": [
+      {
+        "id": "B1",
+        "text": "Lai šī diena ir piepildīta ar prieku, smaidiem un jaukiem mirkļiem.",
+        "tags": [
+          "prieks",
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "B2",
+        "text": "Lai Tava vārdadiena ir gaiša un sirsnīgu cilvēku piepildīta.",
+        "tags": [
+          "cilvēki",
+          "lai"
+        ]
+      },
+      {
+        "id": "B3",
+        "text": "Lai šodien Tevi sasniedz daudz labu vārdu un siltu domu.",
+        "tags": [
+          "labi_vārdi",
+          "lai"
+        ]
+      },
+      {
+        "id": "B4",
+        "text": "Lai šī īpašā diena atnes daudz prieka un patīkamu pārsteigumu.",
+        "tags": [
+          "prieks",
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "B5",
+        "text": "Lai vārdadiena Tev dāvā skaistus mirkļus un patiesu prieku.",
+        "tags": [
+          "skaists",
+          "prieks",
+          "lai"
+        ]
+      },
+      {
+        "id": "B6",
+        "text": "Lai šodien apkārt ir smaidi, labi vārdi un patīkama sabiedrība.",
+        "tags": [
+          "smaids",
+          "labi_vārdi",
+          "lai"
+        ]
+      },
+      {
+        "id": "B7",
+        "text": "Lai šī diena ir mazliet īpašāka par citām un sagādā daudz prieka.",
+        "tags": [
+          "prieks",
+          "lai"
+        ]
+      },
+      {
+        "id": "B8",
+        "text": "Lai vārdadienas sveicieni sasilda un iepriecina visas dienas garumā.",
+        "tags": [
+          "sveiciens",
+          "lai"
+        ]
+      },
+      {
+        "id": "B9",
+        "text": "Lai šodien netrūkst smaidu un jauku pārsteigumu.",
+        "tags": [
+          "smaids",
+          "pārsteigumi",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "B10",
+        "text": "Lai Tava vārdadiena ir piepildīta ar siltumu un labām emocijām.",
+        "tags": [
+          "lai"
+        ]
+      }
     ],
-    wishes:[
-      {text:"Lai ikdienā netrūkst veselības, enerģijas un skaistu mirkļu.",tags:["veselība","skaists","netrūkst","lai"]},
-      {text:"Lai piepildās iecerētais un vienmēr atrodas kāds jauns iemesls smaidīt.",tags:["smaids","lai"]},
-      {text:"Lai blakus vienmēr ir cilvēki, kuri Tevi novērtē un iepriecina.",tags:["cilvēki","lai"]},
-      {text:"Lai katra jauna diena atnes ko labu un vērtīgu.",tags:["diena","lai"]},
-      {text:"Lai izdodas iecerētais un dzīve sagādā patīkamus pārsteigumus.",tags:["pārsteigumi","lai"]},
-      {text:"Lai Tev daudz laimīgu brīžu un cilvēku, ar kuriem tajos dalīties.",tags:["cilvēki","lai"]},
-      {text:"Lai pietiek spēka lieliem mērķiem un laika tam, kas Tev patiesi svarīgs.",tags:["lai"]},
-      {text:"Lai ikdienā vairāk gaišu domu, siltu tikšanos un patiesu smaidu.",tags:["smaids","lai"]},
-      {text:"Lai dzīvē netrūkst veselības, mīlestības un jauku notikumu.",tags:["veselība","netrūkst","lai"]},
-      {text:"Lai katrā dienā izdodas atrast kaut ko, par ko priecāties.",tags:["prieks","diena","lai"]},
-      {text:"Lai sapņi pamazām kļūst par skaistiem notikumiem.",tags:["skaists","lai"]},
-      {text:"Lai Tevi pavada veiksme, veselība un labi cilvēki.",tags:["veselība","cilvēki","lai"]}
+    "C": [
+      {
+        "id": "C1",
+        "text": "Lai ikdienā netrūkst veselības, enerģijas un skaistu mirkļu.",
+        "tags": [
+          "veselība",
+          "skaists",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "C2",
+        "text": "Lai piepildās iecerētais un vienmēr atrodas kāds jauns iemesls smaidīt.",
+        "tags": [
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "C3",
+        "text": "Lai blakus vienmēr ir cilvēki, kuri Tevi novērtē un iepriecina.",
+        "tags": [
+          "cilvēki",
+          "lai"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs"
+        ]
+      },
+      {
+        "id": "C4",
+        "text": "Lai katra jauna diena atnes ko labu un vērtīgu.",
+        "tags": [
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "C5",
+        "text": "Lai izdodas iecerētais un dzīve sagādā patīkamus pārsteigumus.",
+        "tags": [
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "C6",
+        "text": "Lai Tev daudz laimīgu brīžu un cilvēku, ar kuriem tajos dalīties.",
+        "tags": [
+          "cilvēki",
+          "lai"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs"
+        ]
+      },
+      {
+        "id": "C7",
+        "text": "Lai pietiek spēka lieliem mērķiem un laika tam, kas Tev patiesi svarīgs.",
+        "tags": [
+          "lai"
+        ]
+      },
+      {
+        "id": "C8",
+        "text": "Lai ikdienā vairāk gaišu domu, siltu tikšanos un patiesu smaidu.",
+        "tags": [
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "C9",
+        "text": "Lai dzīvē netrūkst veselības, mīlestības un jauku notikumu.",
+        "tags": [
+          "veselība",
+          "netrūkst",
+          "lai"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs"
+        ]
+      },
+      {
+        "id": "C10",
+        "text": "Lai katrā dienā izdodas atrast kaut ko, par ko priecāties.",
+        "tags": [
+          "prieks",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "C11",
+        "text": "Lai sapņi pamazām kļūst par skaistiem notikumiem.",
+        "tags": [
+          "skaists",
+          "lai"
+        ]
+      },
+      {
+        "id": "C12",
+        "text": "Lai Tevi pavada veiksme, veselība un labi cilvēki.",
+        "tags": [
+          "veselība",
+          "cilvēki",
+          "lai"
+        ]
+      }
     ],
-    closings:[
-      {text:"Brīnišķīgu vārdadienu!",tags:[]},
-      {text:"Skaistu un priecīgu vārdadienu!",tags:["skaists","prieks"]},
-      {text:"Sirsnīgi sveicieni Tavā svētku dienā!",tags:["sveiciens","diena"]},
-      {text:"No sirds — skaistu vārdadienu!",tags:["skaists"]},
-      {text:"Jauku un saulainu svētku dienu!",tags:["diena"]},
-      {text:"Daudz prieka Tavā vārdadienā!",tags:["prieks"]},
-      {text:"Sirsnīgi sveicieni un jauku dienu!",tags:["sveiciens","diena"]},
-      {text:"Daudz smaidu Tavā svētku dienā!",tags:["smaids","diena"]},
-      {text:"Skaistus svētkus!",tags:["skaists"]},
-      {text:"Vislabākie vēlējumi vārdadienā!",tags:[]}
+    "D": [
+      {
+        "id": "D1",
+        "text": "Brīnišķīgu vārdadienu!",
+        "tags": []
+      },
+      {
+        "id": "D2",
+        "text": "Skaistu un priecīgu vārdadienu!",
+        "tags": [
+          "skaists",
+          "prieks"
+        ]
+      },
+      {
+        "id": "D3",
+        "text": "Sirsnīgi sveicieni Tavā svētku dienā!",
+        "tags": [
+          "sveiciens",
+          "diena"
+        ]
+      },
+      {
+        "id": "D4",
+        "text": "No sirds — skaistu vārdadienu!",
+        "tags": [
+          "skaists"
+        ]
+      },
+      {
+        "id": "D5",
+        "text": "Jauku un saulainu svētku dienu!",
+        "tags": [
+          "diena"
+        ]
+      },
+      {
+        "id": "D6",
+        "text": "Daudz prieka Tavā vārdadienā!",
+        "tags": [
+          "prieks"
+        ]
+      },
+      {
+        "id": "D7",
+        "text": "Sirsnīgi sveicieni un jauku dienu!",
+        "tags": [
+          "sveiciens",
+          "diena"
+        ]
+      },
+      {
+        "id": "D8",
+        "text": "Daudz smaidu Tavā svētku dienā!",
+        "tags": [
+          "smaids",
+          "diena"
+        ]
+      },
+      {
+        "id": "D9",
+        "text": "Skaistus svētkus!",
+        "tags": [
+          "skaists"
+        ]
+      },
+      {
+        "id": "D10",
+        "text": "Vislabākie vēlējumi vārdadienā!",
+        "tags": []
+      }
     ]
-  };
-
+  },
+  "Jautrs": {
+    "A": [
+      {
+        "id": "JA1",
+        "text": "[Vārds], šodien svētki ir Tev!",
+        "tags": [
+          "svētki"
+        ]
+      },
+      {
+        "id": "JA2",
+        "text": "[Vārds], vārdadiena ir klāt!",
+        "tags": [
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "JA3",
+        "text": "Hei, [Vārds] — sveicieni vārdadienā!",
+        "tags": [
+          "sveiciens"
+        ],
+        "relationships": [
+          "Draugs",
+          "Kolēģis"
+        ]
+      },
+      {
+        "id": "JA4",
+        "text": "[Vārds], šodien ir labs iemesls svinēt!",
+        "tags": [
+          "svinēt"
+        ]
+      },
+      {
+        "id": "JA5",
+        "text": "Daudz priecīgu sveicienu, [Vārds]!",
+        "tags": [
+          "prieks",
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "JA6",
+        "text": "[Vārds], lai sākas vārdadienas svinības!",
+        "tags": [
+          "svinēt",
+          "lai"
+        ]
+      },
+      {
+        "id": "JA7",
+        "text": "Priecīgu vārdadienu, [Vārds]!",
+        "tags": [
+          "prieks"
+        ]
+      },
+      {
+        "id": "JA8",
+        "text": "[Vārds], šodien kalendārs ir Tavā pusē!",
+        "tags": [
+          "kalendārs"
+        ]
+      }
+    ],
+    "B": [
+      {
+        "id": "JB1",
+        "text": "Lai šodien smaidu ir vairāk nekā ikdienas rūpju.",
+        "tags": [
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "JB2",
+        "text": "Lai vārdadiena atnes labu garastāvokli un kādu patīkamu pārsteigumu.",
+        "tags": [
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "JB3",
+        "text": "Šodien drīkst mazliet vairāk priecāties un mazliet mazāk domāt par darbiem.",
+        "tags": [
+          "prieks",
+          "darbs"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs",
+          "Kolēģis"
+        ]
+      },
+      {
+        "id": "JB4",
+        "text": "Lai šodien netrūkst labas kompānijas, gardumu un jautru brīžu.",
+        "tags": [
+          "kompānija",
+          "gardumi",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "JB5",
+        "text": "Šodien ir īstā diena labam garastāvoklim un nelielām svinībām.",
+        "tags": [
+          "svinēt"
+        ]
+      },
+      {
+        "id": "JB6",
+        "text": "Lai sveicieni nāk viens pēc otra un katrs atnes kādu smaidu.",
+        "tags": [
+          "sveiciens",
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "JB7",
+        "text": "Vārdadiena ir lielisks iemesls ikdienai pievienot mazliet svētku.",
+        "tags": [
+          "svētki"
+        ]
+      },
+      {
+        "id": "JB8",
+        "text": "Lai šī diena sagādā vairāk patīkamu pārsteigumu nekā paredzēts.",
+        "tags": [
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "JB9",
+        "text": "Šodien labs garastāvoklis ir gandrīz obligāts.",
+        "tags": []
+      },
+      {
+        "id": "JB10",
+        "text": "Lai vārdadienas svinēšanai atrodas gan laiks, gan laba kompānija.",
+        "tags": [
+          "svinēt",
+          "kompānija",
+          "lai"
+        ]
+      }
+    ],
+    "C": [
+      {
+        "id": "JC1",
+        "text": "Lai ikdienā vairāk piedzīvojumu un mazāk garlaicīgu dienu.",
+        "tags": [
+          "piedzīvojumi",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC2",
+        "text": "Lai vienmēr atrodas labs iemesls pasmaidīt.",
+        "tags": [
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC3",
+        "text": "Lai veiksme turas blakus arī tad, kad nekas nav ieplānots.",
+        "tags": [
+          "veiksme",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC4",
+        "text": "Lai dzīvē netrūkst cilvēku, ar kuriem kopā var gan pasmieties, gan nosvinēt.",
+        "tags": [
+          "cilvēki",
+          "svinēt",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC5",
+        "text": "Lai iecerētais izdodas un neplānotais patīkami pārsteidz.",
+        "tags": [
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC6",
+        "text": "Lai ikdienā netrūkst notikumu, kurus vēlāk ar smaidu atcerēties.",
+        "tags": [
+          "netrūkst",
+          "smaids",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC7",
+        "text": "Lai pietiek enerģijas gan lieliem plāniem, gan mazām izklaidēm.",
+        "tags": [
+          "enerģija",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC8",
+        "text": "Lai labu cilvēku, smieklu un jauku notikumu nekad nav par daudz.",
+        "tags": [
+          "cilvēki",
+          "smiekli",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC9",
+        "text": "Lai veicas darbos un vēl labāk — atpūtā.",
+        "tags": [
+          "darbs",
+          "lai"
+        ],
+        "relationships": [
+          "Ģimenes loceklis",
+          "Draugs",
+          "Kolēģis"
+        ]
+      },
+      {
+        "id": "JC10",
+        "text": "Lai dzīve biežāk sagādā patīkamus pārsteigumus.",
+        "tags": [
+          "pārsteigumi",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC11",
+        "text": "Lai garastāvoklis labs ne tikai svētkos, bet arī parastās dienās.",
+        "tags": [
+          "svētki",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "JC12",
+        "text": "Lai vienmēr paliek laiks lietām, kas sagādā prieku.",
+        "tags": [
+          "prieks",
+          "lai"
+        ]
+      }
+    ],
+    "D": [
+      {
+        "id": "JD1",
+        "text": "Priecīgu vārdadienu!",
+        "tags": [
+          "prieks"
+        ]
+      },
+      {
+        "id": "JD3",
+        "text": "Daudz smaidu un labu emociju!",
+        "tags": [
+          "smaids"
+        ]
+      },
+      {
+        "id": "JD4",
+        "text": "Šodien par Tevi!",
+        "tags": []
+      },
+      {
+        "id": "JD5",
+        "text": "Lai svētki izdodas!",
+        "tags": [
+          "svētki",
+          "lai"
+        ]
+      },
+      {
+        "id": "JD6",
+        "text": "Jauku vārdadienu un labu garastāvokli!",
+        "tags": []
+      },
+      {
+        "id": "JD8",
+        "text": "Baudi savu svētku dienu!",
+        "tags": [
+          "svētki",
+          "diena"
+        ]
+      },
+      {
+        "id": "JD9",
+        "text": "Daudz jautru mirkļu šodien!",
+        "tags": []
+      },
+      {
+        "id": "JD10",
+        "text": "Lielisku vārdadienu!",
+        "tags": []
+      }
+    ]
+  },
+  "Īss": {
+    "A": [
+      {
+        "id": "IA1",
+        "text": "Priecīgu vārdadienu, [Vārds]!",
+        "tags": [
+          "prieks"
+        ]
+      },
+      {
+        "id": "IA2",
+        "text": "Sirsnīgi sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "IA3",
+        "text": "[Vārds], sveicu vārdadienā!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "IA4",
+        "text": "[Vārds], daudz laimes vārdadienā!",
+        "tags": [
+          "laime"
+        ]
+      },
+      {
+        "id": "IA5",
+        "text": "Skaistu vārdadienu, [Vārds]!",
+        "tags": [
+          "skaists"
+        ]
+      },
+      {
+        "id": "IA6",
+        "text": "[Vārds], sirsnīgi sveicu svētkos!",
+        "tags": [
+          "sveiciens",
+          "svētki"
+        ]
+      },
+      {
+        "id": "IA7",
+        "text": "Vislabākie sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens"
+        ]
+      },
+      {
+        "id": "IA8",
+        "text": "Jauku vārdadienu, [Vārds]!",
+        "tags": [
+          "lai"
+        ]
+      }
+    ],
+    "B": [
+      {
+        "id": "IB1",
+        "text": "Lai daudz prieka un skaistu mirkļu!",
+        "tags": [
+          "prieks",
+          "skaists",
+          "lai"
+        ]
+      },
+      {
+        "id": "IB2",
+        "text": "Lai šodien netrūkst smaidu un labu emociju!",
+        "tags": [
+          "smaids",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "IB3",
+        "text": "Lai izdodas viss iecerētais!",
+        "tags": [
+          "lai"
+        ]
+      },
+      {
+        "id": "IB4",
+        "text": "Daudz prieka, veselības un veiksmes!",
+        "tags": [
+          "prieks",
+          "veselība",
+          "veiksme"
+        ]
+      },
+      {
+        "id": "IB5",
+        "text": "Lai Tev saulaina un priecīga diena!",
+        "tags": [
+          "prieks",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "IB6",
+        "text": "Lai ikdienā daudz skaistu brīžu!",
+        "tags": [
+          "skaists",
+          "lai"
+        ]
+      },
+      {
+        "id": "IB7",
+        "text": "Veselību, veiksmi un labu garastāvokli!",
+        "tags": [
+          "veselība",
+          "veiksme"
+        ]
+      },
+      {
+        "id": "IB8",
+        "text": "Lai piepildās iecerētais!",
+        "tags": [
+          "lai"
+        ]
+      },
+      {
+        "id": "IB9",
+        "text": "Daudz smaidu un jauku pārsteigumu!",
+        "tags": [
+          "smaids",
+          "pārsteigumi"
+        ]
+      },
+      {
+        "id": "IB10",
+        "text": "Lai šī diena sagādā daudz prieka!",
+        "tags": [
+          "prieks",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "IB11",
+        "text": "Veiksmi, enerģiju un daudz labu dienu!",
+        "tags": [
+          "veiksme",
+          "enerģija",
+          "diena"
+        ]
+      },
+      {
+        "id": "IB12",
+        "text": "Lai blakus labi cilvēki un daudz jauku mirkļu!",
+        "tags": [
+          "cilvēki",
+          "lai"
+        ]
+      }
+    ],
+    "C": [
+      {
+        "id": "IC1",
+        "text": "Skaistus svētkus!",
+        "tags": [
+          "skaists",
+          "svētki"
+        ]
+      },
+      {
+        "id": "IC2",
+        "text": "Jauku dienu!",
+        "tags": [
+          "diena"
+        ]
+      },
+      {
+        "id": "IC3",
+        "text": "Daudz smaidu!",
+        "tags": [
+          "smaids"
+        ]
+      },
+      {
+        "id": "IC4",
+        "text": "Visu to labāko!",
+        "tags": []
+      },
+      {
+        "id": "IC5",
+        "text": "Lai izdodas!",
+        "tags": [
+          "lai"
+        ]
+      },
+      {
+        "id": "IC6",
+        "text": "Baudi savu dienu!",
+        "tags": [
+          "diena"
+        ]
+      },
+      {
+        "id": "IC7",
+        "text": "No sirds!",
+        "tags": []
+      },
+      {
+        "id": "IC8",
+        "text": "Priecīgus svētkus!",
+        "tags": [
+          "prieks",
+          "svētki"
+        ]
+      }
+    ]
+  },
+  "Formāls": {
+    "A": [
+      {
+        "id": "FA1",
+        "text": "Sirsnīgi sveicu vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA2",
+        "text": "Sirsnīgi sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA4",
+        "text": "Vislabākie sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA5",
+        "text": "[Vārds], sirsnīgi sveicieni vārdadienā!",
+        "tags": [
+          "sveiciens",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA6",
+        "text": "Daudz laimes vārdadienā, [Vārds]!",
+        "tags": [
+          "laime",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA7",
+        "text": "Skaistu vārdadienu, [Vārds]!",
+        "tags": [
+          "skaists",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FA8",
+        "text": "Vissirsnīgākie sveicieni vārdadienā, [Vārds]!",
+        "tags": [
+          "sveiciens",
+          "vārdadiena"
+        ]
+      }
+    ],
+    "B": [
+      {
+        "id": "FB1",
+        "text": "Lai šī diena ir patīkamu notikumu un labu emociju piepildīta.",
+        "tags": [
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "FB2",
+        "text": "Lai vārdadiena sniedz daudz priecīgu un patīkamu mirkļu.",
+        "tags": [
+          "prieks",
+          "lai",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FB3",
+        "text": "Lai šī svētku diena ir gaiša un patīkamiem notikumiem bagāta.",
+        "tags": [
+          "svētki",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "FB4",
+        "text": "Lai vārdadiena sagādā prieku un patīkamus pārsteigumus.",
+        "tags": [
+          "prieks",
+          "pārsteigumi",
+          "lai",
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FB5",
+        "text": "Lai šodien netrūkst labu vārdu un patīkamu mirkļu.",
+        "tags": [
+          "labi_vārdi",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "FB6",
+        "text": "Lai šī diena sniedz gandarījumu un daudz pozitīvu emociju.",
+        "tags": [
+          "diena",
+          "gandarījums",
+          "lai",
+          "pozitīvs"
+        ]
+      },
+      {
+        "id": "FB7",
+        "text": "Lai vārdadiena ir patīkams brīdis ikdienas steigā.",
+        "tags": [
+          "vārdadiena",
+          "lai"
+        ]
+      },
+      {
+        "id": "FB9",
+        "text": "Lai svētku diena ir piepildīta ar labām domām un patīkamiem mirkļiem.",
+        "tags": [
+          "svētki",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "FB10",
+        "text": "Lai vārdadiena atnes daudz pozitīvu emociju.",
+        "tags": [
+          "vārdadiena",
+          "lai",
+          "pozitīvs"
+        ]
+      }
+    ],
+    "C": [
+      {
+        "id": "FC1",
+        "text": "Lai arī turpmāk netrūkst veselības, enerģijas un veiksmes.",
+        "tags": [
+          "veselība",
+          "enerģija",
+          "veiksme",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC2",
+        "text": "Lai izdodas īstenot iecerēto un sasniegt izvirzītos mērķus.",
+        "tags": [
+          "mērķi",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC3",
+        "text": "Lai ikdienā pavada veiksme, gandarījums un laba pašsajūta.",
+        "tags": [
+          "veiksme",
+          "gandarījums",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC4",
+        "text": "Lai netrūkst jaunu ieceru un iespēju tās īstenot.",
+        "tags": [
+          "ieceres",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC5",
+        "text": "Lai darbos veicas un iecerētais izdodas.",
+        "tags": [
+          "darbs",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC6",
+        "text": "Lai ikdienā pietiek enerģijas, optimisma un iedvesmas.",
+        "tags": [
+          "enerģija",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC8",
+        "text": "Lai profesionālajā un personīgajā dzīvē netrūkst gandarījuma.",
+        "tags": [
+          "gandarījums",
+          "netrūkst",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC9",
+        "text": "Lai piepildās iecerētais un izdodas sasniegt sev svarīgos mērķus.",
+        "tags": [
+          "mērķi",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC10",
+        "text": "Lai veselība, veiksme un labs noskaņojums pavada ik dienu.",
+        "tags": [
+          "veselība",
+          "veiksme",
+          "diena",
+          "lai"
+        ]
+      },
+      {
+        "id": "FC11",
+        "text": "Lai turpmākajā ikdienā netrūkst pozitīvu notikumu un jaunu iespēju.",
+        "tags": [
+          "netrūkst",
+          "lai",
+          "pozitīvs"
+        ]
+      },
+      {
+        "id": "FC12",
+        "text": "Lai ikviena jauna iecere nes gandarījumu par paveikto.",
+        "tags": [
+          "ieceres",
+          "gandarījums",
+          "lai"
+        ]
+      }
+    ],
+    "D": [
+      {
+        "id": "FD1",
+        "text": "Vislabākie vēlējumi vārdadienā!",
+        "tags": [
+          "vārdadiena"
+        ]
+      },
+      {
+        "id": "FD2",
+        "text": "Skaistu svētku dienu!",
+        "tags": [
+          "skaists",
+          "svētki",
+          "diena"
+        ]
+      },
+      {
+        "id": "FD3",
+        "text": "Sirsnīgi sveicieni svētkos!",
+        "tags": [
+          "sveiciens",
+          "svētki"
+        ]
+      },
+      {
+        "id": "FD4",
+        "text": "Daudz veiksmes un panākumu!",
+        "tags": [
+          "veiksme"
+        ]
+      },
+      {
+        "id": "FD5",
+        "text": "Veselību, veiksmi un labu noskaņojumu!",
+        "tags": [
+          "veselība",
+          "veiksme"
+        ]
+      },
+      {
+        "id": "FD6",
+        "text": "Visu to labāko!",
+        "tags": []
+      },
+      {
+        "id": "FD7",
+        "text": "Veiksmi un panākumus arī turpmāk!",
+        "tags": [
+          "veiksme"
+        ]
+      },
+      {
+        "id": "FD8",
+        "text": "Patīkamu un skaistu svētku dienu!",
+        "tags": [
+          "skaists",
+          "svētki",
+          "diena"
+        ]
+      },
+      {
+        "id": "FD9",
+        "text": "Vislabākie vēlējumi arī turpmāk!",
+        "tags": []
+      },
+      {
+        "id": "FD10",
+        "text": "Panākumus un visu to labāko!",
+        "tags": []
+      }
+    ]
+  }
+};
   document.querySelectorAll('.greeting-options').forEach(group=>{
     group.addEventListener('click',e=>{
       const btn=e.target.closest('button');
@@ -310,14 +1451,6 @@
       greetingValidation.hidden=true;
     });
   });
-  function randomGreetingPart(parts,usedTags){
-    const compatible=parts.filter(part=>part.tags.every(tag=>tag==="lai"||!usedTags.has(tag)));
-    const pool=compatible.length?compatible:parts;
-    const part=pool[Math.floor(Math.random()*pool.length)];
-    part.tags.filter(tag=>tag!=="lai").forEach(tag=>usedTags.add(tag));
-    return part;
-  }
-
   function isKnownName(name){
     const q=name.toLocaleLowerCase('lv-LV');
     return Object.values(DATA).some(groups=>groups.some(names=>names.some(n=>n.toLocaleLowerCase('lv-LV')===q)));
@@ -331,206 +1464,53 @@
     return name;
   }
 
-  function generateSincereGreeting(name){
-    const usedTags=new Set();
-    const vocativeName=greetingVocative(name);
-    const parts=[
-      randomGreetingPart(GREETING_SINCERE.openings,usedTags),
-      randomGreetingPart(GREETING_SINCERE.greetings,usedTags),
-      randomGreetingPart(GREETING_SINCERE.wishes,usedTags),
-      randomGreetingPart(GREETING_SINCERE.closings,usedTags)
-    ];
-    return parts.map(part=>part.text.replace("[Vārds]",vocativeName)).join(" ");
-  }
 
-  const GREETING_SHORT=[
-    "Daudz laimes vārdadienā, [Vārds]! Lai šī diena ir prieka un skaistu mirkļu pilna!",
-    "Sirsnīgi sveicieni vārdadienā, [Vārds]! Lai smaidi un veiksme Tevi pavada!",
-    "Sveicu vārdadienā, [Vārds]! Lai viss iecerētais izdodas!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien netrūkst patīkamu pārsteigumu!",
-    "Mīļi sveicieni vārdadienā, [Vārds]! Lai Tev skaista un saulaina diena!",
-    "Daudz laimes, [Vārds]! Lai katra diena atnes ko labu!",
-    "Sveiciens Tavā vārdadienā, [Vārds]! Lai prieks ir tepat blakus!",
-    "Lai brīnišķīga vārdadiena, [Vārds]! Veselību, laimi un daudz smaidu!",
-    "No sirds sveicu vārdadienā, [Vārds]! Lai piepildās kāda skaista vēlēšanās!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodiena paliek jaukā atmiņā!",
-    "Daudz prieka un mīļu sveicienu vārdadienā, [Vārds]!",
-    "Lai Tavā vārdadienā netrūkst smaidu, [Vārds]! Sirsnīgi sveicieni!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai diena izdodas!",
-    "Sveicu vārdadienā, [Vārds]! Lai daudz prieka!",
-    "Priecīgu vārdadienu, [Vārds]! Lai smaids nepazūd!",
-    "Mīļi sveicieni, [Vārds]! Lai viss skaistais piepildās!",
-    "Daudz laimes, [Vārds]! Lai laime ir līdzās!",
-    "Sirsnīgs sveiciens vārdadienā, [Vārds]! Lai skaisti svētki!",
-    "Sveicu, [Vārds]! Lai šodiena ir īpaša!",
-    "Priecīgu vārdadienu, [Vārds]! Lai daudz gaišu mirkļu!",
-    "Daudz laimes, [Vārds]! Lai sirdī vienmēr prieks!",
-    "Sveiciens vārdadienā, [Vārds]! Lai veiksme pavada!",
-    "Mīļi sveicu, [Vārds]! Lai saulaina diena!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai sapņi piepildās!",
-    "Priecīgu vārdadienu, [Vārds]! Lai silti un sirsnīgi!",
-    "Sveicu svētkos, [Vārds]! Lai katrs mirklis priecē!",
-    "Daudz laimes, [Vārds]! Lai skaistu notikumu pilna diena!",
-    "Sirsnīgi sveicieni, [Vārds]! Lai viss izdodas!",
-    "Priecīgu vārdadienu, [Vārds]! Lai miers un prieks!",
-    "Sveicu vārdadienā, [Vārds]! Lai netrūkst smaidu!",
-    "Daudz laimes, [Vārds]! Lai diena pārsteidz ar labo!",
-    "Mīļš sveiciens, [Vārds]! Lai Tev brīnišķīga vārdadiena!",
-    "Priecīgu vārdadienu, [Vārds]! Lai sirdī pavasaris!",
-    "Sveicu, [Vārds]! Lai šodien daudz patīkamu mirkļu!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai mīļi cilvēki blakus!",
-    "Sirsnīgs sveiciens, [Vārds]! Lai prieks ik uz soļa!",
-    "Priecīgu vārdadienu, [Vārds]! Lai diena gaiša un jauka!",
-    "Daudz laimes, [Vārds]! Lai ikdienā vairāk svētku!",
-    "Sveicu vārdadienā, [Vārds]! Lai siltums sirdī!",
-    "Mīļi sveicieni, [Vārds]! Lai dzīve dāvā prieku!",
-    "Priecīgu vārdadienu, [Vārds]! Lai veicas visās iecerēs!",
-    "Daudz laimes, [Vārds]! Lai skaistas domas un darbi!",
-    "Sveiciens vārdadienā, [Vārds]! Lai laimīgi mirkļi!",
-    "Priecīgu vārdadienu, [Vārds]! Lai katra diena nes prieku!",
-    "Daudz laimes, [Vārds]! Lai smaidu pilni svētki!",
-    "Sirsnīgi sveicu vārdadienā, [Vārds]! Lai daudz laba!",
-    "Sveicu, [Vārds]! Lai laime atrod Tevi ik dienu!",
-    "Priecīgu vārdadienu, [Vārds]! Lai apkārt sirsnība!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai brīnišķīgi pārsteigumi!",
-    "Mīļš sveiciens vārdadienā, [Vārds]! Lai priecīga diena!"
-];
-  // Each fixed-style library is shuffled into a no-repeat deck.
-  const greetingDecks=Object.create(null);
-  function nextGreetingFromDeck(style,templates,name){
-    let deck=greetingDecks[style];
-    if(!deck||deck.remaining.length===0){
-      const remaining=templates.map((_,index)=>index);
-      for(let i=remaining.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [remaining[i],remaining[j]]=[remaining[j],remaining[i]];
+  const greetingVariantCache=new Map();
+  const greetingDecks=new Map();
+
+  function getGreetingVariants(style,relationship,partCount){
+    const cacheKey=JSON.stringify([style,relationship,partCount]);
+    if(greetingVariantCache.has(cacheKey))return greetingVariantCache.get(cacheKey);
+    const groups=Object.values(GREETING_LIBRARIES[style]).slice(0,partCount).map(group=>
+      group.filter(part=>!part.relationships||part.relationships.includes(relationship))
+    );
+    const variants=[];
+    function collect(index,parts,usedTags,laiRun){
+      if(index===groups.length){variants.push(parts);return;}
+      for(const part of groups[index]){
+        if(part.tags.some(tag=>tag!=='lai'&&usedTags.has(tag)))continue;
+        const nextLaiRun=part.text.startsWith('Lai ')?laiRun+1:0;
+        if(nextLaiRun>2)continue;
+        const nextTags=new Set([...usedTags,...part.tags]);
+        collect(index+1,[...parts,part],nextTags,nextLaiRun);
       }
-      if(deck&&remaining.length>1&&remaining[remaining.length-1]===deck.lastIndex){
-        const swapIndex=Math.floor(Math.random()*(remaining.length-1));
-        [remaining[remaining.length-1],remaining[swapIndex]]=[remaining[swapIndex],remaining[remaining.length-1]];
-      }
-      deck={remaining,lastIndex:deck?deck.lastIndex:null};
-      greetingDecks[style]=deck;
     }
-    const index=deck.remaining.pop();
-    deck.lastIndex=index;
-    return templates[index].replace("[Vārds]",greetingVocative(name));
+    collect(0,[],new Set(),0);
+    greetingVariantCache.set(cacheKey,variants);
+    return variants;
   }
 
-  function generateShortGreeting(name){
-    return nextGreetingFromDeck("Īss",GREETING_SHORT,name);
-  }
-
-  const GREETING_FUN=[
-    "Daudz laimes vārdadienā, [Vārds]! Lai kūka ir lielāka par rūpēm un svētku noskaņa turas ilgāk par brīvdienām!",
-    "Sveiciens vārdadienā, [Vārds]! Šodien visi darbi drīkst pagaidīt — izņemot kūkas ēšanu!",
-    "Priecīgu vārdadienu, [Vārds]! Lai smaidu ir tik daudz, ka vaigiem jāprasa atvaļinājums!",
-    "Daudz laimes, [Vārds]! Lai šodien pārsteigumi ir tikai patīkami, bet kalorijas pašas sevi neskaita!",
-    "Sveicu vārdadienā, [Vārds]! Lai diena tik jauka, ka pat modinātājs nolemj netraucēt!",
-    "Lai jautra vārdadiena, [Vārds]! Novēlu pilnu šķīvi gardumu un tukšu sarakstu ar pienākumiem!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai šodien veiksme skrien Tev pakaļ, nevis Tu tai!",
-    "Priecīgu vārdadienu, [Vārds]! Lai smiekli skan skaļāk par telefona paziņojumiem!",
-    "Sveiciens svētkos, [Vārds]! Lai kafija garšīga, kūka garda un neviens nejautā, kad būsi atpakaļ pie darbiem!",
-    "Daudz laimes, [Vārds]! Lai šodien vienīgā nopietnā izvēle ir — vēl vienu kūkas gabaliņu vai uzreiz divus!",
-    "Lai lieliska vārdadiena, [Vārds]! Lai visi plāni izdodas, bet pārsteigumi ir vēl labāki par plāniem!",
-    "Sveicu vārdadienā, [Vārds]! Lai šodien smaids nepazūd pat tad, ja kūkas pēdējais gabaliņš jau apēsts!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien pietiek laika gan svinēšanai, gan nekā nedarīšanai!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai diena tik izdevusies, ka gribas tai nospiest pogu „Atkārtot”!",
-    "Sveiciens vārdadienā, [Vārds]! Lai dāvanas patīk, kūka garšo un svētku viesi palīdz novākt galdu!",
-    "Priecīgu vārdadienu, [Vārds]! Lai dzīvē vairāk konfeti un mazāk steidzamu e-pastu!",
-    "Sveicu vārdadienā, [Vārds]! Lai vienīgā šodienas steiga ir paspēt pēc otrā kūkas gabaliņa!",
-    "Daudz laimes, [Vārds]! Lai telefons zvana tikai ar apsveikumiem, nevis darba jautājumiem!",
-    "Priecīgu vārdadienu, [Vārds]! Lai svētku galds bagātīgs un trauki pēc tam nomazgājas paši!",
-    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi luksofori rāda zaļo un visi cilvēki smaida!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai labais garastāvoklis pielīp ātrāk par konfeti pie džempera!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien katrs pārsteigums ir patīkamāks par negaidītu brīvdienu!",
-    "Sveicu, [Vārds]! Lai šodien vienīgais sarežģītais uzdevums ir izvēlēties gardāko kūku!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai veiksme ir tik uzstājīga, ka no tās nevar atkratīties!",
-    "Priecīgu vārdadienu, [Vārds]! Lai svētku noskaņa turas arī tad, kad baloni jau nolaidušies!",
-    "Sveiciens, [Vārds]! Lai šodien smaids ir platāks par darāmo darbu sarakstu!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai katrs apsveikums nāk ar labu garastāvokli un vismaz vienu smieklu!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien pārsteigumi birst kā popkorns kino vakarā!",
-    "Sveicu vārdadienā, [Vārds]! Lai svētku dienā pat lietus prot dejot līdzi!",
-    "Daudz laimes, [Vārds]! Lai šodien nekas neizlādējas — ne telefons, ne pacietība, ne prieks!",
-    "Priecīgu vārdadienu, [Vārds]! Lai ikdienas rūpes šodien paņem brīvdienu bez atgriešanās biļetes!",
-    "Sveiciens vārdadienā, [Vārds]! Lai kūkas gabaliņš vienmēr ir lielāks, nekā sākumā izskatījās!",
-    "Daudz laimes, [Vārds]! Lai šodien viss iet kā pa sviestu — arī tad, ja uz galda ir tikai kūka!",
-    "Priecīgu vārdadienu, [Vārds]! Lai labās ziņas nāk rindā, bet sliktās apmaldās pa ceļam!",
-    "Sveicu, [Vārds]! Lai šodienas dienas kārtībā ir tikai trīs punkti: priecāties, svinēt un atkārtot!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai Tavs smaids šodien ir galvenā svētku dekorācija!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien pat pulkstenis nesteidzas un svētki ievelkas!",
-    "Sveiciens, [Vārds]! Lai dāvanu saiņošana citiem, bet izsaiņošana tikai Tev!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai diena salda kā deserts un viegla kā balons!",
-    "Priecīgu vārdadienu, [Vārds]! Lai šodien neviens nesaka „vēl tikai viens darbiņš”!",
-    "Sveicu vārdadienā, [Vārds]! Lai komplimenti šodien skan biežāk nekā telefona zvans!",
-    "Daudz laimes, [Vārds]! Lai šodien prieks lec augstāk par šampanieša korķi!",
-    "Priecīgu vārdadienu, [Vārds]! Lai diena ir tik laba, ka pat pirmdiena gribētu būt tās vietā!",
-    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi ceļi ved pie draugiem un gardas kūkas!",
-    "Daudz laimes, [Vārds]! Lai dzīve piedāvā vairāk jauku pārsteigumu nekā reklāmu internetā!",
-    "Priecīgu vārdadienu, [Vārds]! Lai svētku galds pilns un kalendārā vieta tikai patīkamiem plāniem!",
-    "Sveicu, [Vārds]! Lai šodien katrs spogulis atgādina, cik labi Tev piestāv smaids!",
-    "Daudz laimes vārdadienā, [Vārds]! Lai pat visnopietnākie cilvēki šodien atrod iemeslu pasmaidīt!",
-    "Priecīgu vārdadienu, [Vārds]! Lai diena pilna tik labu mirkļu, ka grūti izvēlēties mīļāko!",
-    "Sveiciens vārdadienā, [Vārds]! Lai šodien visi jautājumi sākas ar „Kādu kūku vēlies?”!"
-];
-  function generateFunGreeting(name){
-    return nextGreetingFromDeck("Jautrs",GREETING_FUN,name);
-  }
-
-  const GREETING_FORMAL=[
-    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Sirsnīgi sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Pieņemiet manus apsveikumus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Vārdadienā vēlos Jums novēlēt visu labāko, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Ar vislabākajiem vēlējumiem sveicu Jūs vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Vēlos Jūs sirsnīgi apsveikt vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Lūdzu, pieņemiet sirsnīgus sveicienus vārdadienā, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Vārdadienā sūtu Jums cieņpilnus un sirsnīgus sveicienus, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Sveicot Jūs vārdadienā, [Vārds], novēlu visu to labāko! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus.",
-    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu stipru veselību, labklājību un panākumus visās iecerēs.",
-    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai Jums netrūkst enerģijas, iedvesmas un gandarījuma par paveikto.",
-    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu veiksmīgu turpmāko darbību, saticību un daudz gaišu mirkļu.",
-    "Šajā svētku dienā sveicu Jūs, [Vārds]! Lai ikdienā Jūs pavada veiksme, miers un pozitīvi notikumi.",
-    "Šajā svētku dienā sveicu Jūs, [Vārds]! Novēlu izdošanos profesionālajā un personīgajā dzīvē, kā arī patīkamus svētkus."
-];
-  function generateFormalGreeting(name){
-    return nextGreetingFromDeck("Formāls",GREETING_FORMAL,name);
+  function generateGreeting(name,relationship,style,previous=''){
+    // Short greetings usually have two parts, with a third ending in one in four draws.
+    const partCount=style==='Īss'?(Math.random()<0.25?3:2):4;
+    const variants=getGreetingVariants(style,relationship,partCount);
+    const deckKey=JSON.stringify([style,relationship,partCount]);
+    let deck=greetingDecks.get(deckKey);
+    if(!deck||!deck.length){
+      deck=[...variants];
+      for(let i=deck.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [deck[i],deck[j]]=[deck[j],deck[i]];
+      }
+      greetingDecks.set(deckKey,deck);
+    }
+    const vocativeName=greetingVocative(name);
+    const format=parts=>parts.map(part=>part.text.replace('[Vārds]',vocativeName)).join(' ');
+    const index=deck.findIndex(parts=>format(parts)!==previous);
+    if(index>=0)return format(deck.splice(index,1)[0]);
+    // At a cycle boundary the last unused variant may match the displayed greeting.
+    const alternative=variants.find(parts=>format(parts)!==previous);
+    return format(alternative||deck[0]);
   }
 
   const birthdayAddForm=document.getElementById('birthdayAddForm');
@@ -806,17 +1786,7 @@
       return;
     }
     greetingValidation.hidden=true;
-    if(style.textContent.trim()==="Sirsnīgs"){
-      greetingResultText.value=generateSincereGreeting(name);
-    }else if(style.textContent.trim()==="Īss"){
-      greetingResultText.value=generateShortGreeting(name);
-    }else if(style.textContent.trim()==="Jautrs"){
-      greetingResultText.value=generateFunGreeting(name);
-    }else if(style.textContent.trim()==="Formāls"){
-      greetingResultText.value=generateFormalGreeting(name);
-    }else{
-      greetingResultText.value="Šim stilam apsveikumu bibliotēka vēl tiek gatavota.";
-    }
+    greetingResultText.value=generateGreeting(name,relationship.textContent.trim(),style.textContent.trim());
     greetingView.hidden=true;
     greetingResultView.hidden=false;
     resizeGreetingResult();
@@ -909,16 +1879,12 @@
 
   greetingRegenerate.addEventListener('click',()=>{
     const name=greetingName.value.trim();
+    const relationship=document.querySelector('[data-choice-group="relationship"] .active');
     const style=document.querySelector('[data-choice-group="style"] .active');
-    if(!name||!style)return;
-    const selectedStyle=style.textContent.trim();
-    if(!["Sirsnīgs","Īss","Jautrs","Formāls"].includes(selectedStyle))return;
-    const previous=greetingResultText.value;
-    let next=previous;
-    for(let attempt=0;attempt<20&&next===previous;attempt++){
-      next=selectedStyle==="Īss"?generateShortGreeting(name):selectedStyle==="Jautrs"?generateFunGreeting(name):selectedStyle==="Formāls"?generateFormalGreeting(name):generateSincereGreeting(name);
-    }
-    greetingResultText.value=next;
+    if(!name||!relationship||!style)return;
+    greetingResultText.value=generateGreeting(
+      name,relationship.textContent.trim(),style.textContent.trim(),greetingResultText.value
+    );
     resizeGreetingResult();
   });
 
@@ -2235,3 +3201,4 @@ if ("serviceWorker" in navigator) {
   document.addEventListener('pointerdown',e=>{for(const c of controls)if(!c.wrapper.contains(e.target))c.close()});
 })();
 </script></body></html>
+
