@@ -9,7 +9,9 @@
 - Vārdu izcelsme un vēsture atlikta.
 - “Interesanti”: tikai dienu nosaukumi; bez izvērstiem paskaidrojumiem un avotu saitēm. Lietotājs atkārtoti apstiprināja 22.11.2026.
 - Dzimšanas dienas un to atgādinājumi ir saskaņots papildinājums.
-- Izplatīšanas modelis: 2,99 EUR par trim gadiem, Push iekļauts; automātiskas abonēšanas nav, pagarināšana ir brīvprātīga.
+- Izplatīšana: vispirms iPhone lietotne App Store, vēlāk Android versija Google Play. Sākotnējā maksas PWA pārdošanas iecere aizstāta.
+- Pārdevējs būs uzņēmums; lietotājs, visticamāk, dibinās jaunu SIA.
+- Cena: 4,99 EUR par trim gadiem (aizstāj iepriekšējos 2,99 EUR), Push iekļauts; automātiskas abonēšanas nav, pagarināšana ir brīvprātīga.
 - Pēc termiņa bez pagarināšanas pamatfunkcijas un lokāla apsveikumu veidošana/dalīšanās saglabājas; Push pārtrauc. Turpmāka uzturēšana un saderība pēc termiņa netiek garantēta. Datu eksports/imports nodrošina pārnešanu.
 
 ## Pabeigtais un pārbaudītais
@@ -28,7 +30,7 @@ Pašreiz pārbaudītajā main zarā nav pirkuma, licences termiņa vai brīvprā
 
 1. Pārbaudīt aktuālo servera kodu un datu struktūru pret saskaņoto trīs gadu modeli.
 2. Fiksēt konkrētas neieviestās daļas: pirkuma apstiprināšana, termiņš, Push tiesības, termiņa beigas un brīvprātīga pagarināšana.
-3. Sagatavot izplatīšanas ieviešanas plānu un pārbaudāmu rezultātu. Maksājumu pakalpojuma izvēle un ārējo kontu konfigurācija nav veikta ar šo reģistru.
+3. Sagatavot iOS projektu, Apple veikala pirkumus un publicēšanas procesu. Skatīt app-store-plan.md; pirkuma plūsma (maksas lejupielāde vai bezmaksas lejupielāde ar maksas aktivizēšanu) vēl nav izvēlēta. Stripe vairs netiek plānots sākotnējai App Store plūsmai.
 
 ## Atskaites avoti
 
