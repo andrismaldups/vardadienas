@@ -41,3 +41,8 @@ test('Rejects remote file URI and overlapping exports',async()=>{
  const first=run({filename,text});await new Promise(resolve=>setImmediate(resolve));
  await assert.rejects(run({filename,text}),/jau notiek/);finish();await first;
 });
+
+test('Actual iOS share-sheet cancellation is normalized while the temporary backup is cleaned',async()=>{
+ const {calls,run}=setup({share:{share:async()=>{throw Error('Share canceled');}}});
+ await assert.rejects(run({filename,text}),error=>error.name==='AbortError');assert(calls.some(c=>c[0]==='delete'));
+});

@@ -136,6 +136,7 @@
         if(root.VardadienasNativeBackup){
           busy=true;report('Izvēlies “Saglabāt Failos”. Fails: '+filename+' ('+blob.size+' baiti).');
           try{await root.VardadienasNativeBackup.exportFile({text,filename});report('Datu fails nodots iPhone dalīšanās izvēlnei: '+filename+'.');}
+          catch(error){if(error.name==='AbortError')report('Eksports atcelts.');else throw error;}
           finally{busy=false;}
           return;
         }
@@ -151,15 +152,29 @@
         download(blob,filename);report('Eksporta fails nodots lejupielādei: '+filename+' ('+blob.size+' baiti). Saglabā to savā ierīcē.');
       }catch(error){report(error.message);}
     });
-    $('backupImport').addEventListener('click',()=>{try{available();if(!busy){fileInput.value='';fileInput.click();}}catch(error){report(error.message);}});
-    fileInput.addEventListener('change',async()=>{
-      const serial=++reading;pending=null;preview.hidden=true;
-      const file=fileInput.files?.[0];if(!file)return;
+    async function previewFile(file,serial){
       try{
         available();if(file.size>MAX_BYTES)fail('Fails pārsniedz 5 MB ierobežojumu.');
         const parsed=parse(await file.text());if(serial!==reading)return;
         available();pending=parsed;$('backupFileName').textContent=(file.name||'Datu kopija')+' · '+new Date(parsed.exportedAt).toLocaleString('lv-LV');showPreview();preview.scrollIntoView?.({block:'nearest'});report('Fails pārbaudīts. Pirms importa apskati kopsavilkumu.');
       }catch(error){if(serial===reading){pending=null;report(error.message);}}
+    }
+    $('backupImport').addEventListener('click',async()=>{
+      try{
+        available();if(busy)return;fileInput.value='';
+        if(!root.VardadienasNativeBackup?.importFile){fileInput.click();return;}
+        const serial=++reading;pending=null;preview.hidden=true;busy=true;
+        try{
+          report('Izvēlies saglabāto JSON datu failu.');
+          const file=await root.VardadienasNativeBackup.importFile();
+          if(serial!==reading)return;
+          if(file)await previewFile(file,serial);else report('Imports atcelts.');
+        }finally{busy=false;}
+      }catch(error){report(error.message);}
+    });
+    fileInput.addEventListener('change',async()=>{
+      const serial=++reading;pending=null;preview.hidden=true;
+      const file=fileInput.files?.[0];if(file)await previewFile(file,serial);
     });
     function plan(){return merge({favorites,birthdays},pending,canonicalNames,birthdayId);}
     function showPreview(){

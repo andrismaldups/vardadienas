@@ -85,8 +85,27 @@ Eksportam ir Filesystem/Share adapters: UTF-8 fails privātajā Cache mapē, tik
 faila pielikums bez teksta/virsraksta, tīrīšana pēc dalīšanās izvēlnes aizvēršanas.
 Tas nenozīmē, ka lietotājs failu noteikti saglabāja. Eksports vispirms gaida krātuves
 saglabāšanas rindu. Natīvās kļūmes gadījumā nav pārejas uz pārlūka lejupielādi.
-Pārnesamā JSON versija paliek 1. Importa faila izvēle joprojām ir HTML ievade;
-tā jāpārbauda īstā iPhone.
+Pārnesamā JSON versija paliek 1. iOS importa poga tagad atver UIDocumentPicker caur precīzi fiksētu
+Capawesome File Picker 8.1.1. Izvēle: viens `application/json`, `readData=false`.
+Spraudnis izveido pagaidu kopiju; JS pārbauda, ka adrese ir tieši Cache/UUID/fails,
+izmērs ir līdz 5 MiB un tas nav mainījies, tad nolasa UTF-8. Nelasām Base64 un
+neaugšupielādējam failu. Pēc nolasīšanas/darbības kļūmes kopiju iztīra bez rekursīvas
+mapju dzēšanas; avota fails Files/iCloud netiek dzēsts. Atcelšana neko neimportē.
+Pati iOS izvēlne var vispirms lejupielādēt/kopēt iCloud failu — 5 MiB pārbaude notiek
+pēc izvēles, pirms satura nodošanas JavaScript. iCloud nepieejamība bez interneta
+paliek kļūme, nevis tukšs imports. Spraudņa kopijas ceļa pārbaude ir piesaistīta
+pārskatītajai 8.1.1 Swift realizācijai; atjauninot spraudni, tā jāpārskata.
+
+Iegūtais fails nonāk tajā pašā kopīgajā JSON validatorā, priekšskatījumā un
+apstiprinātā apvienošanā; dati pirms apstiprināšanas nemainās. PWA HTML file input
+ceļš saglabāts. iOS kļūme neizraisa klusu pāreju uz HTML faila izvēli.
+
+Apsveikuma “Dalīties” iOS izmanto Share ar tikai `{text}`; netiek pievienots URL,
+virsraksts vai faila pielikums. “Kopēt” izmanto Clipboard 8.0.1 ar tikai `{string}`.
+Nekad nelasām starpliktuvi. Rediģētais teksts/emoji/rindu pārtraukumi saglabājas.
+Dalīšanās atcelšana ir klusa un neko nekopē. Kļūmes gadījumā var atsevišķi nospiest
+“Kopēt”; automātiska starpliktuves pārrakstīšana nenotiek. PWA turpina izmantot savas
+pārlūka funkcijas. Arī datu faila eksporta atcelšana normalizēta uz “Eksports atcelts”.
 
 Filesystem 8.1.5, Preferences 8.0.1 un Share 8.0.3 fiksēti npm/SPM; esbuild 0.28.2
 komplektē klienta adapterus. SHA-256 izmanto precīzi fiksētu @noble/hashes 2.4.0,
@@ -99,7 +118,8 @@ Nākamajos posmos vēl nepieciešams:
    aizvēršana saglabāšanas laikā, lietotnes atjaunināšana, lieli faili, pilna ierīce,
    bloķēšana/atbloķēšana un iCloud ierīces dublējuma atjaunošana. JS/native apstiprinājums
    nav pierādījums par fsync vai garantiju pēkšņa strāvas zuduma gadījumā.
-2. JSON faila izvēles un apsveikumu natīvās dalīšanās pārbaude/pielāgošana.
+2. Ieviestā JSON faila izvēles un apsveikumu natīvās dalīšanās pārbaude īstā iPhone,
+   tostarp On My iPhone/iCloud, atcelšana, īsziņas, Mail un citas izvēlētās lietotnes.
 3. Natīvais APNs, atļaujas un servera piesaiste; Web Push nav APNs tokens.
 4. StoreKit pirkuma pārbaude/atjaunošana un brīvprātīga pagarināšana.
 5. iOS servera autentifikācija/Keychain, piesaiste, licence un kopīgā datu dzēšanas plūsma.
@@ -123,14 +143,21 @@ Kamēr uzņēmuma konta nav, produkcijas konfigurāciju vai maksājumus neaktivi
 Ģenerētās `www`, `ios/App/App/public`, konfigurācijas un node_modules netiek glabātas git;
 tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti git.
 
+File Picker 8.1.1 un Clipboard 8.0.1 pievienoti npm/SPM; nav ieslēgta piekļuve
+foto bibliotēkai, kontaktiem vai starpliktuves lasīšana. UIDocumentPicker izvēle nav
+“Open in Vārdadienas”/Share Extension integrācija — failu izvēlas lietotnes pogā.
+`THIRD_PARTY_NOTICES.txt` tiek iekļauts lokālajā paketē ar pašreizējo izpildlaika
+pakotņu licencēm. Pirms izlaides vēl jāpārskata Xcode atrisinātās Swift atkarības.
+
 ## Veiktās pārbaudes 22.11.2026.
 
-- `npm test` mobilajā projektā: 40 pārbaudes — 9 iepakošana/izolācija, 5 faila
-  eksports, 22 krātuve/transakcijas/palaišana/dzēšana, 1 pārnēsājama kontrolsumma un 3 sakomplektēto skriptu
-  integrācijas pārbaudes ar imitētu Capacitor tiltu. Tās nav Swift vai WKWebView pārbaudes.
-- Kopīgā JSON moduļa 45 un saskarnes 17 pārbaudes izdevās, ieskaitot gaidīšanu
-  pirms sekmīga importa paziņojuma un kļūmi bez eksporta/sarakstu izmaiņām.
-- `npm run ios:sync`: resursi un trīs spraudņi pievienoti SPM.
+- `npm test` mobilajā projektā: 57 pārbaudes — 9 iepakošana/izolācija, 6 faila
+  eksports, 22 krātuve/transakcijas/palaišana/dzēšana, 1 kontrolsumma, 11 natīvo darbību
+  adapteri, 4 apsveikumu pogu pārbaudes un 4 sakomplektēto skriptu integrācijas
+  pārbaudes ar imitētu Capacitor tiltu. Tās nav Swift vai WKWebView pārbaudes.
+- Kopīgā JSON moduļa 45 un saskarnes 20 pārbaudes izdevās, ieskaitot natīvās faila
+  izvēles priekšskatījumu bez rakstīšanas, atcelšanu, nederīgu JSON un atkārtotu importu.
+- Kopā 122 automatizētas pārbaude; `npm run ios:sync` pievieno piecus spraudņus SPM.
 - Xcode kompilācija, simulators un īsts iPhone šajā vidē nav pārbaudīti.
 
 ## Oficiālie avoti
@@ -146,3 +173,6 @@ tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti gi
 - https://capacitorjs.com/docs/apis/preferences
 
 - https://github.com/paulmillr/noble-hashes
+
+- https://capawesome.io/docs/sdks/capacitor/file-picker/
+- https://capacitorjs.com/docs/apis/clipboard

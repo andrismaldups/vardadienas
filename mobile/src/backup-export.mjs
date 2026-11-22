@@ -1,3 +1,4 @@
+import {cancelled,abortError} from './native-actions.mjs';
 // Injectable native boundary: no titles/text/URLs accompanying a backup attachment.
 export function createBackupExporter({ filesystem, share, directory, encoding, randomId }) {
   let active = false;
@@ -22,7 +23,7 @@ export function createBackupExporter({ filesystem, share, directory, encoding, r
       const result = await filesystem.writeFile({ path, data: text, directory, encoding, recursive: true });
       created = true;
       if (!/^file:\/\//.test(result.uri)) throw new Error('Nav iegūta vietējā faila adrese.');
-      await share.share({ files: [result.uri] });
+      try{await share.share({ files: [result.uri] });}catch(error){if(cancelled(error,'Share canceled'))throw abortError();throw error;}
       // A completed sheet does not prove that the user saved the file.
       return { bytes, filename };
     } finally {

@@ -1970,6 +1970,7 @@
   async function copyGreetingText(){
     const value=greetingResultText.value;
     if(!value.trim())return false;
+    if(window.VardadienasNativeGreetings){try{await window.VardadienasNativeGreetings.copyText(value);return true;}catch(error){return false;}}
     if(navigator.clipboard&&window.isSecureContext){
       try{await navigator.clipboard.writeText(value);return true;}catch(error){}
     }
@@ -1993,6 +1994,11 @@
   greetingShare.addEventListener('click',async()=>{
     const value=greetingResultText.value;
     if(!value.trim())return;
+    if(window.VardadienasNativeGreetings){
+      try{await window.VardadienasNativeGreetings.shareText(value);}
+      catch(error){if(error.name!=='AbortError')alert('Neizdevās atvērt dalīšanās izvēlni. Vari izmantot pogu Kopēt.');}
+      return;
+    }
     if(navigator.share){
       try{await navigator.share({text:value});return;}
       catch(error){if(error.name==='AbortError')return;}

@@ -44,3 +44,5 @@ await build({ entryPoints: [join(mobile, 'src/native-backup.mjs')], outfile: joi
 
 await writeFile(join(out, 'index.html'), `<!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="${csp}"><title>Vārdadienas</title><style>body{font:18px system-ui;background:#f3f7fb;color:#142c40;max-width:40rem;margin:20vh auto;padding:24px}button{font:inherit;padding:12px}</style><script defer src="native-boot.js"></script></head><body><main><h1>Vārdadienas</h1><p id="bootStatus" role="status">Pārbauda saglabātos datus…</p><button id="bootRetry" hidden>Mēģināt vēlreiz</button></main></body></html>`);
 for (const name of ['native-boot','native-storage']) await build({entryPoints:[join(mobile, `src/${name}.mjs`)],outfile:join(out,`${name}.js`),bundle:true,format:'iife',platform:'browser',target:'safari15'});
+
+await copyFile(join(mobile, 'THIRD_PARTY_NOTICES.txt'), join(out, 'THIRD_PARTY_NOTICES.txt'));
