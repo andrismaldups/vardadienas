@@ -87,3 +87,9 @@ plānotais jaunais Mac un uzņēmuma Apple konts būs vajadzīgi iOS būvēšana
 - https://developer.apple.com/help/app-store-connect/manage-subscriptions/create-non-renewing-subscriptions
 
 Pārskatāms kopā ar `docs/app-store-plan.md` un `docs/project-status-2026-11-22.md`.
+
+## APNs sagatave
+
+`apns/README.md` apraksta iOS klienta reģistrācijas kontrolieri un tīru APNs pieprasījuma
+veidotāju. Nav dzīva APNs transporta, DB piesaistes vai Apple atslēgu; sagataves
+pieprasījuma veidotājs nav pirkuma/autentifikācijas pārbaude.

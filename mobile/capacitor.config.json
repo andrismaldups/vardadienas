@@ -2,5 +2,16 @@
   "appId": "lv.example.vardadienas.preview",
   "appName": "Vārdadienas",
   "webDir": "www",
-  "ios": { "contentInset": "automatic" }
+  "ios": {
+    "contentInset": "automatic"
+  },
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": [
+        "banner",
+        "list",
+        "sound"
+      ]
+    }
+  }
 }

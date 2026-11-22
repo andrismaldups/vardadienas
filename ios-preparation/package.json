@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test entitlements/*.test.mjs server/*.test.mjs",
+    "test": "node --test entitlements/*.test.mjs server/*.test.mjs apns/*.test.mjs",
     "test:schema": "python server/schema.test.py"
   },
   "dependencies": {

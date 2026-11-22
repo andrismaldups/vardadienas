@@ -7,15 +7,17 @@ import {encodeSnapshot,decodeSnapshot} from '../src/storage-core.mjs';
 import {HEAD_KEY} from '../src/storage-vault.mjs';
 import {HANDOFF} from '../src/storage-startup.mjs';
 const boot=await readFile(new URL('../www/native-boot.js',import.meta.url),'utf8');
+const pushCode=await readFile(new URL('../www/native-push.js',import.meta.url),'utf8');
+const pushHtml=await readFile(new URL('../../index.html',import.meta.url),'utf8');
 const actions=await readFile(new URL('../www/native-backup.js',import.meta.url),'utf8');
 const runtime=await readFile(new URL('../www/native-storage.js',import.meta.url),'utf8');
 function memory(initial={}){const values=new Map(Object.entries(initial));return {getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,String(v)),removeItem:k=>values.delete(k)};}
 function fixture({corrupt=false}={}){
  const text=encodeSnapshot({favorites:'["Andris"]',birthdays:'[]'}),head={version:1,slot:'a',sha256:createHash('sha256').update(text).digest('hex')};
  const preferences=memory({[HEAD_KEY]:JSON.stringify(head)}),files=new Map([['vardadienas/storage-a.json',corrupt?'broken':text]]),docEvents={};
- const element=()=>({hidden:false,style:{},textContent:'',addEventListener(){},setAttribute(){},append(){},replaceChildren(){}});
+ const element=()=>({hidden:false,style:{},textContent:'',classList:{remove(){}},listeners:{},addEventListener(name,fn){this.listeners[name]=fn;},setAttribute(){},append(){},replaceChildren(){}});
  const nativeCalls=[];
- const elements={bootStatus:element(),bootRetry:element()};let resolveDone;
+ const elements={bootStatus:element(),bootRetry:element(),activatePushButton:element(),pushActivationStatus:element(),remindersEnabled:element()};let resolveDone;
  const done=new Promise(r=>resolveDone=r);
  const status=elements.bootStatus;let message='';Object.defineProperty(status,'textContent',{get:()=>message,set:v=>{message=v;if(v.startsWith('Saglabātos datus neizdevās'))resolveDone();}});
  const ctx={console,URL,TextEncoder,crypto:{getRandomValues:v=>webcrypto.getRandomValues(v)},queueMicrotask,setTimeout,clearTimeout,
@@ -70,4 +72,16 @@ test('Compiled native actions wire the selected local file and text-only share/c
  const shared=f.nativeCalls.find(c=>c.plugin==='Share'&&c.method==='share');assert.equal(Object.keys(shared.args).join(','),'text');assert.equal(shared.args.text,'Sveicu! 🎂');
  const copied=f.nativeCalls.find(c=>c.plugin==='Clipboard');assert.equal(copied.args.string,'Rediģēts 🌷');
  const picked=f.nativeCalls.find(c=>c.plugin==='FilePicker');assert.equal(picked.args.readData,false);assert.equal(picked.args.limit,1);
+});
+
+test('Compiled native Push keeps unconfigured controls inactive without any native permission/token calls',async()=>{
+ const f=fixture();let flushed=0;f.ctx.VardadienasNativeStorage={flush:async()=>{flushed++;}};
+ vm.runInContext(pushCode,f.ctx);for(const listener of f.docEvents.DOMContentLoaded)listener();
+ assert.equal(f.elements.activatePushButton.disabled,true);assert.equal(f.elements.remindersEnabled.checked,false);assert.equal(f.elements.remindersEnabled.disabled,true);
+ assert.equal(await f.ctx.VardadienasNativePush.activate(),false);assert.equal(f.nativeCalls.length,0);
+ // Existing PWA reminder controls still own local persistence/UI behaviour;
+ // the native hook bypasses only Web Push server synchronisation.
+ const start=pushHtml.indexOf('function queueTestReminderSync(){'),end=pushHtml.indexOf("activatePushButton.addEventListener('click'",start);
+ vm.runInContext(pushHtml.slice(start,end),f.ctx);f.ctx.queueTestReminderSync();await new Promise(r=>setImmediate(r));
+ assert.equal(flushed,1);assert(f.elements.pushActivationStatus.textContent.includes('saglabāta ierīcē'));assert.equal(f.nativeCalls.length,0);
 });

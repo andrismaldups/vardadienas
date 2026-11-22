@@ -105,3 +105,10 @@ test('Generated Xcode project uses the same provisional identifier and pinned ru
   assert.ok(project.includes(config.appId)); assert.ok(spm.includes('exact: "8.6.2"'));
   assert.ok(!project.includes('DEVELOPMENT_TEAM ='));
 });
+
+test('APNs callback bridge is wired but no placeholder identity is granted a Push signing entitlement',async()=>{
+ const delegate=await text(join(mobile,'ios/App/App/AppDelegate.swift'));
+ assert(delegate.includes('.capacitorDidRegisterForRemoteNotifications'));assert(delegate.includes('.capacitorDidFailToRegisterForRemoteNotifications'));
+ const config=JSON.parse(await text(join(mobile,'capacitor.config.json')));assert.deepEqual(config.plugins.PushNotifications.presentationOptions,['banner','list','sound']);
+ const project=await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'));assert(!project.includes('PushDevelopment.entitlements.example'));
+});

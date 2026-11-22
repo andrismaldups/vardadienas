@@ -3034,6 +3034,7 @@ function setPushActivationAppearance(active){
   activatePushButton.classList.toggle('push-active-status',active);
 }
 async function refreshPushActivationAppearance(){
+  if(window.VardadienasNativePush)return;
   try{
     if(!('Notification' in window)||Notification.permission!=='granted'||!('serviceWorker' in navigator))return setPushActivationAppearance(false);
     const registration=await navigator.serviceWorker.ready;
@@ -3058,6 +3059,7 @@ function base64UrlToUint8Array(base64Url){
 }
 // TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
 async function syncTestReminderSettings(){
+  if(window.VardadienasNativePush)return window.VardadienasNativePush.syncSettings();
   if(deletionSyncBlocked())return false;
   reminderSyncInProgress++;
   try{
@@ -3098,6 +3100,7 @@ async function syncTestReminderSettings(){
   }finally{reminderSyncInProgress--;}
 }
 function queueTestReminderSync(){
+  if(window.VardadienasNativePush){window.VardadienasNativePush.remindersChanged();return;}
   if(deletionSyncBlocked())return;
   if(!('serviceWorker' in navigator))return;
   syncTestReminderSettings().catch(error=>{
@@ -3106,6 +3109,7 @@ function queueTestReminderSync(){
   });
 }
 activatePushButton.addEventListener('click',async()=>{
+  if(window.VardadienasNativePush){await window.VardadienasNativePush.activate();return;}
   if(deletionSyncBlocked()||pushActivationInProgress)return;
   pushActivationInProgress=true;
   activatePushButton.disabled=true;

@@ -120,7 +120,8 @@ Nākamajos posmos vēl nepieciešams:
    nav pierādījums par fsync vai garantiju pēkšņa strāvas zuduma gadījumā.
 2. Ieviestā JSON faila izvēles un apsveikumu natīvās dalīšanās pārbaude īstā iPhone,
    tostarp On My iPhone/iCloud, atcelšana, īsziņas, Mail un citas izvēlētās lietotnes.
-3. Natīvais APNs, atļaujas un servera piesaiste; Web Push nav APNs tokens.
+3. Ieviestās APNs reģistrācijas sagataves piesaiste autentificētam serverim, pirkuma
+   tiesībām un reālai Apple konfigurācijai. Skatīt `../ios-preparation/apns/README.md`.
 4. StoreKit pirkuma pārbaude/atjaunošana un brīvprātīga pagarināšana.
 5. iOS servera autentifikācija/Keychain, piesaiste, licence un kopīgā datu dzēšanas plūsma.
 6. Safe-area, tastatūra, pieejamība un visu funkciju atkārtota pārbaude īstā iPhone.
@@ -149,16 +150,26 @@ foto bibliotēkai, kontaktiem vai starpliktuves lasīšana. UIDocumentPicker izv
 `THIRD_PARTY_NOTICES.txt` tiek iekļauts lokālajā paketē ar pašreizējo izpildlaika
 pakotņu licencēm. Pirms izlaides vēl jāpārskata Xcode atrisinātās Swift atkarības.
 
+## APNs klienta sagatave
+
+Push Notifications 8.1.3 un AppDelegate callback savienojums pievienoti. Apple serverim
+nav nosūtītu reģistrāciju/paziņojumu; nav īsta tokena vai Apple konta konfigurācijas.
+Esošā iOS sagatave rāda neieslēgtu Push un neveic OS atļaujas pieprasījumu, kamēr nav
+uzticamā servera adaptera. Atgādinājumu izvēles turpina saglabāties lokāli ar esošajiem
+vadības elementiem; native ceļš neizmanto produkcijas Web Push reģistrāciju.
+`VardadienasPlatform.nativePush` pagaidām paliek false — sagatave nav aktīva piegāde.
+Tokens netiek saglabāts personalizācijas krātuvē vai JSON eksportā. Detalizētais statuss,
+servera līgums un atlikušās darbības: `../ios-preparation/apns/README.md`.
+
 ## Veiktās pārbaudes 22.11.2026.
 
-- `npm test` mobilajā projektā: 57 pārbaudes — 9 iepakošana/izolācija, 6 faila
-  eksports, 22 krātuve/transakcijas/palaišana/dzēšana, 1 kontrolsumma, 11 natīvo darbību
-  adapteri, 4 apsveikumu pogu pārbaudes un 4 sakomplektēto skriptu integrācijas
-  pārbaudes ar imitētu Capacitor tiltu. Tās nav Swift vai WKWebView pārbaudes.
-- Kopīgā JSON moduļa 45 un saskarnes 20 pārbaudes izdevās, ieskaitot natīvās faila
-  izvēles priekšskatījumu bez rakstīšanas, atcelšanu, nederīgu JSON un atkārtotu importu.
-- Kopā 122 automatizētas pārbaude; `npm run ios:sync` pievieno piecus spraudņus SPM.
-- Xcode kompilācija, simulators un īsts iPhone šajā vidē nav pārbaudīti.
+- `npm test` mobilajā projektā: 72 pārbaudes (iepriekšējās 57 un 13 APNs kontroliera,
+  1 neieslēgta native UI/atgādinājumu savienojuma un 1 Xcode callback/konfigurācijas pārbaude).
+- Kopīgais JSON modulis: 45; importa/eksporta saskarne: 20 pārbaudes.
+- `ios-preparation`: Apple/pirkumu periodi un APNs pieprasījuma sagatave — 47 JS
+  pārbaudes; SQLite migrāciju/dzēšanas izolācija — 9 pārbaudes.
+- `npm run ios:sync`: SPM atrod sešus spraudņus. Šie testi imitē native tiltu;
+  Xcode kompilācija, simulators un īsts iPhone šajā vidē nav pārbaudīti.
 
 ## Oficiālie avoti
 
@@ -176,3 +187,5 @@ pakotņu licencēm. Pirms izlaides vēl jāpārskata Xcode atrisinātās Swift a
 
 - https://capawesome.io/docs/sdks/capacitor/file-picker/
 - https://capacitorjs.com/docs/apis/clipboard
+
+- https://capacitorjs.com/docs/apis/push-notifications
