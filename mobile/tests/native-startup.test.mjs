@@ -34,14 +34,14 @@ function fixture({corrupt=false}={}){
     {name:'FilePicker',methods:[{name:'pickFiles',rtype:'promise'}]},
     {name:'Share',methods:['canShare','share'].map(name=>({name,rtype:'promise'}))},
     {name:'Clipboard',methods:[{name:'write',rtype:'promise'}]},
-    {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'}]},
+    {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'},{name:'deletionState',rtype:'promise'}]},
     {name:'AppPurchaseProof',methods:['read','refresh'].map(name=>({name,rtype:'promise'}))},
     {name:'AppAttestEnrollment',methods:['status','attest'].map(name=>({name,rtype:'promise'}))}],
     nativePromise:async(plugin,method,args)=>{
      nativeCalls.push({plugin,method,args});
      if(plugin==='AppAttestEnrollment')return method==='status'?{supported:true}:{keyId:'native-key',attestation:'native-attestation',signedAppTransaction:'native.purchase.proof'};
      if(plugin==='AppPurchaseProof')return {signedAppTransaction:'header.payload.signature'};
-     if(plugin==='InstallationIdentity')return {record:ctx.identityRecord??null};
+     if(plugin==='InstallationIdentity')return method==='deletionState'?{blocked:ctx.identityRecord!=null||ctx.pendingRecovery===true}:{record:ctx.identityRecord??null};
      if(plugin==='Clipboard')return {};
      if(plugin==='Share')return method==='canShare'?{value:true}:{activityType:'test'};
      if(plugin==='FilePicker'){
@@ -127,4 +127,11 @@ test('Compiled App Attest adapter does not generate keys on construction or stat
  const f=fixture();vm.runInContext(attestBundle,f.ctx);assert.equal(f.nativeCalls.length,0);await f.ctx.testAttest.status();assert.equal(f.nativeCalls[0].method,'status');
  const result=await f.ctx.testAttest.attest({challengeId:'12345678-abcd-1234-abcd-123456789abc',installationId:'87654321-abcd-1234-abcd-123456789abc',bundleId:'lv.demo.vardadienas',challenge:'A'.repeat(43),signedAppTransaction:'foreign.purchase.proof'});
  assert.equal(f.nativeCalls[1].args.signedAppTransaction,undefined);assert.equal(result.signedAppTransaction,'native.purchase.proof');
+});
+
+test('Pending recovery without a primary credential blocks deletion and preserves personal lists',async()=>{
+ const f=fixture();vm.runInContext(boot,f.ctx);await f.done;vm.runInContext(identityCode,f.ctx);vm.runInContext(runtime,f.ctx);
+ for(const listener of f.docEvents.DOMContentLoaded)listener();f.ctx.confirm=()=>true;f.ctx.pendingRecovery=true;const before=[...f.files];
+ await f.elements.deleteMyDataButton.listeners.click({stopImmediatePropagation(){},preventDefault(){}});
+ assert.equal(f.ctx.localStorage.getItem('favorites'),'["Andris"]');assert.deepEqual([...f.files],before);assert(f.elements.deleteMyDataStatus.textContent.includes('serverī'));
 });

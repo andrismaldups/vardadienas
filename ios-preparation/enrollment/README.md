@@ -166,8 +166,14 @@ challenge and assertion. Never create a new token on every retry. The returned
 acknowledgement contains no secret. The client may promote the pending Keychain
 record only after a trusted server acknowledgement matches all three fields.
 
-**Remaining release blocker:** pending Keychain storage, native assertion and
-acknowledgement promotion, and trusted HTTP transport are not implemented yet.
+**Native preparation added:** `InstallationIdentityPlugin.swift` now stages a
+device-only pending Keychain credential before generating an assertion with the
+existing attested key, and promotes it after a matching acknowledgement.
+`mobile/src/identity-recovery.mjs` coordinates an explicitly injected transport.
+The pending record is retained as an idempotent receipt, including after success.
+This is retry recovery, not a general credential rotation or compromise response.
+**Remaining release blocker:** trusted HTTP transport and real iPhone/Swift
+verification are not implemented/completed yet.
 An Apple-attested key whose initial server enrollment never committed is a
 separate unfinished recovery case. No automatic key reset is allowed.
 

@@ -119,7 +119,7 @@ test('Keychain plugin is included in Swift sources and both controller entry poi
   assert(project.includes(file+' in Sources'));await access(join(mobile,'ios/App/App',file));
  }
  const native=await text(join(mobile,'ios/App/App/InstallationIdentityPlugin.swift'));
- assert(native.includes('kSecAttrAccessibleWhenUnlockedThisDeviceOnly'));assert(native.includes('kSecAttrSynchronizable as String: false'));assert(!native.includes('SecItemDelete('));assert(!native.includes('SecItemUpdate('));
+ assert(native.includes('kSecAttrAccessibleWhenUnlockedThisDeviceOnly'));assert(native.includes('kSecAttrSynchronizable as String: false'));assert(!native.includes('SecItemDelete('));assert.equal(native.split('SecItemUpdate(').length-1,1);assert(native.indexOf('SecItemUpdate(')>native.indexOf('@objc func finishRecovery'));assert(native.includes('SecRandomCopyBytes'));assert(native.includes('generateAssertion(key'));assert(native.includes('ios-recovery-v1'));assert(native.includes('try pending() == value'));assert(native.includes('value.candidateHash == candidateHash'));
  assert((await text(join(mobile,'ios/App/App/SceneDelegate.swift'))).includes('IdentityBridgeViewController()'));
  assert((await text(join(mobile,'ios/App/App/Base.lproj/Main.storyboard'))).includes('customClass="IdentityBridgeViewController"'));
  assert(html.indexOf('native-identity.js')<html.indexOf('native-storage.js'));

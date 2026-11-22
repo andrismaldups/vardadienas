@@ -201,15 +201,16 @@ App Attest neizsauc; entitlement piemērs nav piesaistīts būvējumam.
 
 Servera adapters izmanto node-app-attest 2.2.0 un papildu sertifikātu/scope pārbaudes.
 Node SQLite atsauces transakcija pārbaudīta lokāli; D1 migrācija vai HTTP endpoint
-nav izvietots. Zudušas reģistrācijas atbildes recovery/assertion plūsma vēl jāievieš
-pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: `../ios-preparation/enrollment/README.md`.
+nav izvietots. Zudušas reģistrācijas atbildes recovery/assertion prototipam pievienota native
+Keychain sagatave un koordinators; uzticams HTTP savienojums un īsta iPhone pārbaude
+vēl nepieciešami pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: `../ios-preparation/enrollment/README.md`.
 
 ## Veiktās pārbaudes 22.11.2026.
 
-- Mobilais projekts: 101 automatizēta pārbaude.
+- Mobilais projekts: 108 automatizētas pārbaude.
 - Kopīgais JSON: 45; importa/eksporta UI: 20.
-- Servera sagataves un jaunā Node SQLite reģistrācija: 81; agrākā Python SQLite shēma: 9.
-- Kopā 256 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
+- Servera sagataves un jaunā Node SQLite reģistrācija: 87; agrākā Python SQLite shēma: 9.
+- Kopā 269 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
   Enclave/īsts iPhone šajā vidē nav pārbaudīts.
 - `npm run ios:sync` izdevās. Dzīvais PWA/Cloudflare nav mainīts.
 
@@ -238,3 +239,28 @@ pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: `../ios-preparation
 - https://developer.apple.com/documentation/storekit/apptransaction/shared
 
 - https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity
+
+
+## Zudušas reģistrācijas atbildes atjaunošana
+
+`identity-recovery.mjs` ir pasīva rūpnīca ar obligāti injicētu transportu; tā netiek
+palaista no UI vai starta un neatver CSP/tīklu. Native plugin izmanto esošo App Attest
+atslēgu. Pirms `generateAssertion` tas izveido 32 nejaušu baitu API noslēpumu ar
+`SecRandomCopyBytes`, saglabā to atsevišķā fiksētā `ios-recovery-v1` Keychain account
+un pārbauda nolasīšanu. JS saņem tikai hash/recovery ID/apliecinājumu. Atkārtojums
+izmanto to pašu pending ierakstu ar jaunu servera nonce; nekad neģenerē jaunu App Attest
+atslēgu. Pēc atbilstoša servera apstiprinājuma native serializēti aizstāj galveno
+credential un nolasa pārbaudei. Pending ieraksts paliek kā idempotents apliecinājums
+arī pēc sekmīgas darbības; šis protokols nav vispārēja kompromitētas atslēgas rotācija.
+
+`finishRecovery` lokāli salīdzina apstiprinājuma laukus, bet pats nav servera
+kriptogrāfiskās autentifikācijas mehānisms. Koordinatoram jāsaņem atbilde tikai no
+uzticamā, fiksētā HTTPS servera; šis transports vēl nav pieslēgts. Atjaunošanas
+apstiprinājums nepiešķir pirkuma/Push perioda tiesības. Dzēšanas aizsargs pārbauda gan
+galveno, gan pending ierakstu un nepieļauj lokālu dzēšanu, pirms atrisināta servera
+identitāte. Nav automātiskas kļūdainu Keychain ierakstu tīrīšanas.
+
+Jauni 6 koordinatora testi imitē native/transporta robežu; viens sakomplektētā koda
+tests pārbauda dzēšanas aizsardzību pending-only gadījumā. Tie neizpilda Swift,
+Keychain vai Secure Enclave. Vajadzīga parakstīta Xcode/iPhone pārbaude, arī procesa
+izbeigšana pirms/pēc katra Keychain ieraksta un pazudis callback.

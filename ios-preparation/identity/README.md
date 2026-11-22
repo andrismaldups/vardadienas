@@ -3,7 +3,9 @@
 Jaunākais papildinājums: `../enrollment/README.md` apraksta App Attest verifikācijas
 adapteri un pirmreizējās reģistrācijas Node SQLite transakciju. Šajā dokumentā
 minētās pārbaudes/imitācijas attiecas uz konkrēto agrāko posmu. Reāls HTTP/D1 un
-zudušas atbildes recovery joprojām nav pieslēgti.
+zudušas atbildes recovery joprojām nav pieslēgti dzīvajam serverim. Native pending
+Keychain/assertion/ack sagatave un pasīvs koordinators tagad pievienoti; aktuālais
+atjaunošanas statuss ir `../../mobile/README.md` un `../enrollment/README.md`.
 
 ## Lietotāja plūsma
 
@@ -17,7 +19,7 @@ Personīgie saraksti un pamatfunkcijas turpina darboties bez identitātes/server
 ### Keychain savienojums
 
 `InstallationIdentityPlugin.swift` glabā servera piešķirtu ierakstu tikai konkrētās
-lietotnes Keychain servisā un vienā fiksētā account. Ieraksts satur versiju,
+lietotnes Keychain servisā un galvenajā fiksētajā account (atjaunošanai ir atsevišķs pending account). Ieraksts satur versiju,
 installationId, 32 baitu base64url API piekļuves noslēpumu, bundleId un servera
 identitāšu vides nosaukumu (`Sandbox`/`Production`). Šī atslēga NAV APNs ierīces tokens.
 APNs tokenu turpina pieprasīt no OS un tur tikai operatīvajā atmiņā.
@@ -33,9 +35,9 @@ APNs tokenu turpina pieprasīt no OS un tur tikai operatīvajā atmiņā.
 - Swift metode `store` pieļauj pirmreizēju ierakstu vai identiska ieraksta atkārtojumu;
   citādu identitāti nepārraksta. Viena kopīga fona rinda serializē plugin darbības.
   Pēc ieraksta pārbauda nolasīšanu; kļūme netiek paziņota kā sekmīga glabāšana.
-- Šajā posmā nav `clear`/tokena rotācijas API. Tām vajadzīgs servera atcelšanas un
-  atjaunošanas protokols. `assertLocalDeletionAllowed` aiztur lokālo “Dzēst manus datus”,
-  ja ir serverī reģistrēta identitāte vai Keychain stāvokli nevar apstiprināt. Ja Keychain
+- Šajā posmā nav `clear` vai vispārējas tokena rotācijas API. Pievienota tikai
+  zudušas reģistrācijas atbildes atjaunošanas sagatave. `assertLocalDeletionAllowed` aiztur lokālo “Dzēst manus datus”,
+  ja ir serverī reģistrēta identitāte, pending atjaunošana vai Keychain stāvokli nevar apstiprināt. Ja Keychain
   ir tukšs, esošā lokālā abu datu kopiju dzēšana turpina darboties.
 - `IdentityBridgeViewController` reģistrē plugin. Abi projekta iOS ieejas ceļi
   (SceneDelegate un Main.storyboard) izmanto šo kontrolieri; Swift faili pievienoti
