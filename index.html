@@ -1511,7 +1511,7 @@
     if(!isKnownName(name))return name;
     if(/us$/i.test(name))return name;
     if(/is$/i.test(name))return name.slice(0,-2)+"i";
-    if(/s$/i.test(name))return name.slice(0,-1);
+    if(/[sš]$/i.test(name))return name.slice(0,-1);
     return name;
   }
 
