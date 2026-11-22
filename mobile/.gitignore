@@ -1,0 +1,13 @@
+node_modules/
+www/
+.env
+.env.*
+*.p8
+*.p12
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/App/Pods/
+ios/App/DerivedData/
+**/xcuserdata/
+.DS_Store

@@ -1,0 +1,102 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile, access, readdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve, join } from 'node:path';
+import { createHash } from 'node:crypto';
+import vm from 'node:vm';
+
+const mobile = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const root = resolve(mobile, '..'), out = join(mobile, 'www');
+const text = path => readFile(path, 'utf8');
+const source = await text(join(root, 'index.html'));
+const html = await text(join(out, 'index.html'));
+const manifest = JSON.parse(await text(join(out, 'packaging-manifest.json')));
+const hash = value => createHash('sha256').update(value).digest('hex');
+
+test('All packaged data, libraries and styles match their existing source bytes', async () => {
+  for (const [file, digest] of Object.entries(manifest.files)) {
+    assert.equal(hash(await readFile(join(root, file))), digest, file);
+    if (file !== 'index.html') assert.equal(hash(await readFile(join(out, file))), digest, file);
+  }
+  assert.equal(hash(source), manifest.sourceIndexSha256);
+});
+test('Every HTML script/image/stylesheet reference resolves to a bundled local file', async () => {
+  for (const match of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    const reference = match[1];
+    if (reference.startsWith('#')) continue;
+    assert.ok(!/^(?:https?:)?\/\//.test(reference), reference);
+    await access(join(out, reference.split(/[?#]/)[0]));
+  }
+});
+test('Selectable themes have their local images; old inactive rules are identified', async () => {
+  const inactive = new Set(['assets/d3-nakts-mezs-fons.svg','assets/d3-nakts-mezs-dekoracijas.svg',
+    'clean-ds-1.1/assets/lavanda_augsa.png','clean-ds-1.1/assets/lavanda_apaksa.png','clean-ds-1.1/assets/lavanda_interesanti.png']);
+  const seen = new Set();
+  for (const file of Object.keys(manifest.files).filter(f => f.endsWith('.css'))) {
+    const css = await text(join(out, file));
+    for (const match of css.matchAll(/url\(\s*["']?([^"')]+)/g)) {
+      const value = match[1];
+      if (/^(?:data:|#|%23)/.test(value)) continue;
+      const resolved = resolve(dirname(join(out, file)), value.split('?')[0]);
+      try { await access(resolved); } catch (error) {
+        const relative = resolved.slice(out.length + 1);
+        assert.ok(inactive.has(relative), `Missing active asset ${file}: ${value}`); seen.add(relative);
+      }
+    }
+  }
+  assert.equal(seen.size, 5);
+  assert.ok(!/name="designStyle" value="(?:nature-d3|lavender)"/.test(html));
+});
+test('Greeting and all other functional inline scripts are unchanged', () => {
+  const scripts = value => [...value.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m => m[1]).filter(Boolean);
+  const before = scripts(source), after = scripts(html);
+  assert.equal(before.length, after.length);
+  for (let i = 0; i < before.length; i++) {
+    if (!before[i].includes('navigator.serviceWorker.register')) assert.equal(after[i], before[i]);
+    new vm.Script(after[i]);
+  }
+});
+test('Native package does not register a PWA service worker or depend on a remote start URL', async () => {
+  assert.ok(!html.includes('navigator.serviceWorker.register'));
+  const config = JSON.parse(await text(join(mobile, 'capacitor.config.json')));
+  assert.equal(config.webDir, 'www'); assert.equal(config.server?.url, undefined);
+  const files = await readdir(out);
+  for (const excluded of ['service-worker.js','manifest.json','ios-preparation','node_modules','.git'])
+    assert.ok(!files.includes(excluded), excluded);
+  assert.ok(!Object.keys(manifest.files).some(f => /server|apple-purchase|package-lock/.test(f)));
+});
+test('Network guard loads before app code and CSP denies remote connections', () => {
+  assert.ok(html.indexOf('native-preview.js') < html.indexOf('data-backup.js'));
+  assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('native-preview.js'));
+  assert.ok(html.includes("connect-src 'self'")); assert.ok(html.includes('viewport-fit=cover'));
+});
+
+async function guard() {
+  const calls = [], window = { location: { href: 'capacitor://localhost/index.html', protocol: 'capacitor:', host: 'localhost' },
+    fetch: async (...args) => { calls.push(args); return { ok: true }; }, Capacitor: { isNativePlatform: () => true } };
+  vm.runInNewContext(await text(join(out, 'native-preview.js')), { window, URL });
+  return { window, calls };
+}
+test('Native preview blocks production/API requests without invoking the transport', async () => {
+  const { window, calls } = await guard();
+  for (const url of ['https://vardadienas-push.andris-maldups.workers.dev/api/installations',
+    'https://localhost/api', 'capacitor://localhost.evil.test/api'])
+    await assert.rejects(window.fetch(url, { method: 'POST' }), /not configured/);
+  assert.equal(calls.length, 0);
+});
+test('Local resources are still available and no purchase/Push capability is falsely advertised', async () => {
+  const { window, calls } = await guard();
+  assert.equal((await window.fetch('./name-days.json')).ok, true);
+  assert.equal(calls.length, 1); assert.equal(window.VardadienasPlatform.native, true);
+  assert.equal(window.VardadienasPlatform.remoteSync, false);
+  assert.equal(window.VardadienasPlatform.storePurchases, false);
+  assert.equal(window.VardadienasPlatform.nativePush, false);
+});
+test('Generated Xcode project uses the same provisional identifier and pinned runtime', async () => {
+  const config = JSON.parse(await text(join(mobile, 'capacitor.config.json')));
+  const project = await text(join(mobile, 'ios/App/App.xcodeproj/project.pbxproj'));
+  const spm = await text(join(mobile, 'ios/App/CapApp-SPM/Package.swift'));
+  assert.ok(project.includes(config.appId)); assert.ok(spm.includes('exact: "8.6.2"'));
+  assert.ok(!project.includes('DEVELOPMENT_TEAM ='));
+});
