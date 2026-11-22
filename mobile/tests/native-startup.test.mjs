@@ -7,6 +7,7 @@ import {encodeSnapshot,decodeSnapshot} from '../src/storage-core.mjs';
 import {HEAD_KEY} from '../src/storage-vault.mjs';
 import {HANDOFF} from '../src/storage-startup.mjs';
 const boot=await readFile(new URL('../www/native-boot.js',import.meta.url),'utf8');
+const identityCode=await readFile(new URL('../www/native-identity.js',import.meta.url),'utf8');
 const pushCode=await readFile(new URL('../www/native-push.js',import.meta.url),'utf8');
 const pushHtml=await readFile(new URL('../../index.html',import.meta.url),'utf8');
 const actions=await readFile(new URL('../www/native-backup.js',import.meta.url),'utf8');
@@ -17,7 +18,7 @@ function fixture({corrupt=false}={}){
  const preferences=memory({[HEAD_KEY]:JSON.stringify(head)}),files=new Map([['vardadienas/storage-a.json',corrupt?'broken':text]]),docEvents={};
  const element=()=>({hidden:false,style:{},textContent:'',classList:{remove(){}},listeners:{},addEventListener(name,fn){this.listeners[name]=fn;},setAttribute(){},append(){},replaceChildren(){}});
  const nativeCalls=[];
- const elements={bootStatus:element(),bootRetry:element(),activatePushButton:element(),pushActivationStatus:element(),remindersEnabled:element()};let resolveDone;
+ const elements={bootStatus:element(),bootRetry:element(),activatePushButton:element(),pushActivationStatus:element(),remindersEnabled:element(),deleteMyDataButton:element(),deleteMyDataStatus:element()};let resolveDone;
  const done=new Promise(r=>resolveDone=r);
  const status=elements.bootStatus;let message='';Object.defineProperty(status,'textContent',{get:()=>message,set:v=>{message=v;if(v.startsWith('Saglabātos datus neizdevās'))resolveDone();}});
  const ctx={console,URL,TextEncoder,crypto:{getRandomValues:v=>webcrypto.getRandomValues(v)},queueMicrotask,setTimeout,clearTimeout,
@@ -29,9 +30,11 @@ function fixture({corrupt=false}={}){
     {name:'Filesystem',methods:['readFile','writeFile','stat','getUri','deleteFile','rmdir'].map(name=>({name,rtype:'promise'}))},
     {name:'FilePicker',methods:[{name:'pickFiles',rtype:'promise'}]},
     {name:'Share',methods:['canShare','share'].map(name=>({name,rtype:'promise'}))},
-    {name:'Clipboard',methods:[{name:'write',rtype:'promise'}]}],
+    {name:'Clipboard',methods:[{name:'write',rtype:'promise'}]},
+    {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'}]}],
     nativePromise:async(plugin,method,args)=>{
      nativeCalls.push({plugin,method,args});
+     if(plugin==='InstallationIdentity')return {record:ctx.identityRecord??null};
      if(plugin==='Clipboard')return {};
      if(plugin==='Share')return method==='canShare'?{value:true}:{activityType:'test'};
      if(plugin==='FilePicker'){
@@ -84,4 +87,24 @@ test('Compiled native Push keeps unconfigured controls inactive without any nati
  const start=pushHtml.indexOf('function queueTestReminderSync(){'),end=pushHtml.indexOf("activatePushButton.addEventListener('click'",start);
  vm.runInContext(pushHtml.slice(start,end),f.ctx);f.ctx.queueTestReminderSync();await new Promise(r=>setImmediate(r));
  assert.equal(flushed,1);assert(f.elements.pushActivationStatus.textContent.includes('saglabāta ierīcē'));assert.equal(f.nativeCalls.length,0);
+});
+
+test('Compiled identity boundary never exposes credentials and blocks local-only deletion of enrolled identity',async()=>{
+ const f=fixture();vm.runInContext(identityCode,f.ctx);assert.deepEqual(Object.keys(f.ctx.VardadienasNativeIdentity),['assertLocalDeletionAllowed']);
+ await f.ctx.VardadienasNativeIdentity.assertLocalDeletionAllowed();f.ctx.identityRecord='server-credential';
+ await assert.rejects(f.ctx.VardadienasNativeIdentity.assertLocalDeletionAllowed(),/serverī/);assert.equal(f.nativeCalls.length,2);
+});
+
+test('Compiled native deletion guard preserves lists when an enrolled identity needs server revocation',async()=>{
+ const f=fixture();vm.runInContext(boot,f.ctx);await f.done;vm.runInContext(identityCode,f.ctx);vm.runInContext(runtime,f.ctx);
+ for(const listener of f.docEvents.DOMContentLoaded)listener();f.ctx.confirm=()=>true;f.ctx.identityRecord='enrolled';const before=[...f.files];
+ await f.elements.deleteMyDataButton.listeners.click({stopImmediatePropagation(){},preventDefault(){}});
+ assert.equal(f.ctx.localStorage.getItem('favorites'),'["Andris"]');assert.deepEqual([...f.files],before);assert(f.elements.deleteMyDataStatus.textContent.includes('serverī'));
+});
+test('Compiled native deletion still clears both copies when Keychain confirms there is no enrolled identity',async()=>{
+ const f=fixture();vm.runInContext(boot,f.ctx);await f.done;vm.runInContext(identityCode,f.ctx);vm.runInContext(runtime,f.ctx);
+ for(const listener of f.docEvents.DOMContentLoaded)listener();f.ctx.confirm=()=>true;
+ await f.elements.deleteMyDataButton.listeners.click({stopImmediatePropagation(){},preventDefault(){}});
+ assert.equal(f.ctx.destination,'./index.html');assert.equal(f.ctx.localStorage.getItem('favorites'),null);
+ for(const [path,text] of f.files)if(path.startsWith('vardadienas/storage-'))assert.equal(decodeSnapshot(text).favorites,undefined);
 });

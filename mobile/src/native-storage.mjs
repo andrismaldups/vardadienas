@@ -46,12 +46,16 @@ try{
   // data locally; never invoke the PWA's production-server deletion workflow.
   document.addEventListener('DOMContentLoaded',()=>{
     const button=document.getElementById('deleteMyDataButton');
+    let deleting=false;
     const description=button?.previousElementSibling;
     if(description?.tagName==='P')description.textContent='Vari dzēst šīs iOS sagataves vārdus, dzimšanas dienas un atgādinājumu iestatījumus. Servera un Push piesaiste vēl nav ieslēgta.';
     button?.addEventListener('click',async event=>{
       event.stopImmediatePropagation();event.preventDefault();
-      if(!confirm('Dzēst šīs iOS sagataves vārdus, dzimšanas dienas un atgādinājumu iestatījumus?'))return;
+      if(deleting||!confirm('Dzēst šīs iOS sagataves vārdus, dzimšanas dienas un atgādinājumu iestatījumus?'))return;
+      deleting=true;button.disabled=true;
       const status=document.getElementById('deleteMyDataStatus');
+      try{await window.VardadienasNativeIdentity.assertLocalDeletionAllowed();}
+      catch(error){deleting=false;button.disabled=false;if(status)status.textContent='Dzēšana apturēta: '+error.message;return;}
       try{
         await controller.commit({},store=>{for(const key of KEYS)if(!['appearanceMode','designStyle'].includes(key))store.removeItem(key);});
         paint('saving');await vault.scrubInactive();

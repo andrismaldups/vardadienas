@@ -24,7 +24,7 @@ html = html.replace('<img class="lavender-top-art" src="assets/lavanda_augsa.png
 html = html.replace('width=device-width,initial-scale=1', 'width=device-width,initial-scale=1,viewport-fit=cover');
 if (!html.includes('<meta charset="utf-8">')) throw Error('Native startup insertion point missing');
 const csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
-html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script><script src="native-storage.js"></script><script src="native-backup.js"></script><script src="native-push.js"></script>`);
+html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script><script src="native-identity.js"></script><script src="native-storage.js"></script><script src="native-backup.js"></script><script src="native-push.js"></script>`);
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
@@ -43,6 +43,6 @@ console.log(`Packaged ${files.length} existing application files locally; root P
 await build({ entryPoints: [join(mobile, 'src/native-backup.mjs')], outfile: join(out, 'native-backup.js'), bundle: true, format: 'iife', platform: 'browser', target: 'safari15' });
 
 await writeFile(join(out, 'index.html'), `<!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="${csp}"><title>Vārdadienas</title><style>body{font:18px system-ui;background:#f3f7fb;color:#142c40;max-width:40rem;margin:20vh auto;padding:24px}button{font:inherit;padding:12px}</style><script defer src="native-boot.js"></script></head><body><main><h1>Vārdadienas</h1><p id="bootStatus" role="status">Pārbauda saglabātos datus…</p><button id="bootRetry" hidden>Mēģināt vēlreiz</button></main></body></html>`);
-for (const name of ['native-boot','native-storage','native-push']) await build({entryPoints:[join(mobile, `src/${name}.mjs`)],outfile:join(out,`${name}.js`),bundle:true,format:'iife',platform:'browser',target:'safari15'});
+for (const name of ['native-boot','native-identity','native-storage','native-push']) await build({entryPoints:[join(mobile, `src/${name}.mjs`)],outfile:join(out,`${name}.js`),bundle:true,format:'iife',platform:'browser',target:'safari15'});
 
 await copyFile(join(mobile, 'THIRD_PARTY_NOTICES.txt'), join(out, 'THIRD_PARTY_NOTICES.txt'));

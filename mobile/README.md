@@ -123,7 +123,8 @@ Nākamajos posmos vēl nepieciešams:
 3. Ieviestās APNs reģistrācijas sagataves piesaiste autentificētam serverim, pirkuma
    tiesībām un reālai Apple konfigurācijai. Skatīt `../ios-preparation/apns/README.md`.
 4. StoreKit pirkuma pārbaude/atjaunošana un brīvprātīga pagarināšana.
-5. iOS servera autentifikācija/Keychain, piesaiste, licence un kopīgā datu dzēšanas plūsma.
+5. Sagatavotā Keychain/HTTP klienta/autentifikācijas koda reāla pārbaude un enrollment,
+   atsaukšanas, licences un kopīgās datu dzēšanas piesaiste. Skatīt `../ios-preparation/identity/README.md`.
 6. Safe-area, tastatūra, pieejamība un visu funkciju atkārtota pārbaude īstā iPhone.
 
 ## Atkārtošana uz jaunā Mac
@@ -161,15 +162,28 @@ vadības elementiem; native ceļš neizmanto produkcijas Web Push reģistrāciju
 Tokens netiek saglabāts personalizācijas krātuvē vai JSON eksportā. Detalizētais statuss,
 servera līgums un atlikušās darbības: `../ios-preparation/apns/README.md`.
 
+## iOS identitātes un HTTPS klienta sagatave
+
+Pievienots lokāls Keychain plugin un tā reģistrācija pielāgotā bridge kontrolierī;
+SceneDelegate un Main.storyboard izmanto šo kontrolieri. Glabā tikai servera izsniegtu
+instalācijas API credential, nevis APNs tokenu. Ieraksti ir ThisDeviceOnly un pieejami
+atbloķētā ierīcē. Bojāta/nesaistīta identitāte netiek automātiski pārrakstīta.
+Lietotnes lokālā dzēšana vispirms pārbauda, vai nav nepieciešama servera identitātes
+atsaukšana; pie tukša Keychain dzēšanas funkcija turpina darboties.
+
+Autentificētā HTTPS klienta un servera tokena pārbaudes prototipi ir testējami, bet
+nav pieslēgti reālam serverim vai jaunai DB shēmai. CSP un tīkla izolācija paliek spēkā.
+Plašāk: `../ios-preparation/identity/README.md`. Keychain Swift kods nav kompilēts ar
+Xcode; tā krātuves īpašības šajā vidē netiek apstiprinātas ar imitētiem JS testiem.
+
 ## Veiktās pārbaudes 22.11.2026.
 
-- `npm test` mobilajā projektā: 72 pārbaudes (iepriekšējās 57 un 13 APNs kontroliera,
-  1 neieslēgta native UI/atgādinājumu savienojuma un 1 Xcode callback/konfigurācijas pārbaude).
-- Kopīgais JSON modulis: 45; importa/eksporta saskarne: 20 pārbaudes.
-- `ios-preparation`: Apple/pirkumu periodi un APNs pieprasījuma sagatave — 47 JS
-  pārbaudes; SQLite migrāciju/dzēšanas izolācija — 9 pārbaudes.
-- `npm run ios:sync`: SPM atrod sešus spraudņus. Šie testi imitē native tiltu;
-  Xcode kompilācija, simulators un īsts iPhone šajā vidē nav pārbaudīti.
+- Mobilais projekts: 89 automatizētas pārbaudes.
+- Kopīgais JSON modulis: 45; importa/eksporta UI: 20.
+- `ios-preparation`: periodi, Apple darījumi, APNs, identitātes autentifikācija — 53 JS.
+- SQLite migrāciju/dzēšanas izolācija — 9. Kopā 216 pārbaudes izdevās.
+- `npm run ios:sync`: seši npm spraudņi SPM un lokālais Swift identitātes plugins
+  pievienots Xcode avotiem. Reālā Swift kompilācija un iPhone vēl nav pārbaudīti.
 
 ## Oficiālie avoti
 
@@ -189,3 +203,6 @@ servera līgums un atlikušās darbības: `../ios-preparation/apns/README.md`.
 - https://capacitorjs.com/docs/apis/clipboard
 
 - https://capacitorjs.com/docs/apis/push-notifications
+
+- https://developer.apple.com/documentation/security/keychain-services
+- https://capacitorjs.com/docs/ios/custom-code

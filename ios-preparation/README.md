@@ -93,3 +93,9 @@ Pārskatāms kopā ar `docs/app-store-plan.md` un `docs/project-status-2026-11-2
 `apns/README.md` apraksta iOS klienta reģistrācijas kontrolieri un tīru APNs pieprasījuma
 veidotāju. Nav dzīva APNs transporta, DB piesaistes vai Apple atslēgu; sagataves
 pieprasījuma veidotājs nav pirkuma/autentifikācijas pārbaude.
+
+## iOS identitāte
+
+`identity/README.md` apraksta Keychain glabāšanas un autentificētā HTTPS klienta
+sagatavi, kā arī servera credential pārbaudi. Reāls enrollment/atsaukšanas maršruts,
+DB shēma un StoreKit/App Attest piesaiste vēl nav izveidoti vai izvietoti.

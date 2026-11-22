@@ -112,3 +112,15 @@ test('APNs callback bridge is wired but no placeholder identity is granted a Pus
  const config=JSON.parse(await text(join(mobile,'capacitor.config.json')));assert.deepEqual(config.plugins.PushNotifications.presentationOptions,['banner','list','sound']);
  const project=await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'));assert(!project.includes('PushDevelopment.entitlements.example'));
 });
+
+test('Keychain plugin is included in Swift sources and both controller entry points use its bridge',async()=>{
+ const project=await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'));
+ for(const file of ['InstallationIdentityPlugin.swift','IdentityBridgeViewController.swift']){
+  assert(project.includes(file+' in Sources'));await access(join(mobile,'ios/App/App',file));
+ }
+ const native=await text(join(mobile,'ios/App/App/InstallationIdentityPlugin.swift'));
+ assert(native.includes('kSecAttrAccessibleWhenUnlockedThisDeviceOnly'));assert(native.includes('kSecAttrSynchronizable as String: false'));assert(!native.includes('SecItemDelete('));assert(!native.includes('SecItemUpdate('));
+ assert((await text(join(mobile,'ios/App/App/SceneDelegate.swift'))).includes('IdentityBridgeViewController()'));
+ assert((await text(join(mobile,'ios/App/App/Base.lproj/Main.storyboard'))).includes('customClass="IdentityBridgeViewController"'));
+ assert(html.indexOf('native-identity.js')<html.indexOf('native-storage.js'));
+});
