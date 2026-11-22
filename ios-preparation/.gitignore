@@ -1,0 +1,6 @@
+node_modules/
+.env
+.env.*
+*.p8
+*.p12
+__pycache__/
