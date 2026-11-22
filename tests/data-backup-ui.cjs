@@ -1,0 +1,55 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const {Storage,sample}=require('./data-backup.cjs');
+const script=fs.readFileSync(__dirname+'/../data-backup.js','utf8');let passed=0;
+class Element{
+ constructor(){this.handlers={};this.value='';this.textContent='';this.hidden=false;this.checked=false;this.disabled=false;this.options=[];this.files=[];this.clicked=0;}
+ addEventListener(e,f){(this.handlers[e]??=[]).push(f);}
+ async emit(e){for(const f of this.handlers[e]||[])await f({target:this});}
+ dispatchEvent(e){for(const f of this.handlers[e.type]||[])f({target:this});}
+ click(){this.clicked++;}
+ remove(){}
+ closest(){return null;}
+}
+function fixture({active=false,online=false}={}){
+ const ids=['backupExport','backupImport','backupStatus','backupPreview','backupFile','backupApplySettings','backupFileSummary','backupFileName','backupSettingsSummary','backupCancel','backupConfirm','backupSyncStatus','reminderEvening','reminderMorning','reminderEveningTime','reminderMorningTime','reminderBirthdays','remindersEnabled','deleteMyDataButton'];
+ const el=Object.fromEntries(ids.map(id=>[id,new Element()]));el.backupApplySettings.checked=true;el.backupPreview.hidden=true;el.reminderEveningTime.value='18:00';el.reminderMorningTime.value='07:00';el.remindersEnabled.checked=active;
+ const docEvents={},winEvents={},radios={designStyle:['classic','festive-s1','ds11','sea-mist','cherry','sun'],appearanceMode:['auto','light','dark'],reminderTarget:['all','favorites']};
+ for(const [group,values] of Object.entries(radios))radios[group]=values.map(v=>{const e=new Element();e.value=v;e.checked=v===({designStyle:'classic',appearanceMode:'auto',reminderTarget:'favorites'}[group]);return e;});
+ const storage=new Storage({favorites:'["Andris"]',birthdays:'[]',remindersEnabled:String(active),vardadienas_test_installation_v1:JSON.stringify({installationId:'DEST',token:'SECRET'})});
+ if(active)storage.setItem('testPushSubscriptionId','6');
+ for(const group of ['designStyle','appearanceMode'])for(const e of radios[group])e.addEventListener('change',()=>storage.setItem(group,e.value));
+ const urls=[],downloads=[],synced=[];let nextId=0;
+ const ctx={TextEncoder,Blob,File,Event,Date,Map,Set,Promise,console:{warn(){}},setTimeout:(f,t)=>{if(t<1000)return setTimeout(f,0);return 0;},localStorage:storage,
+ document:{readyState:'loading',hidden:false,addEventListener:(e,f)=>(docEvents[e]??=[]).push(f),getElementById:id=>el[id],querySelectorAll:q=>radios[q.match(/name="([^"]+)"/)?.[1]]||[],querySelector:q=>radios[q.match(/name="([^"]+)"/)?.[1]]?.find(e=>e.checked),createElement:tag=>{const e=new Element();e.click=()=>downloads.push(e.download);return e;},body:{append(){} }},
+ navigator:{onLine:online},URL:{createObjectURL:blob=>{urls.push(blob);return 'blob:test'},revokeObjectURL(){}},window:{addEventListener:(e,f)=>(winEvents[e]??=[]).push(f)},
+ DATA:{'30.11.':[['Andris','Mārtiņš','Jānis'],[]]},favorites:['Andris'],birthdays:[],pushActivationInProgress:false,reminderSyncInProgress:0,
+ deletionSyncBlocked:()=>storage.getItem('vardadienas_test_deletion_pending_v1')!==null||storage.getItem('vardadienas_backup_transaction_v1')!==null,
+ birthdayId:()=>String(++nextId),TEST_FAVORITES_QUEUE_KEY:'vardadienas_test_favorites_queue_v1',BIRTHDAY_QUEUE_KEY:'testBirthdaySyncQueueV1',BIRTHDAY_INITIALIZED_KEY:'testBirthdaySyncInitializedV1',
+ readTestFavoritesQueue:()=>JSON.parse(storage.getItem('vardadienas_test_favorites_queue_v1')||'[]'),readBirthdayQueue:()=>JSON.parse(storage.getItem('testBirthdaySyncQueueV1')||'[]'),
+ flushTestFavoritesQueue:async()=>{},flushBirthdayQueue:async()=>{},syncTestReminderSettings:async()=>{synced.push(el.reminderMorningTime.value);return true;},
+ restoreReminderTime:(select,value)=>{select.value=value;select.options=[{value,textContent:value}];select.selectedIndex=0;},
+ setBirthdaySortMode:()=>{},closeBirthdayForm:()=>{},closeFavoriteAdd:()=>{},renderFavorites:()=>{},renderBirthdays:()=>{},renderBirthdayHome:()=>{}};
+ ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(script,ctx);docEvents.DOMContentLoaded.forEach(fn=>fn());
+ const load=async b=>{el.backupFile.files=[{size:100,text:async()=>typeof b==='string'?b:JSON.stringify(b)}];await el.backupFile.emit('change');};
+ return {ctx,el,storage,load,urls,downloads,synced,docEvents,winEvents};
+}
+(async()=>{
+ async function test(label,fn){await fn();passed++;console.log('PASS UI '+label);}
+ await test('export contains portable JSON without device IDs, tokens or activation',async()=>{const f=fixture({active:true});await f.el.backupExport.emit('click');assert.equal(f.downloads.length,1);const text=await f.urls[0].text();const json=JSON.parse(text);assert.equal(json.format,'lv.vardadienas.backup');assert(!text.includes('SECRET'));assert(!text.includes('DEST'));assert(!text.includes('subscription'));assert(!('enabled'in json.settings.reminders));});
+ await test('preview does not modify lists or storage before confirmation',async()=>{const f=fixture(),before=Array.from(f.storage.m);await f.load(sample());assert.equal(f.el.backupPreview.hidden,false);assert.deepEqual(Array.from(f.storage.m),before);assert.equal(f.ctx.birthdays.length,0);});
+ await test('cancel clears preview with no mutations',async()=>{const f=fixture(),before=Array.from(f.storage.m);await f.load(sample());await f.el.backupCancel.emit('click');assert(f.el.backupPreview.hidden);assert.deepEqual(Array.from(f.storage.m),before);});
+ await test('confirmed offline merge persists queues and keeps device activation',async()=>{const f=fixture({active:true});await f.load(sample());await f.el.backupConfirm.emit('click');assert.deepEqual(Array.from(f.ctx.favorites),['Andris','Mārtiņš']);assert.equal(f.ctx.birthdays.length,1);assert.equal(f.ctx.birthdays[0].name,'Aiga Riepa');assert(f.ctx.birthdays[0].id);assert.equal(f.storage.getItem('remindersEnabled'),'true');assert.equal(f.storage.getItem('testPushSubscriptionId'),'6');assert(f.storage.getItem('vardadienas_import_reminders_pending_v1'));assert.equal(JSON.parse(f.storage.getItem('testBirthdaySyncQueueV1')).length,1);assert.equal(JSON.parse(f.storage.getItem('vardadienas_test_favorites_queue_v1')).length,1);assert.equal(f.storage.getItem('designStyle'),'sea-mist');assert(f.el.backupStatus.textContent.includes('Imports pabeigts'));});
+ await test('online retry syncs imported preferences using this device only',async()=>{const f=fixture({active:true});await f.load(sample());await f.el.backupConfirm.emit('click');f.ctx.navigator.onLine=true;f.ctx.navigator.serviceWorker={};f.winEvents.online.forEach(fn=>fn());await new Promise(resolve=>setTimeout(resolve,5));assert.deepEqual(f.synced,['07:00']);assert.equal(f.storage.getItem('vardadienas_import_reminders_pending_v1'),null);});
+ await test('same file reimport adds no duplicate lists or server actions',async()=>{const f=fixture();await f.load(sample());await f.el.backupConfirm.emit('click');const bq=f.storage.getItem('testBirthdaySyncQueueV1'),fq=f.storage.getItem('vardadienas_test_favorites_queue_v1');await f.load(sample());await f.el.backupConfirm.emit('click');assert.equal(f.ctx.birthdays.length,1);assert.equal(f.ctx.favorites.length,2);assert.equal(f.storage.getItem('testBirthdaySyncQueueV1'),bq);assert.equal(f.storage.getItem('vardadienas_test_favorites_queue_v1'),fq);});
+ await test('uncheck preferences preserves destination settings',async()=>{const f=fixture();f.storage.setItem('designStyle','cherry');f.el.backupApplySettings.checked=false;await f.load(sample());await f.el.backupConfirm.emit('click');assert.equal(f.storage.getItem('designStyle'),'cherry');assert.equal(f.storage.getItem('reminderMorning'),null);});
+ await test('malformed JSON, impossible date and unknown name cannot mutate data',async()=>{for(const b of ['{',(()=>{const b=sample();b.birthdays[0].day=31;return b;})(),(()=>{const b=sample();b.favorites=['Unknown'];return b;})()]){const f=fixture(),before=Array.from(f.storage.m);await f.load(b);await f.el.backupConfirm.emit('click');assert(f.el.backupPreview.hidden);assert.deepEqual(Array.from(f.storage.m),before);}});
+ await test('quota failure restores lists and leaves memory unchanged',async()=>{const f=fixture();await f.load(sample());let once=false;f.storage.fail=k=>{if(k==='birthdays'&&!once){once=true;return true;}return false;};await f.el.backupConfirm.emit('click');assert.deepEqual(Array.from(f.ctx.favorites),['Andris']);assert.equal(f.ctx.birthdays.length,0);assert.equal(f.storage.getItem('favorites'),'["Andris"]');assert.equal(f.storage.getItem('vardadienas_backup_transaction_v1'),null);assert(f.el.backupStatus.textContent.includes('atjaunoti'));});
+ await test('pending deletion blocks export and import',async()=>{const f=fixture();f.storage.setItem('vardadienas_test_deletion_pending_v1','pending');await f.el.backupExport.emit('click');await f.load(sample());assert.equal(f.downloads.length,0);assert(f.el.backupPreview.hidden);});
+ await test('deletion begun while reading file blocks pending import',async()=>{const f=fixture();let release;f.el.backupFile.files=[{size:100,text:()=>new Promise(r=>release=r)}];const read=f.el.backupFile.emit('change');f.storage.setItem('vardadienas_test_deletion_pending_v1','pending');release(JSON.stringify(sample()));await read;assert(f.el.backupPreview.hidden);});
+ await test('file share receives JSON file and cancellation never downloads',async()=>{const f=fixture();f.ctx.navigator.canShare=()=>true;let received;f.ctx.navigator.share=async payload=>{received=payload;const e=new Error('cancel');e.name='AbortError';throw e;};await f.el.backupExport.emit('click');assert.equal(received.files[0].type,'application/json');assert(received.files[0].name.endsWith('.json'));assert.equal(f.downloads.length,0);assert(f.el.backupStatus.textContent.includes('atcelts'));});
+ await test('failed native file share falls back to JSON download',async()=>{const f=fixture();f.ctx.navigator.canShare=()=>true;f.ctx.navigator.share=async()=>{throw Error('unsupported')};await f.el.backupExport.emit('click');assert.equal(f.downloads.length,1);});
+ // Validate browser scripts and required UI IDs without executing unrelated application behavior.
+ const html=fs.readFileSync(__dirname+'/../index.html','utf8');for(const m of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))new vm.Script(m[1]);
+ for(const id of ['backupExport','backupImport','backupPreview','backupConfirm','backupCancel','backupFile','backupApplySettings'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1);
+ console.log('UI TESTS '+passed+'; inline scripts parse; backup UI IDs unique');
+})().catch(e=>{console.error(e);process.exitCode=1;});
