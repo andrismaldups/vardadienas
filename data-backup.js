@@ -136,13 +136,13 @@
         if(typeof File!=='undefined'&&navigator.share&&navigator.canShare){
           const file=new File([blob],filename,{type:'application/json'});
           if(navigator.canShare({files:[file]})){
-            busy=true;report('Izvēlies “Saglabāt Failos”, lai saglabātu datu kopiju.');
-            try{await navigator.share({files:[file],title:'Vārdadienu datu kopija'});report('Datu fails nodots izvēlētajai lietotnei.');return;}
+            busy=true;report('Izvēlies “Saglabāt Failos”. Fails: '+filename+' ('+blob.size+' baiti).');
+            try{await navigator.share({files:[file]});report('Datu fails nodots izvēlētajai lietotnei: '+filename+' ('+blob.size+' baiti).');return;}
             catch(error){if(error.name==='AbortError'){report('Eksports atcelts.');return;}}
             finally{busy=false;}
           }
         }
-        download(blob,filename);report('Eksporta fails nodots lejupielādei. Saglabā to savā ierīcē.');
+        download(blob,filename);report('Eksporta fails nodots lejupielādei: '+filename+' ('+blob.size+' baiti). Saglabā to savā ierīcē.');
       }catch(error){report(error.message);}
     });
     $('backupImport').addEventListener('click',()=>{try{available();if(!busy){fileInput.value='';fileInput.click();}}catch(error){report(error.message);}});
