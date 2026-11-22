@@ -2,9 +2,12 @@
 
 ## Stāvoklis
 
-Izolēts aprēķina prototips zarā `app-store-ios-preparation`. Tas nav pieslēgts PWA,
-Cloudflare, StoreKit vai App Store. Tas nepārbauda Apple parakstus un pats par sevi
-nepiešķir pirkuma tiesības. Nav veikta Swift/Xcode kompilēšana vai īsti Apple pirkumi.
+Izolēts aprēķina un Apple darījumu savienojuma prototips zarā `app-store-ios-preparation`.
+Tas izmanto Apple oficiālo servera bibliotēku 3.1.0, bet nav pieslēgts PWA vai izvietotam
+Cloudflare serverim. Sākotnējā pirkuma derīguma pārbaude pēc noklusējuma paliek unknown;
+bez uzticama apstiprinājuma maksas Push nepiešķir. Nav veikta Swift/Xcode kompilēšana,
+īsti Apple pirkumi vai pozitīva īsta Apple paraksta pārbaude. Detalizēti:
+`server/apple-verification-status.md`.
 
 Saskaņotais: 4,99 EUR par lejupielādi App Store, visas funkcijas uzreiz un trīs gadu
 Push periods. Nav otra aktivizēšanas maksājuma vai automātiskas pagarināšanas.
@@ -31,7 +34,8 @@ Lietotāja JSON, localStorage, HTTP body vai paša klienta apgalvojumu nedrīkst
 kā pārbaudīta pirkuma avotu. `appTransactionId` identificē pirkuma vēsturi; tas nav
 autentifikācijas parole vai patstāvīgs maksājuma/derīguma apliecinājums.
 
-Pirms integrācijas vajag uzticamu adapteri, kas:
+Pirms produkcijas jānoslēdz šādas adaptera un integrācijas prasības (1., 2. un 4. plūsmas
+kods jau sagatavots, bet īstā Apple vidē vēl nav pārbaudīts):
 
 1. Pārbauda Apple parakstīto AppTransaction un darījumu vēsturi, pareizo bundle ID,
    app ID, vidi, pirkumu produktu un darījumu savstarpējo piederību.
@@ -53,18 +57,23 @@ Pirms integrācijas vajag uzticamu adapteri, kas:
 ## Pārbaude
 
 ```sh
-node --test ios-preparation/entitlements/periods.test.mjs
+cd ios-preparation
+npm ci --ignore-scripts
+npm test
+npm run test:schema
 ```
 
-18 automatizēti testi izpildīti 22.11.2026. Tie pārbauda periodu aprēķinu, nevis
-kriptogrāfisko pārbaudi, Apple pirkuma dialogu vai servera ieviešanu.
+22.11.2026. izdevās 40 JavaScript testi un 9 SQLite testi. Pozitīvās darījumu plūsmas
+ir modelētas; reālā Apple bibliotēka negatīvajos testos noraida bojātus/neparakstītus
+ierakstus. Nav pārbaudīts īsts pirkums, pirkuma dialogs vai izvietots serveris.
 
 ## Nākamais ievades materiāls
 
 Saņemts `vardadienas-push-test23.rtf`, pārskatīts `server/worker-review-2026-11-22.md`.
 Saņemti arī faktiskās D1 shēmas ekrānattēli; struktūra pārrakstīta testu fixture failā.
 Jauno tabulu projekts pārbaudīts ar šo shēmu: 9 SQLite testi izdevās, arī Worker dzēšanas
-batch un atcelšanas scenārijiem. Apple pirkumu verifikācijas adapteris vēl nav izveidots. Lietotāja
+batch un atcelšanas scenārijiem. Apple bibliotēkas savienojuma kods ir izveidots;
+klienta piederības, sākotnējās iegādes derīguma un atomiskās persistences integrācija vēl nav pabeigta. Lietotāja
 plānotais jaunais Mac un uzņēmuma Apple konts būs vajadzīgi iOS būvēšanai un veikala testiem.
 
 ## Apple primārie avoti
