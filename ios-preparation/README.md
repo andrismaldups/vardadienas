@@ -61,8 +61,9 @@ kriptogrāfisko pārbaudi, Apple pirkuma dialogu vai servera ieviešanu.
 
 ## Nākamais ievades materiāls
 
-Aktuālais izvietotais Cloudflare Worker avots un datubāzes tabulu struktūra (bez
-slepeno atslēgu vērtībām). GitHub main zarā šo servera failu pašlaik nav. Lietotāja
+Saņemts `vardadienas-push-test23.rtf`, pārskatīts `server/worker-review-2026-11-22.md`.
+Saglabāts jauno tabulu projekts un 8 SQLite testi. Vēl vajadzīga faktiskā D1 tabulu
+un indeksu struktūra (bez personīgajiem datiem un slepeno atslēgu vērtībām). Lietotāja
 plānotais jaunais Mac un uzņēmuma Apple konts būs vajadzīgi iOS būvēšanai un veikala testiem.
 
 ## Apple primārie avoti
