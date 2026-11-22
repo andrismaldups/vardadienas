@@ -34,7 +34,10 @@ Worker iestatījumi. Šis ir mērķēts integrācijas izvērtējums, nevis pilns
 Kodā izmantotas astoņas tabulas: `app_installations`, `push_subscriptions`,
 `reminder_settings`, `favorite_names`, `birthdays`, `reminder_delivery_log`,
 `birthday_delivery_log`, `installation_deletion_receipts`.
-To faktiskie CREATE TABLE/indeksi šajā failā nav iekļauti.
+To faktiskie CREATE TABLE/indeksi Worker failā nav iekļauti, bet lietotājs tos iesniedza
+D1 Console ekrānattēlos 22.11.2026. plkst. 13:41–13:42. Tie pārrakstīti
+`existing-schema.fixture.sql`: astoņas tabulas un divi lietotāja indeksi. Nav izmantoti
+reāli personīgie ieraksti.
 
 ## Vajadzīgie papildinājumi izolētajai iOS videi
 
@@ -68,23 +71,18 @@ pagarinājumu darījumi un instalāciju saites. Tās ir atsevišķas no esošaji
 Šis fails NAV piemērojama produkcijas migrācija bez D1 shēmas pārbaudes un
 atjaunotās dzēšanas/testēšanas plūsmas. Tajā vēl nav APNs tabulas vai maršrutu.
 
-`schema.test.py` pārbauda astoņus ierobežojumu scenārijus SQLite atmiņas datubāzē.
-18 periodu testi un 8 shēmas testi izdevās. Tie nepierāda izvietota D1 vai Apple
+`schema.test.py` pārbauda deviņus scenārijus SQLite atmiņas datubāzē ar novēroto shēmu.
+Worker dzēšanas batch astoņi SQL vaicājumi izvilkti atsevišķā testu failā.
+18 periodu testi un 9 shēmas testi izdevās. Pārbaudīta esošo astoņu tabulu un indeksu
+nemainība, to datu saglabāšana, vienas instalācijas dzēšana un atomiska atcelšana kļūmes gadījumā. Tie nepierāda izvietota D1 vai Apple
 kriptogrāfiskās integrācijas darbību.
 
 ## Nākamais pārbaudāmais solis
 
-Iegūt faktiskās astoņu D1 tabulu struktūras un indeksus, bez personīgajiem datiem:
+D1 struktūras iegūšana un lokālā saderības pārbaude ir pabeigta. Produkcijas migrācija
+nav veikta; SQLite pārbaude neaizstāj izolētas D1 vides pārbaudi.
 
-```sql
-SELECT type, name, sql
-FROM sqlite_master
-WHERE type IN ('table', 'index')
-  AND name NOT LIKE 'sqlite_%'
-  AND name NOT LIKE '_cf_%'
-ORDER BY type, name;
-```
-
-Tas ir tikai SELECT; neko nemaina. Pirms izveides vajadzīga atsevišķa iOS testa
-Worker/D1 vide vai ekvivalents izolēts tests. Esošajam Worker nepievieno trīs gadu
-ierobežojumus, kamēr Apple iegādes vēl nav ieviestas un pārbaudītas.
+Tālāk jāizveido uzticamas Apple verifikācijas adapteris un tā savienojums ar
+instalāciju, pilno darījumu vēsturi un tiesību aprēķinu. Trūkst uzņēmuma Apple konta,
+bundle/app ID, pirkuma produkta un īsta parakstīto pirkumu testa. Līdz tam jaunās tabulas
+un termiņu ierobežojumi netiek piemēroti esošajiem PWA lietotājiem.
