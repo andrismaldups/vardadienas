@@ -28,30 +28,10 @@ public class AppPurchaseProofPlugin: CAPPlugin, CAPBridgedPlugin {
         reading = true
         defer { reading = false }
         do {
-            let result: VerificationResult<AppTransaction>
-            if refresh { result = try await AppTransaction.refresh() }
-            else { result = try await AppTransaction.shared }
-            switch result {
-            case .unverified:
-                call.reject("App purchase could not be verified.", "PURCHASE_UNVERIFIED")
-            case .verified(let app):
-                guard app.bundleID == Bundle.main.bundleIdentifier,
-                      let device = AppStore.deviceVerificationID else {
-                    call.reject("App purchase device scope is unavailable.", "PURCHASE_DEVICE_MISMATCH"); return
-                }
-                let input = app.deviceVerificationNonce.uuidString.lowercased() + device.uuidString.lowercased()
-                guard Data(SHA384.hash(data: Data(input.utf8))) == app.deviceVerification else {
-                    call.reject("App purchase device scope does not match.", "PURCHASE_DEVICE_MISMATCH"); return
-                }
-                let jws = result.jwsRepresentation
-                guard jws.utf8.count <= 65536,
-                      jws.range(of: "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$", options: .regularExpression) != nil else {
-                    call.reject("App purchase proof format is invalid.", "PURCHASE_INVALID"); return
-                }
-                // Only signed proof crosses the bridge. No client-created purchase date,
-                // expiry or active flag. Server independently verifies the Apple signature.
-                call.resolve(["signedAppTransaction": jws])
-            }
+            let jws = try await VerifiedAppPurchase.read(refresh: refresh)
+            call.resolve(["signedAppTransaction": jws])
+        } catch let error as PurchaseProofFailure {
+            call.reject("App purchase proof could not be verified.", error.rawValue)
         } catch {
             call.reject("App purchase proof is unavailable.", "PURCHASE_UNAVAILABLE")
         }

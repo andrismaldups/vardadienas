@@ -8,6 +8,7 @@ import {encodeSnapshot,decodeSnapshot} from '../src/storage-core.mjs';
 import {HEAD_KEY} from '../src/storage-vault.mjs';
 import {HANDOFF} from '../src/storage-startup.mjs';
 const boot=await readFile(new URL('../www/native-boot.js',import.meta.url),'utf8');
+const attestBundle=(await build({stdin:{contents:"import {createNativeAttestationReader} from './app-attest-enrollment.mjs'; window.testAttest=createNativeAttestationReader({bundleId:'lv.demo.vardadienas'});",resolveDir:new URL('../src',import.meta.url).pathname},bundle:true,write:false,platform:'browser',format:'iife'})).outputFiles[0].text;
 const purchaseBundle=(await build({stdin:{contents:"import {createNativeAppPurchaseProofReader} from './native-app-purchase.mjs'; window.testPurchase=createNativeAppPurchaseProofReader();",resolveDir:new URL('../src',import.meta.url).pathname},bundle:true,write:false,platform:'browser',format:'iife'})).outputFiles[0].text;
 const identityCode=await readFile(new URL('../www/native-identity.js',import.meta.url),'utf8');
 const pushCode=await readFile(new URL('../www/native-push.js',import.meta.url),'utf8');
@@ -34,9 +35,11 @@ function fixture({corrupt=false}={}){
     {name:'Share',methods:['canShare','share'].map(name=>({name,rtype:'promise'}))},
     {name:'Clipboard',methods:[{name:'write',rtype:'promise'}]},
     {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'}]},
-    {name:'AppPurchaseProof',methods:['read','refresh'].map(name=>({name,rtype:'promise'}))}],
+    {name:'AppPurchaseProof',methods:['read','refresh'].map(name=>({name,rtype:'promise'}))},
+    {name:'AppAttestEnrollment',methods:['status','attest'].map(name=>({name,rtype:'promise'}))}],
     nativePromise:async(plugin,method,args)=>{
      nativeCalls.push({plugin,method,args});
+     if(plugin==='AppAttestEnrollment')return method==='status'?{supported:true}:{keyId:'native-key',attestation:'native-attestation',signedAppTransaction:'native.purchase.proof'};
      if(plugin==='AppPurchaseProof')return {signedAppTransaction:'header.payload.signature'};
      if(plugin==='InstallationIdentity')return {record:ctx.identityRecord??null};
      if(plugin==='Clipboard')return {};
@@ -118,4 +121,10 @@ test('Compiled StoreKit adapter registers lazily and calls restore only after ex
  const proof=await f.ctx.testPurchase.read();assert.equal(proof.signedAppTransaction,'header.payload.signature');assert.equal(f.nativeCalls[0].plugin,'AppPurchaseProof');assert.equal(f.nativeCalls[0].method,'read');
  await assert.rejects(f.ctx.testPurchase.restore(),/USER_ACTION_REQUIRED/);assert.equal(f.nativeCalls.length,1);
  await f.ctx.testPurchase.restore({userInitiated:true});assert.equal(f.nativeCalls[1].method,'refresh');assert.equal(f.nativeCalls[1].args.userInitiated,true);
+});
+
+test('Compiled App Attest adapter does not generate keys on construction or status check',async()=>{
+ const f=fixture();vm.runInContext(attestBundle,f.ctx);assert.equal(f.nativeCalls.length,0);await f.ctx.testAttest.status();assert.equal(f.nativeCalls[0].method,'status');
+ const result=await f.ctx.testAttest.attest({challengeId:'12345678-abcd-1234-abcd-123456789abc',installationId:'87654321-abcd-1234-abcd-123456789abc',bundleId:'lv.demo.vardadienas',challenge:'A'.repeat(43),signedAppTransaction:'foreign.purchase.proof'});
+ assert.equal(f.nativeCalls[1].args.signedAppTransaction,undefined);assert.equal(result.signedAppTransaction,'native.purchase.proof');
 });

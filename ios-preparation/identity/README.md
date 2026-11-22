@@ -1,5 +1,10 @@
 # iOS instalācijas identitātes sagatave — 22.11.2026.
 
+Jaunākais papildinājums: `../enrollment/README.md` apraksta App Attest verifikācijas
+adapteri un pirmreizējās reģistrācijas Node SQLite transakciju. Šajā dokumentā
+minētās pārbaudes/imitācijas attiecas uz konkrēto agrāko posmu. Reāls HTTP/D1 un
+zudušas atbildes recovery joprojām nav pieslēgti.
+
 ## Lietotāja plūsma
 
 Saglabājas saskaņotais maksas lejupielādes modelis: 4,99 EUR, visas pamatfunkcijas

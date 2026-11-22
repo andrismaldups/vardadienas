@@ -126,12 +126,21 @@ test('Keychain plugin is included in Swift sources and both controller entry poi
 });
 
 test('StoreKit proof bridge uses verified, device-bound AppTransaction and explicit refresh only',async()=>{
- const native=await text(join(mobile,'ios/App/App/AppPurchaseProofPlugin.swift'));
+ const plugin=await text(join(mobile,'ios/App/App/AppPurchaseProofPlugin.swift'));
+ const native=await text(join(mobile,'ios/App/App/VerifiedAppPurchase.swift'));assert(plugin.includes('VerifiedAppPurchase.read(refresh: refresh)'));
  assert(native.includes('case .verified(let app)'));assert(native.includes('case .unverified:'));assert(native.includes('result.jwsRepresentation'));
  assert(native.includes('AppStore.deviceVerificationID'));assert(native.includes('app.deviceVerificationNonce.uuidString.lowercased() + device.uuidString.lowercased()'));assert(native.includes('SHA384.hash'));
- assert(native.includes('call.getBool("userInitiated") == true'));assert(native.includes('#available(iOS 16.0, *)'));
+ assert(plugin.includes('call.getBool("userInitiated") == true'));assert(plugin.includes('#available(iOS 16.0, *)'));
  assert(!native.includes('.purchase('));assert(!native.includes('print('));
  assert((await text(join(mobile,'ios/App/App/IdentityBridgeViewController.swift'))).includes('registerPluginInstance(AppPurchaseProofPlugin())'));
  assert((await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'))).includes('AppPurchaseProofPlugin.swift in Sources'));
  assert.equal(JSON.parse(await text(join(mobile,'capacitor.config.json'))).loggingBehavior,'none');
+});
+
+test('Native App Attest binds server nonce to an internally read StoreKit proof; development entitlement stays unlinked',async()=>{
+ const native=await text(join(mobile,'ios/App/App/AppAttestEnrollmentPlugin.swift'));
+ assert(native.includes('VerifiedAppPurchase.read()'));assert(!native.includes('call.getString("signedAppTransaction")'));
+ assert(native.includes('service.attestKey(key, clientDataHash: hash)'));assert(native.includes('deviceError.code == .serverUnavailable'));
+ assert(native.includes('vardadienas.enroll.v1'));assert(native.includes('jwsHash'));
+ const project=await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'));assert(project.includes('AppAttestEnrollmentPlugin.swift in Sources'));assert(project.includes('VerifiedAppPurchase.swift in Sources'));assert(!project.includes('AppAttestDevelopment.entitlements.example'));
 });

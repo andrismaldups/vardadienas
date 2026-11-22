@@ -105,3 +105,10 @@ DB shēma un StoreKit/App Attest piesaiste vēl nav izveidoti vai izvietoti.
 `purchases/README.md` apraksta native pierādījuma nolasīšanu, ierīces pārbaudi un
 servera pakalpojuma līgumu. Reāls App Attest, enrollment un atomārais DB adapters
 vēl nav ieviesti; sākotnējā pirkuma datums netiek aizstāts ar instalācijas datumu.
+
+## App Attest un enrollment
+
+`enrollment/README.md` apraksta native apliecinājumu, node-app-attest 2.2.0 verifikācijas
+adapteri un reālu lokālu Node SQLite transakciju. Backend sagatavei vajadzīgs Node 24+.
+Nav dzīva HTTP/D1 savienojuma. Recovery pēc zudušas credential atbildes jāievieš pirms
+publiskas aktivizēšanas; pozitīvs mūsu lietotnes Apple apliecinājums vēl nav pārbaudīts.

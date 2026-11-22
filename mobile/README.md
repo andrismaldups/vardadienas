@@ -129,7 +129,7 @@ Nākamajos posmos vēl nepieciešams:
 
 ## Atkārtošana uz jaunā Mac
 
-Nepieciešams Node 22+ un Capacitor 8 atbilstošs Xcode 26+ ar saderīgu macOS.
+Nepieciešams Node 24+ un Capacitor 8 atbilstošs Xcode 26+ ar saderīgu macOS.
 Izvēlas izstrādes zaru `app-store-ios-preparation`, tad:
 
 ```sh
@@ -191,14 +191,27 @@ Servera sasaistes pakalpojuma līgums, imitācijas un atlikušais:
 sākotnējā Apple pirkuma, nevis instalēšanas/sasaistes datuma. Faktiska App Attest
 pārbaude, enrollment un DB transakcijas adapters vēl nav realizēti.
 
+## App Attest un pirmreizējā reģistrācija
+
+Pievienots AppAttestEnrollmentPlugin un kopīgs VerifiedAppPurchase native palīgs,
+lai attest kods pats nolasītu StoreKit pierādījumu un nepieņemtu to no JS.
+Konteksts sasaista servera vienreizējo nonce, instalācijas ID, bundle, keyId un
+native JWS hash. Statusa pārbaude/adaptera izveide neģenerē atslēgas. Pašreizējā UI
+App Attest neizsauc; entitlement piemērs nav piesaistīts būvējumam.
+
+Servera adapters izmanto node-app-attest 2.2.0 un papildu sertifikātu/scope pārbaudes.
+Node SQLite atsauces transakcija pārbaudīta lokāli; D1 migrācija vai HTTP endpoint
+nav izvietots. Zudušas reģistrācijas atbildes recovery/assertion plūsma vēl jāievieš
+pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: `../ios-preparation/enrollment/README.md`.
+
 ## Veiktās pārbaudes 22.11.2026.
 
-- Mobilais projekts: 96 automatizētas pārbaudes.
-- Kopīgais JSON modulis: 45; importa/eksporta UI: 20.
-- `ios-preparation`: 66 JS pārbaudes; agrākās SQLite shēmas izolācija: 9.
-- Kopā 236 pārbaudes izdevās. StoreKit/Keychain Swift pozitīvo ceļu tie nepārbauda.
-- `npm run ios:sync`: seši npm spraudņi SPM un lokālie Swift avoti Xcode projektā.
-- Xcode kompilācija, īsts iPhone un īsts pozitīvs Apple pirkums vēl nav pārbaudīti.
+- Mobilais projekts: 101 automatizēta pārbaude.
+- Kopīgais JSON: 45; importa/eksporta UI: 20.
+- Servera sagataves un jaunā Node SQLite reģistrācija: 81; agrākā Python SQLite shēma: 9.
+- Kopā 256 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
+  Enclave/īsts iPhone šajā vidē nav pārbaudīts.
+- `npm run ios:sync` izdevās. Dzīvais PWA/Cloudflare nav mainīts.
 
 ## Oficiālie avoti
 
@@ -223,3 +236,5 @@ pārbaude, enrollment un DB transakcijas adapters vēl nav realizēti.
 - https://capacitorjs.com/docs/ios/custom-code
 
 - https://developer.apple.com/documentation/storekit/apptransaction/shared
+
+- https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity

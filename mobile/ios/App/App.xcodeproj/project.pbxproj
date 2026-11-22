@@ -20,6 +20,8 @@
 		AB0000000000000000000001 /* InstallationIdentityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000002 /* InstallationIdentityPlugin.swift */; };
 		AB0000000000000000000003 /* IdentityBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* IdentityBridgeViewController.swift */; };
 		AC0000000000000000000001 /* AppPurchaseProofPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0000000000000000000002 /* AppPurchaseProofPlugin.swift */; };
+		AD0000000000000000000001 /* VerifiedAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0000000000000000000002 /* VerifiedAppPurchase.swift */; };
+		AD0000000000000000000003 /* AppAttestEnrollmentPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0000000000000000000004 /* AppAttestEnrollmentPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		AB0000000000000000000002 /* InstallationIdentityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationIdentityPlugin.swift; sourceTree = "<group>"; };
 		AB0000000000000000000004 /* IdentityBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityBridgeViewController.swift; sourceTree = "<group>"; };
 		AC0000000000000000000002 /* AppPurchaseProofPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPurchaseProofPlugin.swift; sourceTree = "<group>"; };
+		AD0000000000000000000002 /* VerifiedAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedAppPurchase.swift; sourceTree = "<group>"; };
+		AD0000000000000000000004 /* AppAttestEnrollmentPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAttestEnrollmentPlugin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				9582B6822FE993A50072D4E8 /* SceneDelegate.swift */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				AC0000000000000000000002 /* AppPurchaseProofPlugin.swift */,
+				AD0000000000000000000002 /* VerifiedAppPurchase.swift */,
+				AD0000000000000000000004 /* AppAttestEnrollmentPlugin.swift */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				AB0000000000000000000004 /* IdentityBridgeViewController.swift */,
 				AB0000000000000000000002 /* InstallationIdentityPlugin.swift */,
@@ -172,6 +178,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC0000000000000000000001 /* AppPurchaseProofPlugin.swift in Sources */,
+				AD0000000000000000000001 /* VerifiedAppPurchase.swift in Sources */,
+				AD0000000000000000000003 /* AppAttestEnrollmentPlugin.swift in Sources */,
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				AB0000000000000000000003 /* IdentityBridgeViewController.swift in Sources */,
 				AB0000000000000000000001 /* InstallationIdentityPlugin.swift in Sources */,

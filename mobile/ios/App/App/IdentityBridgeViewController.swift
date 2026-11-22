@@ -5,5 +5,6 @@ class IdentityBridgeViewController: CAPBridgeViewController {
         super.capacitorDidLoad()
         bridge?.registerPluginInstance(InstallationIdentityPlugin())
         bridge?.registerPluginInstance(AppPurchaseProofPlugin())
+        bridge?.registerPluginInstance(AppAttestEnrollmentPlugin())
     }
 }

@@ -1,5 +1,10 @@
 # StoreKit sākotnējā pirkuma pierādījums — 22.11.2026.
 
+Jaunākais papildinājums: `../enrollment/README.md` apraksta App Attest verifikācijas
+adapteri un pirmreizējās reģistrācijas Node SQLite transakciju. Šajā dokumentā
+minētās pārbaudes/imitācijas attiecas uz konkrēto agrāko posmu. Reāls HTTP/D1 un
+zudušas atbildes recovery joprojām nav pieslēgti.
+
 ## Šī posma rezultāts
 
 Pievienots iOS StoreKit `AppTransaction` pierādījuma nolasīšanas kods un esošas,

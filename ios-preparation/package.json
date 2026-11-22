@@ -4,10 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test entitlements/*.test.mjs server/*.test.mjs apns/*.test.mjs identity/*.test.mjs purchases/*.test.mjs",
+    "test": "node --test entitlements/*.test.mjs server/*.test.mjs apns/*.test.mjs identity/*.test.mjs purchases/*.test.mjs enrollment/*.test.mjs",
     "test:schema": "python server/schema.test.py"
   },
   "dependencies": {
-    "@apple/app-store-server-library": "3.1.0"
+    "@apple/app-store-server-library": "3.1.0",
+    "cbor2": "2.4.2",
+    "node-app-attest": "2.2.0"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
