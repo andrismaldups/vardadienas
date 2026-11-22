@@ -18,7 +18,7 @@ Saglabājas esošais dizains un funkcionālie inline skripti. Tikai ģenerētaj�
 
 Esošie pieci neaktīvo Lavandas/nature-d3 CSS noteikumu attēlu ceļi paliek sākotnējā
 CSS; šie dizaini nav izvēles sarakstā. Tos identificē tests. Izvēlamo dizainu lokālie
-resursi ir iekļauti. PWA saknes faili netiek mainīti.
+resursi ir iekļauti. Iepakošana nemaina avotus. Šajā izstrādes zarā `data-backup.js` ir pievienots izvēles iOS eksporta adapters; pārlūka eksporta ceļš saglabāts. Publicētās PWA zars nav mainīts.
 
 ## Izveidots, bet vēl nav izlaists
 
@@ -42,11 +42,14 @@ Tā nevar automātiski veidot vai dzēst produkcijas instalācijas un sūtīt Pu
 Šis ir izstrādes režīms, nevis bezmaksas App Store produkta variants. Saskaņotā
 pārdošana paliek 4,99 EUR par lejupielādi un atsevišķa brīvprātīga Push pagarināšana.
 
-PWA kods vēl izmanto localStorage un tīmekļa kopēšanu/dalīšanos/failus. Sagatave to
-iepako, bet negarantē šo funkciju darbību WKWebView. Nākamajos posmos jāpievieno:
+Saraksti vēl izmanto localStorage. JSON eksportam pievienots natīvs Filesystem/Share adapters: UTF-8 fails privātajā Cache mapē, faila pielikums bez teksta/virsraksta, pagaidu faila tīrīšana pēc dalīšanās izvēlnes aizvēršanas. Tas nenozīmē, ka lietotājs failu noteikti saglabāja. Natīvās kļūmes gadījumā nenotiek pāreja uz pārlūka lejupielādi. Importa faila izvēle vēl ir HTML ievades ceļš; tas jāpārbauda īstā iPhone.
+
+Filesystem 8.1.5 un Share 8.0.3 ir fiksēti npm/SPM, esbuild 0.28.2 komplektē klienta adapteri. PrivacyInfo.xcprivacy ar FileTimestamp/C617.1 pievienots Xcode Resources. Deklarācija pirms izlaides jāpārskata kopā ar visu galīgo lietotni.
+
+Nākamajos posmos jāpievieno:
 
 1. Noturīga iOS glabāšana ar pārbaudāmu migrāciju; nepazaudēt sarakstus un gaidošās izmaiņas.
-2. Natīva dalīšanās un JSON failu saglabāšana/atvēršana, saglabājot esošo JSON formātu.
+2. JSON failu atvēršanas/importa un apsveikumu natīvās dalīšanās pārbaude/pielāgošana.
 3. Natīvais APNs, atļaujas un servera piesaiste; Web Push abonementi nav pārnesami kā APNs tokeni.
 4. StoreKit maksas lietotnes darījuma pārbaude/atjaunošana un brīvprātīgā pagarināšana;
    izmantot servera sagatavi no `ios-preparation`, neievietojot API privātās atslēgas klientā.
@@ -74,11 +77,12 @@ tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti gi
 
 ## Veiktās pārbaudes 22.11.2026.
 
-- `npm test`: 9 iepakošanas/izolācijas pārbaudes izdevās. Tās pārbauda resursu
+- `npm test`: 14 pārbaudes izdevās (9 iepakošanas/izolācijas un 5 eksporta adaptera pārbaudes). Tās pārbauda resursu
   pieejamību, datu/bibliotēku baitu nemainību, funkcionālo inline skriptu nemainību,
   sintaksi, lokālās ielādes konfigurāciju un produkcijas tīkla pieprasījumu bloķēšanu.
 - `npx cap add ios --packagemanager SPM`: projekta ģenerēšana izdevās.
 - `npm run ios:sync`: resursu un SPM konfigurācijas sinhronizācija izdevās.
+- Kopīgā JSON moduļa 45 pārbaudes un 15 UI pārbaudes izdevās, ieskaitot iOS adaptera izvēli un kļūmes bez pārlūka lejupielādes.
 - Native kompilācija un lietotāja saskarnes pārbaude ierīcē vēl nav veikta.
 
 ## Oficiālie avoti
@@ -87,3 +91,6 @@ tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti gi
 - https://capacitorjs.com/docs/ios
 - https://capacitorjs.com/docs/ios/spm
 - https://capacitorjs.com/docs/config
+
+- https://capacitorjs.com/docs/apis/filesystem
+- https://capacitorjs.com/docs/apis/share

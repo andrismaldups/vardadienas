@@ -1,3 +1,4 @@
+import { build } from 'esbuild';
 import { readFile, writeFile, mkdir, rm, readdir, copyFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname, join } from 'node:path';
@@ -23,7 +24,7 @@ html = html.replace('<img class="lavender-top-art" src="assets/lavanda_augsa.png
 html = html.replace('width=device-width,initial-scale=1', 'width=device-width,initial-scale=1,viewport-fit=cover');
 if (!html.includes('<meta charset="utf-8">')) throw Error('Native startup insertion point missing');
 const csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
-html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script>`);
+html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script><script src="native-backup.js"></script>`);
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
@@ -38,3 +39,5 @@ for (const file of files.sort()) {
 await copyFile(join(mobile, 'src/native-preview.js'), join(out, 'native-preview.js'));
 await writeFile(join(out, 'packaging-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Packaged ${files.length} existing application files locally; root PWA files unchanged.`);
+
+await build({ entryPoints: [join(mobile, 'src/native-backup.mjs')], outfile: join(out, 'native-backup.js'), bundle: true, format: 'iife', platform: 'browser', target: 'safari15' });

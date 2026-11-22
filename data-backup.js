@@ -133,6 +133,12 @@
         available();const data=makeBackup(),text=JSON.stringify(data,null,2)+'\n';
         if(new TextEncoder().encode(text).length>MAX_BYTES)fail('Eksporta fails pārsniedz 5 MB ierobežojumu.');
         const blob=new Blob([text],{type:'application/json;charset=utf-8'}),filename='vardadienas-dati-'+data.exportedAt.slice(0,19).replace(/[:T]/g,'-')+'.json';
+        if(root.VardadienasNativeBackup){
+          busy=true;report('Izvēlies “Saglabāt Failos”. Fails: '+filename+' ('+blob.size+' baiti).');
+          try{await root.VardadienasNativeBackup.exportFile({text,filename});report('Datu fails nodots iPhone dalīšanās izvēlnei: '+filename+'.');}
+          finally{busy=false;}
+          return;
+        }
         if(typeof File!=='undefined'&&navigator.share&&navigator.canShare){
           const file=new File([blob],filename,{type:'application/json'});
           if(navigator.canShare({files:[file]})){
