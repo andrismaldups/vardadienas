@@ -172,8 +172,11 @@ existing attested key, and promotes it after a matching acknowledgement.
 `mobile/src/identity-recovery.mjs` coordinates an explicitly injected transport.
 The pending record is retained as an idempotent receipt, including after success.
 This is retry recovery, not a general credential rotation or compromise response.
-**Remaining release blocker:** trusted HTTP transport and real iPhone/Swift
-verification are not implemented/completed yet.
+**Transport preparation added:** `mobile/src/recovery-transport.mjs` and
+`recovery-http.mjs` provide a fixed-origin HTTPS client and deployment-neutral
+Request/Response adapter, tested together locally.
+**Remaining release blocker:** deployment, trusted ingress/rate limits and real
+iPhone/Swift/TLS verification are not implemented/completed yet.
 An Apple-attested key whose initial server enrollment never committed is a
 separate unfinished recovery case. No automatic key reset is allowed.
 
@@ -181,4 +184,28 @@ Six local recovery tests use generated EC keys with real cryptographic
 verification and SQLite: repeated lost replies, replay/tampering/concurrent
 stale challenges, expiration/revocation, transaction rollback, counter replay,
 and forbidden purchase-table writes. These are synthetic assertions, not
-positive tests on an Apple device. Full server suite: 87 passing tests.
+positive tests on an Apple device. Full server suite: 93 passing tests.
+
+
+## HTTP boundary preparation
+
+`recovery-http.mjs` exposes no Worker/default fetch entry point and has no D1
+binding. A caller must inject both the service and an `admitRequest` ingress /
+rate-limit decision. Without that gate, it returns 503 before database access;
+false returns 429, and gate exceptions return 503. The test gate returning true
+is ONLY a test double, not a deployed rate limiter. A production gate must derive
+identifiers from trusted ingress metadata, never a spoofable client body/header.
+
+Only POST on `/v1/ios/recovery/challenge` and `/v1/ios/recovery/complete` at the
+configured HTTPS origin is accepted. Query strings, other paths and extra JSON
+fields are rejected. JSON request bodies are capped at 24 KiB while streaming and
+have a five-second read deadline. Compressed bodies are rejected. Output is
+non-cacheable JSON without reflected CORS; error responses contain no proof,
+credential, database or personal data. The existing key's cryptographic assertion,
+not a missing/old Bearer credential, authorizes recovery. Six HTTP boundary tests
+cover default-deny admission, routes/origin/method, body limits, stalled input,
+sanitized errors and malformed complete requests.
+
+No live URL, CSP exception, database migration, signing identifier or rate-limit
+binding is enabled by this work. Initial enrollment HTTP, D1 adapter and the
+pre-commit unknown-key recovery case remain separate work before production.

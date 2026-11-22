@@ -202,15 +202,15 @@ App Attest neizsauc; entitlement piemērs nav piesaistīts būvējumam.
 Servera adapters izmanto node-app-attest 2.2.0 un papildu sertifikātu/scope pārbaudes.
 Node SQLite atsauces transakcija pārbaudīta lokāli; D1 migrācija vai HTTP endpoint
 nav izvietots. Zudušas reģistrācijas atbildes recovery/assertion prototipam pievienota native
-Keychain sagatave un koordinators; uzticams HTTP savienojums un īsta iPhone pārbaude
+Keychain sagatave un koordinators; HTTPS transporta sagatave ir lokāli pārbaudīta; izvietots serveris un īsta iPhone pārbaude
 vēl nepieciešami pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: `../ios-preparation/enrollment/README.md`.
 
 ## Veiktās pārbaudes 22.11.2026.
 
-- Mobilais projekts: 108 automatizētas pārbaude.
+- Mobilais projekts: 116 automatizētas pārbaude.
 - Kopīgais JSON: 45; importa/eksporta UI: 20.
-- Servera sagataves un jaunā Node SQLite reģistrācija: 87; agrākā Python SQLite shēma: 9.
-- Kopā 269 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
+- Servera sagataves un jaunā Node SQLite reģistrācija: 93; agrākā Python SQLite shēma: 9.
+- Kopā 283 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
   Enclave/īsts iPhone šajā vidē nav pārbaudīts.
 - `npm run ios:sync` izdevās. Dzīvais PWA/Cloudflare nav mainīts.
 
@@ -255,7 +255,7 @@ arī pēc sekmīgas darbības; šis protokols nav vispārēja kompromitētas ats
 
 `finishRecovery` lokāli salīdzina apstiprinājuma laukus, bet pats nav servera
 kriptogrāfiskās autentifikācijas mehānisms. Koordinatoram jāsaņem atbilde tikai no
-uzticamā, fiksētā HTTPS servera; šis transports vēl nav pieslēgts. Atjaunošanas
+uzticamā, fiksētā HTTPS servera; HTTPS transporta sagatave pievienota, bet dzīvais serveris vēl nav pieslēgts. Atjaunošanas
 apstiprinājums nepiešķir pirkuma/Push perioda tiesības. Dzēšanas aizsargs pārbauda gan
 galveno, gan pending ierakstu un nepieļauj lokālu dzēšanu, pirms atrisināta servera
 identitāte. Nav automātiskas kļūdainu Keychain ierakstu tīrīšanas.
@@ -264,3 +264,26 @@ Jauni 6 koordinatora testi imitē native/transporta robežu; viens sakomplektēt
 tests pārbauda dzēšanas aizsardzību pending-only gadījumā. Tie neizpilda Swift,
 Keychain vai Secure Enclave. Vajadzīga parakstīta Xcode/iPhone pārbaude, arī procesa
 izbeigšana pirms/pēc katra Keychain ieraksta un pazudis callback.
+
+
+## Atjaunošanas HTTPS transporta sagatave — 22.11.2026.
+
+`recovery-transport.mjs` nodrošina tikai divus fiksētus POST ceļus:
+`/v1/ios/recovery/challenge` un `/v1/ios/recovery/complete`. Release konfigurācija
+nosaka HTTPS origin, bundle un vidi. Adresi nevar saņemt no importa vai servera
+atbildes. `origin=null` apstādina koordinatoru pirms Keychain/tīkla darbībām.
+`createNativeIdentityRecovery` var izveidot šo transportu no skaidri nodotas
+konfigurācijas un fetch implementācijas, bet starta/UI kods to neizsauc.
+
+Nav cookies, Bearer vai API noslēpuma atjaunošanas pieprasījumos; īpašumtiesības
+apliecina App Attest assertion. Pieprasījumi nepieļauj pāradresāciju un nesaglabā
+kešu. Atbildei jābūt JSON, līdz 8 KiB, derīgā UTF-8, ar precīziem paredzētajiem
+laukiem, atbilstošu bundle/vidi/atslēgu un apstiprinājuma hash. Kopējā noildze ir
+15 sekundes (ietver atbildes straumi). Kļūdas tiek vispārinātas; nav automātisku
+atkārtojumu. Atbilde pēc noildzes neizraisa Keychain apstiprināšanu.
+
+Pievienoti 8 transporta testi. Viens savieno Request/Response adapteri, īsto ECDSA
+verifikatoru un SQLite: servera ieraksts izdodas, atbilde pazūd, nākamais mēģinājums
+izmanto svaigu nonce un to pašu pending hash. Tas ir lokāls tests ar ģenerētu testa
+EC atslēgu, nevis īsts Apple sertifikāts, TLS serveris vai iPhone Keychain tests.
+CSP/fetch aizsargs, pagaidu bundle ID un publiskā PWA paliek nemainīti.

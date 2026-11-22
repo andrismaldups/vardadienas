@@ -1,11 +1,12 @@
 import {Capacitor,registerPlugin} from '@capacitor/core';
+import {createRecoveryTransport} from './recovery-transport.mjs';
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const nonce=/^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$/;
 // Explicit injected transport only. No default origin, fetch or startup invocation.
 export function createIdentityRecovery({native,transport,bundleId,environment}){
  let busy=false;
  return {async recover(){
-  if(!transport||typeof transport.issueChallenge!=='function'||typeof transport.recover!=='function')throw Error('RECOVERY_NOT_CONFIGURED');
+  if(!transport||transport.configured===false||typeof transport.issueChallenge!=='function'||typeof transport.recover!=='function')throw Error('RECOVERY_NOT_CONFIGURED');
   if(busy)throw Error('RECOVERY_BUSY');busy=true;
   try{
    const {keyId}=await native.recoveryKey();
@@ -31,5 +32,6 @@ export function createIdentityRecovery({native,transport,bundleId,environment}){
 }
 export function createNativeIdentityRecovery(options){
  if(!Capacitor.isNativePlatform())throw Error('RECOVERY_NATIVE_REQUIRED');
- return createIdentityRecovery({...options,native:registerPlugin('InstallationIdentity')});
+ const transport=options.transport??createRecoveryTransport(options);
+ return createIdentityRecovery({...options,transport,native:registerPlugin('InstallationIdentity')});
 }

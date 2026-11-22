@@ -4,7 +4,8 @@ Jaunākais papildinājums: `../enrollment/README.md` apraksta App Attest verifik
 adapteri un pirmreizējās reģistrācijas Node SQLite transakciju. Šajā dokumentā
 minētās pārbaudes/imitācijas attiecas uz konkrēto agrāko posmu. Reāls HTTP/D1 un
 zudušas atbildes recovery joprojām nav pieslēgti dzīvajam serverim. Native pending
-Keychain/assertion/ack sagatave un pasīvs koordinators tagad pievienoti; aktuālais
+Keychain/assertion/ack sagatave, pasīvs koordinators un fiksētas HTTPS izcelsmes
+transporta/HTTP adapteris tagad pievienoti (tikai lokāli testi); aktuālais
 atjaunošanas statuss ir `../../mobile/README.md` un `../enrollment/README.md`.
 
 ## Lietotāja plūsma
