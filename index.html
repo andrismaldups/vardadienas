@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="clean-ds-1.1/app-integration.css">
 <link rel="stylesheet" href="clean-ds-1.1/about-row-gap.css">
 
+<script src="data-backup.js"></script>
 <script src="clean-ds-1.1/theme-bootstrap.js"></script>
 </head>
   <body><div class="wrap">
@@ -67,9 +68,33 @@
 
   <section class="card about-card" aria-labelledby="privacyDataHeading">
     <h3 id="privacyDataHeading">Mani dati</h3>
+    <p>Saglabā savus vārdus, dzimšanas dienas un iestatījumus JSON failā. Failu var pārnest uz citu ierīci.</p>
+    <div class="backup-actions">
+      <button type="button" id="backupExport" class="delete-data-button">Eksportēt datus</button>
+      <button type="button" id="backupImport" class="delete-data-button">Importēt datus</button>
+    </div>
+    <input id="backupFile" type="file" accept=".json,application/json" hidden aria-label="Izvēlēties Vārdadienu datu failu">
+    <div id="backupPreview" class="backup-preview" hidden>
+      <h4>Importa priekšskatījums</h4>
+      <p id="backupFileName"></p>
+      <p id="backupFileSummary"></p>
+      <p id="backupSettingsSummary"></p>
+      <p>Esošie ieraksti saglabāsies. Vienādu vārdu un vienādu dzimšanas dienu ierakstu atkārtojumus nepievienosim.</p>
+      <label class="target-row backup-preference"><input id="backupApplySettings" type="checkbox" checked> Pārņemt failā saglabātos izskata un atgādinājumu iestatījumus</label>
+      <p>Paziņojumu atļauja un atgādinājumu ieslēgšanas stāvoklis šajā ierīcē nemainīsies.</p>
+      <div class="backup-actions">
+        <button type="button" id="backupConfirm" class="delete-data-button">Apstiprināt importu</button>
+        <button type="button" id="backupCancel" class="delete-data-button">Atcelt</button>
+      </div>
+    </div>
+    <p id="backupStatus" role="status" aria-live="polite"></p>
+    <p id="backupSyncStatus" role="status" aria-live="polite"></p>
+    <div class="backup-delete-section">
+      <h4>Datu dzēšana</h4>
     <p>Lietotnē vari neatgriezeniski dzēst šīs instalācijas saglabātos vārdus, dzimšanas dienas, atgādinājumu iestatījumus un Push abonementu gan ierīcē, gan serverī.</p>
     <button type="button" id="deleteMyDataButton" class="delete-data-button" aria-describedby="deleteMyDataStatus">Dzēst manus datus</button>
     <p id="deleteMyDataStatus" role="status">Pirms dzēšanas tiks prasīts apstiprinājums.</p>
+    </div>
   </section>
 
   <section class="card about-card">
@@ -1659,7 +1684,7 @@
   }catch(error){console.warn('Dzimšanas dienu migrācija atlikta:',error);}
   let deletionInProgress=false;
   const DELETION_PENDING_KEY='vardadienas_test_deletion_pending_v1';
-  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY));}
+  function deletionSyncBlocked(){return deletionInProgress || Boolean(localStorage.getItem(DELETION_PENDING_KEY)) || Boolean(localStorage.getItem('vardadienas_backup_transaction_v1'));}
   // TEST: atjaunojam sinhronizāciju arī tad, ja iOS PWA neizsauc online notikumu.
   // Rinda paliek localStorage līdz serveris apstiprina katru darbību.
   function retryPendingBirthdays(){
@@ -1999,7 +2024,7 @@
   let pushActivationInProgress=false;
   let reminderSyncInProgress=0;
   const DELETE_LOCAL_KEYS=[
-    'favorites','birthdays','birthdaySortMode',
+    'favorites','birthdays','birthdaySortMode','vardadienas_import_reminders_pending_v1',
     'testBirthdaySyncQueueV1','testBirthdaySyncInitializedV1',
     'vardadienas_test_favorites_queue_v1',
     'vardadienas_test_installation_v1','testPushSubscriptionId',
@@ -3027,17 +3052,17 @@ function base64UrlToUint8Array(base64Url){
 }
 // TEST: saglabājam atgādinājumu iestatījumu kopiju serverī.
 async function syncTestReminderSettings(){
-  if(deletionSyncBlocked())return;
+  if(deletionSyncBlocked())return false;
   reminderSyncInProgress++;
   try{
   const installation=await getOrCreateTestInstallation();
   const registration=await navigator.serviceWorker.ready;
   const subscription=await registration.pushManager.getSubscription();
-  if(!subscription)return;
+  if(!subscription)return false;
   const subscriptionId=Number(localStorage.getItem('testPushSubscriptionId'));
   if(!Number.isSafeInteger(subscriptionId)||subscriptionId<=0){
     console.warn('TEST: subscription_id nav saglabāts; atkārtoti aktivizējiet Push paziņojumus.');
-    return;
+    return false;
   }
   const payload={
     subscription_id:subscriptionId,
@@ -3063,6 +3088,7 @@ async function syncTestReminderSettings(){
     const details=await response.json().catch(()=>({}));
     throw new Error('Atgādinājumu iestatījumu saglabāšana neizdevās (HTTP '+response.status+'): '+(details.error||''));
   }
+  return true;
   }finally{reminderSyncInProgress--;}
 }
 function queueTestReminderSync(){
