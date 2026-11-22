@@ -15,12 +15,15 @@ Apple piedāvā Non-Renewing Subscription: terminētu pakalpojuma pirkumu bez au
 
 Automātiskajiem abonementiem dokumentētie periodi ir līdz vienam gadam, un tie automātiski atjaunojas; tie neatbilst saskaņotajam modelim.
 
-## Vēl izvēlamā iegādes plūsma
+## Saskaņotā iegādes plūsma
 
-A. Bezmaksas lejupielāde un sākotnējā 4,99 EUR aktivizēšana lietotnē ar Apple pirkumu. Pirms iegādes pieejamais priekšskatījums vēl jānosaka. Pēc pirmā derīgā pirkuma saglabājas pamata tiesības; Push tiesības terminētas.
-B. Maksas 4,99 EUR lejupielāde; sākotnējais termiņš balstīts pārbaudītā lietotnes iegādē. Vēlāk lietotnes pirkums tikai Push perioda pagarināšanai.
+Lietotājs 22.11.2026. izvēlējās B variantu: 4,99 EUR par lejupielādi App Store. Pēc iegādes visas saskaņotās funkcijas ir pieejamas bez otra aktivizēšanas maksājuma; sākotnējā cenā iekļauts trīs gadu Push periods. Vēlāk atsevišķs Apple pirkums tikai brīvprātīgai Push perioda pagarināšanai. Pagarināšanas cena vēl nav atsevišķi saskaņota.
 
-A ir izstrādes priekšlikums, nevis lietotāja apstiprināts lēmums. Nevienā variantā nav paredzēta otra sākotnējā maksa par tām pašām tiesībām. Apple pirkuma atjaunošana nedrīkst kļūdaini piešķirt jaunus trīs gadus, un atkārtota viena darījuma apstrāde nedrīkst pagarināt licenci.
+Bezmaksas lejupielādes un maksas aktivizēšanas variants noraidīts. Bezmaksas priekšskatījuma vai funkciju ierobežošanas režīmu neieviešam.
+
+Sākotnējās tiesības un termiņš jābalsta pārbaudītā lietotnes iegādē. Apple pirkuma atjaunošana nedrīkst kļūdaini piešķirt jaunus trīs gadus; viena darījuma atkārtota apstrāde nedrīkst pagarināt tiesības.
+
+Lietotājs plāno pēc uzņēmuma izveides iegādāties jaunu Mac. Pašreizējais MacBook Air (Retina, 13-inch, 2018), Intel Core i5 1,6 GHz, macOS Sonoma 14.8.9 paliek sagatavošanas darbam; aktuālai App Store būvēšanai vajadzīgs atbilstošs jaunāks Mac/Xcode.
 
 ## iOS tehniskie darbi
 
@@ -48,7 +51,7 @@ Vienkārša attālas vietnes parādīšana WebView nedod App Store apstiprināju
 
 ## Atvērtie lēmumi
 
-- Sākotnējā maksas lejupielāde vai bezmaksas lejupielāde ar vienu maksas aktivizēšanu.
+- Sākotnējā iegādes plūsma atrisināta: maksas lejupielāde. Vēl jānosaka pagarinājuma cena.
 - Pirmā termiņa sākums, priekšlaicīgas pagarināšanas aprēķins un 29.februāra politika.
 - Pirkuma atjaunošanas identitāte un iPhone/Android tiesību savstarpēja izmantošana.
 - iOS tehnoloģija pēc neliela prototipa pārbaudes.
