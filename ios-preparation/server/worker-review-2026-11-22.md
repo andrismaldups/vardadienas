@@ -82,7 +82,9 @@ kriptogrāfiskās integrācijas darbību.
 D1 struktūras iegūšana un lokālā saderības pārbaude ir pabeigta. Produkcijas migrācija
 nav veikta; SQLite pārbaude neaizstāj izolētas D1 vides pārbaudi.
 
-Tālāk jāizveido uzticamas Apple verifikācijas adapteris un tā savienojums ar
-instalāciju, pilno darījumu vēsturi un tiesību aprēķinu. Trūkst uzņēmuma Apple konta,
+Apple oficiālās bibliotēkas savienojuma kods un pilnās vēstures nolasīšana tagad ir
+sagatavota `apple-purchase-reader.mjs`; rezultāti/ierobežojumi aprakstīti
+`apple-verification-status.md`. Tālāk jānoslēdz ierīces piederības, sākotnējās iegādes
+derīguma un atomiskās persistences integrācija. Trūkst uzņēmuma Apple konta,
 bundle/app ID, pirkuma produkta un īsta parakstīto pirkumu testa. Līdz tam jaunās tabulas
 un termiņu ierobežojumi netiek piemēroti esošajiem PWA lietotājiem.
