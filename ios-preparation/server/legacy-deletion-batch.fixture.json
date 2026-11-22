@@ -1,0 +1,13 @@
+{
+  "source": "vardadienas-push-test23.rtf; matches screenshot d10eb209; only deletion batch SQL, no live data",
+  "statements": [
+    "INSERT INTO installation_deletion_receipts\n(installation_id, token_hash, expires_at)\nVALUES (?, ?, unixepoch() + 604800)\nON CONFLICT(installation_id) DO UPDATE SET\ntoken_hash = excluded.token_hash, expires_at = excluded.expires_at",
+    "DELETE FROM reminder_delivery_log WHERE subscription_id IN\n(SELECT id FROM push_subscriptions WHERE installation_id = ?)",
+    "DELETE FROM birthday_delivery_log WHERE subscription_id IN\n(SELECT id FROM push_subscriptions WHERE installation_id = ?)",
+    "DELETE FROM reminder_settings WHERE subscription_id IN\n(SELECT id FROM push_subscriptions WHERE installation_id = ?)",
+    "DELETE FROM push_subscriptions WHERE installation_id = ?",
+    "DELETE FROM favorite_names WHERE installation_id = ?",
+    "DELETE FROM birthdays WHERE installation_id = ?",
+    "DELETE FROM app_installations WHERE id = ?"
+  ]
+}
