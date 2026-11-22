@@ -24,3 +24,8 @@ CREATE TABLE ios_recovery_challenges (
  nonce_hash TEXT NOT NULL, base_counter INTEGER NOT NULL, base_token_hash TEXT NOT NULL,
  expires_at_ms INTEGER NOT NULL, consumed_at_ms INTEGER
 );
+
+CREATE TABLE ios_enrollment_resume_challenges (
+ id TEXT PRIMARY KEY, original_challenge_id TEXT NOT NULL REFERENCES ios_enrollment_challenges(id) ON DELETE CASCADE,
+ key_id TEXT NOT NULL, nonce_hash TEXT NOT NULL, expires_at_ms INTEGER NOT NULL, consumed_at_ms INTEGER
+);

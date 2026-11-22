@@ -119,7 +119,7 @@ public class InstallationIdentityPlugin: CAPPlugin, CAPBridgedPlugin {
             do {
                 let credential = try self.load()
                 let pending = try self.pending()
-                call.resolve(["blocked": credential != nil || pending != nil])
+                call.resolve(["blocked": credential != nil || pending != nil || UserDefaults.standard.string(forKey: "vardadienas_appattest_enrollment_key_v1") != nil])
             } catch { self.reject(call, error) }
         }
     }

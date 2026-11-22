@@ -141,6 +141,6 @@ test('Native App Attest binds server nonce to an internally read StoreKit proof;
  const native=await text(join(mobile,'ios/App/App/AppAttestEnrollmentPlugin.swift'));
  assert(native.includes('VerifiedAppPurchase.read()'));assert(!native.includes('call.getString("signedAppTransaction")'));
  assert(native.includes('service.attestKey(key, clientDataHash: hash)'));assert(native.includes('deviceError.code == .serverUnavailable'));
- assert(native.includes('vardadienas.enroll.v1'));assert(native.includes('jwsHash'));
+ assert(native.includes('vardadienas.enroll.v1'));assert(native.includes('jwsHash'));assert(native.includes('vardadienas.enroll.resume.v1'));assert(native.includes('kSecAttrAccessibleWhenUnlockedThisDeviceOnly'));assert(native.includes('kSecAttrSynchronizable as String: false'));assert(native.includes('try self.saveProof(proof)'));assert(native.indexOf('try self.saveProof(proof)')<native.lastIndexOf('call.resolve(proof.result)'));assert(!native.includes('removeObject(forKey: self.keyName)'));assert(native.includes('try loadProof() == value'));
  const project=await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'));assert(project.includes('AppAttestEnrollmentPlugin.swift in Sources'));assert(project.includes('VerifiedAppPurchase.swift in Sources'));assert(!project.includes('AppAttestDevelopment.entitlements.example'));
 });

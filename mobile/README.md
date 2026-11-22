@@ -207,10 +207,10 @@ vēl nepieciešami pirms reālas reģistrācijas pieslēgšanas. Pilns statuss: 
 
 ## Veiktās pārbaudes 22.11.2026.
 
-- Mobilais projekts: 116 automatizētas pārbaude.
+- Mobilais projekts: 124 automatizētas pārbaude.
 - Kopīgais JSON: 45; importa/eksporta UI: 20.
-- Servera sagataves un jaunā Node SQLite reģistrācija: 93; agrākā Python SQLite shēma: 9.
-- Kopā 283 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
+- Servera sagataves un jaunā Node SQLite reģistrācija: 100; agrākā Python SQLite shēma: 9.
+- Kopā 298 pārbaudes. Pozitīva Apple/App Attest puse testos ir imitēta; Swift/Secure
   Enclave/īsts iPhone šajā vidē nav pārbaudīts.
 - `npm run ios:sync` izdevās. Dzīvais PWA/Cloudflare nav mainīts.
 
@@ -287,3 +287,32 @@ verifikatoru un SQLite: servera ieraksts izdodas, atbilde pazūd, nākamais mē�
 izmanto svaigu nonce un to pašu pending hash. Tas ir lokāls tests ar ģenerētu testa
 EC atslēgu, nevis īsts Apple sertifikāts, TLS serveris vai iPhone Keychain tests.
 CSP/fetch aizsargs, pagaidu bundle ID un publiskā PWA paliek nemainīti.
+
+
+## Sākotnējās reģistrācijas turpināšana — 22.11.2026.
+
+`AppAttestEnrollmentPlugin` saglabā sākotnējo challenge/instalācijas ID, attestation
+un native nolasīto pirkuma JWS atsevišķā Keychain `proof-v1` ierakstā. Tikai pēc
+ieraksta/nolasīšanas pārbaudes apliecinājums tiek atdots JS. Atkārtots tā paša
+challenge pieprasījums atdod saglabāto pierādījumu; cits challenge neizraisa jaunas
+atslēgas ģenerēšanu. `pending` nolasa šo ierakstu bez jaunas Apple attestācijas.
+`resume` paraksta jaunu servera nonce ar esošo atslēgu un native nolasītā keša hash.
+Neviens no šiem pierādījumiem neietilpst JSON eksportā vai localStorage.
+
+`enrollment-resume.mjs` pārbauda instalāciju, bundle, vidi, sākotnējo proof un
+servera credential; pēc saglabāšanas pārbauda nolasīšanu. Koordinators ir pasīvs,
+ar obligāti injicētu transportu. Nav jauna HTTP maršruta, tīkla atļaujas vai UI
+pogas. Ja sākotnējais challenge beidzies, servera resume prototips pārbauda jaunu
+parakstu un sākotnējo Apple pierādījumu. Ja serveris jau saglabājis instalāciju,
+jāizmanto iepriekšējā credential recovery plūsma. Sākotnējais pirkuma datums un
+trīs gadu perioda sākums netiek pārbīdīts.
+
+Kešs tiek saglabāts arī pēc sekmīgas reģistrācijas kā atkārtojuma apliecinājums.
+Lokālās dzēšanas aizsargs tagad bloķē arī nepabeigtu App Attest atslēgu. Keša
+bojājuma vai marķiera zuduma gadījumā nav automātiskas datu/atslēgas tīrīšanas.
+
+Svarīgs atlikums: procesa apstāšanās starp Apple apliecinājuma izveidi un tā
+Keychain ierakstu vēl var atstāt neatjaunojamu stāvokli. Šis gadījums, Keychain
+kļūmes/pārinstalēšana, Swift kompilācija un īsts iPhone jāizpēta pirms izlaides.
+Pozitīvie testi imitē Apple sākotnējo attestation, bet svaigos assertion parakstus
+pārbauda īstais ECDSA verifikators. Servera SQLite testi nepārbauda D1 vai TLS.

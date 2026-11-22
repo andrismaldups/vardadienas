@@ -1,7 +1,6 @@
 // Isolated SQLite reference protocol. No HTTP route or production deployment.
 import {createHash,randomBytes,randomUUID} from 'node:crypto';
-import {verifyAssertion} from 'node-app-attest';
-import {decodeSequence} from 'cbor2';
+import {verifyBoundAssertion} from './assertion-verifier.mjs';
 const hash=x=>createHash('sha256').update(x).digest('hex');
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 export function recoveryContext(c){return Buffer.from(['vardadienas.recover.v1',c.challengeId,c.installationId,c.bundleId,c.identityEnvironment,c.challenge,c.keyId,c.recoveryId,c.candidateHash].join('\n'));}
@@ -20,10 +19,7 @@ export function createSQLiteRecoveryService({db,bundleId,appIdPrefix,identityEnv
   const c=db.prepare('SELECT * FROM ios_recovery_challenges WHERE id=?').get(input.challengeId),k=c&&key(c.key_id);
   if(!c||!valid(k)||c.consumed_at_ms!==null||c.expires_at_ms<=clock()||c.nonce_hash!==hash(input.challenge)||k.counter!==c.base_counter||k.token_hash!==c.base_token_hash)throw Error('RECOVERY_REJECTED');
   const context={challengeId:c.id,installationId:k.installation_id,bundleId,identityEnvironment,keyId:k.key_id,challenge:input.challenge,recoveryId:input.recoveryId,candidateHash:input.candidateHash};
-  const assertion=Buffer.from(input.assertion,'base64');
-  try{const decoded=[...decodeSequence(assertion,{maxDepth:8})];if(decoded.length!==1||!(decoded[0]?.authenticatorData instanceof Uint8Array)||decoded[0].authenticatorData.length!==37||!(decoded[0]?.signature instanceof Uint8Array)||decoded[0].signature.length===0||decoded[0].signature.length>144)throw Error();}catch{throw Error('RECOVERY_ASSERTION_REJECTED');}
-  let counter;try{counter=verifyAssertion({assertion,payload:recoveryContext(context),publicKey:k.public_key_pem,bundleIdentifier:bundleId,teamIdentifier:appIdPrefix,signCount:k.counter}).signCount;}catch{throw Error('RECOVERY_ASSERTION_REJECTED');}
-  if(!Number.isSafeInteger(counter)||counter<=k.counter)throw Error('RECOVERY_ASSERTION_REJECTED');
+  let counter;try{counter=verifyBoundAssertion({assertion:input.assertion,clientData:recoveryContext(context),publicKeyPem:k.public_key_pem,bundleId,appIdPrefix,counter:k.counter});}catch{throw Error('RECOVERY_ASSERTION_REJECTED');}
   db.exec('BEGIN IMMEDIATE');try{
    const current=key(c.key_id),fresh=db.prepare('SELECT * FROM ios_recovery_challenges WHERE id=?').get(c.id);
    if(!valid(current)||current.counter!==c.base_counter||current.token_hash!==c.base_token_hash||fresh?.consumed_at_ms!==null||fresh.expires_at_ms<=clock())throw Error('RECOVERY_COMMIT_REJECTED');

@@ -41,7 +41,7 @@ function fixture({corrupt=false}={}){
      nativeCalls.push({plugin,method,args});
      if(plugin==='AppAttestEnrollment')return method==='status'?{supported:true}:{keyId:'native-key',attestation:'native-attestation',signedAppTransaction:'native.purchase.proof'};
      if(plugin==='AppPurchaseProof')return {signedAppTransaction:'header.payload.signature'};
-     if(plugin==='InstallationIdentity')return method==='deletionState'?{blocked:ctx.identityRecord!=null||ctx.pendingRecovery===true}:{record:ctx.identityRecord??null};
+     if(plugin==='InstallationIdentity')return method==='deletionState'?{blocked:ctx.identityRecord!=null||ctx.pendingRecovery===true||ctx.pendingAttestation===true}:{record:ctx.identityRecord??null};
      if(plugin==='Clipboard')return {};
      if(plugin==='Share')return method==='canShare'?{value:true}:{activityType:'test'};
      if(plugin==='FilePicker'){
@@ -135,3 +135,5 @@ test('Pending recovery without a primary credential blocks deletion and preserve
  await f.elements.deleteMyDataButton.listeners.click({stopImmediatePropagation(){},preventDefault(){}});
  assert.equal(f.ctx.localStorage.getItem('favorites'),'["Andris"]');assert.deepEqual([...f.files],before);assert(f.elements.deleteMyDataStatus.textContent.includes('serverī'));
 });
+
+test('Uncommitted attested enrollment also blocks local-only deletion',async()=>{const f=fixture();vm.runInContext(identityCode,f.ctx);f.ctx.pendingAttestation=true;await assert.rejects(f.ctx.VardadienasNativeIdentity.assertLocalDeletionAllowed(),/serverī/);});

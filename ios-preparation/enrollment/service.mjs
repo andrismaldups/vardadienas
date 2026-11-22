@@ -15,13 +15,13 @@ export function createEnrollmentService({bundleId,identityEnvironment,appleEnvir
   const challenge=randomBytes(32).toString('base64url');row.nonceHash=sha(challenge);await repository.insertChallenge(row);
   return {challengeId:row.challengeId,installationId:row.installationId,bundleId,challenge,expiresAt:row.expiresAt};
  }
- async function enroll(input){
+ async function verifyProof(input,allowExpired=false){
   ready();if(!input||!uuid.test(input.challengeId)||!uuid.test(input.installationId)||!nonce.test(input.challenge)||typeof input.keyId!=='string'||!/^[A-Za-z0-9+/]{43}=$/.test(input.keyId)||typeof input.attestation!=='string'||input.attestation.length>131072||!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(input.attestation)||!input.attestation||typeof input.signedAppTransaction!=='string'||Buffer.byteLength(input.signedAppTransaction)>65536||!/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(input.signedAppTransaction))throw Error('INVALID_ENROLLMENT_PROOF');
   if(Buffer.from(input.keyId,'base64').length!==32||Buffer.from(input.keyId,'base64').toString('base64')!==input.keyId||Buffer.from(input.attestation,'base64').toString('base64')!==input.attestation)throw Error('INVALID_ENROLLMENT_PROOF');
   input=structuredClone(input);
   const challenge=await repository.readChallenge(input.challengeId),now=clock();
   if(!Number.isSafeInteger(now)||now<0)throw Error('INVALID_SERVER_TIME');
-  if(!challenge||challenge.installationId!==input.installationId||challenge.bundleId!==bundleId||challenge.appId!==appIdPrefix+'.'+bundleId||challenge.identityEnvironment!==identityEnvironment||challenge.appleEnvironment!==appleEnvironment||challenge.attestEnvironment!==attestEnvironment||challenge.nonceHash!==sha(input.challenge)||challenge.consumed||challenge.expiresAt<=now)throw Error('CHALLENGE_REJECTED');
+  if(!challenge||challenge.installationId!==input.installationId||challenge.bundleId!==bundleId||challenge.appId!==appIdPrefix+'.'+bundleId||challenge.identityEnvironment!==identityEnvironment||challenge.appleEnvironment!==appleEnvironment||challenge.attestEnvironment!==attestEnvironment||challenge.nonceHash!==sha(input.challenge)||challenge.consumed||(!allowExpired&&challenge.expiresAt<=now))throw Error('CHALLENGE_REJECTED');
   const clientData=Buffer.from(enrollmentContext({...input,bundleId}));
   const clientDataHash=createHash('sha256').update(clientData).digest();
   // Only a real server-owned verifier can fulfil this contract. No request flag
@@ -32,11 +32,15 @@ export function createEnrollmentService({bundleId,identityEnvironment,appleEnvir
   if(purchase?.snapshot?.app?.bundleId!==bundleId||purchase.snapshot.app.environment!==appleEnvironment||purchase.decision?.environment!==appleEnvironment)throw Error('PURCHASE_SCOPE_MISMATCH');
   const sandbox=identityEnvironment==='Sandbox'&&appleEnvironment==='Sandbox'&&purchase.decision.status==='sandbox'&&['active','expired'].includes(purchase.decision.testPeriodStatus);
   if(purchase.decision.baseAccess!==true&&!sandbox)throw Error('PAID_PURCHASE_NOT_CONFIRMED');
+  return {challenge,attested,purchase,now};
+ }
+ async function enroll(input){
+  const {challenge,attested,purchase,now}=await verifyProof(input);
   const commitTime=clock();if(!Number.isSafeInteger(commitTime)||commitTime<now||commitTime>=challenge.expiresAt)throw Error('CHALLENGE_EXPIRED');
   const token=randomBytes(32).toString('base64url');
   const committed=await repository.commitEnrollment({challenge,nonceHash:sha(input.challenge),commitTime,credentialHash:sha(token),attested,purchase});
   if(committed?.committed!==true||committed.installationId!==challenge.installationId)throw Error('ENROLLMENT_COMMIT_UNCONFIRMED');
   return {version:1,installationId:challenge.installationId,token,bundleId,environment:identityEnvironment};
  }
- return {issueChallenge,enroll};
+ return {issueChallenge,enroll,assertConfigured:ready,verifyForResume:input=>verifyProof(input,true)};
 }

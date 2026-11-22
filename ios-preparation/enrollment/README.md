@@ -177,14 +177,14 @@ This is retry recovery, not a general credential rotation or compromise response
 Request/Response adapter, tested together locally.
 **Remaining release blocker:** deployment, trusted ingress/rate limits and real
 iPhone/Swift/TLS verification are not implemented/completed yet.
-An Apple-attested key whose initial server enrollment never committed is a
-separate unfinished recovery case. No automatic key reset is allowed.
+The pre-commit case now has the cached-proof/fresh-assertion resume reference
+below; its HTTP/UI wiring remains unfinished. No automatic key reset is allowed.
 
 Six local recovery tests use generated EC keys with real cryptographic
 verification and SQLite: repeated lost replies, replay/tampering/concurrent
 stale challenges, expiration/revocation, transaction rollback, counter replay,
 and forbidden purchase-table writes. These are synthetic assertions, not
-positive tests on an Apple device. Full server suite: 93 passing tests.
+positive tests on an Apple device. Full server suite: 100 passing tests.
 
 
 ## HTTP boundary preparation
@@ -207,5 +207,56 @@ cover default-deny admission, routes/origin/method, body limits, stalled input,
 sanitized errors and malformed complete requests.
 
 No live URL, CSP exception, database migration, signing identifier or rate-limit
-binding is enabled by this work. Initial enrollment HTTP, D1 adapter and the
-pre-commit unknown-key recovery case remain separate work before production.
+binding is enabled by this work. Initial/resumed enrollment HTTP and the D1
+adapter remain separate work before production.
+
+
+## Pre-commit enrollment resume — 22.11.2026
+
+`resume.mjs` covers an Apple-attested key whose enrollment never committed.
+The native plugin caches the original server challenge, installation ID, key ID,
+attestation and internally read AppTransaction JWS in a fixed device-only,
+non-synchronizing Keychain item before returning the proof to JS. Exact cached
+proof is reused; original nonce/context is never rewritten to fit a new challenge.
+The installation marker binds this cache to the local installation. Invalid,
+missing-marker or conflicting cache fails closed, without resetting the key.
+
+When the original five-minute challenge has expired, the server issues a NEW
+five-minute resume nonce bound to the original challenge ID and key. Native code
+reads its own cached proof and signs the `vardadienas.enroll.resume.v1` context,
+including hashes of both attestation and JWS. The server verifies the original
+Apple attestation against the ORIGINAL context, rechecks Apple purchase/history,
+and verifies the fresh assertion with that attested public key. Only this path
+permits an expired original challenge. Direct initial enrollment still rejects
+an expired challenge, and an expired resume challenge also cannot commit.
+
+One transaction consumes both original and resume nonces, stores the actual
+verified assertion counter, and creates the same original installation plus its
+purchase link. The original verified purchase date is preserved. Other initial
+or resumed attempts cannot create another identity from either consumed nonce.
+If the server already committed and its reply was lost, use the existing-key
+credential recovery protocol instead; resuming an already consumed enrollment is
+rejected. `assertion-verifier.mjs` shares the real bounded ECDSA verification with
+that recovery path.
+
+`mobile/src/enrollment-resume.mjs` is a passive, injected-transport coordinator.
+It validates cached/native/response scope, keeps JS proof out of native signing
+arguments, and confirms Keychain credential readback. It creates no HTTP route
+and is not called by startup/UI. Original cached proof is retained, including
+after success, until a future server-aware cleanup policy is integrated.
+
+Seven server resume tests cover original expiry, tampering, fresh expiry/counter,
+parallel/lost-reply behavior, transaction rollback, missing verifier/foreign
+scope/revocation, and expiry during verification. Seven client coordinator tests
+include a complete local ECDSA + SQLite flow after a pre-commit network failure;
+one additional compiled-boundary test blocks deletion for pending attestation.
+The initial Apple attestation is a test double in positive tests; actual ECDSA
+assertions use locally generated EC keys. This is not a real Apple/iPhone test.
+
+**Remaining device failure window:** if the process terminates after Apple
+produces an attestation but before its callback/proof is durably cached, the
+proof may be unrecoverable. That state must stay blocked; it is not solved by
+blindly generating a new key. Keychain failure, missing cache, reinstall/marker
+loss, native crashes and certificate expiry require explicit policy and device
+tests before release. Initial/resumed HTTP admission, D1, trusted TLS and signing
+configuration also remain unconnected.
