@@ -1,4 +1,4 @@
-const CACHE_NAME = "vardadienas-v18";
+const CACHE_NAME = "vardadienas-v19";
 
 const FILES_TO_CACHE = [
   "./",
@@ -9,7 +9,7 @@ const FILES_TO_CACHE = [
   "./icon-192.png",
   "./icon-512.png",
   "./clean-ds-1.1/legacy-layout.css",
-  "./design-system.css",
+  "./design-system.css?v=19",
   "./clean-ds-1.1/components.css",
   "./clean-ds-1.1/d3-theme.css",
   "./clean-ds-1.1/sea-mist-theme.css",
