@@ -141,3 +141,38 @@ Negatīvi nederīgi dati tiek nodoti arī īstajam CBOR/verifikācijas kodam. Sw
 - https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity
 - https://developer.apple.com/documentation/devicecheck/validating-apps-that-connect-to-your-server
 - https://github.com/uebelack/node-app-attest
+
+
+## Credential recovery server reference — 22.11.2026
+
+`recovery.mjs` adds an isolated SQLite reference for a committed enrollment whose
+credential reply was lost. It is not an HTTP endpoint and is not enabled in the
+native application or deployed to D1.
+
+The existing attested key identifies the existing installation. A five-minute
+random nonce binds the current key counter and credential hash. An App Attest
+assertion covers the nonce, installation, app and environment, recovery ID, and
+replacement credential hash. The actual pinned `node-app-attest` assertion
+verifier checks the ECDSA signature, App ID and increasing counter. A transaction
+rechecks expiry, revocation and the original counter/hash, then consumes the
+nonce and updates both credential hash copies and the counter atomically.
+Purchase, renewal and purchase-link tables are never written by recovery.
+
+The client MUST generate a cryptographically random 32-byte replacement token
+and durably save it in device-only Keychain BEFORE requesting its assertion.
+Only its SHA-256 over the ASCII base64url token is sent to this service. If a
+reply is lost, the same pending token and recovery ID MUST be reused with a fresh
+challenge and assertion. Never create a new token on every retry. The returned
+acknowledgement contains no secret. The client may promote the pending Keychain
+record only after a trusted server acknowledgement matches all three fields.
+
+**Remaining release blocker:** pending Keychain storage, native assertion and
+acknowledgement promotion, and trusted HTTP transport are not implemented yet.
+An Apple-attested key whose initial server enrollment never committed is a
+separate unfinished recovery case. No automatic key reset is allowed.
+
+Six local recovery tests use generated EC keys with real cryptographic
+verification and SQLite: repeated lost replies, replay/tampering/concurrent
+stale challenges, expiration/revocation, transaction rollback, counter replay,
+and forbidden purchase-table writes. These are synthetic assertions, not
+positive tests on an Apple device. Full server suite: 87 passing tests.
