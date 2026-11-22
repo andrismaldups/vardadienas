@@ -1,3 +1,4 @@
+import {build} from 'esbuild';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -7,6 +8,7 @@ import {encodeSnapshot,decodeSnapshot} from '../src/storage-core.mjs';
 import {HEAD_KEY} from '../src/storage-vault.mjs';
 import {HANDOFF} from '../src/storage-startup.mjs';
 const boot=await readFile(new URL('../www/native-boot.js',import.meta.url),'utf8');
+const purchaseBundle=(await build({stdin:{contents:"import {createNativeAppPurchaseProofReader} from './native-app-purchase.mjs'; window.testPurchase=createNativeAppPurchaseProofReader();",resolveDir:new URL('../src',import.meta.url).pathname},bundle:true,write:false,platform:'browser',format:'iife'})).outputFiles[0].text;
 const identityCode=await readFile(new URL('../www/native-identity.js',import.meta.url),'utf8');
 const pushCode=await readFile(new URL('../www/native-push.js',import.meta.url),'utf8');
 const pushHtml=await readFile(new URL('../../index.html',import.meta.url),'utf8');
@@ -31,9 +33,11 @@ function fixture({corrupt=false}={}){
     {name:'FilePicker',methods:[{name:'pickFiles',rtype:'promise'}]},
     {name:'Share',methods:['canShare','share'].map(name=>({name,rtype:'promise'}))},
     {name:'Clipboard',methods:[{name:'write',rtype:'promise'}]},
-    {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'}]}],
+    {name:'InstallationIdentity',methods:[{name:'read',rtype:'promise'}]},
+    {name:'AppPurchaseProof',methods:['read','refresh'].map(name=>({name,rtype:'promise'}))}],
     nativePromise:async(plugin,method,args)=>{
      nativeCalls.push({plugin,method,args});
+     if(plugin==='AppPurchaseProof')return {signedAppTransaction:'header.payload.signature'};
      if(plugin==='InstallationIdentity')return {record:ctx.identityRecord??null};
      if(plugin==='Clipboard')return {};
      if(plugin==='Share')return method==='canShare'?{value:true}:{activityType:'test'};
@@ -107,4 +111,11 @@ test('Compiled native deletion still clears both copies when Keychain confirms t
  await f.elements.deleteMyDataButton.listeners.click({stopImmediatePropagation(){},preventDefault(){}});
  assert.equal(f.ctx.destination,'./index.html');assert.equal(f.ctx.localStorage.getItem('favorites'),null);
  for(const [path,text] of f.files)if(path.startsWith('vardadienas/storage-'))assert.equal(decodeSnapshot(text).favorites,undefined);
+});
+
+test('Compiled StoreKit adapter registers lazily and calls restore only after explicit user action',async()=>{
+ const f=fixture();vm.runInContext(purchaseBundle,f.ctx);assert.equal(f.nativeCalls.length,0);
+ const proof=await f.ctx.testPurchase.read();assert.equal(proof.signedAppTransaction,'header.payload.signature');assert.equal(f.nativeCalls[0].plugin,'AppPurchaseProof');assert.equal(f.nativeCalls[0].method,'read');
+ await assert.rejects(f.ctx.testPurchase.restore(),/USER_ACTION_REQUIRED/);assert.equal(f.nativeCalls.length,1);
+ await f.ctx.testPurchase.restore({userInitiated:true});assert.equal(f.nativeCalls[1].method,'refresh');assert.equal(f.nativeCalls[1].args.userInitiated,true);
 });

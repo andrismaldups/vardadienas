@@ -1,4 +1,6 @@
 import {createHash,timingSafeEqual} from 'node:crypto';
+const authenticatedContexts=new WeakSet();
+export const isAuthenticatedInstallation=value=>Boolean(value&&typeof value==='object'&&authenticatedContexts.has(value));
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const secret=/^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$/;
 export const hashInstallationToken=token=>{if(typeof token!=='string'||!secret.test(token))throw Error('INVALID_INSTALLATION_TOKEN');return createHash('sha256').update(token).digest('hex');};
@@ -14,5 +16,5 @@ export async function authenticateInstallation({headers,lookup,bundleId,environm
  if(!row||row.id!==id||row.platform!=='ios'||row.bundleId!==bundleId||row.environment!==environment||row.revoked!==false||typeof row.tokenHash!=='string'||!/^[a-f0-9]{64}$/.test(row.tokenHash))return denied();
  const actual=Buffer.from(hashInstallationToken(match[1]),'hex'),expected=Buffer.from(row.tokenHash,'hex');
  if(!timingSafeEqual(actual,expected))return denied();
- return Object.freeze({id,platform:'ios',bundleId,environment});
+ const context=Object.freeze({id,platform:'ios',bundleId,environment});authenticatedContexts.add(context);return context;
 }

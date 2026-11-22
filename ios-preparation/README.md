@@ -99,3 +99,9 @@ pieprasījuma veidotājs nav pirkuma/autentifikācijas pārbaude.
 `identity/README.md` apraksta Keychain glabāšanas un autentificētā HTTPS klienta
 sagatavi, kā arī servera credential pārbaudi. Reāls enrollment/atsaukšanas maršruts,
 DB shēma un StoreKit/App Attest piesaiste vēl nav izveidoti vai izvietoti.
+
+## StoreKit sākotnējā pierādījuma sasaistes sagatave
+
+`purchases/README.md` apraksta native pierādījuma nolasīšanu, ierīces pārbaudi un
+servera pakalpojuma līgumu. Reāls App Attest, enrollment un atomārais DB adapters
+vēl nav ieviesti; sākotnējā pirkuma datums netiek aizstāts ar instalācijas datumu.

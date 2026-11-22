@@ -176,14 +176,29 @@ nav pieslēgti reālam serverim vai jaunai DB shēmai. CSP un tīkla izolācija 
 Plašāk: `../ios-preparation/identity/README.md`. Keychain Swift kods nav kompilēts ar
 Xcode; tā krātuves īpašības šajā vidē netiek apstiprinātas ar imitētiem JS testiem.
 
+## StoreKit sākotnējā pirkuma pierādījums
+
+Pievienots lokāls AppPurchaseProofPlugin: AppTransaction.shared, .verified un ierīces
+SHA-384 pārbaude, tikai parakstīta JWS nodošana servera adapterim. Refresh atsevišķi
+pieļauj tikai lietotāja ierosinātu atjaunošanas darbību; automātiska App Store dialoga
+atvēršana nav pievienota. Pašreizējā UI šo adapteri vēl neizsauc. Capacitor tilta
+loggingBehavior=none, lai atkļūdošanā neizdrukātu credential vai JWS rezultātus.
+Nepieciešams iOS 16; saglabāta pieejamības pārbaude, bet ietvara provizoriskais
+mērķis 15 vēl nav veikala minimālās saderības lēmums.
+
+Servera sasaistes pakalpojuma līgums, imitācijas un atlikušais:
+`../ios-preparation/purchases/README.md`. Pirkuma perioda sākums nāk no verificēta
+sākotnējā Apple pirkuma, nevis instalēšanas/sasaistes datuma. Faktiska App Attest
+pārbaude, enrollment un DB transakcijas adapters vēl nav realizēti.
+
 ## Veiktās pārbaudes 22.11.2026.
 
-- Mobilais projekts: 89 automatizētas pārbaudes.
+- Mobilais projekts: 96 automatizētas pārbaudes.
 - Kopīgais JSON modulis: 45; importa/eksporta UI: 20.
-- `ios-preparation`: periodi, Apple darījumi, APNs, identitātes autentifikācija — 53 JS.
-- SQLite migrāciju/dzēšanas izolācija — 9. Kopā 216 pārbaudes izdevās.
-- `npm run ios:sync`: seši npm spraudņi SPM un lokālais Swift identitātes plugins
-  pievienots Xcode avotiem. Reālā Swift kompilācija un iPhone vēl nav pārbaudīti.
+- `ios-preparation`: 66 JS pārbaudes; agrākās SQLite shēmas izolācija: 9.
+- Kopā 236 pārbaudes izdevās. StoreKit/Keychain Swift pozitīvo ceļu tie nepārbauda.
+- `npm run ios:sync`: seši npm spraudņi SPM un lokālie Swift avoti Xcode projektā.
+- Xcode kompilācija, īsts iPhone un īsts pozitīvs Apple pirkums vēl nav pārbaudīti.
 
 ## Oficiālie avoti
 
@@ -206,3 +221,5 @@ Xcode; tā krātuves īpašības šajā vidē netiek apstiprinātas ar imitētie
 
 - https://developer.apple.com/documentation/security/keychain-services
 - https://capacitorjs.com/docs/ios/custom-code
+
+- https://developer.apple.com/documentation/storekit/apptransaction/shared

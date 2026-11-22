@@ -124,3 +124,14 @@ test('Keychain plugin is included in Swift sources and both controller entry poi
  assert((await text(join(mobile,'ios/App/App/Base.lproj/Main.storyboard'))).includes('customClass="IdentityBridgeViewController"'));
  assert(html.indexOf('native-identity.js')<html.indexOf('native-storage.js'));
 });
+
+test('StoreKit proof bridge uses verified, device-bound AppTransaction and explicit refresh only',async()=>{
+ const native=await text(join(mobile,'ios/App/App/AppPurchaseProofPlugin.swift'));
+ assert(native.includes('case .verified(let app)'));assert(native.includes('case .unverified:'));assert(native.includes('result.jwsRepresentation'));
+ assert(native.includes('AppStore.deviceVerificationID'));assert(native.includes('app.deviceVerificationNonce.uuidString.lowercased() + device.uuidString.lowercased()'));assert(native.includes('SHA384.hash'));
+ assert(native.includes('call.getBool("userInitiated") == true'));assert(native.includes('#available(iOS 16.0, *)'));
+ assert(!native.includes('.purchase('));assert(!native.includes('print('));
+ assert((await text(join(mobile,'ios/App/App/IdentityBridgeViewController.swift'))).includes('registerPluginInstance(AppPurchaseProofPlugin())'));
+ assert((await text(join(mobile,'ios/App/App.xcodeproj/project.pbxproj'))).includes('AppPurchaseProofPlugin.swift in Sources'));
+ assert.equal(JSON.parse(await text(join(mobile,'capacitor.config.json'))).loggingBehavior,'none');
+});
