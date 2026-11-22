@@ -62,8 +62,9 @@ kriptogrāfisko pārbaudi, Apple pirkuma dialogu vai servera ieviešanu.
 ## Nākamais ievades materiāls
 
 Saņemts `vardadienas-push-test23.rtf`, pārskatīts `server/worker-review-2026-11-22.md`.
-Saglabāts jauno tabulu projekts un 8 SQLite testi. Vēl vajadzīga faktiskā D1 tabulu
-un indeksu struktūra (bez personīgajiem datiem un slepeno atslēgu vērtībām). Lietotāja
+Saņemti arī faktiskās D1 shēmas ekrānattēli; struktūra pārrakstīta testu fixture failā.
+Jauno tabulu projekts pārbaudīts ar šo shēmu: 9 SQLite testi izdevās, arī Worker dzēšanas
+batch un atcelšanas scenārijiem. Apple pirkumu verifikācijas adapteris vēl nav izveidots. Lietotāja
 plānotais jaunais Mac un uzņēmuma Apple konts būs vajadzīgi iOS būvēšanai un veikala testiem.
 
 ## Apple primārie avoti
