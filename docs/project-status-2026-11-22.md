@@ -30,7 +30,7 @@ Pašreiz pārbaudītajā main zarā nav pirkuma, licences termiņa vai brīvprā
 
 1. Pārbaudīt aktuālo servera kodu un datu struktūru pret saskaņoto trīs gadu modeli.
 2. Fiksēt konkrētas neieviestās daļas: pirkuma apstiprināšana, termiņš, Push tiesības, termiņa beigas un brīvprātīga pagarināšana.
-3. Sagatavot iOS projektu, Apple veikala pirkumus un publicēšanas procesu. Skatīt app-store-plan.md; pirkuma plūsma (maksas lejupielāde vai bezmaksas lejupielāde ar maksas aktivizēšanu) vēl nav izvēlēta. Stripe vairs netiek plānots sākotnējai App Store plūsmai.
+3. Sagatavot iOS projektu, Apple veikala pirkumus un publicēšanas procesu. Skatīt app-store-plan.md; pirkuma plūsma izvēlēta: 4,99 EUR par lejupielādi App Store, bez otra sākotnējās aktivizēšanas maksājuma; vēlāk atsevišķs brīvprātīgs pirkums Push perioda pagarināšanai. Pagarinājuma cena vēl nav atsevišķi saskaņota. Stripe vairs netiek plānots sākotnējai App Store plūsmai.
 
 ## Atskaites avoti
 
