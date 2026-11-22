@@ -1,0 +1,13 @@
+{
+  "name": "vardadienas-ios-preparation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test entitlements/*.test.mjs server/*.test.mjs",
+    "test:schema": "python server/schema.test.py"
+  },
+  "dependencies": {
+    "@apple/app-store-server-library": "3.1.0"
+  }
+}
