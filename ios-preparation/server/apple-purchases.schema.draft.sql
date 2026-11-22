@@ -1,6 +1,7 @@
--- DRAFT ONLY: not deployed. Verify the live D1 schema and deletion behavior first.
+-- DRAFT ONLY: not deployed. Local SQLite tests use the observed 22.11.2026 D1 schema.
+-- Still requires isolated D1 testing and the trusted Apple verifier before deployment.
 -- Millisecond timestamps; only the trusted Apple verifier writes these records.
--- app_installations(id) is an EXISTING table; verify its key/type before applying.
+-- app_installations(id TEXT PRIMARY KEY) confirmed in the supplied D1 screenshots.
 CREATE TABLE apple_app_purchases (
   environment TEXT NOT NULL CHECK (environment IN ('Production', 'Sandbox')),
   bundle_id TEXT NOT NULL,
