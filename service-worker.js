@@ -1,8 +1,9 @@
-const CACHE_NAME = "vardadienas-v15";
+const CACHE_NAME = "vardadienas-v16";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
+  "./data-backup.js",
   "./manifest.json",
   "./name-days.json",
   "./icon-192.png",
