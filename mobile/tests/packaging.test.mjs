@@ -10,7 +10,8 @@ const mobile = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(mobile, '..'), out = join(mobile, 'www');
 const text = path => readFile(path, 'utf8');
 const source = await text(join(root, 'index.html'));
-const html = await text(join(out, 'index.html'));
+const html = await text(join(out, 'app.html'));
+const bootHtml = await text(join(out, 'index.html'));
 const manifest = JSON.parse(await text(join(out, 'packaging-manifest.json')));
 const hash = value => createHash('sha256').update(value).digest('hex');
 
@@ -68,6 +69,10 @@ test('Native package does not register a PWA service worker or depend on a remot
 });
 test('Network guard loads before app code and CSP denies remote connections', () => {
   assert.ok(html.indexOf('native-preview.js') < html.indexOf('data-backup.js'));
+  assert.ok(html.indexOf('native-storage.js') < html.indexOf('data-backup.js'));
+  assert.ok(bootHtml.includes('native-boot.js'));
+  assert.ok(!bootHtml.includes('data-backup.js'));
+  assert.ok(!bootHtml.includes('name-days.json'));
   assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('native-preview.js'));
   assert.ok(html.includes("connect-src 'self'")); assert.ok(html.includes('viewport-fit=cover'));
 });

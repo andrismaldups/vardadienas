@@ -24,7 +24,7 @@ html = html.replace('<img class="lavender-top-art" src="assets/lavanda_augsa.png
 html = html.replace('width=device-width,initial-scale=1', 'width=device-width,initial-scale=1,viewport-fit=cover');
 if (!html.includes('<meta charset="utf-8">')) throw Error('Native startup insertion point missing');
 const csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
-html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script><script src="native-backup.js"></script>`);
+html = html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${csp}"><script src="native-preview.js"></script><script src="native-storage.js"></script><script src="native-backup.js"></script>`);
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
@@ -32,7 +32,7 @@ const manifest = { sourceIndexSha256: hash(source), files: {} };
 for (const file of files.sort()) {
   const data = await readFile(join(root, file));
   await mkdir(dirname(join(out, file)), { recursive: true });
-  if (file === 'index.html') await writeFile(join(out, file), html);
+  if (file === 'index.html') await writeFile(join(out, 'app.html'), html);
   else await copyFile(join(root, file), join(out, file));
   manifest.files[file] = hash(data);
 }
@@ -41,3 +41,6 @@ await writeFile(join(out, 'packaging-manifest.json'), JSON.stringify(manifest, n
 console.log(`Packaged ${files.length} existing application files locally; root PWA files unchanged.`);
 
 await build({ entryPoints: [join(mobile, 'src/native-backup.mjs')], outfile: join(out, 'native-backup.js'), bundle: true, format: 'iife', platform: 'browser', target: 'safari15' });
+
+await writeFile(join(out, 'index.html'), `<!doctype html><html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="${csp}"><title>Vārdadienas</title><style>body{font:18px system-ui;background:#f3f7fb;color:#142c40;max-width:40rem;margin:20vh auto;padding:24px}button{font:inherit;padding:12px}</style><script defer src="native-boot.js"></script></head><body><main><h1>Vārdadienas</h1><p id="bootStatus" role="status">Pārbauda saglabātos datus…</p><button id="bootRetry" hidden>Mēģināt vēlreiz</button></main></body></html>`);
+for (const name of ['native-boot','native-storage']) await build({entryPoints:[join(mobile, `src/${name}.mjs`)],outfile:join(out,`${name}.js`),bundle:true,format:'iife',platform:'browser',target:'safari15'});

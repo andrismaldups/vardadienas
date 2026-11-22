@@ -130,7 +130,7 @@
     $('backupExport').addEventListener('click',async()=>{
       if(busy)return;
       try{
-        available();const data=makeBackup(),text=JSON.stringify(data,null,2)+'\n';
+        available();if(root.VardadienasNativeStorage)await root.VardadienasNativeStorage.flush();const data=makeBackup(),text=JSON.stringify(data,null,2)+'\n';
         if(new TextEncoder().encode(text).length>MAX_BYTES)fail('Eksporta fails pārsniedz 5 MB ierobežojumu.');
         const blob=new Blob([text],{type:'application/json;charset=utf-8'}),filename='vardadienas-dati-'+data.exportedAt.slice(0,19).replace(/[:T]/g,'-')+'.json';
         if(root.VardadienasNativeBackup){
@@ -191,7 +191,7 @@
       document.querySelectorAll('input[name="reminderTarget"]').forEach(input=>{input.checked=input.value===r.nameDays;});
       setBirthdaySortMode(s.birthdaySort);
     }
-    $('backupConfirm').addEventListener('click',()=>{
+    $('backupConfirm').addEventListener('click',async()=>{
       if(busy||!pending)return;
       busy=true;$('backupConfirm').disabled=true;
       try{
@@ -203,7 +203,7 @@
         for(const b of p.addedPeople)bq.push({method:'POST',id:b.id,person:{...b}});
         updates[TEST_FAVORITES_QUEUE_KEY]=JSON.stringify(fq);updates[BIRTHDAY_QUEUE_KEY]=JSON.stringify(bq);updates[BIRTHDAY_INITIALIZED_KEY]='true';
         if(applySettings.checked)Object.assign(updates,settingsUpdates(pending.settings));
-        commit(localStorage,updates);
+        if(root.VardadienasNativeStorage)await root.VardadienasNativeStorage.commit(updates,commit);else commit(localStorage,updates);
         favorites=p.favorites;birthdays=p.birthdays;
         if(applySettings.checked){applyPreferences(pending.settings);$('backupSyncStatus').textContent=navigator.onLine===false?'Dati saglabāti ierīcē. Servera sinhronizāciju atkārtosim pēc savienojuma atjaunošanas.':'';}
         closeBirthdayForm();closeFavoriteAdd();renderFavorites();renderBirthdays();renderBirthdayHome();

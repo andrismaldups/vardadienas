@@ -42,20 +42,68 @@ Tā nevar automātiski veidot vai dzēst produkcijas instalācijas un sūtīt Pu
 Šis ir izstrādes režīms, nevis bezmaksas App Store produkta variants. Saskaņotā
 pārdošana paliek 4,99 EUR par lejupielādi un atsevišķa brīvprātīga Push pagarināšana.
 
-Saraksti vēl izmanto localStorage. JSON eksportam pievienots natīvs Filesystem/Share adapters: UTF-8 fails privātajā Cache mapē, faila pielikums bez teksta/virsraksta, pagaidu faila tīrīšana pēc dalīšanās izvēlnes aizvēršanas. Tas nenozīmē, ka lietotājs failu noteikti saglabāja. Natīvās kļūmes gadījumā nenotiek pāreja uz pārlūka lejupielādi. Importa faila izvēle vēl ir HTML ievades ceļš; tas jāpārbauda īstā iPhone.
+Personīgie saraksti un iestatījumi tagad pieslēgti natīvajai krātuvei. Esošajiem
+skriptiem saglabāta sinhronā `localStorage` metožu saskarne; dati šajā režīmā tiek
+lasīti no atmiņas un secīgi saglabāti iOS Library failos, nevis paļaujas uz WebView
+localStorage noturību.
 
-Filesystem 8.1.5 un Share 8.0.3 ir fiksēti npm/SPM, esbuild 0.28.2 komplektē klienta adapteri. PrivacyInfo.xcprivacy ar FileTimestamp/C617.1 pievienots Xcode Resources. Deklarācija pirms izlaides jāpārskata kopā ar visu galīgo lietotni.
+### Palaišana un ierakstīšana
 
-Nākamajos posmos jāpievieno:
+- `www/index.html` ir palaišanas pārbaude. Tā nolasa Preferences norādi, izvēlēto
+  failu un SHA-256 kontrolsummu; tikai pēc pārbaudes atver `app.html`.
+- Divi privāti faili `Library/vardadienas/storage-a.json` un `storage-b.json`.
+  Jaunais ieraksts iet neaktīvajā failā. To nolasa un pārbauda pirms Preferences
+  norādes maiņas. Preferences 8.0.1 glabā tikai mazo norādi, nevis sarakstu datubāzi.
+- Trūkstošs/bojāts jau apstiprināts fails aptur palaišanu; nav automātiskas atiestates
+  vai klusējošas pārejas uz vecāku kopiju. Trūkstoša norāde kopā ar esošu failu arī aptur palaišanu. Iepriekšējā kopija paliek diagnostikai.
+- Tikai pašā pirmajā natīvās krātuves palaišanā, kad norādes un abu datu failu vēl nav, var pārņemt
+  šīs pašas iOS sagataves WebView personīgos datus. PWA instalācijas datiem nav
+  automātiskas piekļuves — tos pārnes ar JSON failu.
+- Pārņem tikai atļautos personīgo datu laukus, ieskaitot gaidošās sarakstu izmaiņas
+  un importa atjaunošanas žurnālu. Instalācijas/tokeni/Push abonementa ID nav šajā
+  krātuvē; nākotnes iOS piekļuves datiem vajadzēs atsevišķu Keychain risinājumu.
+- Native palaišanas pārbaude nodod vienreizēju, patērējamu sessionStorage kopiju
+  sinhronajam lietotnes sākumam. Pirms jauna faila apstiprināšanas pārbauda arī šīs
+  nodošanas ietilpību. Robeža ir mazākā no 32 MiB privātā formāta un faktiskās
+  WebView ietilpības; pilna 5 MiB pārnesamā JSON robeža iOS vēl nav garantēta.
+- Parastās izmaiņas savāc vienā secīgā saglabāšanas rindā. Kamēr ieraksta datus,
+  saskarne rāda “Saglabā datus…” un tās pārējās daļas ir inert. Kļūme saglabā
+  nesaglabāto kopiju atmiņā un piedāvā atkārtot, bloķējot tālākas izmaiņas.
+- Imports atsevišķā transakcijā saglabā vienu gala kopiju, gaida apstiprinājumu un
+  tikai tad maina lietotnes sarakstus/paziņo pabeigšanu. Neskaidra importa kļūme
+  prasa atkārtotu palaišanas pārbaudi; tā nevar turpināt rakstīt novecojušus datus.
+- Pieņēmums: viena iOS aina/WebView (projektā MultipleScenes=false). Norādes
+  atkārtota pārbaude atklāj novecojušu rakstītāju, bet nav daudzprocesu CAS bloķēšana.
+- Natīvajā izolētajā sagatavē “Dzēst manus datus” prasa atsevišķu lokālu apstiprinājumu,
+  saglabā iztīrītu aktīvo kopiju, iztīra arī iepriekšējo failu un WebView personīgo
+  datu paliekas. Izskata izvēle saglabājas. Produkcijas servera dzēšana netiek izsaukta.
+  Tā nav SSD fiziskās dzēšanas garantija un neizdzēš lietotāja atsevišķi eksportētos failus.
 
-1. Noturīga iOS glabāšana ar pārbaudāmu migrāciju; nepazaudēt sarakstus un gaidošās izmaiņas.
-2. JSON failu atvēršanas/importa un apsveikumu natīvās dalīšanās pārbaude/pielāgošana.
-3. Natīvais APNs, atļaujas un servera piesaiste; Web Push abonementi nav pārnesami kā APNs tokeni.
-4. StoreKit maksas lietotnes darījuma pārbaude/atjaunošana un brīvprātīgā pagarināšana;
-   izmantot servera sagatavi no `ios-preparation`, neievietojot API privātās atslēgas klientā.
-5. iOS servera izcelsmes/autentifikācijas risinājums, datu dzēšanas plūsma un licence.
-6. Safe-area, tastatūras, pieejamības, gaišā/tumšā režīma un visu lietotāja funkciju
-   atkārtota pārbaude īstā iPhone. PWA sekmīgie testi nav automātiski iOS testu rezultāti.
+### JSON eksports un atlikušie posmi
+
+Eksportam ir Filesystem/Share adapters: UTF-8 fails privātajā Cache mapē, tikai
+faila pielikums bez teksta/virsraksta, tīrīšana pēc dalīšanās izvēlnes aizvēršanas.
+Tas nenozīmē, ka lietotājs failu noteikti saglabāja. Eksports vispirms gaida krātuves
+saglabāšanas rindu. Natīvās kļūmes gadījumā nav pārejas uz pārlūka lejupielādi.
+Pārnesamā JSON versija paliek 1. Importa faila izvēle joprojām ir HTML ievade;
+tā jāpārbauda īstā iPhone.
+
+Filesystem 8.1.5, Preferences 8.0.1 un Share 8.0.3 fiksēti npm/SPM; esbuild 0.28.2
+komplektē klienta adapterus. SHA-256 izmanto precīzi fiksētu @noble/hashes 2.4.0,
+nesaistot palaišanu ar crypto.subtle pieejamību; sagataves failu ID izmanto getRandomValues. Xcode Resources iekļauts PrivacyInfo.xcprivacy ar
+FileTimestamp/C617.1 un UserDefaults/CA92.1. Pirms izlaides jāpārskata visas lietotnes deklarācijas.
+
+Nākamajos posmos vēl nepieciešams:
+
+1. Xcode kompilācija un reāli iPhone glabāšanas testi: aukstā palaišana, OS piespiedu
+   aizvēršana saglabāšanas laikā, lietotnes atjaunināšana, lieli faili, pilna ierīce,
+   bloķēšana/atbloķēšana un iCloud ierīces dublējuma atjaunošana. JS/native apstiprinājums
+   nav pierādījums par fsync vai garantiju pēkšņa strāvas zuduma gadījumā.
+2. JSON faila izvēles un apsveikumu natīvās dalīšanās pārbaude/pielāgošana.
+3. Natīvais APNs, atļaujas un servera piesaiste; Web Push nav APNs tokens.
+4. StoreKit pirkuma pārbaude/atjaunošana un brīvprātīga pagarināšana.
+5. iOS servera autentifikācija/Keychain, piesaiste, licence un kopīgā datu dzēšanas plūsma.
+6. Safe-area, tastatūra, pieejamība un visu funkciju atkārtota pārbaude īstā iPhone.
 
 ## Atkārtošana uz jaunā Mac
 
@@ -77,13 +125,13 @@ tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti gi
 
 ## Veiktās pārbaudes 22.11.2026.
 
-- `npm test`: 14 pārbaudes izdevās (9 iepakošanas/izolācijas un 5 eksporta adaptera pārbaudes). Tās pārbauda resursu
-  pieejamību, datu/bibliotēku baitu nemainību, funkcionālo inline skriptu nemainību,
-  sintaksi, lokālās ielādes konfigurāciju un produkcijas tīkla pieprasījumu bloķēšanu.
-- `npx cap add ios --packagemanager SPM`: projekta ģenerēšana izdevās.
-- `npm run ios:sync`: resursu un SPM konfigurācijas sinhronizācija izdevās.
-- Kopīgā JSON moduļa 45 pārbaudes un 15 UI pārbaudes izdevās, ieskaitot iOS adaptera izvēli un kļūmes bez pārlūka lejupielādes.
-- Native kompilācija un lietotāja saskarnes pārbaude ierīcē vēl nav veikta.
+- `npm test` mobilajā projektā: 40 pārbaudes — 9 iepakošana/izolācija, 5 faila
+  eksports, 22 krātuve/transakcijas/palaišana/dzēšana, 1 pārnēsājama kontrolsumma un 3 sakomplektēto skriptu
+  integrācijas pārbaudes ar imitētu Capacitor tiltu. Tās nav Swift vai WKWebView pārbaudes.
+- Kopīgā JSON moduļa 45 un saskarnes 17 pārbaudes izdevās, ieskaitot gaidīšanu
+  pirms sekmīga importa paziņojuma un kļūmi bez eksporta/sarakstu izmaiņām.
+- `npm run ios:sync`: resursi un trīs spraudņi pievienoti SPM.
+- Xcode kompilācija, simulators un īsts iPhone šajā vidē nav pārbaudīti.
 
 ## Oficiālie avoti
 
@@ -94,3 +142,7 @@ tās atjauno iepriekš minētās komandas. Xcode projekta avoti tiek glabāti gi
 
 - https://capacitorjs.com/docs/apis/filesystem
 - https://capacitorjs.com/docs/apis/share
+
+- https://capacitorjs.com/docs/apis/preferences
+
+- https://github.com/paulmillr/noble-hashes
