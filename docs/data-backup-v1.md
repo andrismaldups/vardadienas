@@ -107,7 +107,16 @@ node tests/data-backup-ui.cjs
 
 45 pamatpārbaudes aptver formātu, Unicode, robežvērtības, datumu pārbaudi,
 dublikātus, atkārtotu importu, krātuves kļūmes un pārtrauktas darbības atjaunošanu.
-13 saskarnes darbību pārbaudes izmanto izolētu DOM modeli, pārbauda
+14 saskarnes darbību pārbaudes izmanto izolētu DOM modeli, pārbauda
 priekšskatījumu, apstiprināšanu, atcelšanu, eksportu, bezsaistes rindas un
 paziņojumu stāvokļa saglabāšanu. Tās nav pilna īstas pārlūkprogrammas pārbaude.
 Pēc publicēšanas vēl jāveic iPhone saglabāšanas un faila izvēles pārbaude.
+
+## iPhone faila saglabāšanas precizējums
+
+Eksporta faila dalīšanās izsaukumam nodod tikai `files: [file]`, bez `title`,
+`text` vai `url`. Lietotāja pārbaudē iPhone saglabāja papildus nodoto virsrakstu
+kā atsevišķu 23 baitu failu `text`, nevis JSON kopiju. Papildu virsraksts ir
+noņemts. Eksporta statusā rāda īstā JSON faila nosaukumu un tā UTF-8 izmēru
+baitos, lai tos varētu salīdzināt ar saglabāto failu. Pievienota regresijas
+pārbaude, kas pārbauda tieši faila saturu un neļauj pievienot teksta laukus.
