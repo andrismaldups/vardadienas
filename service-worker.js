@@ -1,4 +1,4 @@
-const CACHE_NAME = "vardadienas-v19";
+const CACHE_NAME = "vardadienas-v20";
 
 const FILES_TO_CACHE = [
   "./",
@@ -32,10 +32,10 @@ const FILES_TO_CACHE = [
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
+      // Bypass the HTTP cache when preparing a new offline version.
+      return cache.addAll(FILES_TO_CACHE.map(path => new Request(path, { cache: "reload" })));
+    }).then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
@@ -43,12 +43,11 @@ self.addEventListener("activate", event => {
     caches.keys().then(keys => {
       return Promise.all(
         keys
-          .filter(key => key !== CACHE_NAME)
+          .filter(key => /^vardadienas-v\d+$/.test(key) && key !== CACHE_NAME)
           .map(key => caches.delete(key))
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
@@ -70,7 +69,8 @@ self.addEventListener("fetch", event => {
         }
         return response;
       } catch (error) {
-        const cached = await caches.match(event.request);
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(event.request);
         if (cached) return cached;
         return new Response("Nav interneta savienojuma", {
           status: 503,
