@@ -1,0 +1,43 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createEnrollmentResumeTransport} from '../src/enrollment-resume-transport.mjs';import {createEnrollmentResumer} from '../src/enrollment-resume.mjs';
+import {createEnrollmentResumeHttpHandler} from '../../ios-preparation/enrollment/resume-http.mjs';import {setup} from '../../ios-preparation/enrollment/resume-fixture.mjs';import {createEnrollmentTransport} from '../src/enrollment-transport.mjs';
+import {createRegistrationHttpHandler} from '../../ios-preparation/enrollment/registration-http.mjs';
+import {NOW} from '../../ios-preparation/enrollment/enrollment-fixture.mjs';
+const scope={bundleId:'lv.demo.vardadienas',environment:'Production'},origin='https://ios-api.example.test',id='12345678-abcd-4234-abcd-123456789abc',keyId=Buffer.alloc(32,1).toString('base64');
+const challengeInput={originalChallengeId:id,keyId},challenge={resumeChallengeId:id,originalChallengeId:id,installationId:id,bundleId:scope.bundleId,identityEnvironment:scope.environment,keyId,resumeChallenge:'A'.repeat(43),expiresAt:12345};
+const proof={challengeId:id,installationId:id,challenge:'A'.repeat(43),keyId,attestation:'YWJj',signedAppTransaction:'header.payload.signature',resumeChallengeId:id,resumeChallenge:'A'.repeat(43),assertion:'YWJj'},credential={version:1,installationId:id,token:'A'.repeat(43),...scope};
+const json=value=>new Response(JSON.stringify(value),{headers:{'Content-Type':'application/json'}}),make=(fetchTransport,extra={})=>createEnrollmentResumeTransport({...scope,origin,fetchTransport,...extra});
+test('Resume HTTPS requires final scope and fixed HTTPS origin; unconfigured coordinator never reads Keychain',async()=>{for(const config of [{origin:'http://api.test'},{origin:'https://user:pass@api.test'},{origin:'https://api.test/path'},{origin:'https://api.test/?x=1'},{origin:'https://api.test:8443'},{bundleId:'lv.example.preview'},{environment:'other'}])assert.throws(()=>make(null,config));let nativeCalls=0,network=0;const transport=make(()=>{network++;},{origin:null}),reader=createEnrollmentResumer({...scope,transport,native:{pending:()=>{nativeCalls++;}}});await assert.rejects(reader.resume(),/NOT_CONFIGURED/);assert.equal(nativeCalls,0);assert.equal(network,0);});
+test('Resume sends exact fixed POST endpoints and no auth/cookies; returned credential is scope checked',async()=>{const calls=[],transport=make(async(url,options)=>{calls.push({url,options});return json(url.endsWith('/challenge')?challenge:credential);});assert.deepEqual(await transport.issueChallenge(challengeInput),challenge);assert.deepEqual(await transport.resume(proof),credential);assert.equal(calls[0].url,origin+'/v1/ios/enrollment/resume/challenge');assert.equal(calls[1].url,origin+'/v1/ios/enrollment/resume/complete');for(const {options} of calls){assert.equal(options.method,'POST');assert.equal(options.redirect,'error');assert.equal(options.credentials,'omit');assert(!('Authorization' in options.headers));}assert.deepEqual(JSON.parse(calls[1].options.body),proof);});
+test('Extra/foreign challenge or credential fields and invalid proof never cross the trusted boundary',async()=>{for(const patch of [{bundleId:'other.app'},{identityEnvironment:'Sandbox'},{keyId:'other'},{originalChallengeId:'87654321-abcd-4234-abcd-123456789abc'},{serverUrl:'https://evil.test'}])await assert.rejects(make(async()=>json({...challenge,...patch})).issueChallenge(challengeInput),/CHALLENGE_INVALID/);for(const patch of [{environment:'Sandbox'},{installationId:'87654321-abcd-4234-abcd-123456789abc'},{allowed:true}])await assert.rejects(make(async()=>json({...credential,...patch})).resume(proof),/CREDENTIAL_INVALID/);let calls=0;for(const patch of [{token:'private'},{attestation:'x'.repeat(131073)},{assertion:'invalid!'},{signedAppTransaction:'not-jws'}])await assert.rejects(make(()=>{calls++;}).resume({...proof,...patch}),/PROOF_INVALID/);assert.equal(calls,0);});
+test('Resume refuses redirects, oversized/invalid responses and stalled fetch without leaking content or retrying',async()=>{const redirected=json(challenge);Object.defineProperty(redirected,'url',{value:'https://evil.test/'});for(const response of [redirected,new Response('private',{status:503}),new Response('x'.repeat(8193),{headers:{'Content-Type':'application/json'}}),new Response(new Uint8Array([255]),{headers:{'Content-Type':'application/json'}})])await assert.rejects(make(async()=>response).issueChallenge(challengeInput),e=>e.message==='RESUME_REQUEST_INCOMPLETE');let calls=0;await assert.rejects(make(async()=>{calls++;throw Error(credential.token);}).issueChallenge(challengeInput),e=>e.message==='RESUME_REQUEST_INCOMPLETE');assert.equal(calls,1);await assert.rejects(make(()=>new Promise(()=>{}),{timeoutMs:5}).issueChallenge(challengeInput),/INCOMPLETE/);});
+async function integration(){const f=await setup();let record=null,counter=0,saved=0;const handler=createEnrollmentResumeHttpHandler({origin,service:f.resumer,admitRequest:async()=>true}),native={pending:async()=>({proof:{...f.original,bundleId:scope.bundleId}}),resume:async c=>f.sign(c,++counter)},identity={read:async()=>record,store:async v=>{record=v;saved++;}};return {...f,handler,native,identity,saved:()=>saved,reader:fetchTransport=>createEnrollmentResumer({...scope,native,identity,transport:make(fetchTransport)})};}
+test('HTTPS adapter + real ECDSA + SQLite resume after original expiry and pre-commit network loss',async()=>{const f=await integration();try{let fail=true;const fetch=async(url,options)=>{if(fail&&url.endsWith('/complete')){fail=false;throw Error('network interrupted before server');}return f.handler(new Request(url,options));};await assert.rejects(f.reader(fetch).resume(),/INCOMPLETE/);assert.equal(f.count('app_installations'),0);f.setNow(NOW+300001);assert.deepEqual(await f.reader(fetch).resume(),{resumed:true,installationId:f.original.installationId});assert.equal(f.count('app_installations'),1);assert.equal(f.saved(),1);assert.equal(f.db.prepare('SELECT counter FROM ios_appattest_keys').get().counter,2);}finally{f.db.close();}});
+test('Lost committed reply is not a second registration; HTTP resume fails closed for consumed enrollment',async()=>{const f=await integration();try{let lose=true;const fetch=async(url,options)=>{const response=await f.handler(new Request(url,options));if(lose&&url.endsWith('/complete')&&response.status===200){lose=false;throw Error('reply lost after commit');}return response;};await assert.rejects(f.reader(fetch).resume(),/INCOMPLETE/);assert.equal(f.count('app_installations'),1);assert.equal(f.saved(),0);await assert.rejects(f.reader(fetch).resume(),/INCOMPLETE/);assert.equal(f.count('app_installations'),1);assert.equal(f.saved(),0);}finally{f.db.close();}});
+test('Late credential reply after client deadline never promotes local identity',async()=>{let release,saved=0;const transport=make(async url=>url.endsWith('/challenge')?json(challenge):new Promise(r=>release=()=>r(json(credential))),{timeoutMs:5});const reader=createEnrollmentResumer({...scope,transport,native:{pending:async()=>({proof:{...proof,bundleId:scope.bundleId}}),resume:async()=>proof},identity:{read:async()=>null,store:async()=>{saved++;}}});await assert.rejects(reader.resume(),/INCOMPLETE/);release();await new Promise(r=>setImmediate(r));assert.equal(saved,0);});
+
+test('Initial challenge and resumed completion use the same server entry point and purchase date', async () => {
+ const admitRequest = () => true;
+ let handle;
+ const fetchTransport = (url, options) => handle(new Request(url, options));
+ const initial = createEnrollmentTransport({...scope, origin, fetchTransport});
+ const f = await setup(enrollment => {
+  handle = createRegistrationHttpHandler({origin, admitRequest, enrollment});
+  return initial.issueChallenge();
+ });
+ try {
+  handle = createRegistrationHttpHandler({origin, admitRequest, enrollment: f.service, resume: f.resumer});
+  f.setNow(NOW + 300001);
+  await assert.rejects(initial.enroll(f.original), /INCOMPLETE/);
+  assert.equal(f.count('app_installations'), 0);
+  const transport = make(fetchTransport);
+  const challenge = await transport.issueChallenge({originalChallengeId: f.original.challengeId, keyId: f.original.keyId});
+  const signed = f.sign(challenge);
+  delete signed.expiresAt;
+  delete signed.bundleId;
+  const credential = await transport.resume(signed);
+  assert.equal(credential.installationId, f.original.installationId);
+  assert.equal(f.count('app_installations'), 1);
+  assert.equal(f.db.prepare('SELECT purchase_date_ms FROM apple_app_purchases').get().purchase_date_ms,
+   Date.parse('2026-11-22T12:00:00Z'));
+ } finally { f.db.close(); }
+});

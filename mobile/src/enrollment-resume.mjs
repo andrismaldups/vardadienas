@@ -1,4 +1,4 @@
-import {Capacitor,registerPlugin} from '@capacitor/core';import {validateCredential} from './installation-identity.mjs';
+import {Capacitor,registerPlugin} from '@capacitor/core';import {createEnrollmentResumeTransport} from './enrollment-resume-transport.mjs';import {validateCredential} from './installation-identity.mjs';
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
 const nonce=/^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$/;
 // Passive coordinator; no startup call, HTTP origin or automatic key reset.
@@ -30,5 +30,6 @@ export function createEnrollmentResumer({native,transport,identity,bundleId,envi
 }
 export function createNativeEnrollmentResumer(options){
  if(!Capacitor.isNativePlatform())throw Error('RESUME_NATIVE_REQUIRED');
- return createEnrollmentResumer({...options,native:registerPlugin('AppAttestEnrollment')});
+ const transport=options.transport??createEnrollmentResumeTransport(options);
+ return createEnrollmentResumer({...options,transport,native:registerPlugin('AppAttestEnrollment')});
 }
