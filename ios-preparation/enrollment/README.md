@@ -260,3 +260,19 @@ blindly generating a new key. Keychain failure, missing cache, reinstall/marker
 loss, native crashes and certificate expiry require explicit policy and device
 tests before release. Initial/resumed HTTP admission, D1, trusted TLS and signing
 configuration also remain unconnected.
+
+## Isolated HTTPS integration test
+
+Run `node --test mobile/tests/registration-tls.test.mjs` from the repository root
+after installing both projects' dependencies. The test uses OpenSSL to create a
+temporary certificate and binds the HTTPS server to a random loopback port.
+It checks certificate trust, interrupts the first submission before delivery,
+advances the database fixture clock past the original challenge deadline, and
+resumes registration over a new HTTPS connection. It verifies that the original
+installation and purchase date are preserved.
+
+The test uses a temporary SQLite database and simulated Apple purchase and
+attestation data. The resume assertion is verified with a generated EC key.
+The listener is a test harness for the Request/Response adapter. A hosted iOS
+test environment still needs its own HTTPS origin, server configuration and
+Apple signing credentials for testing a signed build on an iPhone.
